@@ -1,0 +1,61 @@
+(*	$Id: customers_c.uncal,v 1.1 2009/06/24 09:11:39 hu Exp $	*)
+(* customer, address and order data *)
+(* This is the same as that of costomers.uncal,
+ *  except labelled class edge.
+ *)
+
+&src @ cycle(
+(
+  &src :=
+     { Customer: &customer1,
+       Customer: &customer2
+     },
+
+  &customer1 :=
+     { name: {String: {"Tanaka"}},
+       email: {String: {"tanaka@biglab"}},
+       email: {String: {"tanaka@gmail"}},
+       add: {Address: &add1},
+       order: {Order: &order1},
+       order: {Order: &order2}
+     },
+
+  &customer2 :=
+     { name: {String: {"Kato"}},
+       email: {String: {"kato@biglab"}},
+       add: {Address: &add1},
+       add: {Address: &add2},
+       order: {Order: &order3}
+     },
+
+  &add1 :=
+     { type: {String: {"shipping"}},
+       code: {String: {"200-777"}},
+       info: {String: {"BiG office of Tokyo"}}
+     },
+
+  &add2 := 
+     { type: {String: {"contractual"}},
+       code: {String: {"100-888"}},
+       info: {String: {"IPL of Tokyo"}}
+     },
+
+  &order1 :=
+     { date: {String: {"16/07/2008"}},
+       no: {Int: {1001}},
+       order_of: {Customer: &customer1}
+     },
+
+  &order2 :=
+     { date: {String: {"16/10/2008"}},
+       no: {Int: {1002}},
+       order_of: {Customer: &customer1}
+     },
+
+  &order3 :=
+     { date: {String: {"16/12/2008"}},
+       no: {Int: {1003}},
+       order_of: {Customer: &customer2}
+     }
+)
+)

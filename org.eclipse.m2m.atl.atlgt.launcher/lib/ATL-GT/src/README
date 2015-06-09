@@ -1,0 +1,46 @@
+This directory includes OCaml source of commands 
+build on top of GRoundTram distribution.
+GroundTram source has been downloaded and installed by
+
+ $ pushd ../..
+ $ wget -nd http://www.biglab.org/src/ground_tram-0.9.3.tgz
+ $ gzip -cd ground_tram-0.9.3.tgz | tar xvf -
+ $ popd
+
+We also use XML-Light 
+whose source has been downloaded and installed by
+ $ wget -nd http://tech.motion-twin.com/zip/xml-light-2.2.zip
+ $ unzip xml-light-2.2.zip
+
+* PREREQUISITES
+  Same as those for GRoundTram. See ../../ground_tram-0.9.3/INSTALL.
+  MONA is only necessary for static typechecking (chkuncal) of transformations.
+
+* INSTALL
+
+ 1. Make GRoundTram commands and libraries
+
+   $ pushd ../../ground_tram-0.9.3
+   $ ./configure
+   $ make
+   $ popd
+
+ 2. Make XML-Light libraries
+
+   $ pushd xml-light
+   $ make opt
+   $ popd
+
+   These are necessary only once.
+
+ 3. Make ATL-GRoundTram integration commands
+
+   $ make
+
+   The following programs will be produced:
+
+  - xmi2dot_command
+  - fixdot
+
+
+

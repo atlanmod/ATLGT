@@ -1,0 +1,32 @@
+The GRoundTram System (version 0.9.5)
+(Graph Roundtrip Transformation for models)
+ ~     ~~~~~     ~~~                ~
+
+Developed by the BiG Team - http://www.biglab.org/
+National Institute of Informatics 
+2-1-2 Hitotsubashi, Chiyoda-ku, Tokyo 101-8430, Japan.
+
+* What it is
+
+The GRoundTram system was developed by the BiG team of National
+Institute of Informatics for supporting systematic development of
+bidirectional model transformation.
+
+* How to build it
+
+See the INSTALL file.
+
+* How to use it
+
+See the doc/manual.pdf file.
+
+* How to contact with us
+
+Send an email to bigteam@biglab.org for bug reports, comments and
+questions.
+
+* Under what kind of license it is distributed.
+
+We adopt the MIT license. See the LICENSE file.
+
+

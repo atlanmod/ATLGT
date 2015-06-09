@@ -1,0 +1,139 @@
+#####  -*- Makefile -*-
+#
+# Test of forward and backward transformation of translatable ATL fragment
+#
+
+# usage: 
+# Forward transformation: 
+#   make -f <this file> fwd
+# Backward transformation (after editing $(XMITGT)): 
+#   make -f <this file> bwd
+
+#
+# Transformation specific parameters
+#
+
+# source model
+XMISRC       = $(ATLEXAMPLES)/ClassDiagram/Sample-ClassDiagram.xmi
+
+# source metamodel and package
+KM3SRC       =  $(ATLEXAMPLES)/ClassDiagram/ClassDiagram.km3
+PKGSRC       = ClassDiagram
+
+# target model
+XMITGT       = ClassDiagram2Relational-target.xmi
+# target metamodel and package
+KM3TGT       = $(ATLEXAMPLES)/Relational/Relational-relaxed.km3
+PKGTGT       = Relational
+
+# sour ATL file (with id translation injected)
+ATL          = $(ATLEXAMPLES)/ClassDiagram2Relational-ids.atl
+
+
+#
+# Transformation independent definitions (do not have to edit below)
+#
+
+#
+# GRoundTram command paths
+#
+BIGROOT     = ../../ground_tram-0.9.5
+BIGSRC      = $(BIGROOT)/src
+ATLEXAMPLES = ../../../../org.eclipse.m2m.atl.atlgt.example.simpleclass2relational
+XMI2DOT     = ./xmi2dot_generic_command
+DOT2XMI     = ./dot2xmi_command
+ATL2UNQL    = ./atl2unql
+FWD_UNCAL   = $(BIGSRC)/fwd_uncal -ge -sb -cl -zn -fi -np -sa -t -rw -as
+BX_CONTRACT = $(BIGSRC)/bx_contract -batch
+BWD_UNCAL   = $(BIGSRC)/bwd_uncal -t
+
+
+#
+# Transformation independent rules for filenames
+#
+
+# source DOT file
+DOTSRC       = $(XMISRC).dot
+
+# target DOT file
+DOTTGT       = $(XMITGT).dot
+
+# translated UnQL file
+TGTUNQL      = $(notdir $(ATL)).unql
+
+# graph transformation trace files
+# (names are automatically generated using source and transformation name)
+XG = $(notdir $(DOTSRC))_$(notdir $(TGTUNQL)).xg
+EI = $(basename $(XG)).ei
+
+# updated target model
+XMITGT_UPD   = $(XMITGT)
+# normalized target DOT file
+DOTTGT_NORMAL = $(basename $(DOTTGT))_NORMAL.dot
+# updated normalized target DOT file
+DOTTGT_NORMAL_UPD = $(basename $(DOTTGT_NORMAL))_UPD.dot
+# updated (denormalized) target DOT file
+DOTTGT_UPD = $(basename $(DOTTGT))_UPD.dot
+# updated source DOT file
+DOTSRC_UPD = $(basename $(DOTSRC))_UPD.dot
+# updated source XMI file
+XMISRC_UPD = $(basename $(XMISRC))_UPD.xmi
+
+
+#
+# forward transformation
+#
+$(DOTSRC):  $(XMISRC) $(KM3SRC)
+	${XMI2DOT} -xmi ${XMISRC} -dot $@ -km3 ${KM3SRC} -pkg ${PKGSRC}
+
+# ATL to UnQL translation 
+$(TGTUNQL): $(ATL) $(KM3SRC) $(KM3TGT)
+	    $(ATL2UNQL)  -atl $< -uq $@ -ikm3 $(KM3SRC) -ipkg $(PKGSRC) -okm3 $(KM3TGT) -opkg $(PKGTGT)
+
+# forward graph transformation
+$(DOTTGT):  $(TGTUNQL) $(DOTSRC)
+#	$(FWD_UNCAL) -db $(DOTSRC) -uq $(TGTUNQL) -dot $@ -xg $(@:.dot=.xg) -ei $(@:.dot=.ei)
+	$(FWD_UNCAL) -db $(DOTSRC) -uq $(TGTUNQL) -dot $@ -xg $(XG) -ei $(EI)
+
+# bisimulation contraction
+$(DOTTGT_NORMAL): $(DOTTGT)
+	${BX_CONTRACT} -src $(DOTTGT) -dst ${DOTTGT_NORMAL}
+
+$(XMITGT) : $(DOTTGT_NORMAL) $(KM3TGT)
+	$(DOT2XMI) -dot $< -xmi $@ -km3 $(KM3TGT) -pkg $(PKGTGT)
+
+fwd: $(XMITGT)
+
+all: $(XMITGT)
+
+#
+# backward transformation
+#
+
+# backeward transformation of graph-to-model transformation
+$(DOTTGT_NORMAL_UPD) : $(XMITGT_UPD) $(DOTTGT_NORMAL)
+	$(XMI2DOT) -xmi $(XMITGT_UPD) -dot $@  -odot $(DOTTGT_NORMAL) -km3 $(KM3TGT) -pkg $(PKGTGT)
+
+# denormalization (backward transformation of normalization)
+$(DOTTGT_UPD): $(DOTTGT) $(DOTTGT_NORMAL_UPD)
+	$(BX_CONTRACT) -src $(DOTTGT) -dst $(DOTTGT_NORMAL_UPD) -usrc $@ -batch
+
+# backward graph transformation
+$(DOTSRC_UPD) : $(DOTTGT_UPD)
+	$(BWD_UNCAL) -db $(DOTSRC) -udot $@ -dot $(DOTTGT_UPD) -xg $(XG) -ei $(EI)
+
+
+$(XMISRC_UPD) : $(DOTSRC_UPD)
+	$(DOT2XMI) -dot $< -xmi $@ -km3 $(KM3SRC) -pkg $(PKGSRC)
+
+
+bwd: $(XMISRC_UPD)
+
+
+
+clean:
+	rm -f $(DOTSRC) $(TGTUNQL) $(DOTTGT) $(DOTTGT_NORMAL) $(XMITGT)
+	rm -f $(DOTTGT_NORMAL_UPD) $(DOTTGT_UPD) $(DOTSRC_UPD) $(XMISRC_UPD)
+#	rm -f $(DOTTGT:.dot=.xg) $(DOTTGT:.dot=.ei)
+	rm -f $(XG) $(EI)
+

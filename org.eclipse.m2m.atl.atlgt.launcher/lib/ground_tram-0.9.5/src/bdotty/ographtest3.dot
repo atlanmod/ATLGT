@@ -1,0 +1,118 @@
+digraph "g" {
+	graph [
+		fontsize = "14"
+		fontname = "Times-Roman"
+		fontcolor = "black"
+		ordering = "out"
+	]
+	node [
+		fontsize = "14"
+		fontname = "Times-Roman"
+		fontcolor = "black"
+		shape = "ellipse"
+		style = "solid"
+	]
+	edge [
+		fontsize = "14"
+		fontname = "Times-Roman"
+		fontcolor = "black"
+		style = "solid"
+	]
+	"163" [
+		fontsize = "14"
+		fontname = "Times-Roman"
+		fontcolor = "black"
+		label = "{&}\n\N"
+		shape = "ellipse"
+		style = "solid"
+	]
+	"2" [
+		fontsize = "14"
+		fontname = "Times-Roman"
+		fontcolor = "black"
+		label = "\N"
+		shape = "ellipse"
+		style = "solid"
+	]
+	"n5" [
+		fontsize = "14"
+		fontname = "Times-Roman"
+		fontcolor = "black"
+		label = "\N"
+		shape = "ellipse"
+		style = "solid"
+	]
+	"n6" [
+		fontsize = "14"
+		fontname = "Times-Roman"
+		fontcolor = "black"
+		label = "\N"
+		shape = "ellipse"
+		style = "solid"
+	]
+	"n7" [
+		fontsize = "14"
+		fontname = "Times-Roman"
+		fontcolor = "black"
+		label = "\N"
+		shape = "ellipse"
+		style = "solid"
+	]
+	"n8" [
+		fontsize = "14"
+		fontname = "Times-Roman"
+		fontcolor = "black"
+		label = "\N"
+		shape = "ellipse"
+		style = "solid"
+	]
+	"163" -> "2" [
+		fontsize = "14"
+		fontname = "Times-Roman"
+		fontcolor = "black"
+		label = "b"
+		style = "solid"
+	]
+	"n5" -> "2" [
+		fontsize = "14"
+		fontname = "Times-Roman"
+		fontcolor = "black"
+		label = "c"
+		style = "solid"
+	]
+	"163" -> "n5" [
+		fontsize = "14"
+		fontname = "Times-Roman"
+		fontcolor = "black"
+		label = "XX"
+		style = "solid"
+	]
+	"163" -> "n6" [
+		fontsize = "14"
+		fontname = "Times-Roman"
+		fontcolor = "black"
+		label = "a"
+		style = "solid"
+	]
+	"n5" -> "n7" [
+		fontsize = "14"
+		fontname = "Times-Roman"
+		fontcolor = "black"
+		label = "d"
+		style = "solid"
+	]
+	"n5" -> "n6" [
+		fontsize = "14"
+		fontname = "Times-Roman"
+		fontcolor = "black"
+		label = "xxx"
+		style = "solid"
+	]
+	"163" -> "n8" [
+		fontsize = "14"
+		fontname = "Times-Roman"
+		fontcolor = "black"
+		label = "t"
+		style = "solid"
+	]
+}

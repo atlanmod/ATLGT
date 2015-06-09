@@ -1,0 +1,7 @@
+rec( \($L,$G).
+       if $L = Customer then &
+  else if $L = order then &
+  else if $L = Order then &
+  else if $L = date then {Date: {data: $G}}
+  else {}
+)($db)

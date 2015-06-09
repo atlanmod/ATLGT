@@ -1,0 +1,505 @@
+# 	$Id: big.lefty,v 1.6 2010/04/28 22:11:00 hidaka Exp $	
+load ('dotty.lefty');
+load ('parsenode.lefty');
+load ('util.lefty');
+load ('msort.lefty');
+big = [];
+
+big.protogt = [
+   'layoutmode' = 'sync';
+   'actions' = copy (dotty.protogt.actions);
+# big actions are added later in this file
+];
+big.protovt = [
+   'name' = 'BiG';
+   'type' = 'normal';
+   'actions' = copy (dotty.protovt.actions);
+# other entries are added later in the file
+];
+
+
+#big.main = function () {
+#    local gnvt, gt;
+#    gnvt = dotty.createviewandgraph (null, 'file', big.protogt, big.protovt);
+#    gt = gnvt.gt;
+#    gt.loadgraph (gt, 'fa.dot', 'file', big.protogt.graph, 1);
+#};
+
+big.protogt.setnodelabel = function (gt, obj) {
+    local kv, t, attr, value, label;
+
+    attr = 'label';
+    if (~obj.attr[attr] & (obj.nid >= 0)) {
+	obj.attr[attr] = '\N';
+    }
+    #echo("obj.attr=",obj.attr);
+    if (obj.attr.shape == "record")
+	node_r = parse_recnode(obj.attr[attr]);
+    else 
+	node_r = parsenode(obj.attr[attr]);
+
+    label = node_r.label;
+
+    if (~(kv = ask ('give node label value','string',label)))
+        return;
+    t = kv;
+    value = t;
+    if (is_whitespace(t))  return;
+    node_r.label = t;
+    if (obj.attr.shape == "record") 
+	value = pack_recnode(node_r);
+    else 
+	value = packnode(node_r);
+	
+    if (obj.nid >= 0) {
+        gt.undrawnode (gt, gt.views, obj);
+        obj.attr[attr] = value;
+        gt.unpacknodeattr (gt, obj);
+        gt.drawnode (gt, gt.views, obj);
+    }
+};
+
+
+big.protogt.printedge = function (gt, obj) {
+    #echo ('src: ' ,obj.head.name);
+    #echo ('label: ', obj.attr.label);  
+    #echo ('dst: ' ,obj.tail.name);
+    echo ('(',obj.tail.name,',',obj.attr.label,',',obj.head.name,')');
+    #dump (obj.head.attr);
+    #dump (obj.tail.attr);
+    #dump (obj.attr);
+};
+
+big.protogt.printposition = function (edge) {
+    echo ("position=",getposition(edge));
+};
+
+
+big.protogt.printnode = function (gt, obj) {
+    echo (obj.name);
+};
+
+set_view_title = function (gt, name) {
+     local vid;
+     for (vid in gt.views) {
+       vt = gt.views[vid];
+     setwidgetattr(vt.view, ['name' = concat('BiG: ',name);]);
+     }
+};
+
+big.protogt.setedgelabel = function (gt, obj) {
+    local kv, t, attr, value;
+
+    attr = 'label';
+    if (~obj.attr[attr] & (obj.eid >= 0)) {
+	obj.attr[attr] = "!";
+    }
+    if (~(kv = ask ('give edge label value','string',obj.attr[attr])))
+        return;
+    t = kv;
+    value = t;
+    if (obj.eid >= 0) {
+        gt.undrawedge (gt, gt.views, obj);
+        obj.attr[attr] = value;
+        gt.unpackedgeattr (gt, obj);
+        gt.drawedge (gt, gt.views, obj);
+    }
+};
+
+#
+# set arrowhead of the first sibling 'dot' if the graph is ordered
+# and the edge is not the only child
+# FIXME: edge-by edge test is inefficient.
+mark_if_first_sibling = function (edge) {
+    local pos, oedges, gt, is_ordered;
+    oedges = outgo_edges(edge.tail);
+    # FIXME: index of may vary
+    gt = dotty.graphs[1];
+    is_ordered =   gt.graph.graphattr.ordering 
+	         & gt.graph.graphattr.ordering == "out";
+
+    if (tablesize(oedges) > 1 & is_ordered) {
+	pos = getposition(edge);
+	if (pos == 0) {
+	    edge.attr.arrowhead ="dot";
+#	    echo ("setting arrowhead of edge");
+	} else {
+	    remove("arrowhead",edge.attr);
+	};
+    };
+};
+
+#
+# hook drawedge
+#
+# drawedge_aux = copy (dotty.protogt.drawedge);
+# dotty.protogt.drawedge = function (gt, views, edge) {
+#     gt.undrawedge (gt, views, edge);
+#     # echo ("edge.draws=",edge.draws);
+#     mark_if_first_sibling(edge);
+#     drawedge_aux(gt, views, edge);
+#     echo ("drawedge_aux");
+# };
+
+#
+# patched drawedge function
+# FIXME: not every call reflects the arrowhead attribute
+# 
+dotty.protogt.drawedge = function (gt, views, edge) {
+    local vid, canvas;
+
+    edge.drawn = 1;
+    if (~edge.draws)
+        return;
+    ########################## BEGIN patch ############################
+    mark_if_first_sibling(edge);
+    ##########################  END  patch ############################
+    gt.execalldraw (gt, views, edge, edge.draws, [
+        'fontname' = edge.fontname;
+        'fontsize' = edge.fontsize;
+        'fontcolor' = edge.fontcolor;
+        'drawcolor' = edge.drawcolor;
+        'fillcolor' = edge.fillcolor;
+    ]);
+    for (vid in views) {
+        canvas = views[vid].canvas;
+        if (gt.edgehandles == 0 | ~edge.draws.ep)
+            continue;
+        arc (canvas, edge, edge.draws.ep, ['x' = 5; 'y' = 5;], ['color' = 1;]);
+    }
+};
+
+
+#
+# swap the edge with the edge on the right
+#
+big.protogt.swapedge = function (gt, obj) {
+    local tail, oedges;
+    local nedge, cpos, npos, ceid, neid, e1,e2;
+    local n1,n2;
+
+    # echo("big.protogt.swapedge");
+
+    # obtain tail (source) node
+    tail = obj.tail;
+    # echo("tail.name"=tail.name);
+    # obj.eid (self edge ID)
+    ceid = obj.eid;
+    # echo("ceid=",ceid);
+    # obtain outgoing edges
+    oedges = outgo_edges(tail);
+
+    # sort ourgoing edges by eid
+    oedges = ms_msort(oedges,"eid",ms_cmp);
+    nedge = tablesize (oedges);
+    # echo("no. of ourgoing edges=",nedge);
+    cpos = -1;
+    cpos = get_pos_byattr(oedges,"eid",ceid);
+
+    # echo("position of the selected edge=",cpos);
+ 
+    # next position
+    npos = (cpos+1) % nedge;
+    # echo("position of the next edge=",npos);
+    neid = oedges[npos].eid;
+    # echo("eid of selected edge =",ceid);
+    # echo("eid of next edge ="    ,neid);
+
+    # echo("no. edges in the graph=",tablesize(gt.graph.edges));
+
+    #####  swap attribute and head  ######
+    e1 = gt.graph.edges[ceid];
+    e2 = gt.graph.edges[neid];
+    n1 = gt.graph.nodes[e1.head.nid];
+    n2 = gt.graph.nodes[e2.head.nid];
+    # echo("n1.name=",n1.name);
+    # echo("n2.name=",n2.name);
+    
+    gt.undrawedge (gt, gt.views, e1);
+    gt.undrawedge (gt, gt.views, e2);
+    swap_attr (e1,e2,"attr");
+
+    # reflect rerouting of edges to nodes
+
+    # remove ceid from n1's edges
+    # unless e1 is self looping
+    if (~(e1.head == e1.tail)) {
+       remove(ceid,n1.edges);
+    } else {
+	# echo("edge",ceid," is self-looping");
+    }
+    # add new (incoming) edge
+    n1.edges[neid] = e2;
+
+    # remove neid from n2's edges
+    # unless e2 is self looping
+    if (~(e2.head == e2.tail)) {
+       remove(neid,n2.edges);
+    } else {
+      # echo("edge",neid," is self-looping");
+    }
+    # add new (incoming) edge
+    n2.edges[ceid] = e1;
+
+    swap_attr (e1,e2,"head");
+
+    gt.drawedge (gt, gt.views, e1);
+    gt.drawedge (gt, gt.views, e2);
+
+};
+
+
+big.protogt.setmarks = function (gt, obj,i_o) {
+    local kv, t, attr, value,mark_s, node_r;
+    
+    attr = 'label';
+    if (~obj.attr[attr] & (obj.nid >= 0)) {
+	obj.attr[attr] = '\N';
+    }
+    if (obj.attr.shape == "record") 
+	node_r = parse_recnode(obj.attr[attr]);
+    else 
+	node_r = parsenode(obj.attr[attr]);
+    mark_s = unsplit_mc(node_r[i_o],"; ");
+    if (~(kv = ask (concat('give ', i_o),'string',mark_s)))
+        return;
+    t = kv;
+    if (is_whitespace(t)) 
+	node_r[i_o] = [];
+    else 
+	node_r[i_o] = exmarks(concat("{",t,"}"));
+    if (obj.attr.shape == "record")
+	value = pack_recnode(node_r);
+    else 
+	value = packnode(node_r);
+    if (obj.nid >= 0) {
+        gt.undrawnode (gt, gt.views, obj);
+        obj.attr[attr] = value;
+        gt.unpacknodeattr (gt, obj);
+        gt.drawnode (gt, gt.views, obj);
+    }
+};
+
+
+big.protogt.actions.node['set node label'] = function (gt, vt, obj, data) {
+   gt.setnodelabel (gt, obj);
+   gt.layoutgraph (gt);
+};
+
+big.protogt.actions.edge['set edge label'] = function (gt, vt, obj, data) {
+   gt.setedgelabel (gt, obj);
+   gt.layoutgraph (gt);
+};
+
+big.protogt.actions.edge['swap edge'] = function (gt, vt, obj, data) {
+   gt.swapedge (gt, obj);
+   gt.layoutgraph (gt);
+};
+
+big.protogt.actions.edge['print position'] = function (gt, vt, obj, data) {
+   gt.printposition (obj);
+};
+
+
+# print edge (including head and tail)
+big.protogt.actions.edge['print edge'] = function (gt, vt, obj, data) {
+   gt.printedge (gt, obj);
+};
+
+# print node 
+big.protogt.actions.node['print node'] = function (gt, vt, obj, data) {
+   gt.printnode (gt, obj);
+};
+
+big.protogt.actions.node['set imarks'] = function (gt, vt, obj, data) {
+   gt.setmarks (gt, obj, 'imarks');
+   gt.layoutgraph (gt);
+};
+
+big.protogt.actions.node['set omarks'] = function (gt, vt, obj, data) {
+   gt.setmarks (gt, obj, 'omarks');
+   gt.layoutgraph (gt);
+};
+
+
+big.protovt.menus = [
+    'general' = [
+        0 = "undo";
+        1 = "paste";
+        2 = "do layout";
+        3 = "cancel layout";
+        4 = "redraw";
+        5 = "new graph";
+        6 = "load graph";
+        7 = "reload graph";
+        8 = "save graph";
+        9 = "save graph as";
+        10 = "open view";
+        11 = "copy view";
+        12 = "clone view";
+        13 = "birdseye view";
+        14 = "close view";
+        15 = "set graph attr";
+        16 = "set node attr";
+        17 = "set edge attr";
+        18 = "zoom in";
+        19 = "zoom out";
+        20 = "find node";
+        21 = "print graph";
+        22 = "text view";
+        23 = "quit";
+    ];
+    'node' = [
+	      0 = "cut";
+	      1 = "Cut";
+	      2 = "copy";
+	      3 = "Copy";
+	      4 = "group";
+	      5 = "Group";
+	      6 = "delete";
+	      7 = "Delete";
+	      8 = "remove";
+	      9 = "Remove";
+	      10 = "set attr";
+	      11 = "print attr";
+	      12 = "set node label";
+	      13 = "set imarks";     # extension
+	      14 = "set omarks";     # extension
+              15 = "print node";     # extension
+    ];
+    'edge' = [
+	0 = "cut";
+	1 = "Cut";
+	2 = "copy";
+	3 = "Copy";
+	4 = "delete";
+	5 = "Delete";
+	6 = "set attr";
+	7 = "print attr";
+	8 = "set edge label"; # extension
+        9 = "print edge";     # extension
+       10 = "swap edge";      # extension
+       11 = "print position"; # extension
+    ];
+];
+# big.protovt.uifuncs.rightdown = dotty.protovt.normal.uifuncs.rightdown;
+# big.protovt.uifuncs.keyup = dotty.protovt.normal.uifuncs.keyup;
+# big.protovt.uifuncs.redraw = dotty.protovt.normal.uifuncs.redraw;
+# big.protovt.uifuncs.closeview = dotty.protovt.normal.uifuncs.closeview;
+# big.protovt.uifuncs.leftup = dotty.protovt.normal.uifuncs.leftup;
+# big.protovt.uifuncs.middleup = dotty.protovt.normal.uifuncs.middleup;
+# big.protovt.uifuncs.leftdown = dotty.protovt.normal.uifuncs.leftdown;
+big.protovt.uifuncs = copy (dotty.protogt.normal.uifuncs);
+dotty.protovt.normal.uifuncs.leftup = function (data) {
+    local gt,attr,node;
+    
+    gt = dotty.graphs[dotty.views[data.widget].gtid];
+    if (dotty.node2move) {
+	if (dotty.movewidget == data.widget)
+	    gt.movenode (gt, dotty.node2move, data.pos);
+	dotty.node2move = 0;
+    } else if (~data.obj) {
+	node = gt.insertnode (gt, data.pos, null, null, null, 1);
+	#echo(node);
+	if (node.attr.shape == "record") {
+	    node.attr.label = "{|\N|}";
+	};
+	gt.layoutgraph (gt);
+    }
+};
+
+# keyboard shortcuts
+dotty.protovt.normal.keys.general.q = "quit";
+dotty.protovt.normal.keys.edge.s    = "swap edge";
+dotty.protovt.normal.keys.edge.p    = "print position";
+dotty.protovt.normal.keys.edge.t    = "set edge label";
+
+
+# We do need to overwrite savegraph instead of
+# big.protogt.actions.general['save graph as'], because filename,
+# which is obtained by ask function, is not returned by savegraph
+# so there is no way to obtain the name inside 'save graph as' function.
+
+big.protogt.savegraph = function (gt, name, type) {
+    local fd;
+   
+    if (~name)
+        if (~(name = ask ('file name:', 'file', '')))
+            return;
+    ########################## BEGIN patch ############################
+    set_view_title(gt,name);
+    ##########################  END  patch ############################    
+    if (
+        ~((fd = dotty.openio (name, type, 'w')) >= 0) |
+        ~writegraph (fd, gt.graph, 0)
+    ) {
+        dotty.message (0, 'cannot save graph');
+        return;
+    }
+    if (~(type == 'file' & name == '-'))
+        closeio (fd);
+};
+
+big.protogt.actions.general['new graph'] = function (gt, vt, data) {
+        gt.erasegraph (gt, null, null);
+    ########################## BEGIN patch ############################
+	set_view_title(gt,"");
+    ##########################  END  patch ############################    
+    };
+
+
+# in a similar reason, we do need to overwrite loadgraph,
+# because original loadgraph do not return the name returned
+# by ask function
+
+big.protogt.loadgraph = function (gt, name, type, protograph, layoutflag) {
+    local fd, vid, vt, graph, nid, eid, gid;
+
+    if (gt.layoutpending > 0)
+        gt.cancellayout (gt);
+    if (~name)
+        if (~(name = ask ('file name:', 'file', '')))
+            return;
+    dotty.pushbusy (gt, gt.views);
+    dotty.message (1, 'loading');
+    if (~protograph)
+        protograph = dotty.protogt.graph;
+    if (
+        ~((fd = dotty.openio (name, type, 'r')) >= 0) |
+        ~(graph = readgraph (fd, protograph))
+    ) {
+        dotty.message (0, 'cannot load graph');
+        dotty.popbusy (gt, gt.views);
+        return;
+    }
+    for (vid in gt.views) {
+        vt = gt.views[vid];
+        vt.colors = [];
+        vt.colorn = 2;
+    }
+    ########################## BEGIN patch ############################
+    set_view_title(gt,name);
+    ##########################  END  patch ############################    
+    gt.graph = graph;
+    gt.name = name;
+    gt.type = type;
+    gt.undoarray = ['level' = 0; 'entries' = [];];
+    if (~(type == 'file' & name == '-'))
+        closeio (fd);
+    graph.maxgid = tablesize (graph.graphs);
+    graph.maxnid = tablesize (graph.nodes);
+    graph.maxeid = tablesize (graph.edges);
+    for (nid in graph.nodes)
+        graph.nodes[nid][dotty.keys.nid] = nid;
+    for (eid in graph.edges)
+        graph.edges[eid][dotty.keys.eid] = eid;
+    for (gid in graph.graphs)
+        graph.graphs[gid][dotty.keys.gid] = gid;
+    gt.unpackattr (gt);
+    if (layoutflag) {
+        dotty.message (1, 'generating layout');
+        gt.layoutgraph (gt);
+    }
+    dotty.popbusy (gt, gt.views);
+    return gt.pgraph;
+};

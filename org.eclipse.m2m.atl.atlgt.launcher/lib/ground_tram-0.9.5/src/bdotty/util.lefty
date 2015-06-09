@@ -1,0 +1,52 @@
+#
+# generic library of utility functions
+#
+
+# swap attribute attr of objects obj1 and obj2
+swap_attr = function (obj1, obj2, attr) {
+    local tmp;
+    tmp = obj1[attr];
+    obj1[attr] = obj2[attr];
+    obj2[attr] = tmp;
+};
+
+# obtain array of outgoing edges of a node
+outgo_edges = function (node) {
+    local i, eid, edge, oedges;
+    i = 0;
+    for (eid in node.edges) {
+      edge = node.edges[eid];
+      if (edge.tail == node) {
+        oedges[i] = edge;
+        i=i+1;
+      }
+    }
+    return oedges;
+};
+
+# In a given table, lookup an object whose attribute attr
+# is equal to value val, and return its position 
+# -1 is returned if not found or the table is empty
+get_pos_byattr = function (table, attr, val) {
+    local i, tsize, pos, obj;
+    pos = -1;
+    tsize = tablesize (table);
+    
+    for (i=0;i<tsize;i=i+1) {
+      obj = table[i];
+      if (obj[attr] == val) {
+         pos = i;
+      }
+    }
+    return pos;
+};
+
+# get the relative position among siblings
+getposition = function (edge) {
+    local oedges, nedge, cpos;
+
+    oedges = outgo_edges(edge.tail);
+    oedges = ms_msort(oedges,"eid",ms_cmp);
+    cpos = get_pos_byattr(oedges,"eid",edge.eid);
+    return cpos;
+};

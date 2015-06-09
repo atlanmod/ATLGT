@@ -1,0 +1,18 @@
+
+select 
+  {Customer:
+    {name: $c,
+     order: 
+      {Order: 
+        {date:$d, 
+         no:  $no
+  	}
+      }
+    }
+  }
+where
+  {Order:$o} in $db,
+  {customer_name:$c} in $o,
+  {date:$d} in $o,
+  {no:$no} in $o
+group by $c

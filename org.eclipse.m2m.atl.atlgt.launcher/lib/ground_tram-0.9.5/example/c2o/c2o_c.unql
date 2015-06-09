@@ -1,0 +1,17 @@
+(* $Id: c2o_c.unql,v 1.3 2009/09/26 15:10:55 hu Exp $ *)
+
+select 
+  {Order: 
+    {date: $date,
+     no: $no,
+     customer_name: $name,
+     addr: {Address: $a}
+    }
+  }
+where 
+  {Customer.order.Order:$o} in $db, 
+  (*  {_*.Order:$o} in $db, *)
+  {order_of.Customer:$c, date:$date, no:$no} in $o,
+  {add.Address:$a, name:$name} in $c,
+  {code:$code, info:$info, type.String:{$t:{}}} in $a,
+  $t = "shipping"

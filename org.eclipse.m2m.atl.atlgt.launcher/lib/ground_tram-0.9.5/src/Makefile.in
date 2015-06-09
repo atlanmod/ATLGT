@@ -1,0 +1,324 @@
+# $Id: Makefile,v 1.109 2011/01/04 06:32:48 hidaka Exp $
+
+.PHONY: clean cleanexec all
+
+##############################################################################
+# OCaml 
+##############################################################################
+
+OCAMLC    := @OCAMLC@
+OCAMLOPT  := @OCAMLOPT@
+OCAMLDEP  := @OCAMLDEP@
+OCAMLLEX  := @OCAMLLEX@
+OCAMLYACC := @OCAMLYACC@
+
+OCAMLFLAGS = -w yu -annot
+OCAMLOPTFLAGS = -w yu
+
+INSTALL = @INSTALL@
+PREFIX = @prefix@
+BINDIR = $(PREFIX)/bin
+
+
+
+##############################################################################
+# Files
+##############################################################################
+
+DIR_UTIL := util
+SRC_UTIL := $(addprefix $(DIR_UTIL)/, \
+	print.ml extSetMap.ml parse.ml fileUtil.ml fputil.ml dllist.mli dllist.ml version.ml)
+
+DIR_UNCAL := uncal
+SRC_UNCAL := $(addprefix $(DIR_UNCAL)/, unCAL.ml printUnCAL.mli printUnCAL.ml lexUnCAL.mll parseUnCAL.mly)
+
+DIR_DATAMODEL := datamodel
+SRC_DATAMODEL := $(addprefix $(DIR_DATAMODEL)/, \
+	unCALDM.ml printUnCALDM.ml unCALDMutil.ml unCALDMnlabel.ml scc.ml unCALDMutil_scc.ml \
+	prefine.ml prefOpt.ml contraction.ml unCALDMutil.mli scc.mli prefine.mli prefOpt.mli \
+	contraction.mli)
+
+DIR_DOT := dot
+SRC_DOT := $(addprefix $(DIR_DOT)/, \
+	dot.ml printDot.mli printDot.ml dotutil.mli dotutil.ml g2viz.ml lexDot.mll parseDot.mly)
+
+DIR_EVAL := eval
+SRC_EVAL := $(addprefix $(DIR_EVAL)/, \
+	unCALDMpath.mli \
+	evalUnCAL.mli xlateUnCAL.mli \
+	biEvalUnCAL.mli g2UnCAL.mli \
+	unCALSAST.ml unCALSA.ml g2UnCAL.ml \
+	unCALinfix.ml unCALinline.ml unCALcase.ml \
+	unCALMAST.ml unCALMASTWalk.ml unCALdynenv.ml evalUnCAL.ml unCALDMpath.ml \
+	xlateUnCAL.ml unCALenv.ml eCenv.ml biEvalUnCAL.ml printUnCALMAST.ml evalFUnCAL.ml \
+	testUnCALutil.ml)
+
+DIR_UNQL := unql
+SRC_UNQL := $(addprefix $(DIR_UNQL)/, unQL.ml printUnQL.ml desugarUnQL.ml unQL2unCAL.ml walkUnQL.ml lexUnQL.mll parseUnQL.mly)
+
+DIR_INSERTION := insertion
+SRC_INSERTION :=	$(addprefix $(DIR_INSERTION)/, \
+	testInsert.mli insertionTemplate3.mli\
+	testInsert.ml insertionTemplate3.ml)
+
+DIR_SCHEMA := schema
+SRC_SCHEMA := $(addprefix $(DIR_SCHEMA)/, km3.mli km3.ml lexKm3.mll parseKm3.mly printKm3.ml km3util.ml)
+
+DIR_TOLOGIC := tologic
+SRC_TOLOGIC := $(addprefix $(DIR_TOLOGIC)/, \
+	msoTcUtil.ml mona.ml printMona.ml monaOut.ml msoTcSchema.ml msoGT.ml typecheckOld.ml msoFromUnCAL.ml parseMonaOut.mly lexMonaOut.mll)
+
+DIR_RANGE := range
+SRC_RANGE := $(addprefix $(DIR_RANGE)/, graphSim.ml uschema.ml)
+
+DIR_STATEBASE := statebase
+SRC_STATEBASE := $(addprefix $(DIR_STATEBASE)/, graphs2op.mli graphs2op.ml)
+
+DIR_COMMAND := command
+SRC_COMMAND := $(addprefix $(DIR_COMMAND)/, \
+	unqlplus.ml uncalcmd.ml desugar.ml \
+	fwd_uncal.ml bwd_uncal.ml fi2si.ml fwdI_uncal.ml bwdI_uncal.ml bwdI_enum_uncal.ml \
+	bwdIg_uncal.ml typecheck_simple.ml bwdD_uncal.ml chkuncal.ml gdiff.ml extractpath.ml fi2si_dummy.ml \
+	gtram.ml bx_quick.ml bx_contract.ml)
+
+
+
+DIRS :=\
+	$(DIR_UTIL) \
+	$(DIR_UNCAL) \
+	$(DIR_DATAMODEL) \
+	$(DIR_DOT) \
+	$(DIR_UNQL) \
+	$(DIR_EVAL) \
+	$(DIR_INSERTION) \
+	$(DIR_SCHEMA) \
+	$(DIR_TOLOGIC) \
+	$(DIR_RANGE) \
+	$(DIR_STATEBASE) \
+	$(DIR_COMMAND)
+
+INCLUDES := $(addprefix -I ,$(DIRS))
+
+SRCS_CORE := \
+	$(SRC_UTIL) \
+	$(SRC_UNCAL) \
+	$(SRC_DATAMODEL) \
+	$(SRC_DOT) \
+	$(SRC_UNQL) \
+	$(SRC_EVAL) \
+	$(SRC_INSERTION) \
+	$(SRC_SCHEMA) \
+	$(SRC_TOLOGIC) \
+	$(SRC_RANGE) \
+	$(SRC_STATEBASE)
+
+SRCS_PARSER := \
+	$(patsubst %.mly,%.ml,$(filter %.mly,$(SRCS_CORE))) \
+	$(patsubst %.mly,%.mli,$(filter %.mly,$(SRCS_CORE))) \
+	$(patsubst %.mll,%.ml,$(filter %.mll,$(SRCS_CORE))) \
+	$(patsubst %.mll,%.mli,$(filter %.mll,$(SRCS_CORE)))
+SRCS_ML  := $(filter %.ml,$(patsubst %.mly,%.ml,$(patsubst %.mll,%.ml,$(SRCS_CORE))))
+SRCS_MLI := $(filter %.mli,$(SRCS_CORE)) \
+	$(patsubst %.mly,%.mli,$(filter %.mly,$(SRCS_CORE)))
+
+SRCS_DEPEND := $(SRCS_ML) $(SRCS_MLI) $(SRC_COMMAND)
+
+OBJS = $(SRCS_ML:.ml=.cmo) 
+OPTOBJS = $(SRCS_ML:.ml=.cmx) 
+
+PROGRAMS = \
+	unqlplus uncalcmd fwd_uncal bwd_uncal fi2si desugar fwdI_uncal bwdI_uncal \
+	chkuncal bwdI_enum_uncal bwdIg_uncal bwdD_uncal	gtram bx_quick bx_contract
+
+
+
+
+
+
+##############################################################################
+# Commands
+##############################################################################
+
+
+all: unql.cma $(PROGRAMS)
+
+$(PROGRAMS): %:%.@HOWCOMP@
+	cp $@.@HOWCOMP@ $@
+
+install: $(PROGRAMS) install-mkdir
+	@PROGRAMS="$(PROGRAMS)"; \
+	for p in $$PROGRAMS; do \
+		$(INSTALL) -v $$p $(BINDIR) || break; \
+	done
+
+install-mkdir:
+	mkdir -p $(PREFIX)/bin
+
+
+
+
+
+
+
+
+unql.cma: $(OBJS)
+	$(OCAMLC) $(OCAMLFLAGS) $(INCLUDES) -o $@ -a $(OBJS)
+
+unql.cmxa: $(OPTOBJS)
+	$(OCAMLOPT) $(OCAMLOPTFLAGS) $(INCLUDES) -o $@ -a $(OPTOBJS)
+
+unqlplus.opt: unql.cmxa command/unqlplus.cmx
+	$(OCAMLOPT) $(OCAMLOPTFLAGS) $(INCLUDES) unix.cmxa -o $@ $^
+unqlplus.byte: unql.cma command/unqlplus.cmo
+	$(OCAMLC) $(OCAMLFLAGS) $(INCLUDES) unix.cma -o $@ $^
+
+uncalcmd.opt: unql.cmxa command/uncalcmd.cmx
+	$(OCAMLOPT) $(OCAMLOPTFLAGS) $(INCLUDES) unix.cmxa -o $@ $^
+uncalcmd.byte: unql.cma command/uncalcmd.cmo
+	$(OCAMLC) $(OCAMLFLAGS) $(INCLUDES) unix.cma -o $@ $^
+
+fwd_uncal.opt: unql.cmxa command/fwd_uncal.cmx
+	$(OCAMLOPT) $(OCAMLOPTFLAGS) $(INCLUDES) unix.cmxa -o $@ $^
+fwd_uncal.byte: unql.cma command/fwd_uncal.cmo
+	$(OCAMLC) $(OCAMLFLAGS) $(INCLUDES) unix.cma -o $@ $^
+
+bwd_uncal.opt: unql.cmxa command/bwd_uncal.cmx
+	$(OCAMLOPT) $(OCAMLOPTFLAGS) $(INCLUDES) unix.cmxa -o $@ $^
+bwd_uncal.byte: unql.cma command/bwd_uncal.cmo
+	$(OCAMLC) $(OCAMLFLAGS) $(INCLUDES) unix.cma -o $@ $^
+
+fi2si.opt: unql.cmxa command/fi2si.cmx
+	$(OCAMLOPT) $(OCAMLOPTFLAGS) $(INCLUDES) unix.cmxa -o $@ $^
+fi2si.byte: unql.cma command/fi2si.cmo
+	$(OCAMLC) $(OCAMLFLAGS) $(INCLUDES) unix.cma -o $@ $^
+
+fwdI_uncal.opt: unql.cmxa command/fwdI_uncal.cmx
+	$(OCAMLOPT) $(OCAMLOPTFLAGS) $(INCLUDES) unix.cmxa -o $@ $^
+fwdI_uncal.byte: unql.cma command/fwdI_uncal.cmo
+	$(OCAMLC) $(OCAMLFLAGS) $(INCLUDES) unix.cma -o $@ $^
+
+bwdI_uncal.opt: unql.cmxa command/bwdI_uncal.cmx
+	$(OCAMLOPT) $(OCAMLOPTFLAGS) $(INCLUDES) unix.cmxa -o $@ $^
+bwdI_uncal.byte: unql.cma command/bwdI_uncal.cmo
+	$(OCAMLC) $(OCAMLFLAGS) $(INCLUDES) unix.cma -o $@ $^
+
+bwdI_enum_uncal.opt: unql.cmxa command/bwdI_enum_uncal.cmx
+	$(OCAMLOPT) $(OCAMLOPTFLAGS) $(INCLUDES) unix.cmxa -o $@ $^
+bwdI_enum_uncal.byte: unql.cma command/bwdI_enum_uncal.cmo
+	$(OCAMLC) $(OCAMLFLAGS) $(INCLUDES) unix.cma -o $@ $^
+
+bwdIg_uncal.opt: unql.cmxa command/bwdIg_uncal.cmx
+	$(OCAMLOPT) $(OCAMLOPTFLAGS) $(INCLUDES) unix.cmxa -o $@ $^
+bwdIg_uncal.byte: unql.cma command/bwdIg_uncal.cmo
+	$(OCAMLC) $(OCAMLFLAGS) $(INCLUDES) unix.cma -o $@ $^
+
+bwdD_uncal.opt: unql.cmxa command/bwdD_uncal.cmx
+	$(OCAMLOPT) $(OCAMLOPTFLAGS) $(INCLUDES) unix.cmxa -o $@ $^
+bwdD_uncal.byte: unql.cma command/bwdD_uncal.cmo
+	$(OCAMLC) $(OCAMLFLAGS) $(INCLUDES) unix.cma -o $@ $^
+
+chkuncal.opt: unql.cmxa command/chkuncal.cmx
+	$(OCAMLOPT) $(OCAMLOPTFLAGS) $(INCLUDES) unix.cmxa -o $@ $^
+chkuncal.byte: unql.cma command/chkuncal.cmo
+	$(OCAMLC) $(OCAMLFLAGS) $(INCLUDES) unix.cma -o $@ $^
+
+typecheck_simple.opt: unql.cmxa command/typecheck_simple.cmx
+	$(OCAMLOPT) $(OCAMLOPTFLAGS) $(INCLUDES) unix.cmxa -o $@ $^
+typecheck_simple.byte: unql.cma command/typecheck_simple.cmo
+	$(OCAMLC) $(OCAMLFLAGS) $(INCLUDES) unix.cma -o $@ $^
+
+desugar.opt: unql.cmxa command/desugar.cmx
+	$(OCAMLOPT) $(OCAMLOPTFLAGS) $(INCLUDES) unix.cmxa -o $@ $^
+desugar.byte: unql.cma command/desugar.cmo
+	$(OCAMLC) $(OCAMLFLAGS) $(INCLUDES) unix.cma -o $@ $^
+
+gdiff.opt: unql.cmxa command/gdiff.cmx
+	$(OCAMLOPT) $(OCAMLOPTFLAGS) $(INCLUDES) unix.cmxa -o $@ $^
+gdiff.byte: unql.cma command/gdiff.cmo
+	$(OCAMLC) $(OCAMLFLAGS) $(INCLUDES) unix.cma -o $@ $^
+
+extractpath.opt: unql.cmxa command/extractpath.cmx
+	$(OCAMLOPT) $(OCAMLOPTFLAGS) $(INCLUDES) unix.cmxa -o $@ $^
+extractpath.byte: unql.cma command/extractpath.cmo
+	$(OCAMLC) $(OCAMLFLAGS) $(INCLUDES) unix.cma -o $@ $^
+
+gtram.opt: unql.cmxa command/gtram.cmx
+	$(OCAMLOPT) $(OCAMLOPTFLAGS) $(INCLUDES) -o $@ $^
+gtram.byte: unql.cma command/gtram.cmo
+	$(OCAMLC) $(OCAMLFLAGS) $(INCLUDES) -o $@ $^
+
+bx_quick.opt: unql.cmxa command/bx_quick.cmx
+	$(OCAMLOPT) $(OCAMLOPTFLAGS) $(INCLUDES) unix.cmxa -o $@ $^
+bx_quick.byte: unql.cma command/bx_quick.cmo
+	$(OCAMLC) $(OCAMLFLAGS) $(INCLUDES) unix.cma -o $@ $^
+
+bx_contract.opt: unql.cmxa command/bx_contract.cmx
+	$(OCAMLOPT) $(OCAMLOPTFLAGS) $(INCLUDES) unix.cmxa -o $@ $^
+bx_contract.byte: unql.cma command/bx_contract.cmo
+	$(OCAMLC) $(OCAMLFLAGS) $(INCLUDES) unix.cma -o $@ $^
+
+
+##############################################################################
+# Distribution
+##############################################################################
+
+dist-reset:
+	rm -rf \
+	dist/*~ dist/*.cm* dist/*.a dist/*.o dist/depend dist/src \
+	dist/configure dist/config.status dist/*.cache \
+	dist/*.ml* dist/*.log dist/*.scan
+
+dist-preproc: dist-reset
+	ruby dist/makedist.rb
+
+dist-test: dist-reset
+	ruby dist/makedist.rb -t
+
+dist: dist-preproc
+	@true
+
+
+
+##############################################################################
+# Misc
+##############################################################################
+
+clean:
+	rm -rf *~ *.cm* *.o *.output *.annot *.spot *.spit *.a $(SRCS_PARSER) depend
+	rm -rf */*~ */*.cm* */*.o */*.output */*.annot */*.spot */*.spit */*.a $(SRCS_PARSER) depend
+
+
+##############################################################################
+# Dependency
+##############################################################################
+
+depend: $(SRCS_DEPEND)
+	$(OCAMLDEP) -slash $(INCLUDES) $^ > depend
+
+-include depend
+
+
+
+##############################################################################
+# Implicit/Explicit Compilation Rules
+##############################################################################
+
+.PHONY: script
+script: script/pa_script.cmi script/pa_script.cmo
+script/pa_script.cmo: script/pa_script.ml
+	$(OCAMLC) $(OCAMLFLAGS) $(INCLUDES) -I +camlp4 camlp4lib.cma -I +camlp4/Camlp4Parsers -pp $(CAMLP4ORF) -o $@ -c $<
+script/pa_script.cmi: script/pa_script.cmo
+
+$(DIR_UTIL)/dllist.cmo: $(DIR_UTIL)/dllist.ml $(DIR_UTIL)/dllist.cmi
+	$(OCAMLC) $(OCAMLFLAGS) $(INCLUDES) -noassert -o $@ -c $(DIR_UTIL)/dllist.ml
+
+$(DIR_UTIL)/dllist.cmx: $(DIR_UTIL)/dllist.ml $(DIR_UTIL)/dllist.cmi
+	$(OCAMLOPT) $(OCAMLOPTFLAGS) $(INCLUDES) -noassert -o $@ -c $(DIR_UTIL)/dllist.ml
+
+.SUFFIXES: .ml .mli .mly .mll .cmi .cmo .cmx
+
+.ml.cmo: ; $(OCAMLC) $(OCAMLFLAGS) $(INCLUDES) $(OCAMLLIBS) -c $<
+.ml.cmx: ; $(OCAMLOPT) $(OCAMLOPTFLAGS) $(INCLUDES) $(OCAMLOPTLIBS) -c $<
+.mli.cmi: ; $(OCAMLC) $(OCAMLFLAGS) $(INCLUDES) $(OCAMLLIBS) -c $<
+.mly.ml: ; $(OCAMLYACC) -v $<
+.mll.ml: ; $(OCAMLLEX) $<

@@ -1,0 +1,34 @@
+select 
+ letrec sfun
+    col_Class2Table({attr:$g})  = {col: Class2Relational($g)}
+  | col_Class2Table({$l:$g})    = {}
+ and sfun
+    type_Attribute2Column {type:$g} = {type:Class2Relational($g)}
+  | type_Attribute2Column {$l:$g}   = {}
+ and sfun
+    Class2Relational({Class:$g})           =
+    {Table:(
+      (select {xmi_id:{String:{("IN." ^ $id ^ ".Class2Table.t"):{}}}}
+       where {xmi_id.String:{$id:$dummy}} in $g)
+    U (select {name:$g} where {name:$g} in $g)
+    U  col_Class2Table($g))}
+  | Class2Relational({Attribute:$g})       =
+    {Column:(
+      (select {xmi_id:{String:{("IN." ^ $id ^ ".Attribute2Column.t"):{}}}}
+       where {xmi_id.String:{$id:$dummy}} in $g)
+    U (select {name:$g} where {name:$g} in $g)
+    U  type_Attribute2Column($g) (*
+    U  (select {fullName:{String: {($s1 ^ $s2):{}}}}
+        where {name.String:           {$s1:$dummy}} in $g,
+              {type.Class.name.String:{$s2:$dummy}} in $g)
+    U  (select {fullName:{String: {($s1 ^ $s2):{}}}}
+        where {name.String:              {$s1:$dummy}} in $g,
+              {type.DataType.name.String:{$s2:$dummy}} in $g) *)  )}
+  | Class2Relational({DataType:$g})        =
+    {Type: (
+      (select {xmi_id:{String:{("IN." ^ $id ^ ".DataType2Type.t"):{}}}}
+       where {xmi_id.String:{$id:$dummy}} in $g)
+    U (select {name:$g} where {name:$g} in $g))}
+  |  Class2Relational({$l:$g})             = {} (* {$l:Class2Relational($g)} *)
+  in Class2Relational($db)
+

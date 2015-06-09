@@ -1,0 +1,91 @@
+rec(\ ($L,$fv6).
+  if $L = Customer
+  then rec(\ ($L,$fv7).
+         if $L = order
+         then rec(\ ($L,$o).
+                if $L = Order
+                then rec(\ ($L,$fv5).
+                       if $L = order_of
+                       then rec(\ ($L,$c).
+                              if $L = Customer
+                              then rec(\ ($L,$date).
+                                     if $L = date
+                                     then rec(\ ($L,$no).
+                                            if $L = no
+                                            then rec(\ ($L,$fv4).
+                                                   if $L = add
+                                                   then rec(\ ($L,$a).
+                                                          if $L = Address
+                                                          then rec(\ ($L,$name).
+                                                                 if $L = name
+                                                                 then 
+                                                                 rec(\ ($L,$code).
+                                                                   if 
+                                                                   $L = code
+                                                                   then 
+                                                                   rec(\ ($L,$info).
+                                                                    if 
+                                                                    $L = info
+                                                                    then 
+                                                                    rec(\ ($L,$fv1).
+                                                                    if 
+                                                                    $L = type
+                                                                    then 
+                                                                    rec(\ ($L,$fv2).
+                                                                    if 
+                                                                    $L
+                                                                    = String
+                                                                    then 
+                                                                    rec(\ ($t,$fv3).
+                                                                    if 
+                                                                    $t
+                                                                    = "shipping"
+                                                                    then 
+                                                                    {
+                                                                    Order: 
+                                                                    {
+                                                                    date: 
+                                                                    $date,
+                                                                    no: $no,
+                                                                    customer_name: 
+                                                                    $name,
+                                                                    addr: 
+                                                                    {
+                                                                    Address: 
+                                                                    $a}}}
+                                                                    else 
+                                                                    {})(
+                                                                    $fv2)
+                                                                    else 
+                                                                    {})(
+                                                                    $fv1)
+                                                                    else 
+                                                                    {})(
+                                                                    $a)
+                                                                    else 
+                                                                    {})
+                                                                   ($a)
+                                                                   else 
+                                                                   {})
+                                                                 ($a)
+                                                                 else 
+                                                                 {})
+                                                               ($c)
+                                                          else {})
+                                                        ($fv4)
+                                                   else {})
+                                                 ($c)
+                                            else {})
+                                          ($o)
+                                     else {})
+                                   ($o)
+                              else {})
+                            ($fv5)
+                       else {})
+                     ($o)
+                else {})
+              ($fv7)
+         else {})
+       ($fv6)
+  else {})
+($db)
