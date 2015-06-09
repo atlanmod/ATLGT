@@ -1,0 +1,46 @@
+module Class2Relational;
+create OUT : Relational from IN : ClassDiagram;
+rule Package2Schema{
+  from
+    p:ClassDiagram!Package 
+     (not p.ownedElements.isEmpty())
+  to
+    out:Relational!Schema
+     (name<-p.name,
+      ownedElements<-p.ownedElements,
+	  __xmiID__<-'IN'.concat(p.__xmiID__.concat('.Package2Schema.t'))
+     )
+}
+rule DataType2Type {
+  from
+    d:ClassDiagram!DataType
+     (ClassDiagram!Class.allInstances()
+        ->select(c | c.name = d.name)->isEmpty())
+  to
+    t:Relational!Type (name<-d.name,
+       __xmiID__ <- 'IN'.concat(d.__xmiID__.concat('.Datatype2Type.t'))
+      )
+}
+rule Class2Table {
+  from
+    c:ClassDiagram!Class
+  to
+    t:Relational!Table 
+     (name<-c.name, col<-c.attr, owner<-c.owner,
+      key<-c.attr->select(a | a.name.endsWith('Id')),
+	  __xmiID__ <- 'IN'.concat(c.__xmiID__.concat('.Class2Table.t'))
+     )
+}
+rule SingleValuedAttribute2Column {
+  from
+    a:ClassDiagram!Attribute
+     (not a.multiValued)
+  to
+    c:Relational!Column 
+     (name<-a.owner.name+'_'+a.name,
+      owner<-a.owner,
+      type<-if a.type.oclIsTypeOf(ClassDiagram!DataType)
+        then a.type else OclUndefined endif,
+	  __xmiID__ <- 'IN'.concat(a.__xmiID__.concat('.Attribute2Column.t'))
+	 )
+}

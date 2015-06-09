@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="ASCII"?>
+<ClassDiagram:Package
+    xmi:version="2.0" 
+    xmlns:xmi="http://www.omg.org/XMI" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:ClassDiagram="ClassDiagram"
+    xmi:id="/0"
+    name="p1">
+  <ownedElements
+      xsi:type="ClassDiagram:Class"
+      owner="/0"
+      xmi:id="//@ownedElements.0"
+      name="c1"
+      isAbstract="false">
+    <attr xmi:id="4" xsi:type="ClassDiagram:Attribute" owner="//@ownedElements.0" name="members" multiValued="true" type="//@ownedElements.0"/>
+  </ownedElements>
+  <ownedElements
+      xsi:type="ClassDiagram:Class"
+      owner="/0"
+      xmi:id="//@ownedElements.1"
+      name="c2"
+      isAbstract="false">
+    <attr xmi:id="6" xsi:type="ClassDiagram:Attribute" owner="//@ownedElements.1" name="family" multiValued="false" type="//@ownedElements.0"/>
+  </ownedElements>
+  <ownedElements
+      xsi:type="ClassDiagram:Class"
+      owner="/0"
+      xmi:id="//@ownedElements.2"
+      name="c3"
+      isAbstract="false"/>
+</ClassDiagram:Package>
