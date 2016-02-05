@@ -58,7 +58,7 @@ public class ATLGTLauncher extends EMFVMLauncher {
 	private Resource targetResource;
 
 	private String targetMetaModelName;
-
+	
 	/**
 	 * {@inheritDoc}
 	 * 
@@ -132,7 +132,7 @@ public class ATLGTLauncher extends EMFVMLauncher {
 			String atlFilePath = workspaceDirectory.getAbsolutePath() + options.get("ATL_FILE").toString();
 			String asmFilePath = atlFilePath.substring(0, atlFilePath.length() - 4) + ".asm";
 			String unqlFilePath = atlFilePath.substring(0, atlFilePath.length() - 4) + ".unql";
-
+			
 			String sourceXMIFilePath = workspaceDirectory.getAbsolutePath()
 					+ ((EMFModel)this.sourceModel).getResource().getURI().toPlatformString(true);
 			String sourceOriginalDOTFilePath = sourceXMIFilePath.substring(0, sourceXMIFilePath.length() - 4)
@@ -174,6 +174,7 @@ public class ATLGTLauncher extends EMFVMLauncher {
 			
 			// A. Metamodel processing
 			// A.1 Ecore2KM3
+			
 			// A.2 Ecore Relaxation
 			// A.3 RelaxedEcore2RelaxedKM3
 
