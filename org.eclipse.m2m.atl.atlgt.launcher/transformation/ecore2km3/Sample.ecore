@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="Sample">
+  <eClassifiers xsi:type="ecore:EClass" name="A" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" ordered="false" unique="false" lowerBound="1" eType="//String"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="B" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="kind" ordered="false" unique="false" lowerBound="1" eType="//Kind"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Kind">
+    <eLiterals name="firstKind"/>
+    <eLiterals name="secondKind"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="C" eSuperTypes="//A">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" ordered="false" unique="false" lowerBound="1" eType="//Integer"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="D" eSuperTypes="//A //B">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isIt" ordered="false" unique="false" lowerBound="1" eType="//Boolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="Boolean"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Integer"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="String"/>
+</ecore:EPackage>
