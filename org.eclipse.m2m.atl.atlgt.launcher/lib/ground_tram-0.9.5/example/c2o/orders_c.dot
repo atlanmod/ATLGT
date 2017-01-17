@@ -1,3 +1,0 @@
-digraph "g" { node [ shape = "ellipse" ]
-    "0" [ label = "{&}\n\N" ]
-}
