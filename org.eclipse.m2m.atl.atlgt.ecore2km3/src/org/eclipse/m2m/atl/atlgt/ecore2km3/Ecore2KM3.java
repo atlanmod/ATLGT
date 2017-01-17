@@ -58,41 +58,14 @@ public class Ecore2KM3 {
 	}
 	
 	private static String getLocation() {
+		System.out.println(Activator.PLUGIN_ID);
+		System.out.println(Platform.getBundle(Activator.PLUGIN_ID));
 		return Platform.getBundle(Activator.PLUGIN_ID).getLocation().replaceFirst("reference:", "");
 	}
 	
 	public void transform() throws ATLCoreException, IOException {
 		this.launcher = new EMFVMLauncher();
 		this.ip = new NullProgressMonitor();
-		
-//		Map<String,String> inModels = new HashMap<String,String>();
-//		inModels.put("IN", "MOF");
-//		Map<String,String> outModels = new HashMap<String,String>();
-//		outModels.put("OUT", "KM3");
-//		
-//		Map<String,String> paths = new HashMap<String,String>();
-//		paths.put("IN", URI.createFileURI(this.workspacePath  + this.metamodelPath).toString());
-//		paths.put("OUT", URI.createFileURI(this.workspacePath + this.metamodelPath.replace(".ecore", "-km3.ecore")).toString());
-//		
-//		paths.put("MOF", ECORE_METAMODEL_PATH);
-//		paths.put("KM3", KM3_METAMODEL_PATH);
-//		
-//		Map<String, Object> options = new HashMap<String, Object>();
-//
-//		URL transformationASM  = Ecore2KM3.class.getResource(EMF2KM3_TRANSF);
-//		
-//		LauncherService.launch(
-//				ILauncher.RUN_MODE, 
-//				ip, 
-//				launcher, 
-//				inModels,
-//				Collections.<String, String> emptyMap(), 
-//				outModels,
-//				paths, 
-//				options, 
-//				Collections.<String, InputStream> emptyMap(), 
-//				transformationASM.openStream()
-//		);
 		
 		IInjector injector = new EMFInjector();
 		IExtractor extractor = new EMFExtractor();
