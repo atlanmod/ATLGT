@@ -9,6 +9,13 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.model.ILaunchConfigurationDelegate;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
+import org.eclipse.m2m.atlgt.metamodel.MetamodelHelpers;
 
 
 /**
@@ -27,7 +34,7 @@ public class ATLGTLauncher implements ILaunchConfigurationDelegate {
 	
 	
 	
-	public void extractConfiguration(ILaunchConfiguration configuration) throws CoreException{
+	public void extractConfiguration(ILaunchConfiguration configuration) throws Exception{
 		config = configuration.getAttributes();
 		
 		isForward = config.get("Forward").toString().equals("true");
@@ -35,6 +42,11 @@ public class ATLGTLauncher implements ILaunchConfigurationDelegate {
 		MMPaths = ( (Map<String, String>) config.get("Metamodels") ).values();
 		
 		// register metamodel in MMPaths
+		for(String path : MMPaths){
+			MetamodelHelpers.registerPackage(path);
+			System.out.println("metamodel register - Executed!!");
+		}
+		
 		
 		module = config.get("Module Name").toString();
 		modulePath = config.get("Module Path").toString();
@@ -46,19 +58,22 @@ public class ATLGTLauncher implements ILaunchConfigurationDelegate {
 	
 
 
+
 	@Override
 	public void launch(ILaunchConfiguration configuration, String mode, ILaunch launch, IProgressMonitor monitor)
 			throws CoreException {
 		
-		extractConfiguration(configuration);
+		try {
+			extractConfiguration(configuration);
+			
+			
+			System.out.println("ATL GT - Executed!!" + srcsPaths.toString() + MMPaths.toString());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		
-		
-		
-		
-		
-		 System.out.println("ATL GT - Executed!!" + srcsPaths.toString() + MMPaths.toString());
-		
+
 	}
 
 
