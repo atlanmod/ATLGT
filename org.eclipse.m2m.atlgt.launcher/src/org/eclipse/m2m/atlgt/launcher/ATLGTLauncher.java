@@ -4,8 +4,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
+import org.eclipse.core.internal.resources.File;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.model.ILaunchConfigurationDelegate;
@@ -15,6 +19,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
+import org.eclipse.m2m.atl.atlgt.ecore2km3.Ecore2KM3;
 import org.eclipse.m2m.atlgt.metamodel.MetamodelHelpers;
 
 
@@ -23,14 +28,15 @@ import org.eclipse.m2m.atlgt.metamodel.MetamodelHelpers;
 public class ATLGTLauncher implements ILaunchConfigurationDelegate {
 
 	static Map<String, Object> config ;	// whole configuration map
-	boolean isForward;	// BX direction
-	Collection<String> MMPaths ;		// metamodel paths
+	static IWorkspace workspace;
+	static boolean isForward;	// BX direction
+	static Collection<String> MMPaths ;		// metamodel paths
 
-	Collection<String> srcsPaths;		// src models paths
-	Collection<String> trgsPaths;		// trg models paths
+	static Collection<String> srcsPaths;		// src models paths
+	static Collection<String> trgsPaths;		// trg models paths
 	
-	String module;
-	String modulePath;
+	static String module;
+	static String modulePath;
 	
 	
 	
@@ -42,8 +48,8 @@ public class ATLGTLauncher implements ILaunchConfigurationDelegate {
 		MMPaths = ( (Map<String, String>) config.get("Metamodels") ).values();
 		
 		// register metamodel in MMPaths
-		for(String path : MMPaths){
-			MetamodelHelpers.registerPackage(path);
+		for(String mmpath : MMPaths){
+			MetamodelHelpers.registerPackage(mmpath);
 			System.out.println("metamodel register - Executed!!");
 		}
 		
@@ -64,7 +70,25 @@ public class ATLGTLauncher implements ILaunchConfigurationDelegate {
 			throws CoreException {
 		
 		try {
+			workspace = ResourcesPlugin.getWorkspace();
+			java.io.File workspaceDirectory = workspace.getRoot().getLocation().toFile();
+			
 			extractConfiguration(configuration);
+			
+			// A. Metamodel processing
+			// A.1 Ecore2KM3
+			
+			for(String mmpath : MMPaths){
+				Ecore2KM3 ecoreTx = new Ecore2KM3(workspaceDirectory.getAbsolutePath(), mmpath);
+				ecoreTx.transform();
+			}
+			
+			// A.2 Ecore Relaxation
+			
+			// A.3 RelaxedEcore2RelaxedKM3
+
+			// B. Transformation processing
+			// B.1 ATLIDfier
 			
 			
 			System.out.println("ATL GT - Executed!!" + srcsPaths.toString() + MMPaths.toString());

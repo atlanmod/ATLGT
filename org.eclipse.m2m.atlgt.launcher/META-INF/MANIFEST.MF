@@ -11,6 +11,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.debug.ui;bundle-version="3.11.101",
  org.eclipse.swt,
  org.eclipse.m2m.atl.emftvm.launcher,
- org.eclipse.emf.ecore
+ org.eclipse.emf.ecore,
+ org.eclipse.m2m.atl.atlgt.ecore2km3
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
