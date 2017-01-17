@@ -16,8 +16,8 @@ public class ATLGTTabGroups extends AbstractLaunchConfigurationTabGroup {
 	public void createTabs(ILaunchConfigurationDialog dialog, String mode) {
 		final ILaunchConfigurationTab mainTab = new MainEMFTVMTab();
 		final ILaunchConfigurationTab parameterTab = new MainTab();
-		final ILaunchConfigurationTab commonTab = new CommonTab();
-		setTabs(new ILaunchConfigurationTab[]{mainTab, parameterTab, commonTab});
+
+		setTabs(new ILaunchConfigurationTab[]{mainTab, parameterTab});
 	}
 
 }
