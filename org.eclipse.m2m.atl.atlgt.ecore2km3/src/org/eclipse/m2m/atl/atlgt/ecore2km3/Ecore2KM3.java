@@ -34,17 +34,26 @@ public class Ecore2KM3 {
 	
 	private String workspacePath;
 	private String metamodelPath;
+	private String pluginPath;
 	
-	private final String EMF2KM3_TRANSF = getLocation() + "resources/EMF2KM3.asm";
-	private final String ECORE_METAMODEL_PATH = getLocation() + "resources/Ecore.ecore";
-	private final String KM3_METAMODEL_PATH = getLocation() + "resources/KM3.ecore";
+	private String EMF2KM3_TRANSF ;
+	private String ECORE_METAMODEL_PATH ;
+	private String KM3_METAMODEL_PATH ;
 	
-	public Ecore2KM3(String workspacePath, String metamodelPath) {
+	
+			
+	public Ecore2KM3(String pPath, String workspacePath, String metamodelPath) {
 		this.launcher = new EMFVMLauncher();
 		this.ip = new NullProgressMonitor();
 		
 		this.workspacePath = workspacePath;
 		this.metamodelPath = metamodelPath;
+		
+		pluginPath = pPath;
+				
+		EMF2KM3_TRANSF = getLocation() + "resources/EMF2KM3.asm";
+		ECORE_METAMODEL_PATH = getLocation() + "resources/Ecore.ecore";
+		KM3_METAMODEL_PATH = getLocation() + "resources/KM3.ecore";
 		
 		try {
 			this.transform();
@@ -57,10 +66,10 @@ public class Ecore2KM3 {
 		}
 	}
 	
-	private static String getLocation() {
-		System.out.println(Activator.PLUGIN_ID);
-		System.out.println(Platform.getBundle(Activator.PLUGIN_ID));
-		return Platform.getBundle(Activator.PLUGIN_ID).getLocation().replaceFirst("reference:", "");
+
+	
+	private String getLocation() {
+		return pluginPath.replaceFirst("reference:", "");
 	}
 	
 	public void transform() throws ATLCoreException, IOException {

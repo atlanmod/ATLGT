@@ -38,7 +38,7 @@ public class ATLGTLauncher implements ILaunchConfigurationDelegate {
 	static String module;
 	static String modulePath;
 	
-	
+	public static final String ECORE2KM3_PLUGIN_ID = "org.eclipse.m2m.atl.atlgt.ecore2km3";
 	
 	public void extractConfiguration(ILaunchConfiguration configuration) throws Exception{
 		config = configuration.getAttributes();
@@ -77,9 +77,9 @@ public class ATLGTLauncher implements ILaunchConfigurationDelegate {
 			
 			// A. Metamodel processing
 			// A.1 Ecore2KM3
-			
+			String ECORE2KM3 = Platform.getBundle(ECORE2KM3_PLUGIN_ID).getLocation();
 			for(String mmpath : MMPaths){
-				Ecore2KM3 ecoreTx = new Ecore2KM3(workspaceDirectory.getAbsolutePath(), mmpath);
+				Ecore2KM3 ecoreTx = new Ecore2KM3(ECORE2KM3, workspaceDirectory.getAbsolutePath(), mmpath);
 				ecoreTx.transform();
 			}
 			
