@@ -21,27 +21,21 @@ import java.util.Collections;
 public class Ecore2KM3 {
 
     private final String workspacePath;
+
     private final String metamodelPath;
 
     public Ecore2KM3(String workspacePath, String metamodelPath) {
         this.workspacePath = workspacePath;
         this.metamodelPath = metamodelPath;
-
-        try {
-            this.transform();
-        }
-        catch (ATLCoreException | IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public void transform() throws ATLCoreException, IOException {
-        IInjector injector = new EMFInjector();
-        IExtractor extractor = new EMFExtractor();
         ModelFactory modelFactory = new EMFModelFactory();
 
         // Load metamodels
         IReferenceModel ecoreMetamodel = modelFactory.getMetametamodel();
+
+        IInjector injector = new EMFInjector();
 
         IReferenceModel km3Metamodel = modelFactory.newReferenceModel();
         try (InputStream stream = Ecore2KM3.class.getResourceAsStream("/KM3.ecore")) {
@@ -62,6 +56,7 @@ public class Ecore2KM3 {
             launcher.launch(ILauncher.RUN_MODE, new NullProgressMonitor(), Collections.emptyMap(), stream);
         }
 
+        IExtractor extractor = new EMFExtractor();
         extractor.extract(outModel, URI.createFileURI(workspacePath + metamodelPath.replace(".ecore", "-km3.ecore")).toString());
     }
 }
