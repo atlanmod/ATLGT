@@ -1,10 +1,8 @@
 package org.eclipse.m2m.atlgt.launcher;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
-import org.eclipse.core.internal.resources.File;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -13,12 +11,6 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.model.ILaunchConfigurationDelegate;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.m2m.atl.atlgt.ecore2km3.Ecore2KM3;
 import org.eclipse.m2m.atlgt.metamodel.MetamodelHelpers;
 
@@ -39,7 +31,8 @@ public class ATLGTLauncher implements ILaunchConfigurationDelegate {
 	static String modulePath;
 	
 	public static final String ECORE2KM3_PLUGIN_ID = "org.eclipse.m2m.atl.atlgt.ecore2km3";
-	
+
+	@SuppressWarnings("unchecked")
 	public void extractConfiguration(ILaunchConfiguration configuration) throws Exception{
 		config = configuration.getAttributes();
 		
