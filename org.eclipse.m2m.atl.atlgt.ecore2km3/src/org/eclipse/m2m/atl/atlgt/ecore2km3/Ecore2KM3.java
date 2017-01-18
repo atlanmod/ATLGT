@@ -22,8 +22,10 @@ public class Ecore2KM3 {
 		
 	private final String workspacePath;
 	private final String metamodelPath;
+
+	@SuppressWarnings("unused")
 	private final String pluginPath;
-	
+
 	public Ecore2KM3(String pluginPath, String workspacePath, String metamodelPath) {
 		this.workspacePath = workspacePath;
 		this.metamodelPath = metamodelPath;
@@ -51,7 +53,7 @@ public class Ecore2KM3 {
 		
 		// Load models and run transformation
 		IModel inModel = modelFactory.newModel(ecoreMetamodel);
-		injector.inject(ecoreMetamodel, this.metamodelPath);
+		injector.inject(ecoreMetamodel, metamodelPath);
 		IModel outModel = modelFactory.newModel(km3Metamodel);
 
 		ILauncher launcher = new EMFVMLauncher();
