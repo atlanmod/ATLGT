@@ -1,4 +1,2 @@
-/ClassDiagram2Relational-ids.asm
-/ClassDiagram2Relational.asm
-/ClassDiagram2Relational.emftvm
-/ClassDiagram2Relational-ids.emftvm
+*.asm
+*.emftvm
