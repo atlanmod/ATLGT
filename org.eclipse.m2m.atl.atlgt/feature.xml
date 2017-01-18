@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+        id="org.eclipse.mmt.atl.atlgt"
+        label="ATLGT"
+        version="0.1.0.qualifier"
+        provider-name="AtlanMod">
+
+    <description url="http://www.example.com/description">
+        [Enter Feature Description here.]
+    </description>
+
+    <copyright url="http://www.example.com/copyright">
+        [Enter Copyright Description here.]
+    </copyright>
+
+    <license url="http://www.example.com/license">
+        [Enter License Description here.]
+    </license>
+
+    <requires>
+        <import plugin="org.eclipse.m2m.atl.engine.emfvm" />
+        <import plugin="org.eclipse.m2m.atl.debug.core" />
+    </requires>
+
+    <plugin
+            id="org.eclipse.m2m.atl.atlgt.launcher"
+            download-size="0"
+            install-size="0"
+            version="0.0.0" />
+
+</feature>
