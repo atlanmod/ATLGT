@@ -1,10 +1,14 @@
 ### Eclipse
-**/.metadata
-**/bin
-**/.settings
+**/.metadata/
+**/bin/
+**/.settings/
+
+# ATL & Co
+**.asm
+**.emftvm
 
 ### IntelliJ
-**/.idea
+**/.idea/
 **.iws
 **.iml
 **.eml
