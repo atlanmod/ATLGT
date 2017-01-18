@@ -1,4 +1,4 @@
-package org.eclipse.m2m.atlgt.metamodel;
+package org.eclipse.m2m.atl.atlgt.metamodel;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;

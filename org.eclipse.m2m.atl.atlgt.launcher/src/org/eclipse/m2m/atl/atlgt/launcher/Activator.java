@@ -1,4 +1,4 @@
-package org.eclipse.m2m.atlgt.launcher;
+package org.eclipse.m2m.atl.atlgt.launcher;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;

@@ -1,0 +1,10 @@
+### Eclipse
+**/.metadata
+**/bin
+**/.settings
+
+### IntelliJ
+**/.idea
+**.iws
+**.iml
+**.eml

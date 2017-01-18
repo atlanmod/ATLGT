@@ -1,10 +1,10 @@
-package org.eclipse.m2m.atlgt.launcher.ui;
+package org.eclipse.m2m.atl.atlgt.launcher.ui;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.debug.ui.AbstractLaunchConfigurationTab;
-import org.eclipse.m2m.atlgt.launcher.AtlGtLauncherConstant;
+import org.eclipse.m2m.atl.atlgt.launcher.AtlGtLauncherConstant;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionAdapter;

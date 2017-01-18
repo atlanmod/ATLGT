@@ -1,4 +1,4 @@
-package org.eclipse.m2m.atlgt.launcher;
+package org.eclipse.m2m.atl.atlgt.launcher;
 
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -7,7 +7,7 @@ import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.model.ILaunchConfigurationDelegate;
 import org.eclipse.m2m.atl.atlgt.ecore2km3.Ecore2KM3;
-import org.eclipse.m2m.atlgt.metamodel.MetamodelHelpers;
+import org.eclipse.m2m.atl.atlgt.metamodel.MetamodelHelpers;
 
 import java.io.File;
 import java.util.Collection;

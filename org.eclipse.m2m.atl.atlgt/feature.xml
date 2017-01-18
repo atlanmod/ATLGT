@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-        id="org.eclipse.mmt.atl.atlgt"
+        id="org.eclipse.m2m.atl.atlgt"
         label="ATLGT"
         version="0.1.0.qualifier"
         provider-name="AtlanMod">

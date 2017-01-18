@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ATL-GT
-Bundle-SymbolicName: org.eclipse.m2m.atlgt.launcher;singleton:=true
+Bundle-SymbolicName: org.eclipse.m2m.atl.atlgt.launcher;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-Activator: org.eclipse.m2m.atlgt.launcher.Activator
+Bundle-Activator: org.eclipse.m2m.atl.atlgt.launcher.Activator
 Bundle-Vendor: Atlanmod-Hosei
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.m2m.atl.engine.emfvm.launch,

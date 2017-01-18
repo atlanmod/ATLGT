@@ -1,4 +1,4 @@
-package org.eclipse.m2m.atlgt.launcher.ui;
+package org.eclipse.m2m.atl.atlgt.launcher.ui;
 
 import org.eclipse.debug.ui.AbstractLaunchConfigurationTabGroup;
 import org.eclipse.debug.ui.CommonTab;
