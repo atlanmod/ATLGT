@@ -1,10 +1,10 @@
 package org.eclipse.m2m.atl.atlgt.ecore2km3;
 
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.m2m.atl.core.ATLCoreException;
 import org.eclipse.m2m.atl.emftvm.EmftvmFactory;
@@ -15,7 +15,6 @@ import org.eclipse.m2m.atl.emftvm.impl.resource.EMFTVMResourceFactoryImpl;
 import org.eclipse.m2m.atl.emftvm.util.DefaultModuleResolver;
 import org.eclipse.m2m.atl.emftvm.util.ModuleResolver;
 import org.eclipse.m2m.atl.emftvm.util.TimingData;
-import org.osgi.framework.Bundle;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,29 +22,24 @@ import java.util.Collections;
 
 public class EcoreTransformationEmftvm implements EcoreTransformation {
 
+    public static final String BUNDLE_SYMBOLIC_NAME = "org.eclipse.m2m.atl.atlgt.ecore2km3";
+
     @Override
     public void transform(File directory, String metamodelPath) throws ATLCoreException, IOException {
         ExecEnv env = EmftvmFactory.eINSTANCE.createExecEnv();
         ResourceSet resourceSet = new ResourceSetImpl();
+        resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("ecore", new EcoreResourceFactoryImpl());
 
-        Bundle bundle = Platform.getBundle("org.eclipse.m2m.atl.atlgt.ecore2km3");
-
-        // TODO Improve path resolver, string resolution is clearly not ideal
-        String resourcesPath = (bundle.getLocation() + "resources/").replace("reference:", "");
-
-        System.out.println(resourcesPath);
+        // TODO Find a dynamic way to have this URI
+        String resourcesPath = "platform:/plugin/" + BUNDLE_SYMBOLIC_NAME + "/resources/";
 
         final Metamodel ecoreMetamodel = EmftvmFactory.eINSTANCE.createMetamodel();
         ecoreMetamodel.setResource(EcorePackage.eINSTANCE.eResource());
+        env.registerMetaModel("Ecore", ecoreMetamodel);
 
-        // TODO Link dynamically, according to the parameters given in the launcher
-//        Metamodel inMetamodel = EmftvmFactory.eINSTANCE.createMetamodel();
-//        inMetamodel.setResource(resourceSet.getResource(URI.createURI(null), true)); // FIXME
-//        env.registerMetaModel("Ecore", inMetamodel);
-//
-//        Metamodel outMetamodel = EmftvmFactory.eINSTANCE.createMetamodel();
-//        outMetamodel.setResource(resourceSet.getResource(URI.createURI(null), true)); // FIXME
-//        env.registerMetaModel("KM3", outMetamodel);
+        final Metamodel km3Metamodel = EmftvmFactory.eINSTANCE.createMetamodel();
+        km3Metamodel.setResource(resourceSet.getResource(URI.createURI(resourcesPath + "/KM3.ecore"), true));
+        env.registerMetaModel("KM3", km3Metamodel);
 
         resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xmi", new XMIResourceFactoryImpl());
         resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("emftvm", new EMFTVMResourceFactoryImpl());
