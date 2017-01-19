@@ -1,3 +1,5 @@
+-- @atlcompiler emftvm
+
 -- @nsURI MOF=http://www.eclipse.org/emf/2002/Ecore
 module EMF2KM3;
 create OUT : KM3 from IN : MOF;
