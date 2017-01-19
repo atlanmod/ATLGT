@@ -24,6 +24,8 @@ public class EcoreTransformationEmftvm implements EcoreTransformation {
 
     public static final String BUNDLE_SYMBOLIC_NAME = "org.eclipse.m2m.atl.atlgt.ecore2km3";
 
+    private static final String MODULE_NAME = "EMF2KM3";
+
     @Override
     public void transform(File directory, String metamodelPath) throws ATLCoreException, IOException {
         ExecEnv env = EmftvmFactory.eINSTANCE.createExecEnv();
@@ -36,6 +38,7 @@ public class EcoreTransformationEmftvm implements EcoreTransformation {
         final Metamodel ecoreMetamodel = EmftvmFactory.eINSTANCE.createMetamodel();
         ecoreMetamodel.setResource(EcorePackage.eINSTANCE.eResource());
         env.registerMetaModel("Ecore", ecoreMetamodel);
+        env.registerMetaModel("MOF", ecoreMetamodel);
 
         final Metamodel km3Metamodel = EmftvmFactory.eINSTANCE.createMetamodel();
         km3Metamodel.setResource(resourceSet.getResource(URI.createURI(resourcesPath + "/KM3.ecore"), true));
@@ -50,12 +53,14 @@ public class EcoreTransformationEmftvm implements EcoreTransformation {
         env.registerInputModel("IN", inModel);
 
         Model outModel = EmftvmFactory.eINSTANCE.createModel();
-        outModel.setResource(resourceSet.createResource(URI.createURI(directory.getAbsolutePath() + metamodelPath.replace(".ecore", "-km3.ecore"))));
+
+        // TODO Use the output directory
+        outModel.setResource(resourceSet.createResource(URI.createURI(metamodelPath.replace(".ecore", "-km3.ecore"))));
         env.registerOutputModel("OUT", outModel);
 
-        ModuleResolver mr = new DefaultModuleResolver(resourcesPath, resourceSet);
+        ModuleResolver moduleResolver = new DefaultModuleResolver(resourcesPath, resourceSet);
         TimingData td = new TimingData();
-        env.loadModule(mr, "EMF2KM3");
+        env.loadModule(moduleResolver, MODULE_NAME);
         td.finishLoading();
         env.run(td);
         td.finish();
