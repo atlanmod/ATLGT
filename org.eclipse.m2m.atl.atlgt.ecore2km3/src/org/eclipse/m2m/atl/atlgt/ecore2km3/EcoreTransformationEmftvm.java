@@ -37,7 +37,6 @@ public class EcoreTransformationEmftvm implements EcoreTransformation {
 
         final Metamodel ecoreMetamodel = EmftvmFactory.eINSTANCE.createMetamodel();
         ecoreMetamodel.setResource(EcorePackage.eINSTANCE.eResource());
-        env.registerMetaModel("Ecore", ecoreMetamodel);
         env.registerMetaModel("MOF", ecoreMetamodel);
 
         final Metamodel km3Metamodel = EmftvmFactory.eINSTANCE.createMetamodel();
