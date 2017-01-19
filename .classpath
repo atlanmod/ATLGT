@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="lib" path="org.eclipse.m2m.atl.atlgt.update/artifacts.jar"/>
+	<classpathentry kind="lib" path="org.eclipse.m2m.atl.atlgt.update/content.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="org.eclipse.m2m.atl.atlgt.ecore2km3/bin"/>
+</classpath>

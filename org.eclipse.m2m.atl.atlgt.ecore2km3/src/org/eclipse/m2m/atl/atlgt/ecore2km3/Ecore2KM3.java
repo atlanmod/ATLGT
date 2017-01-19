@@ -1,9 +1,5 @@
 package org.eclipse.m2m.atl.atlgt.ecore2km3;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.Collections;
-
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.atl.core.ATLCoreException;
@@ -18,60 +14,54 @@ import org.eclipse.m2m.atl.core.emf.EMFModelFactory;
 import org.eclipse.m2m.atl.core.launch.ILauncher;
 import org.eclipse.m2m.atl.engine.emfvm.launch.EMFVMLauncher;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Collections;
+
 public class Ecore2KM3 {
-		
-	private final String workspacePath;
-	private final String metamodelPath;
-	private final String pluginPath;
-	
-	private final String emf2Km3Transformation;
-	private final String km3MetamodelPath;
-	
-	public Ecore2KM3(String pluginPath, String workspacePath, String metamodelPath) {
-		this.workspacePath = workspacePath;
-		this.metamodelPath = metamodelPath;
-		this.pluginPath = pluginPath;
-				
-		this.emf2Km3Transformation = getLocation() + "resources/EMF2KM3.asm";
-		this.km3MetamodelPath = getLocation() + "resources/KM3.ecore";
-		
-		try {
-			this.transform();
-		} catch (ATLCoreException | IOException e) {
-			e.printStackTrace();
-		}
-	}
 
-	private String getLocation() {
-		return pluginPath.replaceFirst("reference:", "");
-	}
-	
-	public void transform() throws ATLCoreException, IOException {
-		IInjector injector = new EMFInjector();
-		IExtractor extractor = new EMFExtractor();
-		ModelFactory modelFactory = new EMFModelFactory();
-		/*
-		 * Load metamodels
-		 */
-		IReferenceModel ecoreMetamodel = modelFactory.getMetametamodel();
+    private final String workspacePath;
+    private final String metamodelPath;
 
-		IReferenceModel km3Metamodel = modelFactory.newReferenceModel();
-		injector.inject(km3Metamodel, km3MetamodelPath);
-		
-		/*
-		 * Load models and run transformation
-		 */
-		IModel inModel = modelFactory.newModel(ecoreMetamodel);
-		injector.inject(ecoreMetamodel, this.metamodelPath);
-		IModel outModel = modelFactory.newModel(km3Metamodel);
+    public Ecore2KM3(String workspacePath, String metamodelPath) {
+        this.workspacePath = workspacePath;
+        this.metamodelPath = metamodelPath;
 
-		ILauncher launcher = new EMFVMLauncher();
-		launcher.initialize(Collections.emptyMap());
-		launcher.addInModel(inModel, "IN", "MOF");
-		launcher.addOutModel(outModel, "OUT", "KM3");
-		URL transformationASM  = Ecore2KM3.class.getResource(URI.createFileURI(emf2Km3Transformation).toString());
-		launcher.launch(ILauncher.RUN_MODE, new NullProgressMonitor(), Collections.emptyMap(), transformationASM.openStream());
-		
-		extractor.extract(outModel, URI.createFileURI(workspacePath + metamodelPath.replace(".ecore", "-km3.ecore")).toString());
-	}
+        try {
+            this.transform();
+        }
+        catch (ATLCoreException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void transform() throws ATLCoreException, IOException {
+        IInjector injector = new EMFInjector();
+        IExtractor extractor = new EMFExtractor();
+        ModelFactory modelFactory = new EMFModelFactory();
+
+        // Load metamodels
+        IReferenceModel ecoreMetamodel = modelFactory.getMetametamodel();
+
+        IReferenceModel km3Metamodel = modelFactory.newReferenceModel();
+        try (InputStream stream = Ecore2KM3.class.getResourceAsStream("/KM3.ecore")) {
+            injector.inject(km3Metamodel, stream, Collections.emptyMap());
+        }
+
+        // Load models and run transformation
+        IModel inModel = modelFactory.newModel(ecoreMetamodel);
+        injector.inject(ecoreMetamodel, metamodelPath);
+        IModel outModel = modelFactory.newModel(km3Metamodel);
+
+        ILauncher launcher = new EMFVMLauncher();
+        launcher.initialize(Collections.emptyMap());
+        launcher.addInModel(inModel, "IN", "MOF");
+        launcher.addOutModel(outModel, "OUT", "KM3");
+
+        try (InputStream stream = Ecore2KM3.class.getResourceAsStream("/EMF2KM3.asm")) {
+            launcher.launch(ILauncher.RUN_MODE, new NullProgressMonitor(), Collections.emptyMap(), stream);
+        }
+
+        extractor.extract(outModel, URI.createFileURI(workspacePath + metamodelPath.replace(".ecore", "-km3.ecore")).toString());
+    }
 }
