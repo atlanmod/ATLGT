@@ -1,7 +1,6 @@
 package org.eclipse.m2m.atl.atlgt.ecore2km3;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.atl.core.ATLCoreException;
 import org.eclipse.m2m.atl.core.IExtractor;
 import org.eclipse.m2m.atl.core.IInjector;
@@ -14,10 +13,8 @@ import org.eclipse.m2m.atl.core.emf.EMFModelFactory;
 import org.eclipse.m2m.atl.core.launch.ILauncher;
 import org.eclipse.m2m.atl.engine.emfvm.launch.EMFVMLauncher;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Path;
 import java.util.Collections;
 
 /**
@@ -28,7 +25,7 @@ import java.util.Collections;
 public class EcoreTransformationEmfvm implements EcoreTransformation {
 
     @Override
-    public void transform(Path directory, String metamodelPath) throws ATLCoreException, IOException {
+    public void transform(String outputDirectory, String metamodelPath) throws ATLCoreException, IOException {
         ModelFactory modelFactory = new EMFModelFactory();
 
         // Load metamodels
@@ -56,6 +53,6 @@ public class EcoreTransformationEmfvm implements EcoreTransformation {
         }
 
         IExtractor extractor = new EMFExtractor();
-        extractor.extract(outModel, directory.resolve(metamodelPath.replace(".ecore", "-km3.ecore")).toString());
+        extractor.extract(outModel, outputDirectory + metamodelPath.replace(".ecore", "-km3.ecore"));
     }
 }

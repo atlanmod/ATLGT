@@ -12,6 +12,7 @@ import org.eclipse.emf.ecore.util.ExtendedMetaData;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -54,11 +55,10 @@ public class MetamodelHelpers {
         return packages;
     }
 
-    public static void relax(Iterable<EPackage> packages, String metamodelPath, String saveDir) throws IOException {
-        String metamodelName = metamodelPath.substring(metamodelPath.lastIndexOf("/"), metamodelPath.length());
-        String savePath = saveDir + metamodelName;
+    public static void relax(Iterable<EPackage> packages, String outputDirectory, String metamodelPath) throws IOException {
+        String outputFile = outputDirectory + new File(metamodelPath).getName() + ".relax";
 
-        Resource resource = createResourceFrom(URI.createURI(savePath).appendFileExtension("relax"));
+        Resource resource = createResourceFrom(URI.createURI(outputFile));
 
         StreamSupport.stream(packages.spliterator(), false)
                 .peek(ePackage -> ePackage.getEClassifiers().stream()

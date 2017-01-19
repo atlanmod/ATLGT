@@ -19,6 +19,7 @@ import org.eclipse.m2m.atl.emftvm.util.TimingData;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Collections;
 
 public class EcoreTransformationEmftvm implements EcoreTransformation {
@@ -28,7 +29,7 @@ public class EcoreTransformationEmftvm implements EcoreTransformation {
     private static final String MODULE_NAME = "EMF2KM3";
 
     @Override
-    public void transform(Path directory, String metamodelPath) throws ATLCoreException, IOException {
+    public void transform(String outputDirectory, String metamodelPath) throws ATLCoreException, IOException {
         ExecEnv env = EmftvmFactory.eINSTANCE.createExecEnv();
         ResourceSet resourceSet = new ResourceSetImpl();
         resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("ecore", new EcoreResourceFactoryImpl());
@@ -52,7 +53,7 @@ public class EcoreTransformationEmftvm implements EcoreTransformation {
         inModel.setResource(resourceSet.getResource(URI.createURI(metamodelPath, true), true));
         env.registerInputModel("IN", inModel);
         
-        Path outputModel = directory.resolve(new File(metamodelPath).getName().replace(".ecore", "-km3.ecore"));
+        Path outputModel = Paths.get(outputDirectory).resolve(new File(metamodelPath).getName().replace(".ecore", "-km3.ecore"));
 
         Model outModel = EmftvmFactory.eINSTANCE.createModel();
         outModel.setResource(resourceSet.createResource(URI.createFileURI(outputModel.toString())));

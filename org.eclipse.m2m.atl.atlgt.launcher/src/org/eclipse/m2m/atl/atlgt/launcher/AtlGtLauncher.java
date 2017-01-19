@@ -1,6 +1,5 @@
 package org.eclipse.m2m.atl.atlgt.launcher;
 
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.debug.core.ILaunch;
@@ -11,8 +10,6 @@ import org.eclipse.m2m.atl.atlgt.ecore2km3.EcoreTransformation;
 import org.eclipse.m2m.atl.atlgt.ecore2km3.EcoreTransformationFactory;
 import org.eclipse.m2m.atl.atlgt.util.MetamodelHelpers;
 
-import java.io.File;
-import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.Map;
 
@@ -24,7 +21,7 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
     private static final String KEY_IN_MODELS = "Input Models";
     private static final String KEY_OUT_MODELS = "Output Models";
     
-    private static final String KEY_HIDDEN_DIR = "/hidden/";
+    private static final String OUTPUT_DIRECTORY_NAME = "/hidden/";
     
     /**
      * BX direction.
@@ -59,9 +56,7 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
     /**
      * The hidden path of the BX project to store all generated files.
      */
-    private String hiddenDir;
-    
-    
+    private String outputDirectory;
 
     @SuppressWarnings("unchecked")
     private void extractConfiguration(ILaunchConfiguration configuration) throws Exception {
@@ -79,8 +74,8 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
 
         moduleName = attributes.get(KEY_MODULE_NAME).toString();
         modulePath = attributes.get(KEY_MODULE_PATH).toString();
-        
-        hiddenDir = modulePath.substring(0, modulePath.lastIndexOf("/") ) + KEY_HIDDEN_DIR;
+
+        outputDirectory = modulePath.substring(0, modulePath.lastIndexOf("/") ) + OUTPUT_DIRECTORY_NAME;
         
         sourcesPaths = ((Map<String, String>) attributes.get(KEY_IN_MODELS)).values();
         targetsPaths = ((Map<String, String>) attributes.get(KEY_OUT_MODELS)).values();
@@ -95,13 +90,13 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
             // A.1 Ecore to KM3
             for (String mmpath : metamodelsPaths) {
                 EcoreTransformation ecoreTx = EcoreTransformationFactory.withEmftvm();
-                ecoreTx.transform(Paths.get(hiddenDir), mmpath);
+                ecoreTx.transform(outputDirectory, mmpath);
             }
 
             // A.2 Ecore Relaxation
             for (String mmpath : metamodelsPaths) {
             	Iterable<EPackage> packages = MetamodelHelpers.readEcore(mmpath);
-            	MetamodelHelpers.relax(packages, mmpath, hiddenDir);
+            	MetamodelHelpers.relax(packages, outputDirectory, mmpath);
             }
             
             // A.3 Relaxed Ecore to Relaxed KM3
@@ -109,7 +104,7 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
             // B. Transformation processing
             // B.1 ATLIDfier
 
-            System.out.println("ATL GT - Executed!!" + hiddenDir);
+            System.out.println("ATL GT - Executed!! " + outputDirectory);
         }
         catch (Exception e) {
             e.printStackTrace();
