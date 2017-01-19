@@ -17,6 +17,7 @@ import org.eclipse.m2m.atl.engine.emfvm.launch.EMFVMLauncher;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Path;
 import java.util.Collections;
 
 /**
@@ -27,7 +28,7 @@ import java.util.Collections;
 public class EcoreTransformationEmfvm implements EcoreTransformation {
 
     @Override
-    public void transform(File directory, String metamodelPath) throws ATLCoreException, IOException {
+    public void transform(Path directory, String metamodelPath) throws ATLCoreException, IOException {
         ModelFactory modelFactory = new EMFModelFactory();
 
         // Load metamodels
@@ -55,6 +56,6 @@ public class EcoreTransformationEmfvm implements EcoreTransformation {
         }
 
         IExtractor extractor = new EMFExtractor();
-        extractor.extract(outModel, URI.createFileURI(directory.getAbsolutePath() + metamodelPath.replace(".ecore", "-km3.ecore")).toString());
+        extractor.extract(outModel, directory.resolve(metamodelPath.replace(".ecore", "-km3.ecore")).toString());
     }
 }

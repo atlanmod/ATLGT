@@ -12,6 +12,7 @@ import org.eclipse.m2m.atl.atlgt.ecore2km3.EcoreTransformationFactory;
 import org.eclipse.m2m.atl.atlgt.util.MetamodelHelpers;
 
 import java.io.File;
+import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.Map;
 
@@ -88,15 +89,13 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
     @Override
     public void launch(ILaunchConfiguration configuration, String mode, ILaunch launch, IProgressMonitor monitor) throws CoreException {
         try {
-            File workspaceDirectory = ResourcesPlugin.getWorkspace().getRoot().getLocation().toFile();
-
             extractConfiguration(configuration);
 
             // A. Metamodel processing
             // A.1 Ecore to KM3
             for (String mmpath : metamodelsPaths) {
                 EcoreTransformation ecoreTx = EcoreTransformationFactory.withEmftvm();
-                ecoreTx.transform(workspaceDirectory, mmpath);
+                ecoreTx.transform(Paths.get(hiddenDir), mmpath);
             }
 
             // A.2 Ecore Relaxation
