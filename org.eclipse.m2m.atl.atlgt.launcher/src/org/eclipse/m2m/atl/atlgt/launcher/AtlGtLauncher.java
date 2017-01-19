@@ -6,11 +6,13 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.model.ILaunchConfigurationDelegate;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.m2m.atl.atlgt.ecore2km3.Ecore2KM3;
 import org.eclipse.m2m.atl.atlgt.metamodel.MetamodelHelpers;
 
 import java.io.File;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 public class AtlGtLauncher implements ILaunchConfigurationDelegate {
@@ -20,7 +22,9 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
     private static final String KEY_MODULE_PATH = "Module Path";
     private static final String KEY_IN_MODELS = "Input Models";
     private static final String KEY_OUT_MODELS = "Output Models";
-
+    
+    private static final String KEY_HIDDEN_DIR = "/hidden/";
+    
     /**
      * BX direction.
      */
@@ -50,6 +54,13 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
      * The path of the module.
      */
     private String modulePath;
+    
+    /**
+     * The hidden path of the BX project to store all generated files.
+     */
+    private String hiddenDir;
+    
+    
 
     @SuppressWarnings("unchecked")
     private void extractConfiguration(ILaunchConfiguration configuration) throws Exception {
@@ -58,7 +69,7 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
         isForward = Boolean.valueOf(attributes.get(AtlGtLauncherConstant.FORWARD).toString());
 
         metamodelsPaths = ((Map<String, String>) attributes.get(KEY_METAMODELS)).values();
-
+        
         // register metamodel in MMPaths
         for (String metamodel : metamodelsPaths) {
             MetamodelHelpers.registerPackage(metamodel);
@@ -67,7 +78,9 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
 
         moduleName = attributes.get(KEY_MODULE_NAME).toString();
         modulePath = attributes.get(KEY_MODULE_PATH).toString();
-
+        
+        hiddenDir = modulePath.substring(0, modulePath.lastIndexOf("/") ) + KEY_HIDDEN_DIR;
+        
         sourcesPaths = ((Map<String, String>) attributes.get(KEY_IN_MODELS)).values();
         targetsPaths = ((Map<String, String>) attributes.get(KEY_OUT_MODELS)).values();
     }
@@ -81,19 +94,24 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
 
             // A. Metamodel processing
             // A.1 Ecore2KM3
-            for (String mmpath : metamodelsPaths) {
-                Ecore2KM3 ecoreTx = new Ecore2KM3(workspaceDirectory.getAbsolutePath(), mmpath);
-                ecoreTx.transform();
-            }
+//            for (String mmpath : metamodelsPaths) {
+//                Ecore2KM3 ecoreTx = new Ecore2KM3(workspaceDirectory.getAbsolutePath(), mmpath);
+//                ecoreTx.transform();
+//            }
 
             // A.2 Ecore Relaxation
-
+            for (String mmpath : metamodelsPaths) {
+            	List<EPackage> p = MetamodelHelpers.readEcore(mmpath);
+            	MetamodelHelpers.relax(p, mmpath, hiddenDir);
+            }
+            
+            
             // A.3 RelaxedEcore2RelaxedKM3
 
             // B. Transformation processing
             // B.1 ATLIDfier
 
-            System.out.println("ATL GT - Executed!!" + sourcesPaths.toString() + metamodelsPaths.toString());
+            System.out.println("ATL GT - Executed!!" + hiddenDir);
         }
         catch (Exception e) {
             e.printStackTrace();
