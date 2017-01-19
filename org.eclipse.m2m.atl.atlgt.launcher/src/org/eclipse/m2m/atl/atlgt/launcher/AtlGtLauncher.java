@@ -7,8 +7,7 @@ import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.model.ILaunchConfigurationDelegate;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.m2m.atl.atlgt.ecore2km3.Ecore2KM3;
-import org.eclipse.m2m.atl.atlgt.metamodel.MetamodelHelpers;
+import org.eclipse.m2m.atl.atlgt.util.MetamodelHelpers;
 
 import java.io.File;
 import java.util.Collection;
@@ -70,7 +69,7 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
 
         metamodelsPaths = ((Map<String, String>) attributes.get(KEY_METAMODELS)).values();
         
-        // register metamodel in MMPaths
+        // register util in MMPaths
         for (String metamodel : metamodelsPaths) {
             MetamodelHelpers.registerPackage(metamodel);
             System.out.println("Registered metamodel: " + metamodel);
@@ -101,8 +100,8 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
 
             // A.2 Ecore Relaxation
             for (String mmpath : metamodelsPaths) {
-            	List<EPackage> p = MetamodelHelpers.readEcore(mmpath);
-            	MetamodelHelpers.relax(p, mmpath, hiddenDir);
+            	Iterable<EPackage> packages = MetamodelHelpers.readEcore(mmpath);
+            	MetamodelHelpers.relax(packages, mmpath, hiddenDir);
             }
             
             
