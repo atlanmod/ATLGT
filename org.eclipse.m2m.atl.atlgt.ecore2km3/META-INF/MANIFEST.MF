@@ -12,12 +12,15 @@ Require-Bundle: org.eclipse.swt,
  org.eclipse.ui,
  org.eclipse.osgi,
  org.eclipse.equinox.common,
- org.eclipse.m2m.atl.engine.emfvm
+ org.eclipse.m2m.atl.engine.emfvm,
+ org.eclipse.m2m.atl.emftvm
 Bundle-Vendor: Atlanmod-Hosei
 Import-Package: org.eclipse.core.runtime,
  org.eclipse.ui,
  org.eclipse.jface,
  org.osgi.framework,
+ org.eclipse.emf.common,
+  org.eclipse.emf.ecore,
  org.eclipse.m2m.atl.core,
  org.eclipse.m2m.atl.engine.emfvm,
- org.eclipse.emf.common
+ org.eclipse.m2m.atl.emftvm

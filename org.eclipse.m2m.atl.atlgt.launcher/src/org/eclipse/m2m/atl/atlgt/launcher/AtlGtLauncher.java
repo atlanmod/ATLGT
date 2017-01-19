@@ -7,11 +7,12 @@ import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.model.ILaunchConfigurationDelegate;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.m2m.atl.atlgt.ecore2km3.EcoreTransformation;
+import org.eclipse.m2m.atl.atlgt.ecore2km3.EcoreTransformationFactory;
 import org.eclipse.m2m.atl.atlgt.util.MetamodelHelpers;
 
 import java.io.File;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
 public class AtlGtLauncher implements ILaunchConfigurationDelegate {
@@ -92,11 +93,11 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
             extractConfiguration(configuration);
 
             // A. Metamodel processing
-            // A.1 Ecore2KM3
-//            for (String mmpath : metamodelsPaths) {
-//                Ecore2KM3 ecoreTx = new Ecore2KM3(workspaceDirectory.getAbsolutePath(), mmpath);
-//                ecoreTx.transform();
-//            }
+            // A.1 Ecore to KM3
+            for (String mmpath : metamodelsPaths) {
+                EcoreTransformation ecoreTx = EcoreTransformationFactory.withEmftvm();
+                ecoreTx.transform(workspaceDirectory, mmpath);
+            }
 
             // A.2 Ecore Relaxation
             for (String mmpath : metamodelsPaths) {
@@ -104,8 +105,7 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
             	MetamodelHelpers.relax(packages, mmpath, hiddenDir);
             }
             
-            
-            // A.3 RelaxedEcore2RelaxedKM3
+            // A.3 Relaxed Ecore to Relaxed KM3
 
             // B. Transformation processing
             // B.1 ATLIDfier
