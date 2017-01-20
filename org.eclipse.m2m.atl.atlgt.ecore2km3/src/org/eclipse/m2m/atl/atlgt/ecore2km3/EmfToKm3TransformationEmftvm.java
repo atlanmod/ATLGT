@@ -22,7 +22,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
 
-public class TransformationEmftvm implements Transformation {
+public class EmfToKm3TransformationEmftvm implements EmfToKm3Transformation {
 
     public static final String BUNDLE_SYMBOLIC_NAME = "org.eclipse.m2m.atl.atlgt.ecore2km3";
 

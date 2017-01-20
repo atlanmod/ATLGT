@@ -6,7 +6,7 @@ import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.model.ILaunchConfigurationDelegate;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.m2m.atl.atlgt.ecore2km3.TransformationFactory;
+import org.eclipse.m2m.atl.atlgt.ecore2km3.EmfToKm3TransformationFactory;
 import org.eclipse.m2m.atl.atlgt.util.MetamodelHelpers;
 import org.eclipse.m2m.atl.core.ATLCoreException;
 
@@ -43,7 +43,7 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
     private void processMetamodels() throws IOException, ATLCoreException {
         // A.1 Ecore to KM3
         for (String metamodel : context.getMetamodels()) {
-            TransformationFactory.withEmftvm().transform(context.getPath(), metamodel);
+            EmfToKm3TransformationFactory.withEmftvm().transform(context.getPath(), metamodel);
         }
 
         // A.2 Ecore Relaxation

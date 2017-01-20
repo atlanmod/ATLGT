@@ -18,10 +18,10 @@ import java.io.InputStream;
 import java.util.Collections;
 
 /**
- * @deprecated use {@link TransformationEmftvm} instead.
+ * @deprecated use {@link EmfToKm3TransformationEmftvm} instead.
  */
 @Deprecated
-public class TransformationEmfvm implements Transformation {
+public class EmfToKm3TransformationEmfvm implements EmfToKm3Transformation {
 
     @Override
     public void transform(String outputDirectory, String metamodelPath) throws ATLCoreException, IOException {
@@ -34,7 +34,7 @@ public class TransformationEmfvm implements Transformation {
         IInjector injector = new EMFInjector();
 
         IReferenceModel km3Metamodel = modelFactory.newReferenceModel();
-        try (InputStream stream = TransformationEmfvm.class.getResourceAsStream("/KM3.ecore")) {
+        try (InputStream stream = EmfToKm3TransformationEmfvm.class.getResourceAsStream("/KM3.ecore")) {
             injector.inject(km3Metamodel, stream, Collections.emptyMap());
         }
 
@@ -51,7 +51,7 @@ public class TransformationEmfvm implements Transformation {
 
         // Run transformation
 
-        try (InputStream stream = TransformationEmfvm.class.getResourceAsStream("/EMF2KM3.asm")) {
+        try (InputStream stream = EmfToKm3TransformationEmfvm.class.getResourceAsStream("/EMF2KM3.asm")) {
             launcher.launch(ILauncher.RUN_MODE, new NullProgressMonitor(), Collections.emptyMap(), stream);
         }
 
