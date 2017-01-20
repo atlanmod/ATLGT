@@ -58,7 +58,12 @@ public class MetamodelHelpers {
     }
 
     public static void relax(Iterable<EPackage> packages, String outputDirectory, String metamodelPath) throws IOException {
-        String outputFile = outputDirectory + new File(metamodelPath).getName() + ".relax";
+    	String outputName = new File(metamodelPath).getName();
+    	if(outputName.lastIndexOf(".") != -1){
+    		outputName = outputName.substring(0, outputName.lastIndexOf("."));
+    	}
+    	
+        String outputFile = outputDirectory + outputName + "-relaxed.ecore";
 
         Resource resource = createResourceFrom(URI.createURI(outputFile));
 
