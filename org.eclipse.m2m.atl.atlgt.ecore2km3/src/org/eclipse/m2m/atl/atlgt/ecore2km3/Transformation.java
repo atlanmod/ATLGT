@@ -4,7 +4,8 @@ import org.eclipse.m2m.atl.core.ATLCoreException;
 
 import java.io.IOException;
 
-public interface EcoreTransformation {
+@FunctionalInterface
+public interface Transformation {
 
     void transform(String outputDirectory, String metamodelPath) throws ATLCoreException, IOException;
 }

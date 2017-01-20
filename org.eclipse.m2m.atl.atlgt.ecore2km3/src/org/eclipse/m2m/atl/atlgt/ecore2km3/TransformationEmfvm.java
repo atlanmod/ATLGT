@@ -18,27 +18,28 @@ import java.io.InputStream;
 import java.util.Collections;
 
 /**
- * ???
- * <p>
- * For now, it does not work; use {@link EcoreTransformationEmftvm} instead.
+ * @deprecated use {@link TransformationEmftvm} instead.
  */
-public class EcoreTransformationEmfvm implements EcoreTransformation {
+@Deprecated
+public class TransformationEmfvm implements Transformation {
 
     @Override
     public void transform(String outputDirectory, String metamodelPath) throws ATLCoreException, IOException {
         ModelFactory modelFactory = new EMFModelFactory();
 
         // Load metamodels
+
         IReferenceModel ecoreMetamodel = modelFactory.getMetametamodel();
 
         IInjector injector = new EMFInjector();
 
         IReferenceModel km3Metamodel = modelFactory.newReferenceModel();
-        try (InputStream stream = EcoreTransformationEmfvm.class.getResourceAsStream("/KM3.ecore")) {
+        try (InputStream stream = TransformationEmfvm.class.getResourceAsStream("/KM3.ecore")) {
             injector.inject(km3Metamodel, stream, Collections.emptyMap());
         }
 
-        // Load models and run transformation
+        // Load models
+
         IModel inModel = modelFactory.newModel(ecoreMetamodel);
         injector.inject(ecoreMetamodel, metamodelPath);
         IModel outModel = modelFactory.newModel(km3Metamodel);
@@ -48,9 +49,13 @@ public class EcoreTransformationEmfvm implements EcoreTransformation {
         launcher.addInModel(inModel, "IN", "MOF");
         launcher.addOutModel(outModel, "OUT", "KM3");
 
-        try (InputStream stream = EcoreTransformationEmfvm.class.getResourceAsStream("/EMF2KM3.asm")) {
+        // Run transformation
+
+        try (InputStream stream = TransformationEmfvm.class.getResourceAsStream("/EMF2KM3.asm")) {
             launcher.launch(ILauncher.RUN_MODE, new NullProgressMonitor(), Collections.emptyMap(), stream);
         }
+
+        // Extract
 
         IExtractor extractor = new EMFExtractor();
         extractor.extract(outModel, outputDirectory + metamodelPath.replace(".ecore", "-km3.ecore"));
