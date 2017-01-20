@@ -7,5 +7,5 @@ import java.io.IOException;
 @FunctionalInterface
 public interface ATLIdfierTransformation {
 
-    void transform(String outputDirectory, String metamodelPath) throws ATLCoreException, IOException;
+    void transform(String outputDirectory, String atlPath) throws ATLCoreException, IOException;
 }

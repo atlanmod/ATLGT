@@ -29,50 +29,51 @@ public class ATLIdfierTransformationEmftvm implements ATLIdfierTransformation {
     private static final String MODULE_NAME = "ATLIDfier";
 
     @Override
-    public void transform(String outputDirectory, String metamodelPath) throws ATLCoreException, IOException {
-        ExecEnv env = EmftvmFactory.eINSTANCE.createExecEnv();
-
-        // TODO Find a dynamic way to have this URI
-        String resourcesPath = "platform:/plugin/" + BUNDLE_SYMBOLIC_NAME + "/resources/";
-
-        ResourceSet resourceSet = new ResourceSetImpl();
-        resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("ecore", new EcoreResourceFactoryImpl());
-        resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xmi", new XMIResourceFactoryImpl());
-        resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("emftvm", new EMFTVMResourceFactoryImpl());
-
-        // Load metamodels
-
-
-        final Metamodel atlMetamodel = EmftvmFactory.eINSTANCE.createMetamodel();
-        atlMetamodel.setResource(resourceSet.getResource(URI.createURI(resourcesPath + "/ATL.ecore"), true));
-        env.registerMetaModel("ATL", atlMetamodel);
-
-        // Load models
-
-        Model inModel = EmftvmFactory.eINSTANCE.createModel();
-        inModel.setResource(resourceSet.getResource(URI.createURI(metamodelPath, true), true));
-        env.registerInputModel("IN", inModel);
-        
-        Path outputModel = Paths.get(outputDirectory).resolve(new File(metamodelPath).getName().replace(".ecore", "-km3.ecore"));
-
-        Model outModel = EmftvmFactory.eINSTANCE.createModel();
-        outModel.setResource(resourceSet.createResource(URI.createFileURI(outputModel.toString())));
-        env.registerOutputModel("OUT", outModel);
-
-        // Run transformation
-
-        ModuleResolver moduleResolver = new DefaultModuleResolver(resourcesPath, resourceSet);
-        TimingData td = new TimingData();
-        env.loadModule(moduleResolver, MODULE_NAME);
-        td.finishLoading();
-        env.run(td);
-        td.finish();
-
-        try {
-            outModel.getResource().save(Collections.emptyMap());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void transform(String outputDirectory, String modulePath) throws ATLCoreException, IOException {
+    	
+//        ExecEnv env = EmftvmFactory.eINSTANCE.createExecEnv();
+//
+//        // TODO Find a dynamic way to have this URI
+//        String resourcesPath = "platform:/plugin/" + BUNDLE_SYMBOLIC_NAME + "/resources/";
+//
+//        ResourceSet resourceSet = new ResourceSetImpl();
+//        resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("ecore", new EcoreResourceFactoryImpl());
+//        resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xmi", new XMIResourceFactoryImpl());
+//        resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("emftvm", new EMFTVMResourceFactoryImpl());
+//
+//        // Load metamodels
+//
+//
+//        final Metamodel atlMetamodel = EmftvmFactory.eINSTANCE.createMetamodel();
+//        atlMetamodel.setResource(resourceSet.getResource(URI.createURI(resourcesPath + "/ATL.ecore"), true));
+//        env.registerMetaModel("ATL", atlMetamodel);
+//
+//        // Load models
+//
+//        Model inModel = EmftvmFactory.eINSTANCE.createModel();
+//        inModel.setResource(resourceSet.getResource(URI.createURI(metamodelPath, true), true));
+//        env.registerInputModel("IN", inModel);
+//        
+//        Path outputModel = Paths.get(outputDirectory).resolve(new File(metamodelPath).getName().replace(".ecore", "-km3.ecore"));
+//
+//        Model outModel = EmftvmFactory.eINSTANCE.createModel();
+//        outModel.setResource(resourceSet.createResource(URI.createFileURI(outputModel.toString())));
+//        env.registerOutputModel("OUT", outModel);
+//
+//        // Run transformation
+//
+//        ModuleResolver moduleResolver = new DefaultModuleResolver(resourcesPath, resourceSet);
+//        TimingData td = new TimingData();
+//        env.loadModule(moduleResolver, MODULE_NAME);
+//        td.finishLoading();
+//        env.run(td);
+//        td.finish();
+//
+//        try {
+//            outModel.getResource().save(Collections.emptyMap());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
         // Extract
     }

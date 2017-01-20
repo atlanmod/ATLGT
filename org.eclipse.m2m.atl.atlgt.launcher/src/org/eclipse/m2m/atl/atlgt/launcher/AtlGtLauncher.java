@@ -11,6 +11,11 @@ import org.eclipse.m2m.atl.atlgt.util.MetamodelHelpers;
 import org.eclipse.m2m.atl.core.ATLCoreException;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+
 
 public class AtlGtLauncher implements ILaunchConfigurationDelegate {
 
@@ -57,8 +62,17 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
 
     /**
      * Transformation processing. (Step B)
+     * @throws IOException 
+     * @throws ATLCoreException 
      */
-    private void processTransformation() {
+    private void processTransformation() throws ATLCoreException, IOException {
         // B.1 ATLIDfier
+    	//create copy of module file
+    	Path src = Paths.get(context.getModulePath());
+        Path dst = Paths.get("/path/to/dest/dir");
+        Files.copy(src, dst, StandardCopyOption.REPLACE_EXISTING);
+    	
+    	//run inplace transformation
+    	//EmfToKm3TransformationFactory.withEmftvm().transform(context.getPath(), );
     }
 }

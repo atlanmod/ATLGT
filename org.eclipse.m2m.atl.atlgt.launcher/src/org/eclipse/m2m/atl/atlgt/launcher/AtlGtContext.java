@@ -14,7 +14,9 @@ public class AtlGtContext {
     private static final String OUTPUT_DIRECTORY_NAME = "/hidden/";
 
     private final String path;
-
+    
+    private final String modulePath;
+    
     private final Iterable<String> metamodels;
     private final Iterable<String> inModels;
     private final Iterable<String> inOutModels;
@@ -23,9 +25,10 @@ public class AtlGtContext {
     private final boolean forward;
     private final boolean backward;
 
-    private AtlGtContext(String path, Iterable<String> metamodels, Iterable<String> inModels, Iterable<String> inOutModels, Iterable<String> outModels, boolean forward, boolean backward) {
+    private AtlGtContext(String path, String modulePath, Iterable<String> metamodels, Iterable<String> inModels, Iterable<String> inOutModels, Iterable<String> outModels, boolean forward, boolean backward) {
         this.path = path;
-
+        this.modulePath = modulePath;
+        
         this.metamodels = metamodels;
         this.inModels = inModels;
         this.inOutModels = inOutModels;
@@ -47,13 +50,17 @@ public class AtlGtContext {
         boolean forward = launchConfiguration.getAttribute(Keys.FORWARD, false);
         boolean backward = launchConfiguration.getAttribute(Keys.BACKWARD, false);
 
-        return new AtlGtContext(path, metamodels, inModels, inOutModels, outModels, forward, backward);
+        return new AtlGtContext(path, modulePath, metamodels, inModels, inOutModels, outModels, forward, backward);
     }
 
     public String getPath() {
         return path;
     }
-
+    
+    public String getModulePath() {
+        return modulePath;
+    }
+    
     public Iterable<String> getMetamodels() {
         return metamodels;
     }
