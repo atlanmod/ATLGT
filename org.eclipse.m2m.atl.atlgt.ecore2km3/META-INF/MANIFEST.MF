@@ -12,6 +12,7 @@ Require-Bundle: org.eclipse.swt,
  org.eclipse.ui,
  org.eclipse.osgi,
  org.eclipse.equinox.common,
+ org.eclipse.m2m.atl.engine.vm,
  org.eclipse.m2m.atl.engine.emfvm,
  org.eclipse.m2m.atl.emftvm
 Bundle-Vendor: Atlanmod-Hosei
@@ -22,5 +23,7 @@ Import-Package: org.eclipse.core.runtime,
  org.eclipse.emf.common,
   org.eclipse.emf.ecore,
  org.eclipse.m2m.atl.core,
+ org.eclipse.m2m.atl.engine.vm,
  org.eclipse.m2m.atl.engine.emfvm,
+ org.eclipse.m2m.atl.drivers.emf4atl,
  org.eclipse.m2m.atl.emftvm

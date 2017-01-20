@@ -4,5 +4,7 @@
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="resources"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.gmt.am3.dsls.km3_0.2.0.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.gmt.tcs.injector_0.0.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
