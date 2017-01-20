@@ -9,7 +9,9 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore,
  org.eclipse.emf.ecore.xmi,
  org.eclipse.m2m.atl.emftvm,
- org.eclipse.m2m.atl.core.emf
+ org.eclipse.m2m.atl.core.emf,
+ org.eclipse.m2m.atl.engine.emfvm.launch,
+ org.eclipse.m2m.atl.engine;bundle-version="3.7.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Import-Package: org.osgi.framework,
@@ -17,3 +19,4 @@ Import-Package: org.osgi.framework,
  org.eclipse.emf.ecore,
  org.eclipse.m2m.atl.core,
  org.eclipse.m2m.atl.emftvm
+Export-Package: org.eclipse.m2m.atl.atlgt.atlidfier
