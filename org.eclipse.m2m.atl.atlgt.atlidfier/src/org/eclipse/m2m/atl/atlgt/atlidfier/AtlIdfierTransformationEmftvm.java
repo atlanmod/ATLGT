@@ -31,9 +31,6 @@ public class AtlIdfierTransformationEmftvm implements AtlIdfierTransformation {
 
     @Override
     public String transform(String outputDirectory, String atlPath) throws ATLCoreException, IOException {
-        String outputEcore = Paths.get(outputDirectory).resolve(new File(atlPath).getName().replace(".ecore", "-km3.ecore")).toString();
-        System.out.println("Transformation of '" + atlPath + "' to " + outputEcore);
-
         ExecEnv env = EmftvmFactory.eINSTANCE.createExecEnv();
 
         // TODO Find a dynamic way to have this URI
@@ -59,34 +56,34 @@ public class AtlIdfierTransformationEmftvm implements AtlIdfierTransformation {
 			e.printStackTrace();
 		}
         
-        Model inModel = EmftvmFactory.eINSTANCE.createModel();
-        inModel.setResource(resourceSet.getResource(URI.createURI(atlModelPath, true), true));
-        env.registerInputModel("IN", inModel);
+        Model inOutModel = EmftvmFactory.eINSTANCE.createModel();
+        inOutModel.setResource(resourceSet.getResource(URI.createURI(atlModelPath, true), true));
+        env.registerInOutModel("IN", inOutModel);
 
 
         // Run transformation
 
-//        ModuleResolver moduleResolver = new DefaultModuleResolver(resourcesPath, resourceSet);
-//        TimingData td = new TimingData();
-//        env.loadModule(moduleResolver, MODULE_NAME);
-//        td.finishLoading();
-//        env.run(td);
-//        td.finish();
-//
-//        try {
-//        	inModel.getResource().save(Collections.emptyMap());
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        // Extract
-//
-//        String outputKm3 = Paths.get(outputDirectory).resolve(new File(atlPath).getName().replace(".atl", "-ids.atl")).toString();
-//        System.out.println("Extraction of '" + outputEcore + "' to '" + outputKm3 + "'");
-//
-//        // TODO Complete the extraction
+        ModuleResolver moduleResolver = new DefaultModuleResolver(resourcesPath, resourceSet);
+        TimingData td = new TimingData();
+        env.loadModule(moduleResolver, MODULE_NAME);
+        td.finishLoading();
+        env.run(td);
+        td.finish();
+        System.out.println(td);
+        
+        try {
+        	inOutModel.getResource().save(Collections.emptyMap());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        return outputEcore;
+        // Extract
+
+        String outputKm3 = Paths.get(outputDirectory).resolve(new File(atlPath).getName().replace(".atl", "-ids.atl")).toString();
+
+        // TODO Complete the extraction
+
+        return atlModelPath;
 
         //throw new UnsupportedOperationException("Not implemented yet.");
     }
