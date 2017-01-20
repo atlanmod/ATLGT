@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore">
-  <ecore:EPackage name="KM3" nsURI="http://example.org/km3" nsPrefix="km3">
+  <ecore:EPackage name="km3" nsURI="http://example.org/km3" nsPrefix="km3">
     <eClassifiers xsi:type="ecore:EClass" name="LocatedElement" abstract="true">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="location" ordered="false"
           lowerBound="1" eType="#/1/String"/>
