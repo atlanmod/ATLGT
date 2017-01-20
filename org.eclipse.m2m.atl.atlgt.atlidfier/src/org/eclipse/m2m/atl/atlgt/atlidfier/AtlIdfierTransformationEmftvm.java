@@ -1,8 +1,14 @@
 package org.eclipse.m2m.atl.atlgt.atlidfier;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.BasicExtendedMetaData;
+import org.eclipse.emf.ecore.util.ExtendedMetaData;
+import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.m2m.atl.atlgt.atlidfier.helper.ATLHelpers;
@@ -45,7 +51,8 @@ public class AtlIdfierTransformationEmftvm implements AtlIdfierTransformation {
         final Metamodel atlMetamodel = EmftvmFactory.eINSTANCE.createMetamodel();
         atlMetamodel.setResource(resourceSet.getResource(URI.createURI(resourcesPath + "/" + ATL_METAMODEL), true));
         env.registerMetaModel("ATL", atlMetamodel);
-
+        lazyMetamodelRegistration(resourcesPath+"ATL.ecore");
+        
         // Load models
         // turn atl file into model
         String atlModelPath = atlPath+".xmi";
@@ -59,7 +66,7 @@ public class AtlIdfierTransformationEmftvm implements AtlIdfierTransformation {
         Model inOutModel = EmftvmFactory.eINSTANCE.createModel();
         inOutModel.setResource(resourceSet.getResource(URI.createURI(atlModelPath, true), true));
         env.registerInOutModel("IN", inOutModel);
-
+        
 
         // Run transformation
 
@@ -87,4 +94,26 @@ public class AtlIdfierTransformationEmftvm implements AtlIdfierTransformation {
 
         //throw new UnsupportedOperationException("Not implemented yet.");
     }
+    
+	private String lazyMetamodelRegistration(String metamodelPath){
+		
+		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("ecore", new EcoreResourceFactoryImpl());
+   	
+	    ResourceSet rs = new ResourceSetImpl();
+	    // Enables extended meta-data, weird we have to do this but well...
+	    final ExtendedMetaData extendedMetaData = new BasicExtendedMetaData(EPackage.Registry.INSTANCE);
+	    rs.getLoadOptions().put(XMLResource.OPTION_EXTENDED_META_DATA, extendedMetaData);
+	
+	    Resource r = rs.getResource(URI.createURI(metamodelPath), true);
+	    for(EObject eObject : r.getContents()){
+	    	// A meta-model might have multiple packages we assume the main package is the first one listed
+		    if (eObject instanceof EPackage) {
+		        EPackage p = (EPackage)eObject;
+		        System.out.println(p.getNsURI());
+		        EPackage.Registry.INSTANCE.put(p.getNsURI(), p);
+		    }
+	    }
+	    
+	    return null;
+	}
 }
