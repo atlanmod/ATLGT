@@ -1,7 +1,6 @@
 package org.eclipse.m2m.atl.atlgt.atlidfier;
 
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
@@ -18,7 +17,6 @@ import org.eclipse.m2m.atl.emftvm.util.TimingData;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
 
