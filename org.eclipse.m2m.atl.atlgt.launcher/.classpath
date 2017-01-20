@@ -4,5 +4,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/org.eclipse.m2m.atl.atlgt.ecore2km3"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.eclipse.m2m.atl.atlgt.atlidfier"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

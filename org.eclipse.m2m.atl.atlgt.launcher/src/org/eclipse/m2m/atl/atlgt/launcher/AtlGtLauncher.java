@@ -84,7 +84,6 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
         URI targetUrl = URI.createURI("platform:/resource" + context.getPath() + context.getModulePath().substring(context.getModulePath().lastIndexOf('/') + 1));
         copy(sourceUrl, targetUrl);
 
-        
         // Run in-place transformation
         AtlIdfierTransformationFactory.withEmftvm().transform(context.getPath(), targetUrl.toString());
     }
