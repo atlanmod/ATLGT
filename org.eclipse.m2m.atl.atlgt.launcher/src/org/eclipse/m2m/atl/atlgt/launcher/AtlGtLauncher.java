@@ -73,12 +73,13 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
      */
     private void processTransformation() throws ATLCoreException, IOException {
         // B.1 ATLIDfier
-        //create copy of module file
-        Path src = Paths.get(context.getModulePath());
-        Path dst = Paths.get("/path/to/dest/dir");
+    	//create a copy of the atl file
+ 	
+    	Path src = Paths.get("./"+context.getModulePath());
+    	Path dst = Paths.get(context.getPath().replace("platform:/resource/", "./")+"/");
         Files.copy(src, dst, StandardCopyOption.REPLACE_EXISTING);
-
-        //run inplace transformation
-        //EmfToKm3TransformationFactory.withEmftvm().transform(context.getPath(), );
+    	
+    	//run inplace transformation
+    	//EmfToKm3TransformationFactory.withEmftvm().transform(context.getPath(), );
     }
 }
