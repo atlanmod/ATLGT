@@ -9,6 +9,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
+import org.eclipse.m2m.atl.atlgt.atlidfier.AtlIdfierTransformationFactory;
 import org.eclipse.m2m.atl.atlgt.ecore2km3.EmfToKm3TransformationFactory;
 import org.eclipse.m2m.atl.atlgt.util.MetamodelHelpers;
 import org.eclipse.m2m.atl.core.ATLCoreException;
@@ -83,8 +84,9 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
         URI targetUrl = URI.createURI("platform:/resource" + context.getPath() + context.getModulePath().substring(context.getModulePath().lastIndexOf('/') + 1));
         copy(sourceUrl, targetUrl);
 
+        
         // Run in-place transformation
-        //EmfToKm3TransformationFactory.withEmftvm().transform(context.getPath(), );
+        AtlIdfierTransformationFactory.withEmftvm().transform(context.getPath(), targetUrl.toString());
     }
 
     private static void copy(URI source, URI target) throws IOException {
