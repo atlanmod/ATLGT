@@ -1,0 +1,30 @@
+<!-- How to configure this ant script:
+	Run as->Ant Build...
+		Set:
+			- Run in same JRE
+-->
+<project name="ATLIDfier" default="transform">
+    <property name="inputfile" value="../SimpleFamilies2Persons/SimpleFamilies2Persons" />
+    <property name="atl.launcher" value="EMF-specific VM" />
+
+    <target name="transform">
+        <echo message="Transforming file ${inputfile}.atl" />
+
+        <atl.loadModel modelHandler="EMF" name="ATL" metamodel="MOF" path="ATL.ecore" />
+        <atl.loadModel name="input" metamodel="ATL" path="${inputfile}.atl">
+            <injector name="ATL" />
+        </atl.loadModel>
+
+        <atl.saveModel model="input" path="${inputfile}.xmi" />
+
+        <atl.launch path="ATLIDfier.atl" refining="true" mode="">
+            <inoutmodel name="IN" model="input" />
+        </atl.launch>
+
+        <atl.saveModel model="input" path="${inputfile}.xmi-ids.xmi" />
+
+        <atl.saveModel model="input" path="${inputfile}.xmi-ids.atl">
+            <extractor name="ATL" />
+        </atl.saveModel>
+    </target>
+</project>
