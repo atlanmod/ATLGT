@@ -24,7 +24,13 @@ import java.util.Collections;
 public class EmfToKm3TransformationEmfvm implements EmfToKm3Transformation {
 
     @Override
-    public void transform(String outputDirectory, String metamodelPath) throws ATLCoreException, IOException {
+    public String transform(String outputDirectory, String metamodel) {
+        if (!metamodel.endsWith(".ecore")) {
+            throw new IllegalArgumentException("Only *.ecore files can be transformed.");
+        }
+
+        String outputFile = outputDirectory + metamodel.replace(".ecore", "-km3.ecore");
+
         ModelFactory modelFactory = new EMFModelFactory();
 
         // Load metamodels
@@ -33,31 +39,39 @@ public class EmfToKm3TransformationEmfvm implements EmfToKm3Transformation {
 
         IInjector injector = new EMFInjector();
 
-        IReferenceModel km3Metamodel = modelFactory.newReferenceModel();
-        try (InputStream stream = EmfToKm3TransformationEmfvm.class.getResourceAsStream("/KM3.ecore")) {
-            injector.inject(km3Metamodel, stream, Collections.emptyMap());
+        try {
+            IReferenceModel km3Metamodel = modelFactory.newReferenceModel();
+            try (InputStream stream = EmfToKm3TransformationEmfvm.class.getResourceAsStream("/KM3.ecore")) {
+                injector.inject(km3Metamodel, stream, Collections.emptyMap());
+            }
+
+            // Load models
+
+            IModel inModel = modelFactory.newModel(ecoreMetamodel);
+            injector.inject(ecoreMetamodel, metamodel);
+            IModel outModel = modelFactory.newModel(km3Metamodel);
+
+            ILauncher launcher = new EMFVMLauncher();
+            launcher.initialize(Collections.emptyMap());
+            launcher.addInModel(inModel, "IN", "MOF");
+            launcher.addOutModel(outModel, "OUT", "KM3");
+
+            // Run transformation
+
+            try (InputStream stream = EmfToKm3TransformationEmfvm.class.getResourceAsStream("/EMF2KM3.asm")) {
+                launcher.launch(ILauncher.RUN_MODE, new NullProgressMonitor(), Collections.emptyMap(), stream);
+            }
+
+            // Extract
+
+            IExtractor extractor = new EMFExtractor();
+            extractor.extract(outModel, outputFile);
+
+            return outputFile;
         }
-
-        // Load models
-
-        IModel inModel = modelFactory.newModel(ecoreMetamodel);
-        injector.inject(ecoreMetamodel, metamodelPath);
-        IModel outModel = modelFactory.newModel(km3Metamodel);
-
-        ILauncher launcher = new EMFVMLauncher();
-        launcher.initialize(Collections.emptyMap());
-        launcher.addInModel(inModel, "IN", "MOF");
-        launcher.addOutModel(outModel, "OUT", "KM3");
-
-        // Run transformation
-
-        try (InputStream stream = EmfToKm3TransformationEmfvm.class.getResourceAsStream("/EMF2KM3.asm")) {
-            launcher.launch(ILauncher.RUN_MODE, new NullProgressMonitor(), Collections.emptyMap(), stream);
+        catch (IOException | ATLCoreException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-
-        // Extract
-
-        IExtractor extractor = new EMFExtractor();
-        extractor.extract(outModel, outputDirectory + metamodelPath.replace(".ecore", "-km3.ecore"));
     }
 }

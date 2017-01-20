@@ -13,3 +13,5 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.m2m.atl.engine.emfvm.launch
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
+Import-Package: org.osgi.framework,
+ org.eclipse.m2m.atl.core

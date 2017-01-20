@@ -22,15 +22,19 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
 
-public class ATLIdfierTransformationEmftvm implements ATLIdfierTransformation {
+public class AtlIdfierTransformationEmftvm implements AtlIdfierTransformation {
 
     public static final String BUNDLE_SYMBOLIC_NAME = "org.eclipse.m2m.atl.atlgt.atlidfier";
+
+    private static final String ATL_METAMODEL = "KM3.ecore";
 
     private static final String MODULE_NAME = "ATLIDfier";
 
     @Override
-    public void transform(String outputDirectory, String modulePath) throws ATLCoreException, IOException {
-    	
+    public String transform(String outputDirectory, String module) throws ATLCoreException, IOException {
+//        String outputEcore = Paths.get(outputDirectory).resolve(new File(metamodel).getName().replace(".ecore", "-km3.ecore")).toString();
+//        System.out.println("Transformation of '" + metamodel + "' to " + outputEcore);
+//
 //        ExecEnv env = EmftvmFactory.eINSTANCE.createExecEnv();
 //
 //        // TODO Find a dynamic way to have this URI
@@ -45,19 +49,17 @@ public class ATLIdfierTransformationEmftvm implements ATLIdfierTransformation {
 //
 //
 //        final Metamodel atlMetamodel = EmftvmFactory.eINSTANCE.createMetamodel();
-//        atlMetamodel.setResource(resourceSet.getResource(URI.createURI(resourcesPath + "/ATL.ecore"), true));
-//        env.registerMetaModel("ATL", atlMetamodel);
+//        atlMetamodel.setResource(resourceSet.getResource(URI.createURI(resourcesPath + "/" + ATL_METAMODEL), true));
+//        env.registerMetaModel(atlMetamodel);
 //
 //        // Load models
 //
 //        Model inModel = EmftvmFactory.eINSTANCE.createModel();
-//        inModel.setResource(resourceSet.getResource(URI.createURI(metamodelPath, true), true));
+//        inModel.setResource(resourceSet.getResource(URI.createURI(metamodel, true), true));
 //        env.registerInputModel("IN", inModel);
-//        
-//        Path outputModel = Paths.get(outputDirectory).resolve(new File(metamodelPath).getName().replace(".ecore", "-km3.ecore"));
 //
 //        Model outModel = EmftvmFactory.eINSTANCE.createModel();
-//        outModel.setResource(resourceSet.createResource(URI.createFileURI(outputModel.toString())));
+//        outModel.setResource(resourceSet.createResource(URI.createFileURI(outputEcore)));
 //        env.registerOutputModel("OUT", outModel);
 //
 //        // Run transformation
@@ -74,7 +76,16 @@ public class ATLIdfierTransformationEmftvm implements ATLIdfierTransformation {
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
+//
+//        // Extract
+//
+//        String outputKm3 = Paths.get(outputDirectory).resolve(new File(metamodel).getName().replace(".ecore", ".km3")).toString();
+//        System.out.println("Extraction of '" + outputEcore + "' to '" + outputKm3 + "'");
+//
+//        // TODO Complete the extraction
+//
+//        return outputEcore;
 
-        // Extract
+        throw new UnsupportedOperationException("Not implemented yet.");
     }
 }

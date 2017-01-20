@@ -2,6 +2,7 @@ package org.eclipse.m2m.atl.atlgt.util;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -14,9 +15,8 @@ import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import static java.util.Objects.isNull;
@@ -25,8 +25,13 @@ public class MetamodelHelpers {
 
     private static final String ECORE = "ecore";
 
-    public static void registerPackage(String metamodelPath) {
-        Resource resource = getResourceFrom(URI.createURI(metamodelPath));
+    /**
+     * Registers a metamodel to the {@link EPackage.Registry}.
+     *
+     * @param metamodel the metamodel to register
+     */
+    public static void registerPackage(String metamodel) {
+        Resource resource = getResourceFrom(URI.createURI(metamodel));
 
         EObject eObject = resource.getContents().get(0);
         if (EPackage.class.isInstance(eObject)) {
@@ -41,28 +46,49 @@ public class MetamodelHelpers {
             EPackage.Registry.INSTANCE.put(nsURI, ePackage);
         }
 
-        System.out.println("Registered metamodel: " + metamodelPath);
+        System.out.println("Registered metamodel: " + metamodel);
     }
 
-    public static Iterable<EPackage> readEcore(String metamodelPath) {
-        List<EPackage> packages = new ArrayList<>();
+    /**
+     * ???
+     *
+     * @param metamodel the metamodel to read
+     *
+     * @return ???
+     */
+    public static Iterable<EPackage> readEcore(String metamodel) {
+        Resource resource = getResourceFrom(URI.createURI(metamodel));
 
-        Resource resource = getResourceFrom(URI.createURI(metamodelPath));
-
-        resource.getContents().stream()
+        Iterable<EPackage> packages = resource.getContents().stream()
                 .filter(EPackage.class::isInstance)
                 .map(eObject -> (EPackage) eObject)
-                .forEach(packages::add);
+                .collect(Collectors.toList());
+
+        System.out.println("EPackages in '" + metamodel + "': " +
+                StreamSupport.stream(packages.spliterator(), false)
+                        .map(ENamedElement::getName)
+                        .collect(Collectors.joining(", ", "[", "]")));
 
         return packages;
     }
 
-    public static void relax(Iterable<EPackage> packages, String outputDirectory, String metamodelPath) throws IOException {
-    	String outputName = new File(metamodelPath).getName();
-    	if(outputName.lastIndexOf(".") != -1){
-    		outputName = outputName.substring(0, outputName.lastIndexOf("."));
-    	}
-    	
+    /**
+     * ???
+     *
+     * @param packages        ???
+     * @param outputDirectory the output directory
+     * @param metamodel       the metamodel to relax
+     *
+     * @return the path of the relaxed metamodel
+     *
+     * @throws IOException if a I/O error occurs
+     */
+    public static String relax(Iterable<EPackage> packages, String outputDirectory, String metamodel) throws IOException {
+        String outputName = new File(metamodel).getName();
+        if (outputName.lastIndexOf(".") != -1) {
+            outputName = outputName.substring(0, outputName.lastIndexOf("."));
+        }
+
         String outputFile = outputDirectory + outputName + "-relaxed.ecore";
 
         Resource resource = createResourceFrom(URI.createURI(outputFile));
@@ -76,6 +102,10 @@ public class MetamodelHelpers {
                 .forEach(ePackage -> resource.getContents().add(ePackage));
 
         resource.save(Collections.emptyMap());
+
+        System.out.println("Relaxed metamodel of '" + metamodel + "' in " + outputFile);
+
+        return outputFile;
     }
 
     private static Resource getResourceFrom(URI uri) {

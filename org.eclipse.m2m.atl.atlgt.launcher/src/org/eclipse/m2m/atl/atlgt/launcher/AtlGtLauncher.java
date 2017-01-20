@@ -15,6 +15,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class AtlGtLauncher implements ILaunchConfigurationDelegate {
@@ -35,7 +37,7 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
             // Step B: Transformation processing
             processTransformation();
 
-            System.out.println("ATL GT - Executed!! " + context.getPath());
+            System.out.println("ATL-GT - Executed!! " + context.getPath());
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -51,28 +53,32 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
             EmfToKm3TransformationFactory.withEmftvm().transform(context.getPath(), metamodel);
         }
 
+        List<String> relaxedMetamodels = new ArrayList<>();
+
         // A.2 Ecore Relaxation
         for (String metamodel : context.getMetamodels()) {
             Iterable<EPackage> packages = MetamodelHelpers.readEcore(metamodel);
-            MetamodelHelpers.relax(packages, context.getPath(), metamodel);
+            String relaxedMetamodel = MetamodelHelpers.relax(packages, context.getPath(), metamodel);
+            relaxedMetamodels.add(relaxedMetamodel);
         }
 
         // A.3 Relaxed Ecore to Relaxed KM3
+        for (String relaxedMetamodel : relaxedMetamodels) {
+            EmfToKm3TransformationFactory.withEmftvm().transform(context.getPath(), relaxedMetamodel);
+        }
     }
 
     /**
      * Transformation processing. (Step B)
-     * @throws IOException 
-     * @throws ATLCoreException 
      */
     private void processTransformation() throws ATLCoreException, IOException {
         // B.1 ATLIDfier
-    	//create copy of module file
-    	Path src = Paths.get(context.getModulePath());
+        //create copy of module file
+        Path src = Paths.get(context.getModulePath());
         Path dst = Paths.get("/path/to/dest/dir");
         Files.copy(src, dst, StandardCopyOption.REPLACE_EXISTING);
-    	
-    	//run inplace transformation
-    	//EmfToKm3TransformationFactory.withEmftvm().transform(context.getPath(), );
+
+        //run inplace transformation
+        //EmfToKm3TransformationFactory.withEmftvm().transform(context.getPath(), );
     }
 }
