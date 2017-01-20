@@ -66,25 +66,25 @@ public class AtlIdfierTransformationEmftvm implements AtlIdfierTransformation {
 
         // Run transformation
 
-        ModuleResolver moduleResolver = new DefaultModuleResolver(resourcesPath, resourceSet);
-        TimingData td = new TimingData();
-        env.loadModule(moduleResolver, MODULE_NAME);
-        td.finishLoading();
-        env.run(td);
-        td.finish();
-
-        try {
-        	inModel.getResource().save(Collections.emptyMap());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // Extract
-
-        String outputKm3 = Paths.get(outputDirectory).resolve(new File(atlPath).getName().replace(".atl", "-ids.atl")).toString();
-        System.out.println("Extraction of '" + outputEcore + "' to '" + outputKm3 + "'");
-
-        // TODO Complete the extraction
+//        ModuleResolver moduleResolver = new DefaultModuleResolver(resourcesPath, resourceSet);
+//        TimingData td = new TimingData();
+//        env.loadModule(moduleResolver, MODULE_NAME);
+//        td.finishLoading();
+//        env.run(td);
+//        td.finish();
+//
+//        try {
+//        	inModel.getResource().save(Collections.emptyMap());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        // Extract
+//
+//        String outputKm3 = Paths.get(outputDirectory).resolve(new File(atlPath).getName().replace(".atl", "-ids.atl")).toString();
+//        System.out.println("Extraction of '" + outputEcore + "' to '" + outputKm3 + "'");
+//
+//        // TODO Complete the extraction
 
         return outputEcore;
 
