@@ -40,6 +40,8 @@ public class MetamodelHelpers {
             }
             EPackage.Registry.INSTANCE.put(nsURI, ePackage);
         }
+
+        System.out.println("Registered metamodel: " + metamodelPath);
     }
 
     public static Iterable<EPackage> readEcore(String metamodelPath) {

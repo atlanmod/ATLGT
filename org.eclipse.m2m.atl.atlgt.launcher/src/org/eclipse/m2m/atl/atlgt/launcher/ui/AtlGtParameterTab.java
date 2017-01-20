@@ -9,13 +9,14 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 
-public class LauncherTab extends AbstractLaunchConfigurationTab {
+public class AtlGtParameterTab extends AbstractLaunchConfigurationTab {
 
     private Button forward;
     private Button backward;
@@ -33,7 +34,7 @@ public class LauncherTab extends AbstractLaunchConfigurationTab {
         Group parameterGroup = new Group(rootContainer, SWT.NULL);
         parameterGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         parameterGroup.setLayout(new GridLayout(2, false));
-        parameterGroup.setText("Tranformation_Direction");
+        parameterGroup.setText("Transformation Direction");
 
         forward = new Button(parameterGroup, SWT.RADIO);
         forward.setText(AtlGtLauncherConstant.FORWARD);
@@ -81,6 +82,13 @@ public class LauncherTab extends AbstractLaunchConfigurationTab {
 
     @Override
     public String getName() {
-        return "Tranformation_Direction";
+        return "ATL-GT Parameters";
+    }
+
+    @Override
+    // TODO Set the tab icon
+    public Image getImage() {
+        return super.getImage();
+//        return ImageDescriptor.createFromURL();
     }
 }

@@ -9,14 +9,14 @@
                 delegateName="Launcher Test"
                 id="org.eclipse.m2m.atl.atlgt.launcher"
                 modes="run,debug"
-                name="ATL GT Launcher">
+                name="ATL-GT Transformation">
         </launchConfigurationType>
     </extension>
 
     <extension
             point="org.eclipse.debug.ui.launchConfigurationTabGroups">
         <launchConfigurationTabGroup
-                class="org.eclipse.m2m.atl.atlgt.launcher.ui.LauncherTabGroup"
+                class="org.eclipse.m2m.atl.atlgt.launcher.ui.AtlGtTabGroup"
                 id="org.eclipse.m2m.atl.atlgt.launcher.ui.tabgroups"
                 type="org.eclipse.m2m.atl.atlgt.launcher">
         </launchConfigurationTabGroup>
