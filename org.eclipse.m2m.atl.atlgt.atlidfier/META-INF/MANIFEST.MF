@@ -18,5 +18,6 @@ Import-Package: org.osgi.framework,
  org.eclipse.emf.common,
  org.eclipse.emf.ecore,
  org.eclipse.m2m.atl.core,
- org.eclipse.m2m.atl.emftvm
+ org.eclipse.m2m.atl.emftvm,
+ org.eclipse.m2m.atl.engine
 Export-Package: org.eclipse.m2m.atl.atlgt.atlidfier
