@@ -5,16 +5,21 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.model.ILaunchConfigurationDelegate;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.resource.URIConverter;
+import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
 import org.eclipse.m2m.atl.atlgt.ecore2km3.EmfToKm3TransformationFactory;
 import org.eclipse.m2m.atl.atlgt.util.MetamodelHelpers;
 import org.eclipse.m2m.atl.core.ATLCoreException;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.ByteBuffer;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
+import java.nio.channels.WritableByteChannel;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,13 +78,33 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
      */
     private void processTransformation() throws ATLCoreException, IOException {
         // B.1 ATLIDfier
-    	//create a copy of the atl file
- 	
-    	Path src = Paths.get("./"+context.getModulePath());
-    	Path dst = Paths.get(context.getPath().replace("platform:/resource/", "./")+"/");
-        Files.copy(src, dst, StandardCopyOption.REPLACE_EXISTING);
+        // Create a copy of the atl file
+        URI sourceUrl = URI.createURI("platform:/resource" + context.getModulePath());
+        URI targetUrl = URI.createURI("platform:/resource" + context.getPath() + context.getModulePath().substring(context.getModulePath().lastIndexOf('/') + 1));
+        copy(sourceUrl, targetUrl);
+
+        // Run in-place transformation
+        //EmfToKm3TransformationFactory.withEmftvm().transform(context.getPath(), );
+    }
+
+    private static void copy(URI source, URI target) throws IOException {
+    	URIConverter uriConverter = new ExtensibleURIConverterImpl();
+    	uriConverter.createInputStream(source);
+    	uriConverter.createOutputStream(target);
     	
-    	//run inplace transformation
-    	//EmfToKm3TransformationFactory.withEmftvm().transform(context.getPath(), );
+        try (InputStream inputStream = uriConverter.createInputStream(source); OutputStream outputStream = uriConverter.createOutputStream(target)) {
+            try (ReadableByteChannel inputChannel = Channels.newChannel(inputStream); WritableByteChannel outputChannel = Channels.newChannel(outputStream)) {
+                final ByteBuffer buffer = ByteBuffer.allocateDirect(16 * 1024);
+                while (inputChannel.read(buffer) != -1) {
+                    buffer.flip();
+                    outputChannel.write(buffer);
+                    buffer.compact();
+                }
+                buffer.flip();
+                while (buffer.hasRemaining()) {
+                    outputChannel.write(buffer);
+                }
+            }
+        }
     }
 }
