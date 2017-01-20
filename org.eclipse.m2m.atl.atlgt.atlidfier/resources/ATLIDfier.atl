@@ -20,7 +20,7 @@ rule OutPatternElement {
 			xmiIdExpr : ATL!OperationCallExp (
 				source <- inExpr,
 				operationName <- 'concat',
-				arguments <- infileExpr
+				arguments <- Set{infileExpr}
 			),
 			inExpr : ATL!StringExp (
 				stringSymbol <- 'IN'
@@ -28,7 +28,7 @@ rule OutPatternElement {
 			infileExpr : ATL!OperationCallExp (
 				source <- oldXmiIdExpr,
 				operationName <- 'concat',
-				arguments <- bindingNameExpr
+				arguments <- Set{bindingNameExpr}
 			),
 			oldXmiIdExpr : ATL!NavigationOrAttributeCallExp (
 				source <- varNameExpr,
