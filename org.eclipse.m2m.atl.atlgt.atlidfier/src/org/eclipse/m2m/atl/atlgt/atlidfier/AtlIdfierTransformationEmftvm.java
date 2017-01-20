@@ -49,9 +49,8 @@ public class AtlIdfierTransformationEmftvm implements AtlIdfierTransformation {
 
         // Load metamodels
         final Metamodel atlMetamodel = EmftvmFactory.eINSTANCE.createMetamodel();
-        atlMetamodel.setResource(resourceSet.getResource(URI.createURI(resourcesPath + "/" + ATL_METAMODEL), true));
+        atlMetamodel.setResource(resourceSet.getResource(URI.createURI("http://www.eclipse.org/gmt/2005/ATL"), true));
         env.registerMetaModel("ATL", atlMetamodel);
-        lazyMetamodelRegistration(resourcesPath+"ATL.ecore");
         
         // Load models
         // turn atl file into model
