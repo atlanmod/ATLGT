@@ -3,6 +3,10 @@
 **/bin/
 **/.settings/
 
+# Only root files
+.classpath
+.project
+
 # ATL & Co
 **.asm
 **.emftvm
