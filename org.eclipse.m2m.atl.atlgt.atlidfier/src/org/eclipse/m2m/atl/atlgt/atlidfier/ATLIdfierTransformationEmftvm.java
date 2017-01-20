@@ -22,11 +22,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
 
-public class EmfToKm3TransformationEmftvm implements EmfToKm3Transformation {
+public class ATLIdfierTransformationEmftvm implements ATLIdfierTransformation {
 
-    public static final String BUNDLE_SYMBOLIC_NAME = "org.eclipse.m2m.atl.atlgt.ecore2km3";
+    public static final String BUNDLE_SYMBOLIC_NAME = "org.eclipse.m2m.atl.atlgt.atlidfier";
 
-    private static final String MODULE_NAME = "EMF2KM3";
+    private static final String MODULE_NAME = "ATLIDfier";
 
     @Override
     public void transform(String outputDirectory, String metamodelPath) throws ATLCoreException, IOException {
@@ -42,13 +42,10 @@ public class EmfToKm3TransformationEmftvm implements EmfToKm3Transformation {
 
         // Load metamodels
 
-        final Metamodel ecoreMetamodel = EmftvmFactory.eINSTANCE.createMetamodel();
-        ecoreMetamodel.setResource(EcorePackage.eINSTANCE.eResource());
-        env.registerMetaModel("MOF", ecoreMetamodel);
 
-        final Metamodel km3Metamodel = EmftvmFactory.eINSTANCE.createMetamodel();
-        km3Metamodel.setResource(resourceSet.getResource(URI.createURI(resourcesPath + "/KM3.ecore"), true));
-        env.registerMetaModel("KM3", km3Metamodel);
+        final Metamodel atlMetamodel = EmftvmFactory.eINSTANCE.createMetamodel();
+        atlMetamodel.setResource(resourceSet.getResource(URI.createURI(resourcesPath + "/ATL.ecore"), true));
+        env.registerMetaModel("ATL", atlMetamodel);
 
         // Load models
 

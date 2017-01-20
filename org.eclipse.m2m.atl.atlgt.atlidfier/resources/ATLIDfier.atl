@@ -1,3 +1,5 @@
+-- @atlcompiler emftvm
+
 -- @path ATL=/ATLIDfier/ATL.ecore
 
 module ATLIDfier;
