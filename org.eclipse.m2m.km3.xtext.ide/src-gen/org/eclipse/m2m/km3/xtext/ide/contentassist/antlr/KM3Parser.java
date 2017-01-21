@@ -38,6 +38,7 @@ public class KM3Parser extends AbstractContentAssistParser {
 					put(grammarAccess.getModelElementAccess().getAlternatives(), "rule__ModelElement__Alternatives");
 					put(grammarAccess.getStructuralFeatureAccess().getAlternatives(), "rule__StructuralFeature__Alternatives");
 					put(grammarAccess.getElementBoundAccess().getAlternatives(), "rule__ElementBound__Alternatives");
+					put(grammarAccess.getMetamodelAccess().getGroup(), "rule__Metamodel__Group__0");
 					put(grammarAccess.getPackageAccess().getGroup(), "rule__Package__Group__0");
 					put(grammarAccess.getDataTypeAccess().getGroup(), "rule__DataType__Group__0");
 					put(grammarAccess.getClassAccess().getGroup(), "rule__Class__Group__0");
@@ -50,6 +51,7 @@ public class KM3Parser extends AbstractContentAssistParser {
 					put(grammarAccess.getReferenceAccess().getGroup_2(), "rule__Reference__Group_2__0");
 					put(grammarAccess.getReferenceAccess().getGroup_2_1(), "rule__Reference__Group_2_1__0");
 					put(grammarAccess.getReferenceAccess().getGroup_7(), "rule__Reference__Group_7__0");
+					put(grammarAccess.getMetamodelAccess().getContentsAssignment_1(), "rule__Metamodel__ContentsAssignment_1");
 					put(grammarAccess.getPackageAccess().getNameAssignment_1(), "rule__Package__NameAssignment_1");
 					put(grammarAccess.getPackageAccess().getContentsAssignment_3(), "rule__Package__ContentsAssignment_3");
 					put(grammarAccess.getDataTypeAccess().getNameAssignment_1(), "rule__DataType__NameAssignment_1");
@@ -81,7 +83,7 @@ public class KM3Parser extends AbstractContentAssistParser {
 	protected Collection<FollowElement> getFollowElements(AbstractInternalContentAssistParser parser) {
 		try {
 			InternalKM3Parser typedParser = (InternalKM3Parser) parser;
-			typedParser.entryRulePackage();
+			typedParser.entryRuleMetamodel();
 			return typedParser.getFollowElements();
 		} catch(RecognitionException ex) {
 			throw new RuntimeException(ex);

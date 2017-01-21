@@ -8,11 +8,11 @@ helper def: metamodel : KM3!Metamodel = OclUndefined;
 
 -- The Metamodel root element is created in an imperative rule because there
 -- is no corresponding root element in Ecore metamodels.
-entrypoint rule Metamodel() {
+endpoint rule Metamodel() {
 	to
 		t : KM3!Metamodel
 	do {
-		thisModule.metamodel <- t;
+		t.contents <- MOF!EPackage.allInstances();
 	}
 }
 
