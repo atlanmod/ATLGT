@@ -33,8 +33,7 @@ class KM3ScopeProvider extends AbstractKM3ScopeProvider {
 		}
 
 		if (context instanceof Reference && reference == Km3Package.Literals.REFERENCE__OPPOSITE) {
-			val package = context.eContainer.eContainer
-			val candidates = EcoreUtil2.getAllContentsOfType(package, Reference)
+			val candidates = EcoreUtil2.getAllContentsOfType((context as Reference).type, Reference)
 			return Scopes.scopeFor(candidates)
 		}
 

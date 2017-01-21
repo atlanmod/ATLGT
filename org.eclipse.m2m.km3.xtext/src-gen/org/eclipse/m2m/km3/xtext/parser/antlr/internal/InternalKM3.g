@@ -43,7 +43,7 @@ import org.eclipse.m2m.km3.xtext.services.KM3GrammarAccess;
 
     @Override
     protected String getFirstRuleName() {
-    	return "Metamodel";
+    	return "Package";
    	}
 
    	@Override
@@ -59,51 +59,6 @@ import org.eclipse.m2m.km3.xtext.services.KM3GrammarAccess;
         appendSkippedTokens();
     }
 }
-
-// Entry rule entryRuleMetamodel
-entryRuleMetamodel returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getMetamodelRule()); }
-	iv_ruleMetamodel=ruleMetamodel
-	{ $current=$iv_ruleMetamodel.current; }
-	EOF;
-
-// Rule Metamodel
-ruleMetamodel returns [EObject current=null]
-@init {
-	enterRule();
-}
-@after {
-	leaveRule();
-}:
-	(
-		(
-			{
-				$current = forceCreateModelElement(
-					grammarAccess.getMetamodelAccess().getMetamodelAction_0(),
-					$current);
-			}
-		)
-		(
-			(
-				{
-					newCompositeNode(grammarAccess.getMetamodelAccess().getContentsPackageParserRuleCall_1_0());
-				}
-				lv_contents_1_0=rulePackage
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getMetamodelRule());
-					}
-					add(
-						$current,
-						"contents",
-						lv_contents_1_0,
-						"org.eclipse.m2m.km3.xtext.KM3.Package");
-					afterParserOrEnumRuleCall();
-				}
-			)
-		)*
-	)
-;
 
 // Entry rule entryRulePackage
 entryRulePackage returns [EObject current=null]:

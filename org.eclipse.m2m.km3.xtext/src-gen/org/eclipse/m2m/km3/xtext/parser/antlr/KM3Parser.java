@@ -27,7 +27,7 @@ public class KM3Parser extends AbstractAntlrParser {
 
 	@Override 
 	protected String getDefaultRuleName() {
-		return "Metamodel";
+		return "Package";
 	}
 
 	public KM3GrammarAccess getGrammarAccess() {
