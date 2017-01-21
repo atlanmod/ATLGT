@@ -33,7 +33,7 @@ public interface Parameter extends TypedElement {
 	 * @see #setOwner(Operation)
 	 * @see km3.KM3Package#getParameter_Owner()
 	 * @see km3.Operation#getParameters
-	 * @model opposite="parameters" required="true" ordered="false"
+	 * @model opposite="parameters" ordered="false"
 	 * @generated
 	 */
 	Operation getOwner();

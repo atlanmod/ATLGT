@@ -53,7 +53,7 @@ public interface Package extends ModelElement {
 	 * @see #setMetamodel(Metamodel)
 	 * @see km3.KM3Package#getPackage_Metamodel()
 	 * @see km3.Metamodel#getContents
-	 * @model opposite="contents" required="true" ordered="false"
+	 * @model opposite="contents" ordered="false"
 	 * @generated
 	 */
 	Metamodel getMetamodel();

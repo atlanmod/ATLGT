@@ -60,7 +60,7 @@ public interface ModelElement extends LocatedElement {
 	 * @see #setPackage(km3.Package)
 	 * @see km3.KM3Package#getModelElement_Package()
 	 * @see km3.Package#getContents
-	 * @model opposite="contents" required="true" transient="false" ordered="false"
+	 * @model opposite="contents" transient="false" ordered="false"
 	 * @generated
 	 */
 	km3.Package getPackage();

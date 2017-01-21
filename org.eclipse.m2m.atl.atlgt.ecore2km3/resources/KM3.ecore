@@ -4,13 +4,13 @@
   <ecore:EPackage name="km3" nsURI="http://example.org/km3" nsPrefix="km3">
     <eClassifiers xsi:type="ecore:EClass" name="LocatedElement" abstract="true">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="location" ordered="false"
-          lowerBound="1" eType="#/1/String"/>
+          eType="#/1/String"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ModelElement" abstract="true" eSuperTypes="#/0/LocatedElement">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" ordered="false"
           lowerBound="1" eType="#/1/String"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="package" ordered="false"
-          lowerBound="1" eType="#/0/Package" eOpposite="#/0/Package/contents"/>
+          eType="#/0/Package" eOpposite="#/0/Package/contents"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="Classifier" eSuperTypes="#/0/ModelElement"/>
     <eClassifiers xsi:type="ecore:EClass" name="DataType" eSuperTypes="#/0/Classifier"/>
@@ -20,7 +20,7 @@
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="EnumLiteral" eSuperTypes="#/0/ModelElement">
       <eStructuralFeatures xsi:type="ecore:EReference" name="enum" ordered="false"
-          lowerBound="1" eType="#/0/Enumeration" eOpposite="#/0/Enumeration/literals"/>
+          eType="#/0/Enumeration" eOpposite="#/0/Enumeration/literals"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="TemplateParameter" eSuperTypes="#/0/Classifier"/>
     <eClassifiers xsi:type="ecore:EClass" name="Class" eSuperTypes="#/0/Classifier">
@@ -49,7 +49,7 @@
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="StructuralFeature" eSuperTypes="#/0/TypedElement">
       <eStructuralFeatures xsi:type="ecore:EReference" name="owner" ordered="false"
-          lowerBound="1" eType="#/0/Class" eOpposite="#/0/Class/structuralFeatures"/>
+          eType="#/0/Class" eOpposite="#/0/Class/structuralFeatures"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="subsetOf" ordered="false"
           upperBound="-1" eType="#/0/StructuralFeature" eOpposite="#/0/StructuralFeature/derivedFrom"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="derivedFrom" ordered="false"
@@ -64,19 +64,19 @@
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="Operation" eSuperTypes="#/0/TypedElement">
       <eStructuralFeatures xsi:type="ecore:EReference" name="owner" ordered="false"
-          lowerBound="1" eType="#/0/Class" eOpposite="#/0/Class/operations"/>
+          eType="#/0/Class" eOpposite="#/0/Class/operations"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
           eType="#/0/Parameter" eOpposite="#/0/Parameter/owner"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="Parameter" eSuperTypes="#/0/TypedElement">
       <eStructuralFeatures xsi:type="ecore:EReference" name="owner" ordered="false"
-          lowerBound="1" eType="#/0/Operation" eOpposite="#/0/Operation/parameters"/>
+          eType="#/0/Operation" eOpposite="#/0/Operation/parameters"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="Package" eSuperTypes="#/0/ModelElement">
       <eStructuralFeatures xsi:type="ecore:EReference" name="contents" upperBound="-1"
           eType="#/0/ModelElement" containment="true" eOpposite="#/0/ModelElement/package"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="metamodel" ordered="false"
-          lowerBound="1" eType="#/0/Metamodel" eOpposite="#/0/Metamodel/contents"/>
+          eType="#/0/Metamodel" eOpposite="#/0/Metamodel/contents"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="Metamodel" eSuperTypes="#/0/LocatedElement">
       <eStructuralFeatures xsi:type="ecore:EReference" name="contents" upperBound="-1"

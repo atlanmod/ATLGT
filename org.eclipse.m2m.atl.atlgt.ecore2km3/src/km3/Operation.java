@@ -35,7 +35,7 @@ public interface Operation extends TypedElement {
 	 * @see #setOwner(km3.Class)
 	 * @see km3.KM3Package#getOperation_Owner()
 	 * @see km3.Class#getOperations
-	 * @model opposite="operations" required="true" ordered="false"
+	 * @model opposite="operations" ordered="false"
 	 * @generated
 	 */
 	km3.Class getOwner();

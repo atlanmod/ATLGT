@@ -36,7 +36,7 @@ public interface StructuralFeature extends TypedElement {
 	 * @see #setOwner(km3.Class)
 	 * @see km3.KM3Package#getStructuralFeature_Owner()
 	 * @see km3.Class#getStructuralFeatures
-	 * @model opposite="structuralFeatures" required="true" ordered="false"
+	 * @model opposite="structuralFeatures" ordered="false"
 	 * @generated
 	 */
 	km3.Class getOwner();

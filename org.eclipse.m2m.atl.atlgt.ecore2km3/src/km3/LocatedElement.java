@@ -32,7 +32,7 @@ public interface LocatedElement extends EObject {
 	 * @return the value of the '<em>Location</em>' attribute.
 	 * @see #setLocation(String)
 	 * @see km3.KM3Package#getLocatedElement_Location()
-	 * @model dataType="PrimitiveTypes.String" required="true" ordered="false"
+	 * @model dataType="PrimitiveTypes.String" ordered="false"
 	 * @generated
 	 */
 	String getLocation();

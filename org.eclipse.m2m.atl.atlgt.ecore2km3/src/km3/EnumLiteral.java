@@ -33,7 +33,7 @@ public interface EnumLiteral extends ModelElement {
 	 * @see #setEnum(Enumeration)
 	 * @see km3.KM3Package#getEnumLiteral_Enum()
 	 * @see km3.Enumeration#getLiterals
-	 * @model opposite="literals" required="true" ordered="false"
+	 * @model opposite="literals" ordered="false"
 	 * @generated
 	 */
 	Enumeration getEnum();
