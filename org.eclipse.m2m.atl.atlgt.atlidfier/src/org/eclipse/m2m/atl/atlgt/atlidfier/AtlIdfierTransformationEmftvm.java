@@ -6,9 +6,11 @@ import java.util.Collections;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.m2m.atl.common.ATL.ATLPackage;
 import org.eclipse.m2m.atl.core.ATLCoreException;
 import org.eclipse.m2m.atl.emftvm.EmftvmFactory;
 import org.eclipse.m2m.atl.emftvm.ExecEnv;
+import org.eclipse.m2m.atl.emftvm.Metamodel;
 import org.eclipse.m2m.atl.emftvm.Model;
 import org.eclipse.m2m.atl.emftvm.util.DefaultModuleResolver;
 import org.eclipse.m2m.atl.emftvm.util.ModuleResolver;
@@ -28,7 +30,12 @@ public class AtlIdfierTransformationEmftvm implements AtlIdfierTransformation {
         String resourcesPath = "platform:/plugin/" + BUNDLE_SYMBOLIC_NAME + "/resources/";
 
         ResourceSet resourceSet = new ResourceSetImpl();
-
+        
+        // Load ATL metamodel
+        final Metamodel atlMetamodel = EmftvmFactory.eINSTANCE.createMetamodel();
+        atlMetamodel.setResource(ATLPackage.eINSTANCE.eResource());
+        env.registerMetaModel("ATL", atlMetamodel);
+        
         // Load ATL model from file
         Model inOutModel = EmftvmFactory.eINSTANCE.createModel();
         inOutModel.setResource(resourceSet.getResource(URI.createURI(module, true), true));
