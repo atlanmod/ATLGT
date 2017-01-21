@@ -8,5 +8,19 @@ Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.m2m.atl.atlgt.ecore2km3,
  org.eclipse.xtext,
  org.eclipse.xtext.xbase,
- org.eclipse.equinox.common;bundle-version="3.5.0"
+ org.eclipse.equinox.common;bundle-version="3.5.0",
+ org.eclipse.xtext.xbase.lib,
+ org.antlr.runtime,
+ org.eclipse.xtext.util,
+ org.eclipse.xtend.lib
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: org.eclipse.m2m.km3.xtext.scoping,
+ org.eclipse.m2m.km3.xtext.generator,
+ org.eclipse.m2m.km3.xtext.validation,
+ org.eclipse.m2m.km3.xtext.formatting,
+ org.eclipse.m2m.km3.xtext.services,
+ org.eclipse.m2m.km3.xtext.parser.antlr.internal,
+ org.eclipse.m2m.km3.xtext.parser.antlr,
+ org.eclipse.m2m.km3.xtext.serializer,
+ org.eclipse.m2m.km3.xtext
+Import-Package: org.apache.log4j
