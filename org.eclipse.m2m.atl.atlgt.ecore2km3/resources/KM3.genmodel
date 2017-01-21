@@ -5,7 +5,7 @@
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
     operationReflection="true" importOrganizing="true">
   <foreignModel>KM3.ecore</foreignModel>
-  <genPackages prefix="KM3" disposableProviderFactory="true" ecorePackage="KM3.ecore#/0">
+  <genPackages prefix="Km3" disposableProviderFactory="true" ecorePackage="KM3.ecore#/0">
     <genClasses image="false" ecoreClass="KM3.ecore#/0/LocatedElement">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KM3.ecore#/0/LocatedElement/location"/>
     </genClasses>
@@ -26,7 +26,7 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference KM3.ecore#/0/Class/parameters"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KM3.ecore#/0/Class/isAbstract"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference KM3.ecore#/0/Class/supertypes"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference KM3.ecore#/0/Class/structuralFeatures"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KM3.ecore#/0/Class/structuralFeatures"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference KM3.ecore#/0/Class/operations"/>
     </genClasses>
     <genClasses ecoreClass="KM3.ecore#/0/TypedElement">
@@ -37,7 +37,7 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference KM3.ecore#/0/TypedElement/type"/>
     </genClasses>
     <genClasses ecoreClass="KM3.ecore#/0/StructuralFeature">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference KM3.ecore#/0/StructuralFeature/owner"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference KM3.ecore#/0/StructuralFeature/owner"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference KM3.ecore#/0/StructuralFeature/subsetOf"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference KM3.ecore#/0/StructuralFeature/derivedFrom"/>
     </genClasses>

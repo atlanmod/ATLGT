@@ -2,7 +2,7 @@
  */
 package km3.impl;
 
-import km3.KM3Package;
+import km3.Km3Package;
 import km3.TemplateParameter;
 
 import org.eclipse.emf.ecore.EClass;
@@ -31,7 +31,7 @@ public class TemplateParameterImpl extends ClassifierImpl implements TemplatePar
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return KM3Package.Literals.TEMPLATE_PARAMETER;
+		return Km3Package.Literals.TEMPLATE_PARAMETER;
 	}
 
 } //TemplateParameterImpl

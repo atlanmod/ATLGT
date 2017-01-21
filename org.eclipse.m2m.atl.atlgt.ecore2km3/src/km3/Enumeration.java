@@ -16,7 +16,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link km3.Enumeration#getLiterals <em>Literals</em>}</li>
  * </ul>
  *
- * @see km3.KM3Package#getEnumeration()
+ * @see km3.Km3Package#getEnumeration()
  * @model
  * @generated
  */
@@ -32,7 +32,7 @@ public interface Enumeration extends Classifier {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Literals</em>' reference list.
-	 * @see km3.KM3Package#getEnumeration_Literals()
+	 * @see km3.Km3Package#getEnumeration_Literals()
 	 * @see km3.EnumLiteral#getEnum
 	 * @model opposite="enum"
 	 * @generated

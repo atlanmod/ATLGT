@@ -3,7 +3,7 @@
 package km3.impl;
 
 import km3.Classifier;
-import km3.KM3Package;
+import km3.Km3Package;
 import km3.TypedElement;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -39,7 +39,7 @@ public class TypedElementImpl extends ModelElementImpl implements TypedElement {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final Integer LOWER_EDEFAULT = null;
+	protected static final Integer LOWER_EDEFAULT = new Integer(0);
 
 	/**
 	 * The cached value of the '{@link #getLower() <em>Lower</em>}' attribute.
@@ -59,7 +59,7 @@ public class TypedElementImpl extends ModelElementImpl implements TypedElement {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final Integer UPPER_EDEFAULT = null;
+	protected static final Integer UPPER_EDEFAULT = new Integer(1);
 
 	/**
 	 * The cached value of the '{@link #getUpper() <em>Upper</em>}' attribute.
@@ -79,7 +79,7 @@ public class TypedElementImpl extends ModelElementImpl implements TypedElement {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final Boolean IS_ORDERED_EDEFAULT = null;
+	protected static final Boolean IS_ORDERED_EDEFAULT = Boolean.FALSE;
 
 	/**
 	 * The cached value of the '{@link #getIsOrdered() <em>Is Ordered</em>}' attribute.
@@ -99,7 +99,7 @@ public class TypedElementImpl extends ModelElementImpl implements TypedElement {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final Boolean IS_UNIQUE_EDEFAULT = null;
+	protected static final Boolean IS_UNIQUE_EDEFAULT = Boolean.FALSE;
 
 	/**
 	 * The cached value of the '{@link #getIsUnique() <em>Is Unique</em>}' attribute.
@@ -137,7 +137,7 @@ public class TypedElementImpl extends ModelElementImpl implements TypedElement {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return KM3Package.Literals.TYPED_ELEMENT;
+		return Km3Package.Literals.TYPED_ELEMENT;
 	}
 
 	/**
@@ -158,7 +158,7 @@ public class TypedElementImpl extends ModelElementImpl implements TypedElement {
 		Integer oldLower = lower;
 		lower = newLower;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, KM3Package.TYPED_ELEMENT__LOWER, oldLower, lower));
+			eNotify(new ENotificationImpl(this, Notification.SET, Km3Package.TYPED_ELEMENT__LOWER, oldLower, lower));
 	}
 
 	/**
@@ -179,7 +179,7 @@ public class TypedElementImpl extends ModelElementImpl implements TypedElement {
 		Integer oldUpper = upper;
 		upper = newUpper;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, KM3Package.TYPED_ELEMENT__UPPER, oldUpper, upper));
+			eNotify(new ENotificationImpl(this, Notification.SET, Km3Package.TYPED_ELEMENT__UPPER, oldUpper, upper));
 	}
 
 	/**
@@ -200,7 +200,7 @@ public class TypedElementImpl extends ModelElementImpl implements TypedElement {
 		Boolean oldIsOrdered = isOrdered;
 		isOrdered = newIsOrdered;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, KM3Package.TYPED_ELEMENT__IS_ORDERED, oldIsOrdered, isOrdered));
+			eNotify(new ENotificationImpl(this, Notification.SET, Km3Package.TYPED_ELEMENT__IS_ORDERED, oldIsOrdered, isOrdered));
 	}
 
 	/**
@@ -221,7 +221,7 @@ public class TypedElementImpl extends ModelElementImpl implements TypedElement {
 		Boolean oldIsUnique = isUnique;
 		isUnique = newIsUnique;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, KM3Package.TYPED_ELEMENT__IS_UNIQUE, oldIsUnique, isUnique));
+			eNotify(new ENotificationImpl(this, Notification.SET, Km3Package.TYPED_ELEMENT__IS_UNIQUE, oldIsUnique, isUnique));
 	}
 
 	/**
@@ -235,7 +235,7 @@ public class TypedElementImpl extends ModelElementImpl implements TypedElement {
 			type = (Classifier)eResolveProxy(oldType);
 			if (type != oldType) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, KM3Package.TYPED_ELEMENT__TYPE, oldType, type));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, Km3Package.TYPED_ELEMENT__TYPE, oldType, type));
 			}
 		}
 		return type;
@@ -259,7 +259,7 @@ public class TypedElementImpl extends ModelElementImpl implements TypedElement {
 		Classifier oldType = type;
 		type = newType;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, KM3Package.TYPED_ELEMENT__TYPE, oldType, type));
+			eNotify(new ENotificationImpl(this, Notification.SET, Km3Package.TYPED_ELEMENT__TYPE, oldType, type));
 	}
 
 	/**
@@ -270,15 +270,15 @@ public class TypedElementImpl extends ModelElementImpl implements TypedElement {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case KM3Package.TYPED_ELEMENT__LOWER:
+			case Km3Package.TYPED_ELEMENT__LOWER:
 				return getLower();
-			case KM3Package.TYPED_ELEMENT__UPPER:
+			case Km3Package.TYPED_ELEMENT__UPPER:
 				return getUpper();
-			case KM3Package.TYPED_ELEMENT__IS_ORDERED:
+			case Km3Package.TYPED_ELEMENT__IS_ORDERED:
 				return getIsOrdered();
-			case KM3Package.TYPED_ELEMENT__IS_UNIQUE:
+			case Km3Package.TYPED_ELEMENT__IS_UNIQUE:
 				return getIsUnique();
-			case KM3Package.TYPED_ELEMENT__TYPE:
+			case Km3Package.TYPED_ELEMENT__TYPE:
 				if (resolve) return getType();
 				return basicGetType();
 		}
@@ -293,19 +293,19 @@ public class TypedElementImpl extends ModelElementImpl implements TypedElement {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case KM3Package.TYPED_ELEMENT__LOWER:
+			case Km3Package.TYPED_ELEMENT__LOWER:
 				setLower((Integer)newValue);
 				return;
-			case KM3Package.TYPED_ELEMENT__UPPER:
+			case Km3Package.TYPED_ELEMENT__UPPER:
 				setUpper((Integer)newValue);
 				return;
-			case KM3Package.TYPED_ELEMENT__IS_ORDERED:
+			case Km3Package.TYPED_ELEMENT__IS_ORDERED:
 				setIsOrdered((Boolean)newValue);
 				return;
-			case KM3Package.TYPED_ELEMENT__IS_UNIQUE:
+			case Km3Package.TYPED_ELEMENT__IS_UNIQUE:
 				setIsUnique((Boolean)newValue);
 				return;
-			case KM3Package.TYPED_ELEMENT__TYPE:
+			case Km3Package.TYPED_ELEMENT__TYPE:
 				setType((Classifier)newValue);
 				return;
 		}
@@ -320,19 +320,19 @@ public class TypedElementImpl extends ModelElementImpl implements TypedElement {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case KM3Package.TYPED_ELEMENT__LOWER:
+			case Km3Package.TYPED_ELEMENT__LOWER:
 				setLower(LOWER_EDEFAULT);
 				return;
-			case KM3Package.TYPED_ELEMENT__UPPER:
+			case Km3Package.TYPED_ELEMENT__UPPER:
 				setUpper(UPPER_EDEFAULT);
 				return;
-			case KM3Package.TYPED_ELEMENT__IS_ORDERED:
+			case Km3Package.TYPED_ELEMENT__IS_ORDERED:
 				setIsOrdered(IS_ORDERED_EDEFAULT);
 				return;
-			case KM3Package.TYPED_ELEMENT__IS_UNIQUE:
+			case Km3Package.TYPED_ELEMENT__IS_UNIQUE:
 				setIsUnique(IS_UNIQUE_EDEFAULT);
 				return;
-			case KM3Package.TYPED_ELEMENT__TYPE:
+			case Km3Package.TYPED_ELEMENT__TYPE:
 				setType((Classifier)null);
 				return;
 		}
@@ -347,15 +347,15 @@ public class TypedElementImpl extends ModelElementImpl implements TypedElement {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case KM3Package.TYPED_ELEMENT__LOWER:
+			case Km3Package.TYPED_ELEMENT__LOWER:
 				return LOWER_EDEFAULT == null ? lower != null : !LOWER_EDEFAULT.equals(lower);
-			case KM3Package.TYPED_ELEMENT__UPPER:
+			case Km3Package.TYPED_ELEMENT__UPPER:
 				return UPPER_EDEFAULT == null ? upper != null : !UPPER_EDEFAULT.equals(upper);
-			case KM3Package.TYPED_ELEMENT__IS_ORDERED:
+			case Km3Package.TYPED_ELEMENT__IS_ORDERED:
 				return IS_ORDERED_EDEFAULT == null ? isOrdered != null : !IS_ORDERED_EDEFAULT.equals(isOrdered);
-			case KM3Package.TYPED_ELEMENT__IS_UNIQUE:
+			case Km3Package.TYPED_ELEMENT__IS_UNIQUE:
 				return IS_UNIQUE_EDEFAULT == null ? isUnique != null : !IS_UNIQUE_EDEFAULT.equals(isUnique);
-			case KM3Package.TYPED_ELEMENT__TYPE:
+			case Km3Package.TYPED_ELEMENT__TYPE:
 				return type != null;
 		}
 		return super.eIsSet(featureID);

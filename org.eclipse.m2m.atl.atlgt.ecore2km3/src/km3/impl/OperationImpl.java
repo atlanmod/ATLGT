@@ -4,7 +4,7 @@ package km3.impl;
 
 import java.util.Collection;
 
-import km3.KM3Package;
+import km3.Km3Package;
 import km3.Operation;
 import km3.Parameter;
 
@@ -72,7 +72,7 @@ public class OperationImpl extends TypedElementImpl implements Operation {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return KM3Package.Literals.OPERATION;
+		return Km3Package.Literals.OPERATION;
 	}
 
 	/**
@@ -86,7 +86,7 @@ public class OperationImpl extends TypedElementImpl implements Operation {
 			owner = (km3.Class)eResolveProxy(oldOwner);
 			if (owner != oldOwner) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, KM3Package.OPERATION__OWNER, oldOwner, owner));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, Km3Package.OPERATION__OWNER, oldOwner, owner));
 			}
 		}
 		return owner;
@@ -110,7 +110,7 @@ public class OperationImpl extends TypedElementImpl implements Operation {
 		km3.Class oldOwner = owner;
 		owner = newOwner;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KM3Package.OPERATION__OWNER, oldOwner, newOwner);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Km3Package.OPERATION__OWNER, oldOwner, newOwner);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -125,14 +125,14 @@ public class OperationImpl extends TypedElementImpl implements Operation {
 		if (newOwner != owner) {
 			NotificationChain msgs = null;
 			if (owner != null)
-				msgs = ((InternalEObject)owner).eInverseRemove(this, KM3Package.CLASS__OPERATIONS, km3.Class.class, msgs);
+				msgs = ((InternalEObject)owner).eInverseRemove(this, Km3Package.CLASS__OPERATIONS, km3.Class.class, msgs);
 			if (newOwner != null)
-				msgs = ((InternalEObject)newOwner).eInverseAdd(this, KM3Package.CLASS__OPERATIONS, km3.Class.class, msgs);
+				msgs = ((InternalEObject)newOwner).eInverseAdd(this, Km3Package.CLASS__OPERATIONS, km3.Class.class, msgs);
 			msgs = basicSetOwner(newOwner, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, KM3Package.OPERATION__OWNER, newOwner, newOwner));
+			eNotify(new ENotificationImpl(this, Notification.SET, Km3Package.OPERATION__OWNER, newOwner, newOwner));
 	}
 
 	/**
@@ -142,7 +142,7 @@ public class OperationImpl extends TypedElementImpl implements Operation {
 	 */
 	public EList<Parameter> getParameters() {
 		if (parameters == null) {
-			parameters = new EObjectWithInverseResolvingEList<Parameter>(Parameter.class, this, KM3Package.OPERATION__PARAMETERS, KM3Package.PARAMETER__OWNER);
+			parameters = new EObjectWithInverseResolvingEList<Parameter>(Parameter.class, this, Km3Package.OPERATION__PARAMETERS, Km3Package.PARAMETER__OWNER);
 		}
 		return parameters;
 	}
@@ -156,11 +156,11 @@ public class OperationImpl extends TypedElementImpl implements Operation {
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case KM3Package.OPERATION__OWNER:
+			case Km3Package.OPERATION__OWNER:
 				if (owner != null)
-					msgs = ((InternalEObject)owner).eInverseRemove(this, KM3Package.CLASS__OPERATIONS, km3.Class.class, msgs);
+					msgs = ((InternalEObject)owner).eInverseRemove(this, Km3Package.CLASS__OPERATIONS, km3.Class.class, msgs);
 				return basicSetOwner((km3.Class)otherEnd, msgs);
-			case KM3Package.OPERATION__PARAMETERS:
+			case Km3Package.OPERATION__PARAMETERS:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getParameters()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -174,9 +174,9 @@ public class OperationImpl extends TypedElementImpl implements Operation {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case KM3Package.OPERATION__OWNER:
+			case Km3Package.OPERATION__OWNER:
 				return basicSetOwner(null, msgs);
-			case KM3Package.OPERATION__PARAMETERS:
+			case Km3Package.OPERATION__PARAMETERS:
 				return ((InternalEList<?>)getParameters()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -190,10 +190,10 @@ public class OperationImpl extends TypedElementImpl implements Operation {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case KM3Package.OPERATION__OWNER:
+			case Km3Package.OPERATION__OWNER:
 				if (resolve) return getOwner();
 				return basicGetOwner();
-			case KM3Package.OPERATION__PARAMETERS:
+			case Km3Package.OPERATION__PARAMETERS:
 				return getParameters();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -208,10 +208,10 @@ public class OperationImpl extends TypedElementImpl implements Operation {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case KM3Package.OPERATION__OWNER:
+			case Km3Package.OPERATION__OWNER:
 				setOwner((km3.Class)newValue);
 				return;
-			case KM3Package.OPERATION__PARAMETERS:
+			case Km3Package.OPERATION__PARAMETERS:
 				getParameters().clear();
 				getParameters().addAll((Collection<? extends Parameter>)newValue);
 				return;
@@ -227,10 +227,10 @@ public class OperationImpl extends TypedElementImpl implements Operation {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case KM3Package.OPERATION__OWNER:
+			case Km3Package.OPERATION__OWNER:
 				setOwner((km3.Class)null);
 				return;
-			case KM3Package.OPERATION__PARAMETERS:
+			case Km3Package.OPERATION__PARAMETERS:
 				getParameters().clear();
 				return;
 		}
@@ -245,9 +245,9 @@ public class OperationImpl extends TypedElementImpl implements Operation {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case KM3Package.OPERATION__OWNER:
+			case Km3Package.OPERATION__OWNER:
 				return owner != null;
-			case KM3Package.OPERATION__PARAMETERS:
+			case Km3Package.OPERATION__PARAMETERS:
 				return parameters != null && !parameters.isEmpty();
 		}
 		return super.eIsSet(featureID);

@@ -2,7 +2,7 @@
  */
 package km3.impl;
 
-import km3.KM3Package;
+import km3.Km3Package;
 import km3.ModelElement;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -66,7 +66,7 @@ public abstract class ModelElementImpl extends LocatedElementImpl implements Mod
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return KM3Package.Literals.MODEL_ELEMENT;
+		return Km3Package.Literals.MODEL_ELEMENT;
 	}
 
 	/**
@@ -87,7 +87,7 @@ public abstract class ModelElementImpl extends LocatedElementImpl implements Mod
 		String oldName = name;
 		name = newName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, KM3Package.MODEL_ELEMENT__NAME, oldName, name));
+			eNotify(new ENotificationImpl(this, Notification.SET, Km3Package.MODEL_ELEMENT__NAME, oldName, name));
 	}
 
 	/**
@@ -96,7 +96,7 @@ public abstract class ModelElementImpl extends LocatedElementImpl implements Mod
 	 * @generated
 	 */
 	public km3.Package getPackage() {
-		if (eContainerFeatureID() != KM3Package.MODEL_ELEMENT__PACKAGE) return null;
+		if (eContainerFeatureID() != Km3Package.MODEL_ELEMENT__PACKAGE) return null;
 		return (km3.Package)eInternalContainer();
 	}
 
@@ -106,7 +106,7 @@ public abstract class ModelElementImpl extends LocatedElementImpl implements Mod
 	 * @generated
 	 */
 	public NotificationChain basicSetPackage(km3.Package newPackage, NotificationChain msgs) {
-		msgs = eBasicSetContainer((InternalEObject)newPackage, KM3Package.MODEL_ELEMENT__PACKAGE, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newPackage, Km3Package.MODEL_ELEMENT__PACKAGE, msgs);
 		return msgs;
 	}
 
@@ -116,19 +116,19 @@ public abstract class ModelElementImpl extends LocatedElementImpl implements Mod
 	 * @generated
 	 */
 	public void setPackage(km3.Package newPackage) {
-		if (newPackage != eInternalContainer() || (eContainerFeatureID() != KM3Package.MODEL_ELEMENT__PACKAGE && newPackage != null)) {
+		if (newPackage != eInternalContainer() || (eContainerFeatureID() != Km3Package.MODEL_ELEMENT__PACKAGE && newPackage != null)) {
 			if (EcoreUtil.isAncestor(this, newPackage))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
 			NotificationChain msgs = null;
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newPackage != null)
-				msgs = ((InternalEObject)newPackage).eInverseAdd(this, KM3Package.PACKAGE__CONTENTS, km3.Package.class, msgs);
+				msgs = ((InternalEObject)newPackage).eInverseAdd(this, Km3Package.PACKAGE__CONTENTS, km3.Package.class, msgs);
 			msgs = basicSetPackage(newPackage, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, KM3Package.MODEL_ELEMENT__PACKAGE, newPackage, newPackage));
+			eNotify(new ENotificationImpl(this, Notification.SET, Km3Package.MODEL_ELEMENT__PACKAGE, newPackage, newPackage));
 	}
 
 	/**
@@ -139,7 +139,7 @@ public abstract class ModelElementImpl extends LocatedElementImpl implements Mod
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case KM3Package.MODEL_ELEMENT__PACKAGE:
+			case Km3Package.MODEL_ELEMENT__PACKAGE:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetPackage((km3.Package)otherEnd, msgs);
@@ -155,7 +155,7 @@ public abstract class ModelElementImpl extends LocatedElementImpl implements Mod
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case KM3Package.MODEL_ELEMENT__PACKAGE:
+			case Km3Package.MODEL_ELEMENT__PACKAGE:
 				return basicSetPackage(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -169,8 +169,8 @@ public abstract class ModelElementImpl extends LocatedElementImpl implements Mod
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
-			case KM3Package.MODEL_ELEMENT__PACKAGE:
-				return eInternalContainer().eInverseRemove(this, KM3Package.PACKAGE__CONTENTS, km3.Package.class, msgs);
+			case Km3Package.MODEL_ELEMENT__PACKAGE:
+				return eInternalContainer().eInverseRemove(this, Km3Package.PACKAGE__CONTENTS, km3.Package.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -183,9 +183,9 @@ public abstract class ModelElementImpl extends LocatedElementImpl implements Mod
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case KM3Package.MODEL_ELEMENT__NAME:
+			case Km3Package.MODEL_ELEMENT__NAME:
 				return getName();
-			case KM3Package.MODEL_ELEMENT__PACKAGE:
+			case Km3Package.MODEL_ELEMENT__PACKAGE:
 				return getPackage();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -199,10 +199,10 @@ public abstract class ModelElementImpl extends LocatedElementImpl implements Mod
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case KM3Package.MODEL_ELEMENT__NAME:
+			case Km3Package.MODEL_ELEMENT__NAME:
 				setName((String)newValue);
 				return;
-			case KM3Package.MODEL_ELEMENT__PACKAGE:
+			case Km3Package.MODEL_ELEMENT__PACKAGE:
 				setPackage((km3.Package)newValue);
 				return;
 		}
@@ -217,10 +217,10 @@ public abstract class ModelElementImpl extends LocatedElementImpl implements Mod
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case KM3Package.MODEL_ELEMENT__NAME:
+			case Km3Package.MODEL_ELEMENT__NAME:
 				setName(NAME_EDEFAULT);
 				return;
-			case KM3Package.MODEL_ELEMENT__PACKAGE:
+			case Km3Package.MODEL_ELEMENT__PACKAGE:
 				setPackage((km3.Package)null);
 				return;
 		}
@@ -235,9 +235,9 @@ public abstract class ModelElementImpl extends LocatedElementImpl implements Mod
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case KM3Package.MODEL_ELEMENT__NAME:
+			case Km3Package.MODEL_ELEMENT__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case KM3Package.MODEL_ELEMENT__PACKAGE:
+			case Km3Package.MODEL_ELEMENT__PACKAGE:
 				return getPackage() != null;
 		}
 		return super.eIsSet(featureID);

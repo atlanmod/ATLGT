@@ -17,7 +17,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link km3.Package#getMetamodel <em>Metamodel</em>}</li>
  * </ul>
  *
- * @see km3.KM3Package#getPackage()
+ * @see km3.Km3Package#getPackage()
  * @model
  * @generated
  */
@@ -33,7 +33,7 @@ public interface Package extends ModelElement {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Contents</em>' containment reference list.
-	 * @see km3.KM3Package#getPackage_Contents()
+	 * @see km3.Km3Package#getPackage_Contents()
 	 * @see km3.ModelElement#getPackage
 	 * @model opposite="package" containment="true"
 	 * @generated
@@ -51,7 +51,7 @@ public interface Package extends ModelElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Metamodel</em>' reference.
 	 * @see #setMetamodel(Metamodel)
-	 * @see km3.KM3Package#getPackage_Metamodel()
+	 * @see km3.Km3Package#getPackage_Metamodel()
 	 * @see km3.Metamodel#getContents
 	 * @model opposite="contents" ordered="false"
 	 * @generated

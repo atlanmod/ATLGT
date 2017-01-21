@@ -17,7 +17,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link km3.Operation#getParameters <em>Parameters</em>}</li>
  * </ul>
  *
- * @see km3.KM3Package#getOperation()
+ * @see km3.Km3Package#getOperation()
  * @model
  * @generated
  */
@@ -33,7 +33,7 @@ public interface Operation extends TypedElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Owner</em>' reference.
 	 * @see #setOwner(km3.Class)
-	 * @see km3.KM3Package#getOperation_Owner()
+	 * @see km3.Km3Package#getOperation_Owner()
 	 * @see km3.Class#getOperations
 	 * @model opposite="operations" ordered="false"
 	 * @generated
@@ -61,7 +61,7 @@ public interface Operation extends TypedElement {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Parameters</em>' reference list.
-	 * @see km3.KM3Package#getOperation_Parameters()
+	 * @see km3.Km3Package#getOperation_Parameters()
 	 * @see km3.Parameter#getOwner
 	 * @model opposite="owner"
 	 * @generated

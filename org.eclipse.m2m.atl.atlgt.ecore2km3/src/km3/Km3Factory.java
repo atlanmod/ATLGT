@@ -9,17 +9,17 @@ import org.eclipse.emf.ecore.EFactory;
  * The <b>Factory</b> for the model.
  * It provides a create method for each non-abstract class of the model.
  * <!-- end-user-doc -->
- * @see km3.KM3Package
+ * @see km3.Km3Package
  * @generated
  */
-public interface KM3Factory extends EFactory {
+public interface Km3Factory extends EFactory {
 	/**
 	 * The singleton instance of the factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	KM3Factory eINSTANCE = km3.impl.KM3FactoryImpl.init();
+	Km3Factory eINSTANCE = km3.impl.Km3FactoryImpl.init();
 
 	/**
 	 * Returns a new object of class '<em>Classifier</em>'.
@@ -154,6 +154,6 @@ public interface KM3Factory extends EFactory {
 	 * @return the package supported by this factory.
 	 * @generated
 	 */
-	KM3Package getKM3Package();
+	Km3Package getKm3Package();
 
-} //KM3Factory
+} //Km3Factory

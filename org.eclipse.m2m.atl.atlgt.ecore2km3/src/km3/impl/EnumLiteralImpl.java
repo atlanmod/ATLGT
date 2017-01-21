@@ -4,7 +4,7 @@ package km3.impl;
 
 import km3.EnumLiteral;
 import km3.Enumeration;
-import km3.KM3Package;
+import km3.Km3Package;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -54,7 +54,7 @@ public class EnumLiteralImpl extends ModelElementImpl implements EnumLiteral {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return KM3Package.Literals.ENUM_LITERAL;
+		return Km3Package.Literals.ENUM_LITERAL;
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class EnumLiteralImpl extends ModelElementImpl implements EnumLiteral {
 			enum_ = (Enumeration)eResolveProxy(oldEnum);
 			if (enum_ != oldEnum) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, KM3Package.ENUM_LITERAL__ENUM, oldEnum, enum_));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, Km3Package.ENUM_LITERAL__ENUM, oldEnum, enum_));
 			}
 		}
 		return enum_;
@@ -92,7 +92,7 @@ public class EnumLiteralImpl extends ModelElementImpl implements EnumLiteral {
 		Enumeration oldEnum = enum_;
 		enum_ = newEnum;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KM3Package.ENUM_LITERAL__ENUM, oldEnum, newEnum);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Km3Package.ENUM_LITERAL__ENUM, oldEnum, newEnum);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -107,14 +107,14 @@ public class EnumLiteralImpl extends ModelElementImpl implements EnumLiteral {
 		if (newEnum != enum_) {
 			NotificationChain msgs = null;
 			if (enum_ != null)
-				msgs = ((InternalEObject)enum_).eInverseRemove(this, KM3Package.ENUMERATION__LITERALS, Enumeration.class, msgs);
+				msgs = ((InternalEObject)enum_).eInverseRemove(this, Km3Package.ENUMERATION__LITERALS, Enumeration.class, msgs);
 			if (newEnum != null)
-				msgs = ((InternalEObject)newEnum).eInverseAdd(this, KM3Package.ENUMERATION__LITERALS, Enumeration.class, msgs);
+				msgs = ((InternalEObject)newEnum).eInverseAdd(this, Km3Package.ENUMERATION__LITERALS, Enumeration.class, msgs);
 			msgs = basicSetEnum(newEnum, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, KM3Package.ENUM_LITERAL__ENUM, newEnum, newEnum));
+			eNotify(new ENotificationImpl(this, Notification.SET, Km3Package.ENUM_LITERAL__ENUM, newEnum, newEnum));
 	}
 
 	/**
@@ -125,9 +125,9 @@ public class EnumLiteralImpl extends ModelElementImpl implements EnumLiteral {
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case KM3Package.ENUM_LITERAL__ENUM:
+			case Km3Package.ENUM_LITERAL__ENUM:
 				if (enum_ != null)
-					msgs = ((InternalEObject)enum_).eInverseRemove(this, KM3Package.ENUMERATION__LITERALS, Enumeration.class, msgs);
+					msgs = ((InternalEObject)enum_).eInverseRemove(this, Km3Package.ENUMERATION__LITERALS, Enumeration.class, msgs);
 				return basicSetEnum((Enumeration)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -141,7 +141,7 @@ public class EnumLiteralImpl extends ModelElementImpl implements EnumLiteral {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case KM3Package.ENUM_LITERAL__ENUM:
+			case Km3Package.ENUM_LITERAL__ENUM:
 				return basicSetEnum(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -155,7 +155,7 @@ public class EnumLiteralImpl extends ModelElementImpl implements EnumLiteral {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case KM3Package.ENUM_LITERAL__ENUM:
+			case Km3Package.ENUM_LITERAL__ENUM:
 				if (resolve) return getEnum();
 				return basicGetEnum();
 		}
@@ -170,7 +170,7 @@ public class EnumLiteralImpl extends ModelElementImpl implements EnumLiteral {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case KM3Package.ENUM_LITERAL__ENUM:
+			case Km3Package.ENUM_LITERAL__ENUM:
 				setEnum((Enumeration)newValue);
 				return;
 		}
@@ -185,7 +185,7 @@ public class EnumLiteralImpl extends ModelElementImpl implements EnumLiteral {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case KM3Package.ENUM_LITERAL__ENUM:
+			case Km3Package.ENUM_LITERAL__ENUM:
 				setEnum((Enumeration)null);
 				return;
 		}
@@ -200,7 +200,7 @@ public class EnumLiteralImpl extends ModelElementImpl implements EnumLiteral {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case KM3Package.ENUM_LITERAL__ENUM:
+			case Km3Package.ENUM_LITERAL__ENUM:
 				return enum_ != null;
 		}
 		return super.eIsSet(featureID);

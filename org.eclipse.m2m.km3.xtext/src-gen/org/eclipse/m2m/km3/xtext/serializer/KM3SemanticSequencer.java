@@ -5,8 +5,9 @@ package org.eclipse.m2m.km3.xtext.serializer;
 
 import com.google.inject.Inject;
 import java.util.Set;
+import km3.Attribute;
 import km3.DataType;
-import km3.KM3Package;
+import km3.Km3Package;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.m2m.km3.xtext.services.KM3GrammarAccess;
@@ -30,18 +31,50 @@ public class KM3SemanticSequencer extends AbstractDelegatingSemanticSequencer {
 		ParserRule rule = context.getParserRule();
 		Action action = context.getAssignedAction();
 		Set<Parameter> parameters = context.getEnabledBooleanParameters();
-		if (epackage == KM3Package.eINSTANCE)
+		if (epackage == Km3Package.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
-			case KM3Package.DATA_TYPE:
+			case Km3Package.ATTRIBUTE:
+				sequence_Attribute(context, (Attribute) semanticObject); 
+				return; 
+			case Km3Package.CLASS:
+				sequence_Class(context, (km3.Class) semanticObject); 
+				return; 
+			case Km3Package.DATA_TYPE:
 				sequence_DataType(context, (DataType) semanticObject); 
 				return; 
-			case KM3Package.PACKAGE:
+			case Km3Package.PACKAGE:
 				sequence_Package(context, (km3.Package) semanticObject); 
 				return; 
 			}
 		if (errorAcceptor != null)
 			errorAcceptor.accept(diagnosticProvider.createInvalidContextOrTypeDiagnostic(semanticObject, context));
 	}
+	
+	/**
+	 * Contexts:
+	 *     StructuralFeature returns Attribute
+	 *     Attribute returns Attribute
+	 *
+	 * Constraint:
+	 *     (isUnique?='unique'? name=ID isOrdered?='ordered'? type=[Classifier|ID])
+	 */
+	protected void sequence_Attribute(ISerializationContext context, Attribute semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ModelElement returns Class
+	 *     Class returns Class
+	 *
+	 * Constraint:
+	 *     (isAbstract?='abstract'? name=ID (supertypes+=[Class|ID] supertypes+=[Class|ID]*)? structuralFeatures+=StructuralFeature*)
+	 */
+	protected void sequence_Class(ISerializationContext context, km3.Class semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
 	
 	/**
 	 * Contexts:
@@ -53,8 +86,8 @@ public class KM3SemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 */
 	protected void sequence_DataType(ISerializationContext context, DataType semanticObject) {
 		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, KM3Package.Literals.MODEL_ELEMENT__NAME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KM3Package.Literals.MODEL_ELEMENT__NAME));
+			if (transientValues.isValueTransient(semanticObject, Km3Package.Literals.MODEL_ELEMENT__NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, Km3Package.Literals.MODEL_ELEMENT__NAME));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getDataTypeAccess().getNameIDTerminalRuleCall_1_0(), semanticObject.getName());

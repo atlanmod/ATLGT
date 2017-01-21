@@ -11,13 +11,36 @@ Package:
 		(contents+=ModelElement)*
 	'}';
 
-ModelElement returns ModelElement:
-	DataType
-//	Classifier_Impl | DataType | Enumeration | EnumLiteral | TemplateParameter | Class | TypedElement_Impl | StructuralFeature_Impl | Attribute | Reference | Operation | Parameter | Package;
+ModelElement:
+	DataType | Class
+//	Classifier_Impl | Enumeration | EnumLiteral | TemplateParameter | TypedElement_Impl | StructuralFeature_Impl | Attribute | Reference | Operation | Parameter | Package;
 ;
 
-DataType returns DataType:
+DataType:
 	'datatype' name=ID ';';
+
+Class:
+	(isAbstract?='abstract')?
+	'class' name=ID
+		('extends' supertypes+=[Class] ( "," supertypes+=[Class])* )?
+	'{'	(structuralFeatures+=StructuralFeature)*
+	'}';
+
+StructuralFeature returns StructuralFeature:
+	Attribute
+//	StructuralFeature_Impl | Reference;
+;
+
+Attribute returns Attribute:
+	(isUnique?='unique')?
+	'attribute' name=ID
+//			$multiplicity
+//		'lower' lower=Integer
+//		'upper' upper=Integer
+	(isOrdered ?= 'ordered')?
+	':' 'type' type=[Classifier]
+	';'
+;
 
 //Metamodel returns Metamodel:
 //	'Metamodel'
@@ -26,8 +49,6 @@ DataType returns DataType:
 //		('contents' '(' contents+=[Package|STRING] ( "," contents+=[Package|STRING])* ')' )?
 //	'}';
 //
-//StructuralFeature returns StructuralFeature:
-//	StructuralFeature_Impl | Attribute | Reference;
 //
 //
 //Classifier returns Classifier:
@@ -68,17 +89,6 @@ DataType returns DataType:
 //		'name' name=String0
 //	'}';
 //
-//Class returns Class:
-//	'Class'
-//	'{'
-//		'location' location=String0
-//		'name' name=String0
-//		'isAbstract' isAbstract=Boolean
-//		('parameters' '(' parameters+=[TemplateParameter|STRING] ( "," parameters+=[TemplateParameter|STRING])* ')' )?
-//		('supertypes' '(' supertypes+=[Class|STRING] ( "," supertypes+=[Class|STRING])* ')' )?
-//		('structuralFeatures' '(' structuralFeatures+=[StructuralFeature|STRING] ( "," structuralFeatures+=[StructuralFeature|STRING])* ')' )?
-//		('operations' '(' operations+=[Operation|STRING] ( "," operations+=[Operation|STRING])* ')' )?
-//	'}';
 //
 //TypedElement_Impl returns TypedElement:
 //	'TypedElement'
@@ -94,21 +104,6 @@ DataType returns DataType:
 //
 //StructuralFeature_Impl returns StructuralFeature:
 //	'StructuralFeature'
-//	'{'
-//		'location' location=String0
-//		'name' name=String0
-//		'lower' lower=Integer
-//		'upper' upper=Integer
-//		'isOrdered' isOrdered=Boolean
-//		'isUnique' isUnique=Boolean
-//		'type' type=[Classifier|STRING]
-//		'owner' owner=[Class|STRING]
-//		('subsetOf' '(' subsetOf+=[StructuralFeature|STRING] ( "," subsetOf+=[StructuralFeature|STRING])* ')' )?
-//		('derivedFrom' '(' derivedFrom+=[StructuralFeature|STRING] ( "," derivedFrom+=[StructuralFeature|STRING])* ')' )?
-//	'}';
-//
-//Attribute returns Attribute:
-//	'Attribute'
 //	'{'
 //		'location' location=String0
 //		'name' name=String0

@@ -4,7 +4,7 @@ package km3.impl;
 
 import java.util.Collection;
 
-import km3.KM3Package;
+import km3.Km3Package;
 import km3.Metamodel;
 import km3.ModelElement;
 
@@ -72,7 +72,7 @@ public class PackageImpl extends ModelElementImpl implements km3.Package {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return KM3Package.Literals.PACKAGE;
+		return Km3Package.Literals.PACKAGE;
 	}
 
 	/**
@@ -82,7 +82,7 @@ public class PackageImpl extends ModelElementImpl implements km3.Package {
 	 */
 	public EList<ModelElement> getContents() {
 		if (contents == null) {
-			contents = new EObjectContainmentWithInverseEList<ModelElement>(ModelElement.class, this, KM3Package.PACKAGE__CONTENTS, KM3Package.MODEL_ELEMENT__PACKAGE);
+			contents = new EObjectContainmentWithInverseEList<ModelElement>(ModelElement.class, this, Km3Package.PACKAGE__CONTENTS, Km3Package.MODEL_ELEMENT__PACKAGE);
 		}
 		return contents;
 	}
@@ -98,7 +98,7 @@ public class PackageImpl extends ModelElementImpl implements km3.Package {
 			metamodel = (Metamodel)eResolveProxy(oldMetamodel);
 			if (metamodel != oldMetamodel) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, KM3Package.PACKAGE__METAMODEL, oldMetamodel, metamodel));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, Km3Package.PACKAGE__METAMODEL, oldMetamodel, metamodel));
 			}
 		}
 		return metamodel;
@@ -122,7 +122,7 @@ public class PackageImpl extends ModelElementImpl implements km3.Package {
 		Metamodel oldMetamodel = metamodel;
 		metamodel = newMetamodel;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KM3Package.PACKAGE__METAMODEL, oldMetamodel, newMetamodel);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Km3Package.PACKAGE__METAMODEL, oldMetamodel, newMetamodel);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -137,14 +137,14 @@ public class PackageImpl extends ModelElementImpl implements km3.Package {
 		if (newMetamodel != metamodel) {
 			NotificationChain msgs = null;
 			if (metamodel != null)
-				msgs = ((InternalEObject)metamodel).eInverseRemove(this, KM3Package.METAMODEL__CONTENTS, Metamodel.class, msgs);
+				msgs = ((InternalEObject)metamodel).eInverseRemove(this, Km3Package.METAMODEL__CONTENTS, Metamodel.class, msgs);
 			if (newMetamodel != null)
-				msgs = ((InternalEObject)newMetamodel).eInverseAdd(this, KM3Package.METAMODEL__CONTENTS, Metamodel.class, msgs);
+				msgs = ((InternalEObject)newMetamodel).eInverseAdd(this, Km3Package.METAMODEL__CONTENTS, Metamodel.class, msgs);
 			msgs = basicSetMetamodel(newMetamodel, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, KM3Package.PACKAGE__METAMODEL, newMetamodel, newMetamodel));
+			eNotify(new ENotificationImpl(this, Notification.SET, Km3Package.PACKAGE__METAMODEL, newMetamodel, newMetamodel));
 	}
 
 	/**
@@ -156,11 +156,11 @@ public class PackageImpl extends ModelElementImpl implements km3.Package {
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case KM3Package.PACKAGE__CONTENTS:
+			case Km3Package.PACKAGE__CONTENTS:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getContents()).basicAdd(otherEnd, msgs);
-			case KM3Package.PACKAGE__METAMODEL:
+			case Km3Package.PACKAGE__METAMODEL:
 				if (metamodel != null)
-					msgs = ((InternalEObject)metamodel).eInverseRemove(this, KM3Package.METAMODEL__CONTENTS, Metamodel.class, msgs);
+					msgs = ((InternalEObject)metamodel).eInverseRemove(this, Km3Package.METAMODEL__CONTENTS, Metamodel.class, msgs);
 				return basicSetMetamodel((Metamodel)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -174,9 +174,9 @@ public class PackageImpl extends ModelElementImpl implements km3.Package {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case KM3Package.PACKAGE__CONTENTS:
+			case Km3Package.PACKAGE__CONTENTS:
 				return ((InternalEList<?>)getContents()).basicRemove(otherEnd, msgs);
-			case KM3Package.PACKAGE__METAMODEL:
+			case Km3Package.PACKAGE__METAMODEL:
 				return basicSetMetamodel(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -190,9 +190,9 @@ public class PackageImpl extends ModelElementImpl implements km3.Package {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case KM3Package.PACKAGE__CONTENTS:
+			case Km3Package.PACKAGE__CONTENTS:
 				return getContents();
-			case KM3Package.PACKAGE__METAMODEL:
+			case Km3Package.PACKAGE__METAMODEL:
 				if (resolve) return getMetamodel();
 				return basicGetMetamodel();
 		}
@@ -208,11 +208,11 @@ public class PackageImpl extends ModelElementImpl implements km3.Package {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case KM3Package.PACKAGE__CONTENTS:
+			case Km3Package.PACKAGE__CONTENTS:
 				getContents().clear();
 				getContents().addAll((Collection<? extends ModelElement>)newValue);
 				return;
-			case KM3Package.PACKAGE__METAMODEL:
+			case Km3Package.PACKAGE__METAMODEL:
 				setMetamodel((Metamodel)newValue);
 				return;
 		}
@@ -227,10 +227,10 @@ public class PackageImpl extends ModelElementImpl implements km3.Package {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case KM3Package.PACKAGE__CONTENTS:
+			case Km3Package.PACKAGE__CONTENTS:
 				getContents().clear();
 				return;
-			case KM3Package.PACKAGE__METAMODEL:
+			case Km3Package.PACKAGE__METAMODEL:
 				setMetamodel((Metamodel)null);
 				return;
 		}
@@ -245,9 +245,9 @@ public class PackageImpl extends ModelElementImpl implements km3.Package {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case KM3Package.PACKAGE__CONTENTS:
+			case Km3Package.PACKAGE__CONTENTS:
 				return contents != null && !contents.isEmpty();
-			case KM3Package.PACKAGE__METAMODEL:
+			case Km3Package.PACKAGE__METAMODEL:
 				return metamodel != null;
 		}
 		return super.eIsSet(featureID);

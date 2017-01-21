@@ -2,7 +2,7 @@
  */
 package km3.impl;
 
-import km3.KM3Package;
+import km3.Km3Package;
 import km3.Operation;
 import km3.Parameter;
 
@@ -54,7 +54,7 @@ public class ParameterImpl extends TypedElementImpl implements Parameter {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return KM3Package.Literals.PARAMETER;
+		return Km3Package.Literals.PARAMETER;
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class ParameterImpl extends TypedElementImpl implements Parameter {
 			owner = (Operation)eResolveProxy(oldOwner);
 			if (owner != oldOwner) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, KM3Package.PARAMETER__OWNER, oldOwner, owner));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, Km3Package.PARAMETER__OWNER, oldOwner, owner));
 			}
 		}
 		return owner;
@@ -92,7 +92,7 @@ public class ParameterImpl extends TypedElementImpl implements Parameter {
 		Operation oldOwner = owner;
 		owner = newOwner;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KM3Package.PARAMETER__OWNER, oldOwner, newOwner);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Km3Package.PARAMETER__OWNER, oldOwner, newOwner);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -107,14 +107,14 @@ public class ParameterImpl extends TypedElementImpl implements Parameter {
 		if (newOwner != owner) {
 			NotificationChain msgs = null;
 			if (owner != null)
-				msgs = ((InternalEObject)owner).eInverseRemove(this, KM3Package.OPERATION__PARAMETERS, Operation.class, msgs);
+				msgs = ((InternalEObject)owner).eInverseRemove(this, Km3Package.OPERATION__PARAMETERS, Operation.class, msgs);
 			if (newOwner != null)
-				msgs = ((InternalEObject)newOwner).eInverseAdd(this, KM3Package.OPERATION__PARAMETERS, Operation.class, msgs);
+				msgs = ((InternalEObject)newOwner).eInverseAdd(this, Km3Package.OPERATION__PARAMETERS, Operation.class, msgs);
 			msgs = basicSetOwner(newOwner, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, KM3Package.PARAMETER__OWNER, newOwner, newOwner));
+			eNotify(new ENotificationImpl(this, Notification.SET, Km3Package.PARAMETER__OWNER, newOwner, newOwner));
 	}
 
 	/**
@@ -125,9 +125,9 @@ public class ParameterImpl extends TypedElementImpl implements Parameter {
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case KM3Package.PARAMETER__OWNER:
+			case Km3Package.PARAMETER__OWNER:
 				if (owner != null)
-					msgs = ((InternalEObject)owner).eInverseRemove(this, KM3Package.OPERATION__PARAMETERS, Operation.class, msgs);
+					msgs = ((InternalEObject)owner).eInverseRemove(this, Km3Package.OPERATION__PARAMETERS, Operation.class, msgs);
 				return basicSetOwner((Operation)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -141,7 +141,7 @@ public class ParameterImpl extends TypedElementImpl implements Parameter {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case KM3Package.PARAMETER__OWNER:
+			case Km3Package.PARAMETER__OWNER:
 				return basicSetOwner(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -155,7 +155,7 @@ public class ParameterImpl extends TypedElementImpl implements Parameter {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case KM3Package.PARAMETER__OWNER:
+			case Km3Package.PARAMETER__OWNER:
 				if (resolve) return getOwner();
 				return basicGetOwner();
 		}
@@ -170,7 +170,7 @@ public class ParameterImpl extends TypedElementImpl implements Parameter {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case KM3Package.PARAMETER__OWNER:
+			case Km3Package.PARAMETER__OWNER:
 				setOwner((Operation)newValue);
 				return;
 		}
@@ -185,7 +185,7 @@ public class ParameterImpl extends TypedElementImpl implements Parameter {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case KM3Package.PARAMETER__OWNER:
+			case Km3Package.PARAMETER__OWNER:
 				setOwner((Operation)null);
 				return;
 		}
@@ -200,7 +200,7 @@ public class ParameterImpl extends TypedElementImpl implements Parameter {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case KM3Package.PARAMETER__OWNER:
+			case Km3Package.PARAMETER__OWNER:
 				return owner != null;
 		}
 		return super.eIsSet(featureID);

@@ -11,8 +11,8 @@ import km3.Classifier;
 import km3.DataType;
 import km3.EnumLiteral;
 import km3.Enumeration;
-import km3.KM3Factory;
-import km3.KM3Package;
+import km3.Km3Factory;
+import km3.Km3Package;
 import km3.LocatedElement;
 import km3.Metamodel;
 import km3.ModelElement;
@@ -36,7 +36,7 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
  * <!-- end-user-doc -->
  * @generated
  */
-public class KM3PackageImpl extends EPackageImpl implements KM3Package {
+public class Km3PackageImpl extends EPackageImpl implements Km3Package {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -160,12 +160,12 @@ public class KM3PackageImpl extends EPackageImpl implements KM3Package {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
-	 * @see km3.KM3Package#eNS_URI
+	 * @see km3.Km3Package#eNS_URI
 	 * @see #init()
 	 * @generated
 	 */
-	private KM3PackageImpl() {
-		super(eNS_URI, KM3Factory.eINSTANCE);
+	private Km3PackageImpl() {
+		super(eNS_URI, Km3Factory.eINSTANCE);
 	}
 
 	/**
@@ -178,7 +178,7 @@ public class KM3PackageImpl extends EPackageImpl implements KM3Package {
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
 	 * 
-	 * <p>This method is used to initialize {@link KM3Package#eINSTANCE} when that field is accessed.
+	 * <p>This method is used to initialize {@link Km3Package#eINSTANCE} when that field is accessed.
 	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -187,11 +187,11 @@ public class KM3PackageImpl extends EPackageImpl implements KM3Package {
 	 * @see #initializePackageContents()
 	 * @generated
 	 */
-	public static KM3Package init() {
-		if (isInited) return (KM3Package)EPackage.Registry.INSTANCE.getEPackage(KM3Package.eNS_URI);
+	public static Km3Package init() {
+		if (isInited) return (Km3Package)EPackage.Registry.INSTANCE.getEPackage(Km3Package.eNS_URI);
 
 		// Obtain or create and register package
-		KM3PackageImpl theKM3Package = (KM3PackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof KM3PackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new KM3PackageImpl());
+		Km3PackageImpl theKm3Package = (Km3PackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof Km3PackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new Km3PackageImpl());
 
 		isInited = true;
 
@@ -199,20 +199,20 @@ public class KM3PackageImpl extends EPackageImpl implements KM3Package {
 		PrimitiveTypesPackageImpl thePrimitiveTypesPackage = (PrimitiveTypesPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(PrimitiveTypesPackage.eNS_URI) instanceof PrimitiveTypesPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(PrimitiveTypesPackage.eNS_URI) : PrimitiveTypesPackage.eINSTANCE);
 
 		// Create package meta-data objects
-		theKM3Package.createPackageContents();
+		theKm3Package.createPackageContents();
 		thePrimitiveTypesPackage.createPackageContents();
 
 		// Initialize created meta-data
-		theKM3Package.initializePackageContents();
+		theKm3Package.initializePackageContents();
 		thePrimitiveTypesPackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
-		theKM3Package.freeze();
+		theKm3Package.freeze();
 
   
 		// Update the registry and return the package
-		EPackage.Registry.INSTANCE.put(KM3Package.eNS_URI, theKM3Package);
-		return theKM3Package;
+		EPackage.Registry.INSTANCE.put(Km3Package.eNS_URI, theKm3Package);
+		return theKm3Package;
 	}
 
 	/**
@@ -598,8 +598,8 @@ public class KM3PackageImpl extends EPackageImpl implements KM3Package {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public KM3Factory getKM3Factory() {
-		return (KM3Factory)getEFactoryInstance();
+	public Km3Factory getKm3Factory() {
+		return (Km3Factory)getEFactoryInstance();
 	}
 
 	/**
@@ -751,18 +751,18 @@ public class KM3PackageImpl extends EPackageImpl implements KM3Package {
 		initEReference(getClass_Parameters(), this.getTemplateParameter(), null, "parameters", null, 0, -1, km3.Class.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getClass_IsAbstract(), thePrimitiveTypesPackage.getBoolean(), "isAbstract", null, 1, 1, km3.Class.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getClass_Supertypes(), this.getClass_(), null, "supertypes", null, 0, -1, km3.Class.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEReference(getClass_StructuralFeatures(), this.getStructuralFeature(), this.getStructuralFeature_Owner(), "structuralFeatures", null, 0, -1, km3.Class.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getClass_StructuralFeatures(), this.getStructuralFeature(), this.getStructuralFeature_Owner(), "structuralFeatures", null, 0, -1, km3.Class.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getClass_Operations(), this.getOperation(), this.getOperation_Owner(), "operations", null, 0, -1, km3.Class.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(typedElementEClass, TypedElement.class, "TypedElement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getTypedElement_Lower(), thePrimitiveTypesPackage.getInteger(), "lower", null, 1, 1, TypedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEAttribute(getTypedElement_Upper(), thePrimitiveTypesPackage.getInteger(), "upper", null, 1, 1, TypedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEAttribute(getTypedElement_IsOrdered(), thePrimitiveTypesPackage.getBoolean(), "isOrdered", null, 1, 1, TypedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEAttribute(getTypedElement_IsUnique(), thePrimitiveTypesPackage.getBoolean(), "isUnique", null, 1, 1, TypedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getTypedElement_Lower(), thePrimitiveTypesPackage.getInteger(), "lower", "0", 1, 1, TypedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getTypedElement_Upper(), thePrimitiveTypesPackage.getInteger(), "upper", "1", 1, 1, TypedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getTypedElement_IsOrdered(), thePrimitiveTypesPackage.getBoolean(), "isOrdered", "false", 1, 1, TypedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getTypedElement_IsUnique(), thePrimitiveTypesPackage.getBoolean(), "isUnique", "false", 1, 1, TypedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getTypedElement_Type(), this.getClassifier(), null, "type", null, 1, 1, TypedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
 		initEClass(structuralFeatureEClass, StructuralFeature.class, "StructuralFeature", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getStructuralFeature_Owner(), this.getClass_(), this.getClass_StructuralFeatures(), "owner", null, 0, 1, StructuralFeature.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getStructuralFeature_Owner(), this.getClass_(), this.getClass_StructuralFeatures(), "owner", null, 0, 1, StructuralFeature.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getStructuralFeature_SubsetOf(), this.getStructuralFeature(), this.getStructuralFeature_DerivedFrom(), "subsetOf", null, 0, -1, StructuralFeature.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getStructuralFeature_DerivedFrom(), this.getStructuralFeature(), this.getStructuralFeature_SubsetOf(), "derivedFrom", null, 0, -1, StructuralFeature.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
@@ -790,4 +790,4 @@ public class KM3PackageImpl extends EPackageImpl implements KM3Package {
 		createResource(eNS_URI);
 	}
 
-} //KM3PackageImpl
+} //Km3PackageImpl

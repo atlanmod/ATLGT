@@ -3,7 +3,7 @@
 package km3.impl;
 
 import km3.Classifier;
-import km3.KM3Package;
+import km3.Km3Package;
 
 import org.eclipse.emf.ecore.EClass;
 
@@ -31,7 +31,7 @@ public class ClassifierImpl extends ModelElementImpl implements Classifier {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return KM3Package.Literals.CLASSIFIER;
+		return Km3Package.Literals.CLASSIFIER;
 	}
 
 } //ClassifierImpl

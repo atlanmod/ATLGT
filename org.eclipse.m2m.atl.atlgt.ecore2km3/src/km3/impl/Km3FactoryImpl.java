@@ -7,8 +7,8 @@ import km3.Classifier;
 import km3.DataType;
 import km3.EnumLiteral;
 import km3.Enumeration;
-import km3.KM3Factory;
-import km3.KM3Package;
+import km3.Km3Factory;
+import km3.Km3Package;
 import km3.Metamodel;
 import km3.Operation;
 import km3.Parameter;
@@ -31,24 +31,24 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
  * <!-- end-user-doc -->
  * @generated
  */
-public class KM3FactoryImpl extends EFactoryImpl implements KM3Factory {
+public class Km3FactoryImpl extends EFactoryImpl implements Km3Factory {
 	/**
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static KM3Factory init() {
+	public static Km3Factory init() {
 		try {
-			KM3Factory theKM3Factory = (KM3Factory)EPackage.Registry.INSTANCE.getEFactory(KM3Package.eNS_URI);
-			if (theKM3Factory != null) {
-				return theKM3Factory;
+			Km3Factory theKm3Factory = (Km3Factory)EPackage.Registry.INSTANCE.getEFactory(Km3Package.eNS_URI);
+			if (theKm3Factory != null) {
+				return theKm3Factory;
 			}
 		}
 		catch (Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
-		return new KM3FactoryImpl();
+		return new Km3FactoryImpl();
 	}
 
 	/**
@@ -57,7 +57,7 @@ public class KM3FactoryImpl extends EFactoryImpl implements KM3Factory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public KM3FactoryImpl() {
+	public Km3FactoryImpl() {
 		super();
 	}
 
@@ -69,20 +69,20 @@ public class KM3FactoryImpl extends EFactoryImpl implements KM3Factory {
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case KM3Package.CLASSIFIER: return createClassifier();
-			case KM3Package.DATA_TYPE: return createDataType();
-			case KM3Package.ENUMERATION: return createEnumeration();
-			case KM3Package.ENUM_LITERAL: return createEnumLiteral();
-			case KM3Package.TEMPLATE_PARAMETER: return createTemplateParameter();
-			case KM3Package.CLASS: return createClass();
-			case KM3Package.TYPED_ELEMENT: return createTypedElement();
-			case KM3Package.STRUCTURAL_FEATURE: return createStructuralFeature();
-			case KM3Package.ATTRIBUTE: return createAttribute();
-			case KM3Package.REFERENCE: return createReference();
-			case KM3Package.OPERATION: return createOperation();
-			case KM3Package.PARAMETER: return createParameter();
-			case KM3Package.PACKAGE: return createPackage();
-			case KM3Package.METAMODEL: return createMetamodel();
+			case Km3Package.CLASSIFIER: return createClassifier();
+			case Km3Package.DATA_TYPE: return createDataType();
+			case Km3Package.ENUMERATION: return createEnumeration();
+			case Km3Package.ENUM_LITERAL: return createEnumLiteral();
+			case Km3Package.TEMPLATE_PARAMETER: return createTemplateParameter();
+			case Km3Package.CLASS: return createClass();
+			case Km3Package.TYPED_ELEMENT: return createTypedElement();
+			case Km3Package.STRUCTURAL_FEATURE: return createStructuralFeature();
+			case Km3Package.ATTRIBUTE: return createAttribute();
+			case Km3Package.REFERENCE: return createReference();
+			case Km3Package.OPERATION: return createOperation();
+			case Km3Package.PARAMETER: return createParameter();
+			case Km3Package.PACKAGE: return createPackage();
+			case Km3Package.METAMODEL: return createMetamodel();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -233,8 +233,8 @@ public class KM3FactoryImpl extends EFactoryImpl implements KM3Factory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public KM3Package getKM3Package() {
-		return (KM3Package)getEPackage();
+	public Km3Package getKm3Package() {
+		return (Km3Package)getEPackage();
 	}
 
 	/**
@@ -244,8 +244,8 @@ public class KM3FactoryImpl extends EFactoryImpl implements KM3Factory {
 	 * @generated
 	 */
 	@Deprecated
-	public static KM3Package getPackage() {
-		return KM3Package.eINSTANCE;
+	public static Km3Package getPackage() {
+		return Km3Package.eINSTANCE;
 	}
 
-} //KM3FactoryImpl
+} //Km3FactoryImpl

@@ -7,7 +7,7 @@ import km3.Classifier;
 import km3.DataType;
 import km3.EnumLiteral;
 import km3.Enumeration;
-import km3.KM3Package;
+import km3.Km3Package;
 import km3.LocatedElement;
 import km3.Metamodel;
 import km3.ModelElement;
@@ -30,17 +30,17 @@ import org.eclipse.emf.ecore.EObject;
  * The <b>Adapter Factory</b> for the model.
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
- * @see km3.KM3Package
+ * @see km3.Km3Package
  * @generated
  */
-public class KM3AdapterFactory extends AdapterFactoryImpl {
+public class Km3AdapterFactory extends AdapterFactoryImpl {
 	/**
 	 * The cached model package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected static KM3Package modelPackage;
+	protected static Km3Package modelPackage;
 
 	/**
 	 * Creates an instance of the adapter factory.
@@ -48,9 +48,9 @@ public class KM3AdapterFactory extends AdapterFactoryImpl {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public KM3AdapterFactory() {
+	public Km3AdapterFactory() {
 		if (modelPackage == null) {
-			modelPackage = KM3Package.eINSTANCE;
+			modelPackage = Km3Package.eINSTANCE;
 		}
 	}
 
@@ -79,8 +79,8 @@ public class KM3AdapterFactory extends AdapterFactoryImpl {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected KM3Switch<Adapter> modelSwitch =
-		new KM3Switch<Adapter>() {
+	protected Km3Switch<Adapter> modelSwitch =
+		new Km3Switch<Adapter>() {
 			@Override
 			public Adapter caseLocatedElement(LocatedElement object) {
 				return createLocatedElementAdapter();
@@ -401,4 +401,4 @@ public class KM3AdapterFactory extends AdapterFactoryImpl {
 		return null;
 	}
 
-} //KM3AdapterFactory
+} //Km3AdapterFactory

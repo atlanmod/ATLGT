@@ -15,7 +15,7 @@ package km3;
  *   <li>{@link km3.EnumLiteral#getEnum <em>Enum</em>}</li>
  * </ul>
  *
- * @see km3.KM3Package#getEnumLiteral()
+ * @see km3.Km3Package#getEnumLiteral()
  * @model
  * @generated
  */
@@ -31,7 +31,7 @@ public interface EnumLiteral extends ModelElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Enum</em>' reference.
 	 * @see #setEnum(Enumeration)
-	 * @see km3.KM3Package#getEnumLiteral_Enum()
+	 * @see km3.Km3Package#getEnumLiteral_Enum()
 	 * @see km3.Enumeration#getLiterals
 	 * @model opposite="literals" ordered="false"
 	 * @generated

@@ -9,7 +9,7 @@ package km3;
  * <!-- end-user-doc -->
  *
  *
- * @see km3.KM3Package#getTemplateParameter()
+ * @see km3.Km3Package#getTemplateParameter()
  * @model
  * @generated
  */

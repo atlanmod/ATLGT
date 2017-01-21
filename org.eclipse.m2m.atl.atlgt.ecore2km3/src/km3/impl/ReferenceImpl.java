@@ -2,7 +2,7 @@
  */
 package km3.impl;
 
-import km3.KM3Package;
+import km3.Km3Package;
 import km3.Reference;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -73,7 +73,7 @@ public class ReferenceImpl extends StructuralFeatureImpl implements Reference {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return KM3Package.Literals.REFERENCE;
+		return Km3Package.Literals.REFERENCE;
 	}
 
 	/**
@@ -94,7 +94,7 @@ public class ReferenceImpl extends StructuralFeatureImpl implements Reference {
 		Boolean oldIsContainer = isContainer;
 		isContainer = newIsContainer;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, KM3Package.REFERENCE__IS_CONTAINER, oldIsContainer, isContainer));
+			eNotify(new ENotificationImpl(this, Notification.SET, Km3Package.REFERENCE__IS_CONTAINER, oldIsContainer, isContainer));
 	}
 
 	/**
@@ -108,7 +108,7 @@ public class ReferenceImpl extends StructuralFeatureImpl implements Reference {
 			opposite = (Reference)eResolveProxy(oldOpposite);
 			if (opposite != oldOpposite) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, KM3Package.REFERENCE__OPPOSITE, oldOpposite, opposite));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, Km3Package.REFERENCE__OPPOSITE, oldOpposite, opposite));
 			}
 		}
 		return opposite;
@@ -132,7 +132,7 @@ public class ReferenceImpl extends StructuralFeatureImpl implements Reference {
 		Reference oldOpposite = opposite;
 		opposite = newOpposite;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, KM3Package.REFERENCE__OPPOSITE, oldOpposite, opposite));
+			eNotify(new ENotificationImpl(this, Notification.SET, Km3Package.REFERENCE__OPPOSITE, oldOpposite, opposite));
 	}
 
 	/**
@@ -143,9 +143,9 @@ public class ReferenceImpl extends StructuralFeatureImpl implements Reference {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case KM3Package.REFERENCE__IS_CONTAINER:
+			case Km3Package.REFERENCE__IS_CONTAINER:
 				return getIsContainer();
-			case KM3Package.REFERENCE__OPPOSITE:
+			case Km3Package.REFERENCE__OPPOSITE:
 				if (resolve) return getOpposite();
 				return basicGetOpposite();
 		}
@@ -160,10 +160,10 @@ public class ReferenceImpl extends StructuralFeatureImpl implements Reference {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case KM3Package.REFERENCE__IS_CONTAINER:
+			case Km3Package.REFERENCE__IS_CONTAINER:
 				setIsContainer((Boolean)newValue);
 				return;
-			case KM3Package.REFERENCE__OPPOSITE:
+			case Km3Package.REFERENCE__OPPOSITE:
 				setOpposite((Reference)newValue);
 				return;
 		}
@@ -178,10 +178,10 @@ public class ReferenceImpl extends StructuralFeatureImpl implements Reference {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case KM3Package.REFERENCE__IS_CONTAINER:
+			case Km3Package.REFERENCE__IS_CONTAINER:
 				setIsContainer(IS_CONTAINER_EDEFAULT);
 				return;
-			case KM3Package.REFERENCE__OPPOSITE:
+			case Km3Package.REFERENCE__OPPOSITE:
 				setOpposite((Reference)null);
 				return;
 		}
@@ -196,9 +196,9 @@ public class ReferenceImpl extends StructuralFeatureImpl implements Reference {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case KM3Package.REFERENCE__IS_CONTAINER:
+			case Km3Package.REFERENCE__IS_CONTAINER:
 				return IS_CONTAINER_EDEFAULT == null ? isContainer != null : !IS_CONTAINER_EDEFAULT.equals(isContainer);
-			case KM3Package.REFERENCE__OPPOSITE:
+			case Km3Package.REFERENCE__OPPOSITE:
 				return opposite != null;
 		}
 		return super.eIsSet(featureID);

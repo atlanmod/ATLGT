@@ -3,7 +3,7 @@
 package km3.impl;
 
 import km3.Attribute;
-import km3.KM3Package;
+import km3.Km3Package;
 
 import org.eclipse.emf.ecore.EClass;
 
@@ -31,7 +31,7 @@ public class AttributeImpl extends StructuralFeatureImpl implements Attribute {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return KM3Package.Literals.ATTRIBUTE;
+		return Km3Package.Literals.ATTRIBUTE;
 	}
 
 } //AttributeImpl

@@ -19,11 +19,11 @@ import org.eclipse.emf.ecore.EReference;
  *   <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * @see km3.KM3Factory
+ * @see km3.Km3Factory
  * @model kind="package"
  * @generated
  */
-public interface KM3Package extends EPackage {
+public interface Km3Package extends EPackage {
 	/**
 	 * The package name.
 	 * <!-- begin-user-doc -->
@@ -54,14 +54,14 @@ public interface KM3Package extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	KM3Package eINSTANCE = km3.impl.KM3PackageImpl.init();
+	Km3Package eINSTANCE = km3.impl.Km3PackageImpl.init();
 
 	/**
 	 * The meta object id for the '{@link km3.impl.LocatedElementImpl <em>Located Element</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see km3.impl.LocatedElementImpl
-	 * @see km3.impl.KM3PackageImpl#getLocatedElement()
+	 * @see km3.impl.Km3PackageImpl#getLocatedElement()
 	 * @generated
 	 */
 	int LOCATED_ELEMENT = 0;
@@ -98,7 +98,7 @@ public interface KM3Package extends EPackage {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see km3.impl.ModelElementImpl
-	 * @see km3.impl.KM3PackageImpl#getModelElement()
+	 * @see km3.impl.Km3PackageImpl#getModelElement()
 	 * @generated
 	 */
 	int MODEL_ELEMENT = 1;
@@ -153,7 +153,7 @@ public interface KM3Package extends EPackage {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see km3.impl.ClassifierImpl
-	 * @see km3.impl.KM3PackageImpl#getClassifier()
+	 * @see km3.impl.Km3PackageImpl#getClassifier()
 	 * @generated
 	 */
 	int CLASSIFIER = 2;
@@ -208,7 +208,7 @@ public interface KM3Package extends EPackage {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see km3.impl.DataTypeImpl
-	 * @see km3.impl.KM3PackageImpl#getDataType()
+	 * @see km3.impl.Km3PackageImpl#getDataType()
 	 * @generated
 	 */
 	int DATA_TYPE = 3;
@@ -263,7 +263,7 @@ public interface KM3Package extends EPackage {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see km3.impl.EnumerationImpl
-	 * @see km3.impl.KM3PackageImpl#getEnumeration()
+	 * @see km3.impl.Km3PackageImpl#getEnumeration()
 	 * @generated
 	 */
 	int ENUMERATION = 4;
@@ -327,7 +327,7 @@ public interface KM3Package extends EPackage {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see km3.impl.EnumLiteralImpl
-	 * @see km3.impl.KM3PackageImpl#getEnumLiteral()
+	 * @see km3.impl.Km3PackageImpl#getEnumLiteral()
 	 * @generated
 	 */
 	int ENUM_LITERAL = 5;
@@ -391,7 +391,7 @@ public interface KM3Package extends EPackage {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see km3.impl.TemplateParameterImpl
-	 * @see km3.impl.KM3PackageImpl#getTemplateParameter()
+	 * @see km3.impl.Km3PackageImpl#getTemplateParameter()
 	 * @generated
 	 */
 	int TEMPLATE_PARAMETER = 6;
@@ -446,7 +446,7 @@ public interface KM3Package extends EPackage {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see km3.impl.ClassImpl
-	 * @see km3.impl.KM3PackageImpl#getClass_()
+	 * @see km3.impl.Km3PackageImpl#getClass_()
 	 * @generated
 	 */
 	int CLASS = 7;
@@ -506,7 +506,7 @@ public interface KM3Package extends EPackage {
 	int CLASS__SUPERTYPES = CLASSIFIER_FEATURE_COUNT + 2;
 
 	/**
-	 * The feature id for the '<em><b>Structural Features</b></em>' reference list.
+	 * The feature id for the '<em><b>Structural Features</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -546,7 +546,7 @@ public interface KM3Package extends EPackage {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see km3.impl.TypedElementImpl
-	 * @see km3.impl.KM3PackageImpl#getTypedElement()
+	 * @see km3.impl.Km3PackageImpl#getTypedElement()
 	 * @generated
 	 */
 	int TYPED_ELEMENT = 8;
@@ -646,7 +646,7 @@ public interface KM3Package extends EPackage {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see km3.impl.StructuralFeatureImpl
-	 * @see km3.impl.KM3PackageImpl#getStructuralFeature()
+	 * @see km3.impl.Km3PackageImpl#getStructuralFeature()
 	 * @generated
 	 */
 	int STRUCTURAL_FEATURE = 9;
@@ -724,7 +724,7 @@ public interface KM3Package extends EPackage {
 	int STRUCTURAL_FEATURE__TYPE = TYPED_ELEMENT__TYPE;
 
 	/**
-	 * The feature id for the '<em><b>Owner</b></em>' reference.
+	 * The feature id for the '<em><b>Owner</b></em>' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -773,7 +773,7 @@ public interface KM3Package extends EPackage {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see km3.impl.AttributeImpl
-	 * @see km3.impl.KM3PackageImpl#getAttribute()
+	 * @see km3.impl.Km3PackageImpl#getAttribute()
 	 * @generated
 	 */
 	int ATTRIBUTE = 10;
@@ -851,7 +851,7 @@ public interface KM3Package extends EPackage {
 	int ATTRIBUTE__TYPE = STRUCTURAL_FEATURE__TYPE;
 
 	/**
-	 * The feature id for the '<em><b>Owner</b></em>' reference.
+	 * The feature id for the '<em><b>Owner</b></em>' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -900,7 +900,7 @@ public interface KM3Package extends EPackage {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see km3.impl.ReferenceImpl
-	 * @see km3.impl.KM3PackageImpl#getReference()
+	 * @see km3.impl.Km3PackageImpl#getReference()
 	 * @generated
 	 */
 	int REFERENCE = 11;
@@ -978,7 +978,7 @@ public interface KM3Package extends EPackage {
 	int REFERENCE__TYPE = STRUCTURAL_FEATURE__TYPE;
 
 	/**
-	 * The feature id for the '<em><b>Owner</b></em>' reference.
+	 * The feature id for the '<em><b>Owner</b></em>' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -1045,7 +1045,7 @@ public interface KM3Package extends EPackage {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see km3.impl.OperationImpl
-	 * @see km3.impl.KM3PackageImpl#getOperation()
+	 * @see km3.impl.Km3PackageImpl#getOperation()
 	 * @generated
 	 */
 	int OPERATION = 12;
@@ -1163,7 +1163,7 @@ public interface KM3Package extends EPackage {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see km3.impl.ParameterImpl
-	 * @see km3.impl.KM3PackageImpl#getParameter()
+	 * @see km3.impl.Km3PackageImpl#getParameter()
 	 * @generated
 	 */
 	int PARAMETER = 13;
@@ -1272,7 +1272,7 @@ public interface KM3Package extends EPackage {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see km3.impl.PackageImpl
-	 * @see km3.impl.KM3PackageImpl#getPackage()
+	 * @see km3.impl.Km3PackageImpl#getPackage()
 	 * @generated
 	 */
 	int PACKAGE = 14;
@@ -1345,7 +1345,7 @@ public interface KM3Package extends EPackage {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see km3.impl.MetamodelImpl
-	 * @see km3.impl.KM3PackageImpl#getMetamodel()
+	 * @see km3.impl.Km3PackageImpl#getMetamodel()
 	 * @generated
 	 */
 	int METAMODEL = 15;
@@ -1556,10 +1556,10 @@ public interface KM3Package extends EPackage {
 	EReference getClass_Supertypes();
 
 	/**
-	 * Returns the meta object for the reference list '{@link km3.Class#getStructuralFeatures <em>Structural Features</em>}'.
+	 * Returns the meta object for the containment reference list '{@link km3.Class#getStructuralFeatures <em>Structural Features</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Structural Features</em>'.
+	 * @return the meta object for the containment reference list '<em>Structural Features</em>'.
 	 * @see km3.Class#getStructuralFeatures()
 	 * @see #getClass_()
 	 * @generated
@@ -1653,10 +1653,10 @@ public interface KM3Package extends EPackage {
 	EClass getStructuralFeature();
 
 	/**
-	 * Returns the meta object for the reference '{@link km3.StructuralFeature#getOwner <em>Owner</em>}'.
+	 * Returns the meta object for the container reference '{@link km3.StructuralFeature#getOwner <em>Owner</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Owner</em>'.
+	 * @return the meta object for the container reference '<em>Owner</em>'.
 	 * @see km3.StructuralFeature#getOwner()
 	 * @see #getStructuralFeature()
 	 * @generated
@@ -1840,7 +1840,7 @@ public interface KM3Package extends EPackage {
 	 * @return the factory that creates the instances of the model.
 	 * @generated
 	 */
-	KM3Factory getKM3Factory();
+	Km3Factory getKm3Factory();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1861,7 +1861,7 @@ public interface KM3Package extends EPackage {
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @see km3.impl.LocatedElementImpl
-		 * @see km3.impl.KM3PackageImpl#getLocatedElement()
+		 * @see km3.impl.Km3PackageImpl#getLocatedElement()
 		 * @generated
 		 */
 		EClass LOCATED_ELEMENT = eINSTANCE.getLocatedElement();
@@ -1879,7 +1879,7 @@ public interface KM3Package extends EPackage {
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @see km3.impl.ModelElementImpl
-		 * @see km3.impl.KM3PackageImpl#getModelElement()
+		 * @see km3.impl.Km3PackageImpl#getModelElement()
 		 * @generated
 		 */
 		EClass MODEL_ELEMENT = eINSTANCE.getModelElement();
@@ -1905,7 +1905,7 @@ public interface KM3Package extends EPackage {
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @see km3.impl.ClassifierImpl
-		 * @see km3.impl.KM3PackageImpl#getClassifier()
+		 * @see km3.impl.Km3PackageImpl#getClassifier()
 		 * @generated
 		 */
 		EClass CLASSIFIER = eINSTANCE.getClassifier();
@@ -1915,7 +1915,7 @@ public interface KM3Package extends EPackage {
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @see km3.impl.DataTypeImpl
-		 * @see km3.impl.KM3PackageImpl#getDataType()
+		 * @see km3.impl.Km3PackageImpl#getDataType()
 		 * @generated
 		 */
 		EClass DATA_TYPE = eINSTANCE.getDataType();
@@ -1925,7 +1925,7 @@ public interface KM3Package extends EPackage {
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @see km3.impl.EnumerationImpl
-		 * @see km3.impl.KM3PackageImpl#getEnumeration()
+		 * @see km3.impl.Km3PackageImpl#getEnumeration()
 		 * @generated
 		 */
 		EClass ENUMERATION = eINSTANCE.getEnumeration();
@@ -1943,7 +1943,7 @@ public interface KM3Package extends EPackage {
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @see km3.impl.EnumLiteralImpl
-		 * @see km3.impl.KM3PackageImpl#getEnumLiteral()
+		 * @see km3.impl.Km3PackageImpl#getEnumLiteral()
 		 * @generated
 		 */
 		EClass ENUM_LITERAL = eINSTANCE.getEnumLiteral();
@@ -1961,7 +1961,7 @@ public interface KM3Package extends EPackage {
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @see km3.impl.TemplateParameterImpl
-		 * @see km3.impl.KM3PackageImpl#getTemplateParameter()
+		 * @see km3.impl.Km3PackageImpl#getTemplateParameter()
 		 * @generated
 		 */
 		EClass TEMPLATE_PARAMETER = eINSTANCE.getTemplateParameter();
@@ -1971,7 +1971,7 @@ public interface KM3Package extends EPackage {
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @see km3.impl.ClassImpl
-		 * @see km3.impl.KM3PackageImpl#getClass_()
+		 * @see km3.impl.Km3PackageImpl#getClass_()
 		 * @generated
 		 */
 		EClass CLASS = eINSTANCE.getClass_();
@@ -2001,7 +2001,7 @@ public interface KM3Package extends EPackage {
 		EReference CLASS__SUPERTYPES = eINSTANCE.getClass_Supertypes();
 
 		/**
-		 * The meta object literal for the '<em><b>Structural Features</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Structural Features</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -2021,7 +2021,7 @@ public interface KM3Package extends EPackage {
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @see km3.impl.TypedElementImpl
-		 * @see km3.impl.KM3PackageImpl#getTypedElement()
+		 * @see km3.impl.Km3PackageImpl#getTypedElement()
 		 * @generated
 		 */
 		EClass TYPED_ELEMENT = eINSTANCE.getTypedElement();
@@ -2071,13 +2071,13 @@ public interface KM3Package extends EPackage {
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @see km3.impl.StructuralFeatureImpl
-		 * @see km3.impl.KM3PackageImpl#getStructuralFeature()
+		 * @see km3.impl.Km3PackageImpl#getStructuralFeature()
 		 * @generated
 		 */
 		EClass STRUCTURAL_FEATURE = eINSTANCE.getStructuralFeature();
 
 		/**
-		 * The meta object literal for the '<em><b>Owner</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Owner</b></em>' container reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -2105,7 +2105,7 @@ public interface KM3Package extends EPackage {
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @see km3.impl.AttributeImpl
-		 * @see km3.impl.KM3PackageImpl#getAttribute()
+		 * @see km3.impl.Km3PackageImpl#getAttribute()
 		 * @generated
 		 */
 		EClass ATTRIBUTE = eINSTANCE.getAttribute();
@@ -2115,7 +2115,7 @@ public interface KM3Package extends EPackage {
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @see km3.impl.ReferenceImpl
-		 * @see km3.impl.KM3PackageImpl#getReference()
+		 * @see km3.impl.Km3PackageImpl#getReference()
 		 * @generated
 		 */
 		EClass REFERENCE = eINSTANCE.getReference();
@@ -2141,7 +2141,7 @@ public interface KM3Package extends EPackage {
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @see km3.impl.OperationImpl
-		 * @see km3.impl.KM3PackageImpl#getOperation()
+		 * @see km3.impl.Km3PackageImpl#getOperation()
 		 * @generated
 		 */
 		EClass OPERATION = eINSTANCE.getOperation();
@@ -2167,7 +2167,7 @@ public interface KM3Package extends EPackage {
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @see km3.impl.ParameterImpl
-		 * @see km3.impl.KM3PackageImpl#getParameter()
+		 * @see km3.impl.Km3PackageImpl#getParameter()
 		 * @generated
 		 */
 		EClass PARAMETER = eINSTANCE.getParameter();
@@ -2185,7 +2185,7 @@ public interface KM3Package extends EPackage {
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @see km3.impl.PackageImpl
-		 * @see km3.impl.KM3PackageImpl#getPackage()
+		 * @see km3.impl.Km3PackageImpl#getPackage()
 		 * @generated
 		 */
 		EClass PACKAGE = eINSTANCE.getPackage();
@@ -2211,7 +2211,7 @@ public interface KM3Package extends EPackage {
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @see km3.impl.MetamodelImpl
-		 * @see km3.impl.KM3PackageImpl#getMetamodel()
+		 * @see km3.impl.Km3PackageImpl#getMetamodel()
 		 * @generated
 		 */
 		EClass METAMODEL = eINSTANCE.getMetamodel();
@@ -2226,4 +2226,4 @@ public interface KM3Package extends EPackage {
 
 	}
 
-} //KM3Package
+} //Km3Package

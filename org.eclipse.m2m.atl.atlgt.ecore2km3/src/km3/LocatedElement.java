@@ -16,7 +16,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link km3.LocatedElement#getLocation <em>Location</em>}</li>
  * </ul>
  *
- * @see km3.KM3Package#getLocatedElement()
+ * @see km3.Km3Package#getLocatedElement()
  * @model abstract="true"
  * @generated
  */
@@ -31,7 +31,7 @@ public interface LocatedElement extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Location</em>' attribute.
 	 * @see #setLocation(String)
-	 * @see km3.KM3Package#getLocatedElement_Location()
+	 * @see km3.Km3Package#getLocatedElement_Location()
 	 * @model dataType="PrimitiveTypes.String" ordered="false"
 	 * @generated
 	 */

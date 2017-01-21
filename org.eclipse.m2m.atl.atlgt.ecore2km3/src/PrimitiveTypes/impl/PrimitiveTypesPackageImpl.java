@@ -5,9 +5,9 @@ package PrimitiveTypes.impl;
 import PrimitiveTypes.PrimitiveTypesFactory;
 import PrimitiveTypes.PrimitiveTypesPackage;
 
-import km3.KM3Package;
+import km3.Km3Package;
 
-import km3.impl.KM3PackageImpl;
+import km3.impl.Km3PackageImpl;
 
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EPackage;
@@ -89,15 +89,15 @@ public class PrimitiveTypesPackageImpl extends EPackageImpl implements Primitive
 		isInited = true;
 
 		// Obtain or create and register interdependencies
-		KM3PackageImpl theKM3Package = (KM3PackageImpl)(EPackage.Registry.INSTANCE.getEPackage(KM3Package.eNS_URI) instanceof KM3PackageImpl ? EPackage.Registry.INSTANCE.getEPackage(KM3Package.eNS_URI) : KM3Package.eINSTANCE);
+		Km3PackageImpl theKm3Package = (Km3PackageImpl)(EPackage.Registry.INSTANCE.getEPackage(Km3Package.eNS_URI) instanceof Km3PackageImpl ? EPackage.Registry.INSTANCE.getEPackage(Km3Package.eNS_URI) : Km3Package.eINSTANCE);
 
 		// Create package meta-data objects
 		thePrimitiveTypesPackage.createPackageContents();
-		theKM3Package.createPackageContents();
+		theKm3Package.createPackageContents();
 
 		// Initialize created meta-data
 		thePrimitiveTypesPackage.initializePackageContents();
-		theKM3Package.initializePackageContents();
+		theKm3Package.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
 		thePrimitiveTypesPackage.freeze();

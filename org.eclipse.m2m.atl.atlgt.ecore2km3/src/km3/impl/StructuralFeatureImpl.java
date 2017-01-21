@@ -4,7 +4,7 @@ package km3.impl;
 
 import java.util.Collection;
 
-import km3.KM3Package;
+import km3.Km3Package;
 import km3.StructuralFeature;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
@@ -36,16 +37,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * @generated
  */
 public class StructuralFeatureImpl extends TypedElementImpl implements StructuralFeature {
-	/**
-	 * The cached value of the '{@link #getOwner() <em>Owner</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getOwner()
-	 * @generated
-	 * @ordered
-	 */
-	protected km3.Class owner;
-
 	/**
 	 * The cached value of the '{@link #getSubsetOf() <em>Subset Of</em>}' reference list.
 	 * <!-- begin-user-doc -->
@@ -82,7 +73,7 @@ public class StructuralFeatureImpl extends TypedElementImpl implements Structura
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return KM3Package.Literals.STRUCTURAL_FEATURE;
+		return Km3Package.Literals.STRUCTURAL_FEATURE;
 	}
 
 	/**
@@ -91,24 +82,8 @@ public class StructuralFeatureImpl extends TypedElementImpl implements Structura
 	 * @generated
 	 */
 	public km3.Class getOwner() {
-		if (owner != null && owner.eIsProxy()) {
-			InternalEObject oldOwner = (InternalEObject)owner;
-			owner = (km3.Class)eResolveProxy(oldOwner);
-			if (owner != oldOwner) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, KM3Package.STRUCTURAL_FEATURE__OWNER, oldOwner, owner));
-			}
-		}
-		return owner;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public km3.Class basicGetOwner() {
-		return owner;
+		if (eContainerFeatureID() != Km3Package.STRUCTURAL_FEATURE__OWNER) return null;
+		return (km3.Class)eInternalContainer();
 	}
 
 	/**
@@ -117,12 +92,7 @@ public class StructuralFeatureImpl extends TypedElementImpl implements Structura
 	 * @generated
 	 */
 	public NotificationChain basicSetOwner(km3.Class newOwner, NotificationChain msgs) {
-		km3.Class oldOwner = owner;
-		owner = newOwner;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KM3Package.STRUCTURAL_FEATURE__OWNER, oldOwner, newOwner);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
+		msgs = eBasicSetContainer((InternalEObject)newOwner, Km3Package.STRUCTURAL_FEATURE__OWNER, msgs);
 		return msgs;
 	}
 
@@ -132,17 +102,19 @@ public class StructuralFeatureImpl extends TypedElementImpl implements Structura
 	 * @generated
 	 */
 	public void setOwner(km3.Class newOwner) {
-		if (newOwner != owner) {
+		if (newOwner != eInternalContainer() || (eContainerFeatureID() != Km3Package.STRUCTURAL_FEATURE__OWNER && newOwner != null)) {
+			if (EcoreUtil.isAncestor(this, newOwner))
+				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
 			NotificationChain msgs = null;
-			if (owner != null)
-				msgs = ((InternalEObject)owner).eInverseRemove(this, KM3Package.CLASS__STRUCTURAL_FEATURES, km3.Class.class, msgs);
+			if (eInternalContainer() != null)
+				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwner != null)
-				msgs = ((InternalEObject)newOwner).eInverseAdd(this, KM3Package.CLASS__STRUCTURAL_FEATURES, km3.Class.class, msgs);
+				msgs = ((InternalEObject)newOwner).eInverseAdd(this, Km3Package.CLASS__STRUCTURAL_FEATURES, km3.Class.class, msgs);
 			msgs = basicSetOwner(newOwner, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, KM3Package.STRUCTURAL_FEATURE__OWNER, newOwner, newOwner));
+			eNotify(new ENotificationImpl(this, Notification.SET, Km3Package.STRUCTURAL_FEATURE__OWNER, newOwner, newOwner));
 	}
 
 	/**
@@ -152,7 +124,7 @@ public class StructuralFeatureImpl extends TypedElementImpl implements Structura
 	 */
 	public EList<StructuralFeature> getSubsetOf() {
 		if (subsetOf == null) {
-			subsetOf = new EObjectWithInverseResolvingEList.ManyInverse<StructuralFeature>(StructuralFeature.class, this, KM3Package.STRUCTURAL_FEATURE__SUBSET_OF, KM3Package.STRUCTURAL_FEATURE__DERIVED_FROM);
+			subsetOf = new EObjectWithInverseResolvingEList.ManyInverse<StructuralFeature>(StructuralFeature.class, this, Km3Package.STRUCTURAL_FEATURE__SUBSET_OF, Km3Package.STRUCTURAL_FEATURE__DERIVED_FROM);
 		}
 		return subsetOf;
 	}
@@ -164,7 +136,7 @@ public class StructuralFeatureImpl extends TypedElementImpl implements Structura
 	 */
 	public EList<StructuralFeature> getDerivedFrom() {
 		if (derivedFrom == null) {
-			derivedFrom = new EObjectWithInverseResolvingEList.ManyInverse<StructuralFeature>(StructuralFeature.class, this, KM3Package.STRUCTURAL_FEATURE__DERIVED_FROM, KM3Package.STRUCTURAL_FEATURE__SUBSET_OF);
+			derivedFrom = new EObjectWithInverseResolvingEList.ManyInverse<StructuralFeature>(StructuralFeature.class, this, Km3Package.STRUCTURAL_FEATURE__DERIVED_FROM, Km3Package.STRUCTURAL_FEATURE__SUBSET_OF);
 		}
 		return derivedFrom;
 	}
@@ -178,13 +150,13 @@ public class StructuralFeatureImpl extends TypedElementImpl implements Structura
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case KM3Package.STRUCTURAL_FEATURE__OWNER:
-				if (owner != null)
-					msgs = ((InternalEObject)owner).eInverseRemove(this, KM3Package.CLASS__STRUCTURAL_FEATURES, km3.Class.class, msgs);
+			case Km3Package.STRUCTURAL_FEATURE__OWNER:
+				if (eInternalContainer() != null)
+					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwner((km3.Class)otherEnd, msgs);
-			case KM3Package.STRUCTURAL_FEATURE__SUBSET_OF:
+			case Km3Package.STRUCTURAL_FEATURE__SUBSET_OF:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getSubsetOf()).basicAdd(otherEnd, msgs);
-			case KM3Package.STRUCTURAL_FEATURE__DERIVED_FROM:
+			case Km3Package.STRUCTURAL_FEATURE__DERIVED_FROM:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getDerivedFrom()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -198,11 +170,11 @@ public class StructuralFeatureImpl extends TypedElementImpl implements Structura
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case KM3Package.STRUCTURAL_FEATURE__OWNER:
+			case Km3Package.STRUCTURAL_FEATURE__OWNER:
 				return basicSetOwner(null, msgs);
-			case KM3Package.STRUCTURAL_FEATURE__SUBSET_OF:
+			case Km3Package.STRUCTURAL_FEATURE__SUBSET_OF:
 				return ((InternalEList<?>)getSubsetOf()).basicRemove(otherEnd, msgs);
-			case KM3Package.STRUCTURAL_FEATURE__DERIVED_FROM:
+			case Km3Package.STRUCTURAL_FEATURE__DERIVED_FROM:
 				return ((InternalEList<?>)getDerivedFrom()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -214,14 +186,27 @@ public class StructuralFeatureImpl extends TypedElementImpl implements Structura
 	 * @generated
 	 */
 	@Override
+	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
+		switch (eContainerFeatureID()) {
+			case Km3Package.STRUCTURAL_FEATURE__OWNER:
+				return eInternalContainer().eInverseRemove(this, Km3Package.CLASS__STRUCTURAL_FEATURES, km3.Class.class, msgs);
+		}
+		return super.eBasicRemoveFromContainerFeature(msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case KM3Package.STRUCTURAL_FEATURE__OWNER:
-				if (resolve) return getOwner();
-				return basicGetOwner();
-			case KM3Package.STRUCTURAL_FEATURE__SUBSET_OF:
+			case Km3Package.STRUCTURAL_FEATURE__OWNER:
+				return getOwner();
+			case Km3Package.STRUCTURAL_FEATURE__SUBSET_OF:
 				return getSubsetOf();
-			case KM3Package.STRUCTURAL_FEATURE__DERIVED_FROM:
+			case Km3Package.STRUCTURAL_FEATURE__DERIVED_FROM:
 				return getDerivedFrom();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -236,14 +221,14 @@ public class StructuralFeatureImpl extends TypedElementImpl implements Structura
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case KM3Package.STRUCTURAL_FEATURE__OWNER:
+			case Km3Package.STRUCTURAL_FEATURE__OWNER:
 				setOwner((km3.Class)newValue);
 				return;
-			case KM3Package.STRUCTURAL_FEATURE__SUBSET_OF:
+			case Km3Package.STRUCTURAL_FEATURE__SUBSET_OF:
 				getSubsetOf().clear();
 				getSubsetOf().addAll((Collection<? extends StructuralFeature>)newValue);
 				return;
-			case KM3Package.STRUCTURAL_FEATURE__DERIVED_FROM:
+			case Km3Package.STRUCTURAL_FEATURE__DERIVED_FROM:
 				getDerivedFrom().clear();
 				getDerivedFrom().addAll((Collection<? extends StructuralFeature>)newValue);
 				return;
@@ -259,13 +244,13 @@ public class StructuralFeatureImpl extends TypedElementImpl implements Structura
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case KM3Package.STRUCTURAL_FEATURE__OWNER:
+			case Km3Package.STRUCTURAL_FEATURE__OWNER:
 				setOwner((km3.Class)null);
 				return;
-			case KM3Package.STRUCTURAL_FEATURE__SUBSET_OF:
+			case Km3Package.STRUCTURAL_FEATURE__SUBSET_OF:
 				getSubsetOf().clear();
 				return;
-			case KM3Package.STRUCTURAL_FEATURE__DERIVED_FROM:
+			case Km3Package.STRUCTURAL_FEATURE__DERIVED_FROM:
 				getDerivedFrom().clear();
 				return;
 		}
@@ -280,11 +265,11 @@ public class StructuralFeatureImpl extends TypedElementImpl implements Structura
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case KM3Package.STRUCTURAL_FEATURE__OWNER:
-				return owner != null;
-			case KM3Package.STRUCTURAL_FEATURE__SUBSET_OF:
+			case Km3Package.STRUCTURAL_FEATURE__OWNER:
+				return getOwner() != null;
+			case Km3Package.STRUCTURAL_FEATURE__SUBSET_OF:
 				return subsetOf != null && !subsetOf.isEmpty();
-			case KM3Package.STRUCTURAL_FEATURE__DERIVED_FROM:
+			case Km3Package.STRUCTURAL_FEATURE__DERIVED_FROM:
 				return derivedFrom != null && !derivedFrom.isEmpty();
 		}
 		return super.eIsSet(featureID);

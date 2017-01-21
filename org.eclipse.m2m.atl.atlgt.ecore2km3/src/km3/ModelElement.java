@@ -16,7 +16,7 @@ package km3;
  *   <li>{@link km3.ModelElement#getPackage <em>Package</em>}</li>
  * </ul>
  *
- * @see km3.KM3Package#getModelElement()
+ * @see km3.Km3Package#getModelElement()
  * @model abstract="true"
  * @generated
  */
@@ -31,7 +31,7 @@ public interface ModelElement extends LocatedElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(String)
-	 * @see km3.KM3Package#getModelElement_Name()
+	 * @see km3.Km3Package#getModelElement_Name()
 	 * @model dataType="PrimitiveTypes.String" required="true" ordered="false"
 	 * @generated
 	 */
@@ -58,7 +58,7 @@ public interface ModelElement extends LocatedElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Package</em>' container reference.
 	 * @see #setPackage(km3.Package)
-	 * @see km3.KM3Package#getModelElement_Package()
+	 * @see km3.Km3Package#getModelElement_Package()
 	 * @see km3.Package#getContents
 	 * @model opposite="contents" transient="false" ordered="false"
 	 * @generated

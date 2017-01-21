@@ -6,7 +6,7 @@ import java.util.Collection;
 
 import km3.EnumLiteral;
 import km3.Enumeration;
-import km3.KM3Package;
+import km3.Km3Package;
 
 import org.eclipse.emf.common.notify.NotificationChain;
 
@@ -58,7 +58,7 @@ public class EnumerationImpl extends ClassifierImpl implements Enumeration {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return KM3Package.Literals.ENUMERATION;
+		return Km3Package.Literals.ENUMERATION;
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class EnumerationImpl extends ClassifierImpl implements Enumeration {
 	 */
 	public EList<EnumLiteral> getLiterals() {
 		if (literals == null) {
-			literals = new EObjectWithInverseResolvingEList<EnumLiteral>(EnumLiteral.class, this, KM3Package.ENUMERATION__LITERALS, KM3Package.ENUM_LITERAL__ENUM);
+			literals = new EObjectWithInverseResolvingEList<EnumLiteral>(EnumLiteral.class, this, Km3Package.ENUMERATION__LITERALS, Km3Package.ENUM_LITERAL__ENUM);
 		}
 		return literals;
 	}
@@ -82,7 +82,7 @@ public class EnumerationImpl extends ClassifierImpl implements Enumeration {
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case KM3Package.ENUMERATION__LITERALS:
+			case Km3Package.ENUMERATION__LITERALS:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getLiterals()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -96,7 +96,7 @@ public class EnumerationImpl extends ClassifierImpl implements Enumeration {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case KM3Package.ENUMERATION__LITERALS:
+			case Km3Package.ENUMERATION__LITERALS:
 				return ((InternalEList<?>)getLiterals()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -110,7 +110,7 @@ public class EnumerationImpl extends ClassifierImpl implements Enumeration {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case KM3Package.ENUMERATION__LITERALS:
+			case Km3Package.ENUMERATION__LITERALS:
 				return getLiterals();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -125,7 +125,7 @@ public class EnumerationImpl extends ClassifierImpl implements Enumeration {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case KM3Package.ENUMERATION__LITERALS:
+			case Km3Package.ENUMERATION__LITERALS:
 				getLiterals().clear();
 				getLiterals().addAll((Collection<? extends EnumLiteral>)newValue);
 				return;
@@ -141,7 +141,7 @@ public class EnumerationImpl extends ClassifierImpl implements Enumeration {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case KM3Package.ENUMERATION__LITERALS:
+			case Km3Package.ENUMERATION__LITERALS:
 				getLiterals().clear();
 				return;
 		}
@@ -156,7 +156,7 @@ public class EnumerationImpl extends ClassifierImpl implements Enumeration {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case KM3Package.ENUMERATION__LITERALS:
+			case Km3Package.ENUMERATION__LITERALS:
 				return literals != null && !literals.isEmpty();
 		}
 		return super.eIsSet(featureID);

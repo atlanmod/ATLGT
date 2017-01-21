@@ -4,7 +4,7 @@ package km3.impl;
 
 import java.util.Collection;
 
-import km3.KM3Package;
+import km3.Km3Package;
 import km3.Operation;
 import km3.StructuralFeature;
 import km3.TemplateParameter;
@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -82,7 +83,7 @@ public class ClassImpl extends ClassifierImpl implements km3.Class {
 	protected EList<km3.Class> supertypes;
 
 	/**
-	 * The cached value of the '{@link #getStructuralFeatures() <em>Structural Features</em>}' reference list.
+	 * The cached value of the '{@link #getStructuralFeatures() <em>Structural Features</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getStructuralFeatures()
@@ -117,7 +118,7 @@ public class ClassImpl extends ClassifierImpl implements km3.Class {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return KM3Package.Literals.CLASS;
+		return Km3Package.Literals.CLASS;
 	}
 
 	/**
@@ -127,7 +128,7 @@ public class ClassImpl extends ClassifierImpl implements km3.Class {
 	 */
 	public EList<TemplateParameter> getParameters() {
 		if (parameters == null) {
-			parameters = new EObjectResolvingEList<TemplateParameter>(TemplateParameter.class, this, KM3Package.CLASS__PARAMETERS);
+			parameters = new EObjectResolvingEList<TemplateParameter>(TemplateParameter.class, this, Km3Package.CLASS__PARAMETERS);
 		}
 		return parameters;
 	}
@@ -150,7 +151,7 @@ public class ClassImpl extends ClassifierImpl implements km3.Class {
 		Boolean oldIsAbstract = isAbstract;
 		isAbstract = newIsAbstract;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, KM3Package.CLASS__IS_ABSTRACT, oldIsAbstract, isAbstract));
+			eNotify(new ENotificationImpl(this, Notification.SET, Km3Package.CLASS__IS_ABSTRACT, oldIsAbstract, isAbstract));
 	}
 
 	/**
@@ -160,7 +161,7 @@ public class ClassImpl extends ClassifierImpl implements km3.Class {
 	 */
 	public EList<km3.Class> getSupertypes() {
 		if (supertypes == null) {
-			supertypes = new EObjectResolvingEList<km3.Class>(km3.Class.class, this, KM3Package.CLASS__SUPERTYPES);
+			supertypes = new EObjectResolvingEList<km3.Class>(km3.Class.class, this, Km3Package.CLASS__SUPERTYPES);
 		}
 		return supertypes;
 	}
@@ -172,7 +173,7 @@ public class ClassImpl extends ClassifierImpl implements km3.Class {
 	 */
 	public EList<StructuralFeature> getStructuralFeatures() {
 		if (structuralFeatures == null) {
-			structuralFeatures = new EObjectWithInverseResolvingEList<StructuralFeature>(StructuralFeature.class, this, KM3Package.CLASS__STRUCTURAL_FEATURES, KM3Package.STRUCTURAL_FEATURE__OWNER);
+			structuralFeatures = new EObjectContainmentWithInverseEList<StructuralFeature>(StructuralFeature.class, this, Km3Package.CLASS__STRUCTURAL_FEATURES, Km3Package.STRUCTURAL_FEATURE__OWNER);
 		}
 		return structuralFeatures;
 	}
@@ -184,7 +185,7 @@ public class ClassImpl extends ClassifierImpl implements km3.Class {
 	 */
 	public EList<Operation> getOperations() {
 		if (operations == null) {
-			operations = new EObjectWithInverseResolvingEList<Operation>(Operation.class, this, KM3Package.CLASS__OPERATIONS, KM3Package.OPERATION__OWNER);
+			operations = new EObjectWithInverseResolvingEList<Operation>(Operation.class, this, Km3Package.CLASS__OPERATIONS, Km3Package.OPERATION__OWNER);
 		}
 		return operations;
 	}
@@ -198,9 +199,9 @@ public class ClassImpl extends ClassifierImpl implements km3.Class {
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case KM3Package.CLASS__STRUCTURAL_FEATURES:
+			case Km3Package.CLASS__STRUCTURAL_FEATURES:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getStructuralFeatures()).basicAdd(otherEnd, msgs);
-			case KM3Package.CLASS__OPERATIONS:
+			case Km3Package.CLASS__OPERATIONS:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOperations()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -214,9 +215,9 @@ public class ClassImpl extends ClassifierImpl implements km3.Class {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case KM3Package.CLASS__STRUCTURAL_FEATURES:
+			case Km3Package.CLASS__STRUCTURAL_FEATURES:
 				return ((InternalEList<?>)getStructuralFeatures()).basicRemove(otherEnd, msgs);
-			case KM3Package.CLASS__OPERATIONS:
+			case Km3Package.CLASS__OPERATIONS:
 				return ((InternalEList<?>)getOperations()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -230,15 +231,15 @@ public class ClassImpl extends ClassifierImpl implements km3.Class {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case KM3Package.CLASS__PARAMETERS:
+			case Km3Package.CLASS__PARAMETERS:
 				return getParameters();
-			case KM3Package.CLASS__IS_ABSTRACT:
+			case Km3Package.CLASS__IS_ABSTRACT:
 				return getIsAbstract();
-			case KM3Package.CLASS__SUPERTYPES:
+			case Km3Package.CLASS__SUPERTYPES:
 				return getSupertypes();
-			case KM3Package.CLASS__STRUCTURAL_FEATURES:
+			case Km3Package.CLASS__STRUCTURAL_FEATURES:
 				return getStructuralFeatures();
-			case KM3Package.CLASS__OPERATIONS:
+			case Km3Package.CLASS__OPERATIONS:
 				return getOperations();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -253,22 +254,22 @@ public class ClassImpl extends ClassifierImpl implements km3.Class {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case KM3Package.CLASS__PARAMETERS:
+			case Km3Package.CLASS__PARAMETERS:
 				getParameters().clear();
 				getParameters().addAll((Collection<? extends TemplateParameter>)newValue);
 				return;
-			case KM3Package.CLASS__IS_ABSTRACT:
+			case Km3Package.CLASS__IS_ABSTRACT:
 				setIsAbstract((Boolean)newValue);
 				return;
-			case KM3Package.CLASS__SUPERTYPES:
+			case Km3Package.CLASS__SUPERTYPES:
 				getSupertypes().clear();
 				getSupertypes().addAll((Collection<? extends km3.Class>)newValue);
 				return;
-			case KM3Package.CLASS__STRUCTURAL_FEATURES:
+			case Km3Package.CLASS__STRUCTURAL_FEATURES:
 				getStructuralFeatures().clear();
 				getStructuralFeatures().addAll((Collection<? extends StructuralFeature>)newValue);
 				return;
-			case KM3Package.CLASS__OPERATIONS:
+			case Km3Package.CLASS__OPERATIONS:
 				getOperations().clear();
 				getOperations().addAll((Collection<? extends Operation>)newValue);
 				return;
@@ -284,19 +285,19 @@ public class ClassImpl extends ClassifierImpl implements km3.Class {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case KM3Package.CLASS__PARAMETERS:
+			case Km3Package.CLASS__PARAMETERS:
 				getParameters().clear();
 				return;
-			case KM3Package.CLASS__IS_ABSTRACT:
+			case Km3Package.CLASS__IS_ABSTRACT:
 				setIsAbstract(IS_ABSTRACT_EDEFAULT);
 				return;
-			case KM3Package.CLASS__SUPERTYPES:
+			case Km3Package.CLASS__SUPERTYPES:
 				getSupertypes().clear();
 				return;
-			case KM3Package.CLASS__STRUCTURAL_FEATURES:
+			case Km3Package.CLASS__STRUCTURAL_FEATURES:
 				getStructuralFeatures().clear();
 				return;
-			case KM3Package.CLASS__OPERATIONS:
+			case Km3Package.CLASS__OPERATIONS:
 				getOperations().clear();
 				return;
 		}
@@ -311,15 +312,15 @@ public class ClassImpl extends ClassifierImpl implements km3.Class {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case KM3Package.CLASS__PARAMETERS:
+			case Km3Package.CLASS__PARAMETERS:
 				return parameters != null && !parameters.isEmpty();
-			case KM3Package.CLASS__IS_ABSTRACT:
+			case Km3Package.CLASS__IS_ABSTRACT:
 				return IS_ABSTRACT_EDEFAULT == null ? isAbstract != null : !IS_ABSTRACT_EDEFAULT.equals(isAbstract);
-			case KM3Package.CLASS__SUPERTYPES:
+			case Km3Package.CLASS__SUPERTYPES:
 				return supertypes != null && !supertypes.isEmpty();
-			case KM3Package.CLASS__STRUCTURAL_FEATURES:
+			case Km3Package.CLASS__STRUCTURAL_FEATURES:
 				return structuralFeatures != null && !structuralFeatures.isEmpty();
-			case KM3Package.CLASS__OPERATIONS:
+			case Km3Package.CLASS__OPERATIONS:
 				return operations != null && !operations.isEmpty();
 		}
 		return super.eIsSet(featureID);

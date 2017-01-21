@@ -2,7 +2,7 @@
  */
 package km3.impl;
 
-import km3.KM3Package;
+import km3.Km3Package;
 import km3.LocatedElement;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -62,7 +62,7 @@ public abstract class LocatedElementImpl extends MinimalEObjectImpl.Container im
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return KM3Package.Literals.LOCATED_ELEMENT;
+		return Km3Package.Literals.LOCATED_ELEMENT;
 	}
 
 	/**
@@ -83,7 +83,7 @@ public abstract class LocatedElementImpl extends MinimalEObjectImpl.Container im
 		String oldLocation = location;
 		location = newLocation;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, KM3Package.LOCATED_ELEMENT__LOCATION, oldLocation, location));
+			eNotify(new ENotificationImpl(this, Notification.SET, Km3Package.LOCATED_ELEMENT__LOCATION, oldLocation, location));
 	}
 
 	/**
@@ -94,7 +94,7 @@ public abstract class LocatedElementImpl extends MinimalEObjectImpl.Container im
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case KM3Package.LOCATED_ELEMENT__LOCATION:
+			case Km3Package.LOCATED_ELEMENT__LOCATION:
 				return getLocation();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -108,7 +108,7 @@ public abstract class LocatedElementImpl extends MinimalEObjectImpl.Container im
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case KM3Package.LOCATED_ELEMENT__LOCATION:
+			case Km3Package.LOCATED_ELEMENT__LOCATION:
 				setLocation((String)newValue);
 				return;
 		}
@@ -123,7 +123,7 @@ public abstract class LocatedElementImpl extends MinimalEObjectImpl.Container im
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case KM3Package.LOCATED_ELEMENT__LOCATION:
+			case Km3Package.LOCATED_ELEMENT__LOCATION:
 				setLocation(LOCATION_EDEFAULT);
 				return;
 		}
@@ -138,7 +138,7 @@ public abstract class LocatedElementImpl extends MinimalEObjectImpl.Container im
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case KM3Package.LOCATED_ELEMENT__LOCATION:
+			case Km3Package.LOCATED_ELEMENT__LOCATION:
 				return LOCATION_EDEFAULT == null ? location != null : !LOCATION_EDEFAULT.equals(location);
 		}
 		return super.eIsSet(featureID);

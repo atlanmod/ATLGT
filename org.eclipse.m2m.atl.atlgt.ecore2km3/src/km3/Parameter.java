@@ -15,7 +15,7 @@ package km3;
  *   <li>{@link km3.Parameter#getOwner <em>Owner</em>}</li>
  * </ul>
  *
- * @see km3.KM3Package#getParameter()
+ * @see km3.Km3Package#getParameter()
  * @model
  * @generated
  */
@@ -31,7 +31,7 @@ public interface Parameter extends TypedElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Owner</em>' reference.
 	 * @see #setOwner(Operation)
-	 * @see km3.KM3Package#getParameter_Owner()
+	 * @see km3.Km3Package#getParameter_Owner()
 	 * @see km3.Operation#getParameters
 	 * @model opposite="parameters" ordered="false"
 	 * @generated

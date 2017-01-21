@@ -20,7 +20,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link km3.Class#getOperations <em>Operations</em>}</li>
  * </ul>
  *
- * @see km3.KM3Package#getClass_()
+ * @see km3.Km3Package#getClass_()
  * @model
  * @generated
  */
@@ -35,7 +35,7 @@ public interface Class extends Classifier {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Parameters</em>' reference list.
-	 * @see km3.KM3Package#getClass_Parameters()
+	 * @see km3.Km3Package#getClass_Parameters()
 	 * @model
 	 * @generated
 	 */
@@ -51,7 +51,7 @@ public interface Class extends Classifier {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Is Abstract</em>' attribute.
 	 * @see #setIsAbstract(Boolean)
-	 * @see km3.KM3Package#getClass_IsAbstract()
+	 * @see km3.Km3Package#getClass_IsAbstract()
 	 * @model dataType="PrimitiveTypes.Boolean" required="true" ordered="false"
 	 * @generated
 	 */
@@ -77,26 +77,26 @@ public interface Class extends Classifier {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Supertypes</em>' reference list.
-	 * @see km3.KM3Package#getClass_Supertypes()
+	 * @see km3.Km3Package#getClass_Supertypes()
 	 * @model ordered="false"
 	 * @generated
 	 */
 	EList<Class> getSupertypes();
 
 	/**
-	 * Returns the value of the '<em><b>Structural Features</b></em>' reference list.
+	 * Returns the value of the '<em><b>Structural Features</b></em>' containment reference list.
 	 * The list contents are of type {@link km3.StructuralFeature}.
 	 * It is bidirectional and its opposite is '{@link km3.StructuralFeature#getOwner <em>Owner</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Structural Features</em>' reference list isn't clear,
+	 * If the meaning of the '<em>Structural Features</em>' containment reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Structural Features</em>' reference list.
-	 * @see km3.KM3Package#getClass_StructuralFeatures()
+	 * @return the value of the '<em>Structural Features</em>' containment reference list.
+	 * @see km3.Km3Package#getClass_StructuralFeatures()
 	 * @see km3.StructuralFeature#getOwner
-	 * @model opposite="owner"
+	 * @model opposite="owner" containment="true"
 	 * @generated
 	 */
 	EList<StructuralFeature> getStructuralFeatures();
@@ -112,7 +112,7 @@ public interface Class extends Classifier {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Operations</em>' reference list.
-	 * @see km3.KM3Package#getClass_Operations()
+	 * @see km3.Km3Package#getClass_Operations()
 	 * @see km3.Operation#getOwner
 	 * @model opposite="owner"
 	 * @generated

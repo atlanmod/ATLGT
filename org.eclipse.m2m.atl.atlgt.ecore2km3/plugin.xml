@@ -10,7 +10,7 @@
       <!-- @generated KM3 -->
       <package
             uri="http://example.org/km3"
-            class="km3.KM3Package"
+            class="km3.Km3Package"
             genModel="resources/KM3.genmodel"/>
    </extension>
 

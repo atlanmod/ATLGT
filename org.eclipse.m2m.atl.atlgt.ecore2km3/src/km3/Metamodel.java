@@ -16,7 +16,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link km3.Metamodel#getContents <em>Contents</em>}</li>
  * </ul>
  *
- * @see km3.KM3Package#getMetamodel()
+ * @see km3.Km3Package#getMetamodel()
  * @model
  * @generated
  */
@@ -32,7 +32,7 @@ public interface Metamodel extends LocatedElement {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Contents</em>' reference list.
-	 * @see km3.KM3Package#getMetamodel_Contents()
+	 * @see km3.Km3Package#getMetamodel_Contents()
 	 * @see km3.Package#getMetamodel
 	 * @model opposite="metamodel"
 	 * @generated

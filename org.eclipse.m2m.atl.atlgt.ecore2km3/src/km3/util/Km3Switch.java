@@ -7,7 +7,7 @@ import km3.Classifier;
 import km3.DataType;
 import km3.EnumLiteral;
 import km3.Enumeration;
-import km3.KM3Package;
+import km3.Km3Package;
 import km3.LocatedElement;
 import km3.Metamodel;
 import km3.ModelElement;
@@ -33,17 +33,17 @@ import org.eclipse.emf.ecore.util.Switch;
  * until a non-null result is returned,
  * which is the result of the switch.
  * <!-- end-user-doc -->
- * @see km3.KM3Package
+ * @see km3.Km3Package
  * @generated
  */
-public class KM3Switch<T> extends Switch<T> {
+public class Km3Switch<T> extends Switch<T> {
 	/**
 	 * The cached model package
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected static KM3Package modelPackage;
+	protected static Km3Package modelPackage;
 
 	/**
 	 * Creates an instance of the switch.
@@ -51,9 +51,9 @@ public class KM3Switch<T> extends Switch<T> {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public KM3Switch() {
+	public Km3Switch() {
 		if (modelPackage == null) {
-			modelPackage = KM3Package.eINSTANCE;
+			modelPackage = Km3Package.eINSTANCE;
 		}
 	}
 
@@ -80,20 +80,20 @@ public class KM3Switch<T> extends Switch<T> {
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
-			case KM3Package.LOCATED_ELEMENT: {
+			case Km3Package.LOCATED_ELEMENT: {
 				LocatedElement locatedElement = (LocatedElement)theEObject;
 				T result = caseLocatedElement(locatedElement);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case KM3Package.MODEL_ELEMENT: {
+			case Km3Package.MODEL_ELEMENT: {
 				ModelElement modelElement = (ModelElement)theEObject;
 				T result = caseModelElement(modelElement);
 				if (result == null) result = caseLocatedElement(modelElement);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case KM3Package.CLASSIFIER: {
+			case Km3Package.CLASSIFIER: {
 				Classifier classifier = (Classifier)theEObject;
 				T result = caseClassifier(classifier);
 				if (result == null) result = caseModelElement(classifier);
@@ -101,7 +101,7 @@ public class KM3Switch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case KM3Package.DATA_TYPE: {
+			case Km3Package.DATA_TYPE: {
 				DataType dataType = (DataType)theEObject;
 				T result = caseDataType(dataType);
 				if (result == null) result = caseClassifier(dataType);
@@ -110,7 +110,7 @@ public class KM3Switch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case KM3Package.ENUMERATION: {
+			case Km3Package.ENUMERATION: {
 				Enumeration enumeration = (Enumeration)theEObject;
 				T result = caseEnumeration(enumeration);
 				if (result == null) result = caseClassifier(enumeration);
@@ -119,7 +119,7 @@ public class KM3Switch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case KM3Package.ENUM_LITERAL: {
+			case Km3Package.ENUM_LITERAL: {
 				EnumLiteral enumLiteral = (EnumLiteral)theEObject;
 				T result = caseEnumLiteral(enumLiteral);
 				if (result == null) result = caseModelElement(enumLiteral);
@@ -127,7 +127,7 @@ public class KM3Switch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case KM3Package.TEMPLATE_PARAMETER: {
+			case Km3Package.TEMPLATE_PARAMETER: {
 				TemplateParameter templateParameter = (TemplateParameter)theEObject;
 				T result = caseTemplateParameter(templateParameter);
 				if (result == null) result = caseClassifier(templateParameter);
@@ -136,7 +136,7 @@ public class KM3Switch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case KM3Package.CLASS: {
+			case Km3Package.CLASS: {
 				km3.Class class_ = (km3.Class)theEObject;
 				T result = caseClass(class_);
 				if (result == null) result = caseClassifier(class_);
@@ -145,7 +145,7 @@ public class KM3Switch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case KM3Package.TYPED_ELEMENT: {
+			case Km3Package.TYPED_ELEMENT: {
 				TypedElement typedElement = (TypedElement)theEObject;
 				T result = caseTypedElement(typedElement);
 				if (result == null) result = caseModelElement(typedElement);
@@ -153,7 +153,7 @@ public class KM3Switch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case KM3Package.STRUCTURAL_FEATURE: {
+			case Km3Package.STRUCTURAL_FEATURE: {
 				StructuralFeature structuralFeature = (StructuralFeature)theEObject;
 				T result = caseStructuralFeature(structuralFeature);
 				if (result == null) result = caseTypedElement(structuralFeature);
@@ -162,7 +162,7 @@ public class KM3Switch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case KM3Package.ATTRIBUTE: {
+			case Km3Package.ATTRIBUTE: {
 				Attribute attribute = (Attribute)theEObject;
 				T result = caseAttribute(attribute);
 				if (result == null) result = caseStructuralFeature(attribute);
@@ -172,7 +172,7 @@ public class KM3Switch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case KM3Package.REFERENCE: {
+			case Km3Package.REFERENCE: {
 				Reference reference = (Reference)theEObject;
 				T result = caseReference(reference);
 				if (result == null) result = caseStructuralFeature(reference);
@@ -182,7 +182,7 @@ public class KM3Switch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case KM3Package.OPERATION: {
+			case Km3Package.OPERATION: {
 				Operation operation = (Operation)theEObject;
 				T result = caseOperation(operation);
 				if (result == null) result = caseTypedElement(operation);
@@ -191,7 +191,7 @@ public class KM3Switch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case KM3Package.PARAMETER: {
+			case Km3Package.PARAMETER: {
 				Parameter parameter = (Parameter)theEObject;
 				T result = caseParameter(parameter);
 				if (result == null) result = caseTypedElement(parameter);
@@ -200,7 +200,7 @@ public class KM3Switch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case KM3Package.PACKAGE: {
+			case Km3Package.PACKAGE: {
 				km3.Package package_ = (km3.Package)theEObject;
 				T result = casePackage(package_);
 				if (result == null) result = caseModelElement(package_);
@@ -208,7 +208,7 @@ public class KM3Switch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case KM3Package.METAMODEL: {
+			case Km3Package.METAMODEL: {
 				Metamodel metamodel = (Metamodel)theEObject;
 				T result = caseMetamodel(metamodel);
 				if (result == null) result = caseLocatedElement(metamodel);
@@ -475,4 +475,4 @@ public class KM3Switch<T> extends Switch<T> {
 		return null;
 	}
 
-} //KM3Switch
+} //Km3Switch

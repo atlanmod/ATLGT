@@ -16,7 +16,7 @@ package km3;
  *   <li>{@link km3.Reference#getOpposite <em>Opposite</em>}</li>
  * </ul>
  *
- * @see km3.KM3Package#getReference()
+ * @see km3.Km3Package#getReference()
  * @model
  * @generated
  */
@@ -31,7 +31,7 @@ public interface Reference extends StructuralFeature {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Is Container</em>' attribute.
 	 * @see #setIsContainer(Boolean)
-	 * @see km3.KM3Package#getReference_IsContainer()
+	 * @see km3.Km3Package#getReference_IsContainer()
 	 * @model dataType="PrimitiveTypes.Boolean" required="true" ordered="false"
 	 * @generated
 	 */
@@ -57,7 +57,7 @@ public interface Reference extends StructuralFeature {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Opposite</em>' reference.
 	 * @see #setOpposite(Reference)
-	 * @see km3.KM3Package#getReference_Opposite()
+	 * @see km3.Km3Package#getReference_Opposite()
 	 * @model ordered="false"
 	 * @generated
 	 */

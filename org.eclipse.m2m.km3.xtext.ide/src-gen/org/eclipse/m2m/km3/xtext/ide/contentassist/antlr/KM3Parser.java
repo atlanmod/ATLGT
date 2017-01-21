@@ -35,11 +35,25 @@ public class KM3Parser extends AbstractContentAssistParser {
 			nameMappings = new HashMap<AbstractElement, String>() {
 				private static final long serialVersionUID = 1L;
 				{
+					put(grammarAccess.getModelElementAccess().getAlternatives(), "rule__ModelElement__Alternatives");
 					put(grammarAccess.getPackageAccess().getGroup(), "rule__Package__Group__0");
 					put(grammarAccess.getDataTypeAccess().getGroup(), "rule__DataType__Group__0");
+					put(grammarAccess.getClassAccess().getGroup(), "rule__Class__Group__0");
+					put(grammarAccess.getClassAccess().getGroup_3(), "rule__Class__Group_3__0");
+					put(grammarAccess.getClassAccess().getGroup_3_2(), "rule__Class__Group_3_2__0");
+					put(grammarAccess.getAttributeAccess().getGroup(), "rule__Attribute__Group__0");
 					put(grammarAccess.getPackageAccess().getNameAssignment_1(), "rule__Package__NameAssignment_1");
 					put(grammarAccess.getPackageAccess().getContentsAssignment_3(), "rule__Package__ContentsAssignment_3");
 					put(grammarAccess.getDataTypeAccess().getNameAssignment_1(), "rule__DataType__NameAssignment_1");
+					put(grammarAccess.getClassAccess().getIsAbstractAssignment_0(), "rule__Class__IsAbstractAssignment_0");
+					put(grammarAccess.getClassAccess().getNameAssignment_2(), "rule__Class__NameAssignment_2");
+					put(grammarAccess.getClassAccess().getSupertypesAssignment_3_1(), "rule__Class__SupertypesAssignment_3_1");
+					put(grammarAccess.getClassAccess().getSupertypesAssignment_3_2_1(), "rule__Class__SupertypesAssignment_3_2_1");
+					put(grammarAccess.getClassAccess().getStructuralFeaturesAssignment_5(), "rule__Class__StructuralFeaturesAssignment_5");
+					put(grammarAccess.getAttributeAccess().getIsUniqueAssignment_0(), "rule__Attribute__IsUniqueAssignment_0");
+					put(grammarAccess.getAttributeAccess().getNameAssignment_2(), "rule__Attribute__NameAssignment_2");
+					put(grammarAccess.getAttributeAccess().getIsOrderedAssignment_3(), "rule__Attribute__IsOrderedAssignment_3");
+					put(grammarAccess.getAttributeAccess().getTypeAssignment_6(), "rule__Attribute__TypeAssignment_6");
 				}
 			};
 		}
