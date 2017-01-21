@@ -16,3 +16,11 @@
 **.iws
 **.iml
 **.eml
+
+### Generated sources
+**/src-gen
+**/xtend-gen
+
+# Keep file hierarchy
+!**/src-gen/.empty
+!**/xtend-gen/.empty
