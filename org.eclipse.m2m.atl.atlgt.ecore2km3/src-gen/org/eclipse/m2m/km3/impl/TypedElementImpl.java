@@ -39,7 +39,7 @@ public class TypedElementImpl extends ModelElementImpl implements TypedElement {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final Integer LOWER_EDEFAULT = new Integer(0);
+	protected static final Integer LOWER_EDEFAULT = new Integer(1);
 
 	/**
 	 * The cached value of the '{@link #getLower() <em>Lower</em>}' attribute.

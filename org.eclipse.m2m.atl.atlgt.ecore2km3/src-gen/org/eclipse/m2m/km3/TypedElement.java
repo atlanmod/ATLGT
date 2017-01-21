@@ -26,7 +26,7 @@ package org.eclipse.m2m.km3;
 public interface TypedElement extends ModelElement {
 	/**
 	 * Returns the value of the '<em><b>Lower</b></em>' attribute.
-	 * The default value is <code>"0"</code>.
+	 * The default value is <code>"1"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Lower</em>' attribute isn't clear,
@@ -36,7 +36,7 @@ public interface TypedElement extends ModelElement {
 	 * @return the value of the '<em>Lower</em>' attribute.
 	 * @see #setLower(Integer)
 	 * @see org.eclipse.m2m.km3.Km3Package#getTypedElement_Lower()
-	 * @model default="0" dataType="org.eclipse.m2m.km3.primitives.Integer" required="true" ordered="false"
+	 * @model default="1" dataType="org.eclipse.m2m.km3.primitives.Integer" required="true" ordered="false"
 	 * @generated
 	 */
 	Integer getLower();

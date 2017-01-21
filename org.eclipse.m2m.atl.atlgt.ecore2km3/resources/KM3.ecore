@@ -37,7 +37,7 @@
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="TypedElement" eSuperTypes="#/0/ModelElement">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="lower" ordered="false"
-          lowerBound="1" eType="#/1/Integer" defaultValueLiteral="0"/>
+          lowerBound="1" eType="#/1/Integer" defaultValueLiteral="1"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="upper" ordered="false"
           lowerBound="1" eType="#/1/Integer" defaultValueLiteral="1"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="isOrdered" ordered="false"
