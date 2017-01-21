@@ -40,13 +40,11 @@ public class AtlIdfierTransformationEmftvm implements AtlIdfierTransformation {
         resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("emftvm", new EMFTVMResourceFactoryImpl());
 
         // Load models (turn ATL file into model)
-        String outputXmi = module + ".xmi";
-
         Model inOutModel = EmftvmFactory.eINSTANCE.createModel();
         inOutModel.setResource(resourceSet.getResource(URI.createURI(module, true), true));
         env.registerInOutModel("IN", inOutModel);
         
-        // Load metamodels
+        // Load metamodels (they need to be loaded after the ATL model)
         final Metamodel atlMetamodel = EmftvmFactory.eINSTANCE.createMetamodel();
         atlMetamodel.setResource(ATLPackage.eINSTANCE.eResource());
         env.registerMetaModel("ATL", atlMetamodel);
@@ -71,10 +69,6 @@ public class AtlIdfierTransformationEmftvm implements AtlIdfierTransformation {
             throw new RuntimeException(e);
         }
 
-        String outputIds = Paths.get(outputDirectory).resolve(new File(module).getName().replace(".atl", "-ids.atl")).toString();
-
-        // TODO Complete the extraction
-
-        return outputIds;
+        return module;
     }
 }
