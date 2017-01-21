@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
@@ -45,16 +46,6 @@ public class PackageImpl extends ModelElementImpl implements km3.Package {
 	 * @ordered
 	 */
 	protected EList<ModelElement> contents;
-
-	/**
-	 * The cached value of the '{@link #getMetamodel() <em>Metamodel</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getMetamodel()
-	 * @generated
-	 * @ordered
-	 */
-	protected Metamodel metamodel;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -93,24 +84,8 @@ public class PackageImpl extends ModelElementImpl implements km3.Package {
 	 * @generated
 	 */
 	public Metamodel getMetamodel() {
-		if (metamodel != null && metamodel.eIsProxy()) {
-			InternalEObject oldMetamodel = (InternalEObject)metamodel;
-			metamodel = (Metamodel)eResolveProxy(oldMetamodel);
-			if (metamodel != oldMetamodel) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, Km3Package.PACKAGE__METAMODEL, oldMetamodel, metamodel));
-			}
-		}
-		return metamodel;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Metamodel basicGetMetamodel() {
-		return metamodel;
+		if (eContainerFeatureID() != Km3Package.PACKAGE__METAMODEL) return null;
+		return (Metamodel)eInternalContainer();
 	}
 
 	/**
@@ -119,12 +94,7 @@ public class PackageImpl extends ModelElementImpl implements km3.Package {
 	 * @generated
 	 */
 	public NotificationChain basicSetMetamodel(Metamodel newMetamodel, NotificationChain msgs) {
-		Metamodel oldMetamodel = metamodel;
-		metamodel = newMetamodel;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Km3Package.PACKAGE__METAMODEL, oldMetamodel, newMetamodel);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
+		msgs = eBasicSetContainer((InternalEObject)newMetamodel, Km3Package.PACKAGE__METAMODEL, msgs);
 		return msgs;
 	}
 
@@ -134,10 +104,12 @@ public class PackageImpl extends ModelElementImpl implements km3.Package {
 	 * @generated
 	 */
 	public void setMetamodel(Metamodel newMetamodel) {
-		if (newMetamodel != metamodel) {
+		if (newMetamodel != eInternalContainer() || (eContainerFeatureID() != Km3Package.PACKAGE__METAMODEL && newMetamodel != null)) {
+			if (EcoreUtil.isAncestor(this, newMetamodel))
+				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
 			NotificationChain msgs = null;
-			if (metamodel != null)
-				msgs = ((InternalEObject)metamodel).eInverseRemove(this, Km3Package.METAMODEL__CONTENTS, Metamodel.class, msgs);
+			if (eInternalContainer() != null)
+				msgs = eBasicRemoveFromContainer(msgs);
 			if (newMetamodel != null)
 				msgs = ((InternalEObject)newMetamodel).eInverseAdd(this, Km3Package.METAMODEL__CONTENTS, Metamodel.class, msgs);
 			msgs = basicSetMetamodel(newMetamodel, msgs);
@@ -159,8 +131,8 @@ public class PackageImpl extends ModelElementImpl implements km3.Package {
 			case Km3Package.PACKAGE__CONTENTS:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getContents()).basicAdd(otherEnd, msgs);
 			case Km3Package.PACKAGE__METAMODEL:
-				if (metamodel != null)
-					msgs = ((InternalEObject)metamodel).eInverseRemove(this, Km3Package.METAMODEL__CONTENTS, Metamodel.class, msgs);
+				if (eInternalContainer() != null)
+					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetMetamodel((Metamodel)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -188,13 +160,26 @@ public class PackageImpl extends ModelElementImpl implements km3.Package {
 	 * @generated
 	 */
 	@Override
+	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
+		switch (eContainerFeatureID()) {
+			case Km3Package.PACKAGE__METAMODEL:
+				return eInternalContainer().eInverseRemove(this, Km3Package.METAMODEL__CONTENTS, Metamodel.class, msgs);
+		}
+		return super.eBasicRemoveFromContainerFeature(msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case Km3Package.PACKAGE__CONTENTS:
 				return getContents();
 			case Km3Package.PACKAGE__METAMODEL:
-				if (resolve) return getMetamodel();
-				return basicGetMetamodel();
+				return getMetamodel();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -248,7 +233,7 @@ public class PackageImpl extends ModelElementImpl implements km3.Package {
 			case Km3Package.PACKAGE__CONTENTS:
 				return contents != null && !contents.isEmpty();
 			case Km3Package.PACKAGE__METAMODEL:
-				return metamodel != null;
+				return getMetamodel() != null;
 		}
 		return super.eIsSet(featureID);
 	}

@@ -14,7 +14,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
-import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
+import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
@@ -32,7 +32,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class MetamodelImpl extends LocatedElementImpl implements Metamodel {
 	/**
-	 * The cached value of the '{@link #getContents() <em>Contents</em>}' reference list.
+	 * The cached value of the '{@link #getContents() <em>Contents</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getContents()
@@ -67,7 +67,7 @@ public class MetamodelImpl extends LocatedElementImpl implements Metamodel {
 	 */
 	public EList<km3.Package> getContents() {
 		if (contents == null) {
-			contents = new EObjectWithInverseResolvingEList<km3.Package>(km3.Package.class, this, Km3Package.METAMODEL__CONTENTS, Km3Package.PACKAGE__METAMODEL);
+			contents = new EObjectContainmentWithInverseEList<km3.Package>(km3.Package.class, this, Km3Package.METAMODEL__CONTENTS, Km3Package.PACKAGE__METAMODEL);
 		}
 		return contents;
 	}

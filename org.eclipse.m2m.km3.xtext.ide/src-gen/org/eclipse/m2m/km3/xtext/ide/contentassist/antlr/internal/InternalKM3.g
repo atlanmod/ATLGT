@@ -49,6 +49,31 @@ import org.eclipse.m2m.km3.xtext.services.KM3GrammarAccess;
 	}
 }
 
+// Entry rule entryRuleMetamodel
+entryRuleMetamodel
+:
+{ before(grammarAccess.getMetamodelRule()); }
+	 ruleMetamodel
+{ after(grammarAccess.getMetamodelRule()); } 
+	 EOF 
+;
+
+// Rule Metamodel
+ruleMetamodel 
+	@init {
+		int stackSize = keepStackSize();
+	}
+	:
+	(
+		{ before(grammarAccess.getMetamodelAccess().getGroup()); }
+		(rule__Metamodel__Group__0)
+		{ after(grammarAccess.getMetamodelAccess().getGroup()); }
+	)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
 // Entry rule entryRulePackage
 entryRulePackage
 :
@@ -265,6 +290,60 @@ rule__StructuralFeature__Alternatives
 finally {
 	restoreStackSize(stackSize);
 }
+
+rule__Metamodel__Group__0
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	rule__Metamodel__Group__0__Impl
+	rule__Metamodel__Group__1
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__Metamodel__Group__0__Impl
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+(
+	{ before(grammarAccess.getMetamodelAccess().getMetamodelAction_0()); }
+	()
+	{ after(grammarAccess.getMetamodelAccess().getMetamodelAction_0()); }
+)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__Metamodel__Group__1
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	rule__Metamodel__Group__1__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__Metamodel__Group__1__Impl
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+(
+	{ before(grammarAccess.getMetamodelAccess().getContentsAssignment_1()); }
+	(rule__Metamodel__ContentsAssignment_1)*
+	{ after(grammarAccess.getMetamodelAccess().getContentsAssignment_1()); }
+)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
 
 rule__Package__Group__0
 	@init {
@@ -1345,6 +1424,21 @@ finally {
 	restoreStackSize(stackSize);
 }
 
+
+rule__Metamodel__ContentsAssignment_1
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	(
+		{ before(grammarAccess.getMetamodelAccess().getContentsPackageParserRuleCall_1_0()); }
+		rulePackage
+		{ after(grammarAccess.getMetamodelAccess().getContentsPackageParserRuleCall_1_0()); }
+	)
+;
+finally {
+	restoreStackSize(stackSize);
+}
 
 rule__Package__NameAssignment_1
 	@init {

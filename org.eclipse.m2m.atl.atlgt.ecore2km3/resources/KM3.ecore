@@ -80,7 +80,7 @@
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="Metamodel" eSuperTypes="#/0/LocatedElement">
       <eStructuralFeatures xsi:type="ecore:EReference" name="contents" upperBound="-1"
-          eType="#/0/Package" eOpposite="#/0/Package/metamodel"/>
+          eType="#/0/Package" containment="true" eOpposite="#/0/Package/metamodel"/>
     </eClassifiers>
   </ecore:EPackage>
   <ecore:EPackage name="PrimitiveTypes" nsURI="http://example.org/prim" nsPrefix="prim">

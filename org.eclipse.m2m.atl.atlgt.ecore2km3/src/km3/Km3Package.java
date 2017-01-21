@@ -1314,7 +1314,7 @@ public interface Km3Package extends EPackage {
 	int PACKAGE__CONTENTS = MODEL_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Metamodel</b></em>' reference.
+	 * The feature id for the '<em><b>Metamodel</b></em>' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -1360,7 +1360,7 @@ public interface Km3Package extends EPackage {
 	int METAMODEL__LOCATION = LOCATED_ELEMENT__LOCATION;
 
 	/**
-	 * The feature id for the '<em><b>Contents</b></em>' reference list.
+	 * The feature id for the '<em><b>Contents</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -1802,10 +1802,10 @@ public interface Km3Package extends EPackage {
 	EReference getPackage_Contents();
 
 	/**
-	 * Returns the meta object for the reference '{@link km3.Package#getMetamodel <em>Metamodel</em>}'.
+	 * Returns the meta object for the container reference '{@link km3.Package#getMetamodel <em>Metamodel</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Metamodel</em>'.
+	 * @return the meta object for the container reference '<em>Metamodel</em>'.
 	 * @see km3.Package#getMetamodel()
 	 * @see #getPackage()
 	 * @generated
@@ -1823,10 +1823,10 @@ public interface Km3Package extends EPackage {
 	EClass getMetamodel();
 
 	/**
-	 * Returns the meta object for the reference list '{@link km3.Metamodel#getContents <em>Contents</em>}'.
+	 * Returns the meta object for the containment reference list '{@link km3.Metamodel#getContents <em>Contents</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Contents</em>'.
+	 * @return the meta object for the containment reference list '<em>Contents</em>'.
 	 * @see km3.Metamodel#getContents()
 	 * @see #getMetamodel()
 	 * @generated
@@ -2199,7 +2199,7 @@ public interface Km3Package extends EPackage {
 		EReference PACKAGE__CONTENTS = eINSTANCE.getPackage_Contents();
 
 		/**
-		 * The meta object literal for the '<em><b>Metamodel</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Metamodel</b></em>' container reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -2217,7 +2217,7 @@ public interface Km3Package extends EPackage {
 		EClass METAMODEL = eINSTANCE.getMetamodel();
 
 		/**
-		 * The meta object literal for the '<em><b>Contents</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Contents</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated

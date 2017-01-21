@@ -22,7 +22,7 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface Metamodel extends LocatedElement {
 	/**
-	 * Returns the value of the '<em><b>Contents</b></em>' reference list.
+	 * Returns the value of the '<em><b>Contents</b></em>' containment reference list.
 	 * The list contents are of type {@link km3.Package}.
 	 * It is bidirectional and its opposite is '{@link km3.Package#getMetamodel <em>Metamodel</em>}'.
 	 * <!-- begin-user-doc -->
@@ -31,10 +31,10 @@ public interface Metamodel extends LocatedElement {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Contents</em>' reference list.
+	 * @return the value of the '<em>Contents</em>' containment reference list.
 	 * @see km3.Km3Package#getMetamodel_Contents()
 	 * @see km3.Package#getMetamodel
-	 * @model opposite="metamodel"
+	 * @model opposite="metamodel" containment="true"
 	 * @generated
 	 */
 	EList<km3.Package> getContents();

@@ -8,6 +8,7 @@ import java.util.Set;
 import km3.Attribute;
 import km3.DataType;
 import km3.Km3Package;
+import km3.Metamodel;
 import km3.Reference;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -42,6 +43,9 @@ public class KM3SemanticSequencer extends AbstractDelegatingSemanticSequencer {
 				return; 
 			case Km3Package.DATA_TYPE:
 				sequence_DataType(context, (DataType) semanticObject); 
+				return; 
+			case Km3Package.METAMODEL:
+				sequence_Metamodel(context, (Metamodel) semanticObject); 
 				return; 
 			case Km3Package.PACKAGE:
 				sequence_Package(context, (km3.Package) semanticObject); 
@@ -96,6 +100,18 @@ public class KM3SemanticSequencer extends AbstractDelegatingSemanticSequencer {
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getDataTypeAccess().getNameIDTerminalRuleCall_1_0(), semanticObject.getName());
 		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Metamodel returns Metamodel
+	 *
+	 * Constraint:
+	 *     contents+=Package*
+	 */
+	protected void sequence_Metamodel(ISerializationContext context, Metamodel semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	

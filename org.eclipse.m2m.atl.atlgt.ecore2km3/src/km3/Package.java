@@ -41,7 +41,7 @@ public interface Package extends ModelElement {
 	EList<ModelElement> getContents();
 
 	/**
-	 * Returns the value of the '<em><b>Metamodel</b></em>' reference.
+	 * Returns the value of the '<em><b>Metamodel</b></em>' container reference.
 	 * It is bidirectional and its opposite is '{@link km3.Metamodel#getContents <em>Contents</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -49,20 +49,20 @@ public interface Package extends ModelElement {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Metamodel</em>' reference.
+	 * @return the value of the '<em>Metamodel</em>' container reference.
 	 * @see #setMetamodel(Metamodel)
 	 * @see km3.Km3Package#getPackage_Metamodel()
 	 * @see km3.Metamodel#getContents
-	 * @model opposite="contents" ordered="false"
+	 * @model opposite="contents" transient="false" ordered="false"
 	 * @generated
 	 */
 	Metamodel getMetamodel();
 
 	/**
-	 * Sets the value of the '{@link km3.Package#getMetamodel <em>Metamodel</em>}' reference.
+	 * Sets the value of the '{@link km3.Package#getMetamodel <em>Metamodel</em>}' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Metamodel</em>' reference.
+	 * @param value the new value of the '<em>Metamodel</em>' container reference.
 	 * @see #getMetamodel()
 	 * @generated
 	 */

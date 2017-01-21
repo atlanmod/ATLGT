@@ -5,6 +5,9 @@ import "http://example.org/km3"
 import "http://example.org/prim" as PrimitiveTypes
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 
+Metamodel:
+	{Metamodel} (contents+=Package)*;
+
 Package:
 	'package' name=ID
 	'{'
@@ -12,7 +15,6 @@ Package:
 	'}';
 
 terminal COMMENT 	: '--' !('\n'|'\r')* ('\r'? '\n')?;
-
 
 ModelElement:
 	DataType | Class
@@ -58,12 +60,6 @@ Reference:
 	';'
 	;
 
-//Metamodel returns Metamodel:
-//	'Metamodel'
-//	'{'
-//		'location' location=String0
-//		('contents' '(' contents+=[Package|STRING] ( "," contents+=[Package|STRING])* ')' )?
-//	'}';
 //
 //
 //
