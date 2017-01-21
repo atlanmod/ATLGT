@@ -5,7 +5,8 @@
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
     operationReflection="true" importOrganizing="true">
   <foreignModel>KM3.ecore</foreignModel>
-  <genPackages prefix="Km3" disposableProviderFactory="true" ecorePackage="KM3.ecore#/0">
+  <genPackages prefix="Km3" basePackage="org.eclipse.m2m" disposableProviderFactory="true"
+      ecorePackage="KM3.ecore#/0">
     <genClasses image="false" ecoreClass="KM3.ecore#/0/LocatedElement">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KM3.ecore#/0/LocatedElement/location"/>
     </genClasses>
@@ -61,7 +62,8 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference KM3.ecore#/0/Metamodel/contents"/>
     </genClasses>
   </genPackages>
-  <genPackages prefix="PrimitiveTypes" disposableProviderFactory="true" ecorePackage="KM3.ecore#/1">
+  <genPackages prefix="Km3Primitives" basePackage="org.eclipse.m2m.km3" disposableProviderFactory="true"
+      ecorePackage="KM3.ecore#/1">
     <genDataTypes ecoreDataType="KM3.ecore#/1/Boolean"/>
     <genDataTypes ecoreDataType="KM3.ecore#/1/Integer"/>
     <genDataTypes ecoreDataType="KM3.ecore#/1/String"/>

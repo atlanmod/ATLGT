@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore">
-  <ecore:EPackage name="km3" nsURI="http://example.org/km3" nsPrefix="km3">
+  <ecore:EPackage name="km3" nsURI="http://www.eclipse.org/m2m/km3" nsPrefix="km3">
     <eClassifiers xsi:type="ecore:EClass" name="LocatedElement" abstract="true">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="location" ordered="false"
           eType="#/1/String"/>
@@ -83,7 +83,8 @@
           eType="#/0/Package" containment="true" eOpposite="#/0/Package/metamodel"/>
     </eClassifiers>
   </ecore:EPackage>
-  <ecore:EPackage name="PrimitiveTypes" nsURI="http://example.org/prim" nsPrefix="prim">
+  <ecore:EPackage name="primitives" nsURI="http://www.eclipse.org/m2m/km3/primitives"
+      nsPrefix="primitives">
     <eClassifiers xsi:type="ecore:EDataType" name="Boolean" instanceClassName="java.lang.Boolean"/>
     <eClassifiers xsi:type="ecore:EDataType" name="Integer" instanceClassName="java.lang.Integer"/>
     <eClassifiers xsi:type="ecore:EDataType" name="String" instanceClassName="java.lang.String"/>

@@ -4,7 +4,7 @@
 package org.eclipse.m2m.km3.xtext.tests
 
 import com.google.inject.Inject
-import km3.Metamodel
+import org.eclipse.m2m.km3.Metamodel
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.junit4.util.ParseHelper
@@ -26,5 +26,4 @@ class KM3ParsingTest{
 		''')
 		Assert.assertNotNull(result)
 	}
-
 }

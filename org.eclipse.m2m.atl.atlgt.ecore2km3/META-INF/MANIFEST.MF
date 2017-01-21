@@ -8,11 +8,11 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .
 Export-Package: org.eclipse.m2m.atl.atlgt.ecore2km3,
- PrimitiveTypes,
- PrimitiveTypes.impl,
- km3,
- km3.impl,
- km3.util
+ org.eclipse.m2m.km3,
+ org.eclipse.m2m.km3.impl,
+ org.eclipse.m2m.km3.util,
+ org.eclipse.m2m.km3.primitives,
+ org.eclipse.m2m.km3.primitives.impl
 Require-Bundle: org.eclipse.swt,
  org.eclipse.ui,
  org.eclipse.osgi,

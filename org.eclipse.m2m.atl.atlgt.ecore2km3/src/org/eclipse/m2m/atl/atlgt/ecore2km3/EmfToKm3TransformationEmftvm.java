@@ -14,6 +14,7 @@ import org.eclipse.m2m.atl.emftvm.impl.resource.EMFTVMResourceFactoryImpl;
 import org.eclipse.m2m.atl.emftvm.util.DefaultModuleResolver;
 import org.eclipse.m2m.atl.emftvm.util.ModuleResolver;
 import org.eclipse.m2m.atl.emftvm.util.TimingData;
+import org.eclipse.m2m.km3.Km3Package;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -32,8 +33,6 @@ public class EmfToKm3TransformationEmftvm implements EmfToKm3Transformation {
     private static final String ECORE_EXT = "ecore";
     private static final String XMI_EXT = "xmi";
     private static final String EMFTVM_EXT = "emftvm";
-
-    private static final String KM3_METAMODEL = KM3 + "." + ECORE_EXT;
 
     private static final String MODULE_NAME = "EMF2KM3";
 
@@ -67,7 +66,7 @@ public class EmfToKm3TransformationEmftvm implements EmfToKm3Transformation {
         env.registerMetaModel(MOF, ecoreMetamodel);
 
         final Metamodel km3Metamodel = FACTORY.createMetamodel();
-        km3Metamodel.setResource(resourceSet.getResource(resourcesDirectory.appendSegment(KM3_METAMODEL), true));
+        km3Metamodel.setResource(Km3Package.eINSTANCE.eResource());
         env.registerMetaModel(KM3, km3Metamodel);
 
         // Load models

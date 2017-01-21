@@ -5,13 +5,13 @@ package org.eclipse.m2m.km3.xtext.serializer;
 
 import com.google.inject.Inject;
 import java.util.Set;
-import km3.Attribute;
-import km3.DataType;
-import km3.Km3Package;
-import km3.Metamodel;
-import km3.Reference;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.m2m.km3.Attribute;
+import org.eclipse.m2m.km3.DataType;
+import org.eclipse.m2m.km3.Km3Package;
+import org.eclipse.m2m.km3.Metamodel;
+import org.eclipse.m2m.km3.Reference;
 import org.eclipse.m2m.km3.xtext.services.KM3GrammarAccess;
 import org.eclipse.xtext.Action;
 import org.eclipse.xtext.Parameter;
@@ -39,7 +39,7 @@ public class KM3SemanticSequencer extends AbstractDelegatingSemanticSequencer {
 				sequence_Attribute(context, (Attribute) semanticObject); 
 				return; 
 			case Km3Package.CLASS:
-				sequence_Class(context, (km3.Class) semanticObject); 
+				sequence_Class(context, (org.eclipse.m2m.km3.Class) semanticObject); 
 				return; 
 			case Km3Package.DATA_TYPE:
 				sequence_DataType(context, (DataType) semanticObject); 
@@ -48,7 +48,7 @@ public class KM3SemanticSequencer extends AbstractDelegatingSemanticSequencer {
 				sequence_Metamodel(context, (Metamodel) semanticObject); 
 				return; 
 			case Km3Package.PACKAGE:
-				sequence_Package(context, (km3.Package) semanticObject); 
+				sequence_Package(context, (org.eclipse.m2m.km3.Package) semanticObject); 
 				return; 
 			case Km3Package.REFERENCE:
 				sequence_Reference(context, (Reference) semanticObject); 
@@ -79,7 +79,7 @@ public class KM3SemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 * Constraint:
 	 *     (isAbstract?='abstract'? name=ID (supertypes+=[Class|ID] supertypes+=[Class|ID]*)? structuralFeatures+=StructuralFeature*)
 	 */
-	protected void sequence_Class(ISerializationContext context, km3.Class semanticObject) {
+	protected void sequence_Class(ISerializationContext context, org.eclipse.m2m.km3.Class semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -122,7 +122,7 @@ public class KM3SemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 * Constraint:
 	 *     (name=ID contents+=ModelElement*)
 	 */
-	protected void sequence_Package(ISerializationContext context, km3.Package semanticObject) {
+	protected void sequence_Package(ISerializationContext context, org.eclipse.m2m.km3.Package semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

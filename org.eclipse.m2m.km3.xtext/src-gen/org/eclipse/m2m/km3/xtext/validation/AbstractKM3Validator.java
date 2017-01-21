@@ -13,7 +13,7 @@ public abstract class AbstractKM3Validator extends AbstractDeclarativeValidator 
 	@Override
 	protected List<EPackage> getEPackages() {
 		List<EPackage> result = new ArrayList<EPackage>();
-		result.add(EPackage.Registry.INSTANCE.getEPackage("http://example.org/km3"));
+		result.add(EPackage.Registry.INSTANCE.getEPackage("http://www.eclipse.org/m2m/km3"));
 		return result;
 	}
 	
