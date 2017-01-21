@@ -6,6 +6,7 @@ package org.eclipse.m2m.km3.xtext.services;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import java.util.List;
+import org.eclipse.xtext.Action;
 import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.Assignment;
 import org.eclipse.xtext.CrossReference;
@@ -23,6 +24,29 @@ import org.eclipse.xtext.service.GrammarProvider;
 @Singleton
 public class KM3GrammarAccess extends AbstractGrammarElementFinder {
 	
+	public class MetamodelElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.m2m.km3.xtext.KM3.Metamodel");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cMetamodelAction_0 = (Action)cGroup.eContents().get(0);
+		private final Assignment cContentsAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cContentsPackageParserRuleCall_1_0 = (RuleCall)cContentsAssignment_1.eContents().get(0);
+		
+		//Metamodel:
+		//	{Metamodel} contents+=Package*;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//{Metamodel} contents+=Package*
+		public Group getGroup() { return cGroup; }
+		
+		//{Metamodel}
+		public Action getMetamodelAction_0() { return cMetamodelAction_0; }
+		
+		//contents+=Package*
+		public Assignment getContentsAssignment_1() { return cContentsAssignment_1; }
+		
+		//Package
+		public RuleCall getContentsPackageParserRuleCall_1_0() { return cContentsPackageParserRuleCall_1_0; }
+	}
 	public class PackageElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.m2m.km3.xtext.KM3.Package");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -34,8 +58,6 @@ public class KM3GrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cContentsModelElementParserRuleCall_3_0 = (RuleCall)cContentsAssignment_3.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
-		////Metamodel:
-		////	{Metamodel} (contents+=Package)*;
 		//Package:
 		//	'package' name=ID
 		//	'{'
@@ -470,6 +492,7 @@ public class KM3GrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	
+	private final MetamodelElements pMetamodel;
 	private final PackageElements pPackage;
 	private final TerminalRule tCOMMENT;
 	private final ModelElementElements pModelElement;
@@ -489,6 +512,7 @@ public class KM3GrammarAccess extends AbstractGrammarElementFinder {
 			TerminalsGrammarAccess gaTerminals) {
 		this.grammar = internalFindGrammar(grammarProvider);
 		this.gaTerminals = gaTerminals;
+		this.pMetamodel = new MetamodelElements();
 		this.pPackage = new PackageElements();
 		this.tCOMMENT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.m2m.km3.xtext.KM3.COMMENT");
 		this.pModelElement = new ModelElementElements();
@@ -527,8 +551,16 @@ public class KM3GrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	
-	////Metamodel:
-	////	{Metamodel} (contents+=Package)*;
+	//Metamodel:
+	//	{Metamodel} contents+=Package*;
+	public MetamodelElements getMetamodelAccess() {
+		return pMetamodel;
+	}
+	
+	public ParserRule getMetamodelRule() {
+		return getMetamodelAccess().getRule();
+	}
+	
 	//Package:
 	//	'package' name=ID
 	//	'{'
