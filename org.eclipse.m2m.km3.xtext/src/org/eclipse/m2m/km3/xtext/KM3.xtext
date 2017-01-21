@@ -5,179 +5,169 @@ import "http://example.org/km3"
 import "http://example.org/prim" as PrimitiveTypes
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 
-Metamodel returns Metamodel:
-	'Metamodel'
+Package:
+	'package' name=ID
 	'{'
-		'location' location=String0
-		('contents' '(' contents+=[Package|STRING] ( "," contents+=[Package|STRING])* ')' )?
+		(contents+=ModelElement)*
 	'}';
-
 
 ModelElement returns ModelElement:
-	Classifier_Impl | DataType | Enumeration | EnumLiteral | TemplateParameter | Class | TypedElement_Impl | StructuralFeature_Impl | Attribute | Reference | Operation | Parameter | Package;
-
-
-
-
-
-StructuralFeature returns StructuralFeature:
-	StructuralFeature_Impl | Attribute | Reference;
-
-
-Classifier returns Classifier:
-	Classifier_Impl | DataType | Enumeration | TemplateParameter | Class;
-
-
-
-String0 returns PrimitiveTypes::String:
-	'String' /* TODO: implement this rule and an appropriate IValueConverter */;
-
-Package returns Package:
-	'Package'
-	'{'
-		'location' location=String0
-		'name' name=String0
-		'metamodel' metamodel=[Metamodel|STRING]
-		('contents' '{' contents+=ModelElement ( "," contents+=ModelElement)* '}' )?
-	'}';
-
-Classifier_Impl returns Classifier:
-	'Classifier'
-	'{'
-		'location' location=String0
-		'name' name=String0
-	'}';
+	DataType
+//	Classifier_Impl | DataType | Enumeration | EnumLiteral | TemplateParameter | Class | TypedElement_Impl | StructuralFeature_Impl | Attribute | Reference | Operation | Parameter | Package;
+;
 
 DataType returns DataType:
-	'DataType'
-	'{'
-		'location' location=String0
-		'name' name=String0
-	'}';
+	'datatype' name=ID ';';
 
-Enumeration returns Enumeration:
-	'Enumeration'
-	'{'
-		'location' location=String0
-		'name' name=String0
-		('literals' '(' literals+=[EnumLiteral|STRING] ( "," literals+=[EnumLiteral|STRING])* ')' )?
-	'}';
-
-EnumLiteral returns EnumLiteral:
-	'EnumLiteral'
-	'{'
-		'location' location=String0
-		'name' name=String0
-		'enum' ^enum=[Enumeration|STRING]
-	'}';
-
-TemplateParameter returns TemplateParameter:
-	'TemplateParameter'
-	'{'
-		'location' location=String0
-		'name' name=String0
-	'}';
-
-Class returns Class:
-	'Class'
-	'{'
-		'location' location=String0
-		'name' name=String0
-		'isAbstract' isAbstract=Boolean
-		('parameters' '(' parameters+=[TemplateParameter|STRING] ( "," parameters+=[TemplateParameter|STRING])* ')' )?
-		('supertypes' '(' supertypes+=[Class|STRING] ( "," supertypes+=[Class|STRING])* ')' )?
-		('structuralFeatures' '(' structuralFeatures+=[StructuralFeature|STRING] ( "," structuralFeatures+=[StructuralFeature|STRING])* ')' )?
-		('operations' '(' operations+=[Operation|STRING] ( "," operations+=[Operation|STRING])* ')' )?
-	'}';
-
-TypedElement_Impl returns TypedElement:
-	'TypedElement'
-	'{'
-		'location' location=String0
-		'name' name=String0
-		'lower' lower=Integer
-		'upper' upper=Integer
-		'isOrdered' isOrdered=Boolean
-		'isUnique' isUnique=Boolean
-		'type' type=[Classifier|STRING]
-	'}';
-
-StructuralFeature_Impl returns StructuralFeature:
-	'StructuralFeature'
-	'{'
-		'location' location=String0
-		'name' name=String0
-		'lower' lower=Integer
-		'upper' upper=Integer
-		'isOrdered' isOrdered=Boolean
-		'isUnique' isUnique=Boolean
-		'type' type=[Classifier|STRING]
-		'owner' owner=[Class|STRING]
-		('subsetOf' '(' subsetOf+=[StructuralFeature|STRING] ( "," subsetOf+=[StructuralFeature|STRING])* ')' )?
-		('derivedFrom' '(' derivedFrom+=[StructuralFeature|STRING] ( "," derivedFrom+=[StructuralFeature|STRING])* ')' )?
-	'}';
-
-Attribute returns Attribute:
-	'Attribute'
-	'{'
-		'location' location=String0
-		'name' name=String0
-		'lower' lower=Integer
-		'upper' upper=Integer
-		'isOrdered' isOrdered=Boolean
-		'isUnique' isUnique=Boolean
-		'type' type=[Classifier|STRING]
-		'owner' owner=[Class|STRING]
-		('subsetOf' '(' subsetOf+=[StructuralFeature|STRING] ( "," subsetOf+=[StructuralFeature|STRING])* ')' )?
-		('derivedFrom' '(' derivedFrom+=[StructuralFeature|STRING] ( "," derivedFrom+=[StructuralFeature|STRING])* ')' )?
-	'}';
-
-Reference returns Reference:
-	'Reference'
-	'{'
-		'location' location=String0
-		'name' name=String0
-		'lower' lower=Integer
-		'upper' upper=Integer
-		'isOrdered' isOrdered=Boolean
-		'isUnique' isUnique=Boolean
-		'isContainer' isContainer=Boolean
-		'type' type=[Classifier|STRING]
-		'owner' owner=[Class|STRING]
-		('subsetOf' '(' subsetOf+=[StructuralFeature|STRING] ( "," subsetOf+=[StructuralFeature|STRING])* ')' )?
-		('derivedFrom' '(' derivedFrom+=[StructuralFeature|STRING] ( "," derivedFrom+=[StructuralFeature|STRING])* ')' )?
-		('opposite' opposite=[Reference|STRING])?
-	'}';
-
-Operation returns Operation:
-	'Operation'
-	'{'
-		'location' location=String0
-		'name' name=String0
-		'lower' lower=Integer
-		'upper' upper=Integer
-		'isOrdered' isOrdered=Boolean
-		'isUnique' isUnique=Boolean
-		'type' type=[Classifier|STRING]
-		'owner' owner=[Class|STRING]
-		('parameters' '(' parameters+=[Parameter|STRING] ( "," parameters+=[Parameter|STRING])* ')' )?
-	'}';
-
-Parameter returns Parameter:
-	'Parameter'
-	'{'
-		'location' location=String0
-		'name' name=String0
-		'lower' lower=Integer
-		'upper' upper=Integer
-		'isOrdered' isOrdered=Boolean
-		'isUnique' isUnique=Boolean
-		'type' type=[Classifier|STRING]
-		'owner' owner=[Operation|STRING]
-	'}';
-
-Boolean returns PrimitiveTypes::Boolean:
-	'Boolean' /* TODO: implement this rule and an appropriate IValueConverter */;
-
-Integer returns PrimitiveTypes::Integer:
-	'Integer' /* TODO: implement this rule and an appropriate IValueConverter */;
+//Metamodel returns Metamodel:
+//	'Metamodel'
+//	'{'
+//		'location' location=String0
+//		('contents' '(' contents+=[Package|STRING] ( "," contents+=[Package|STRING])* ')' )?
+//	'}';
+//
+//StructuralFeature returns StructuralFeature:
+//	StructuralFeature_Impl | Attribute | Reference;
+//
+//
+//Classifier returns Classifier:
+//	Classifier_Impl | DataType | Enumeration | TemplateParameter | Class;
+//
+//String0 returns PrimitiveTypes::String:
+//	'String' /* TODO: implement this rule and an appropriate IValueConverter */;
+//
+//
+//Classifier_Impl returns Classifier:
+//	'Classifier'
+//	'{'
+//		'location' location=String0
+//		'name' name=String0
+//	'}';
+//
+//
+//Enumeration returns Enumeration:
+//	'Enumeration'
+//	'{'
+//		'location' location=String0
+//		'name' name=String0
+//		('literals' '(' literals+=[EnumLiteral|STRING] ( "," literals+=[EnumLiteral|STRING])* ')' )?
+//	'}';
+//
+//EnumLiteral returns EnumLiteral:
+//	'EnumLiteral'
+//	'{'
+//		'location' location=String0
+//		'name' name=String0
+//		'enum' ^enum=[Enumeration|STRING]
+//	'}';
+//
+//TemplateParameter returns TemplateParameter:
+//	'TemplateParameter'
+//	'{'
+//		'location' location=String0
+//		'name' name=String0
+//	'}';
+//
+//Class returns Class:
+//	'Class'
+//	'{'
+//		'location' location=String0
+//		'name' name=String0
+//		'isAbstract' isAbstract=Boolean
+//		('parameters' '(' parameters+=[TemplateParameter|STRING] ( "," parameters+=[TemplateParameter|STRING])* ')' )?
+//		('supertypes' '(' supertypes+=[Class|STRING] ( "," supertypes+=[Class|STRING])* ')' )?
+//		('structuralFeatures' '(' structuralFeatures+=[StructuralFeature|STRING] ( "," structuralFeatures+=[StructuralFeature|STRING])* ')' )?
+//		('operations' '(' operations+=[Operation|STRING] ( "," operations+=[Operation|STRING])* ')' )?
+//	'}';
+//
+//TypedElement_Impl returns TypedElement:
+//	'TypedElement'
+//	'{'
+//		'location' location=String0
+//		'name' name=String0
+//		'lower' lower=Integer
+//		'upper' upper=Integer
+//		'isOrdered' isOrdered=Boolean
+//		'isUnique' isUnique=Boolean
+//		'type' type=[Classifier|STRING]
+//	'}';
+//
+//StructuralFeature_Impl returns StructuralFeature:
+//	'StructuralFeature'
+//	'{'
+//		'location' location=String0
+//		'name' name=String0
+//		'lower' lower=Integer
+//		'upper' upper=Integer
+//		'isOrdered' isOrdered=Boolean
+//		'isUnique' isUnique=Boolean
+//		'type' type=[Classifier|STRING]
+//		'owner' owner=[Class|STRING]
+//		('subsetOf' '(' subsetOf+=[StructuralFeature|STRING] ( "," subsetOf+=[StructuralFeature|STRING])* ')' )?
+//		('derivedFrom' '(' derivedFrom+=[StructuralFeature|STRING] ( "," derivedFrom+=[StructuralFeature|STRING])* ')' )?
+//	'}';
+//
+//Attribute returns Attribute:
+//	'Attribute'
+//	'{'
+//		'location' location=String0
+//		'name' name=String0
+//		'lower' lower=Integer
+//		'upper' upper=Integer
+//		'isOrdered' isOrdered=Boolean
+//		'isUnique' isUnique=Boolean
+//		'type' type=[Classifier|STRING]
+//		'owner' owner=[Class|STRING]
+//		('subsetOf' '(' subsetOf+=[StructuralFeature|STRING] ( "," subsetOf+=[StructuralFeature|STRING])* ')' )?
+//		('derivedFrom' '(' derivedFrom+=[StructuralFeature|STRING] ( "," derivedFrom+=[StructuralFeature|STRING])* ')' )?
+//	'}';
+//
+//Reference returns Reference:
+//	'Reference'
+//	'{'
+//		'location' location=String0
+//		'name' name=String0
+//		'lower' lower=Integer
+//		'upper' upper=Integer
+//		'isOrdered' isOrdered=Boolean
+//		'isUnique' isUnique=Boolean
+//		'isContainer' isContainer=Boolean
+//		'type' type=[Classifier|STRING]
+//		'owner' owner=[Class|STRING]
+//		('subsetOf' '(' subsetOf+=[StructuralFeature|STRING] ( "," subsetOf+=[StructuralFeature|STRING])* ')' )?
+//		('derivedFrom' '(' derivedFrom+=[StructuralFeature|STRING] ( "," derivedFrom+=[StructuralFeature|STRING])* ')' )?
+//		('opposite' opposite=[Reference|STRING])?
+//	'}';
+//
+//Operation returns Operation:
+//	'Operation'
+//	'{'
+//		'location' location=String0
+//		'name' name=String0
+//		'lower' lower=Integer
+//		'upper' upper=Integer
+//		'isOrdered' isOrdered=Boolean
+//		'isUnique' isUnique=Boolean
+//		'type' type=[Classifier|STRING]
+//		'owner' owner=[Class|STRING]
+//		('parameters' '(' parameters+=[Parameter|STRING] ( "," parameters+=[Parameter|STRING])* ')' )?
+//	'}';
+//
+//Parameter returns Parameter:
+//	'Parameter'
+//	'{'
+//		'location' location=String0
+//		'name' name=String0
+//		'lower' lower=Integer
+//		'upper' upper=Integer
+//		'isOrdered' isOrdered=Boolean
+//		'isUnique' isUnique=Boolean
+//		'type' type=[Classifier|STRING]
+//		'owner' owner=[Operation|STRING]
+//	'}';
+//
+//Boolean returns PrimitiveTypes::Boolean:
+//	'Boolean' /* TODO: implement this rule and an appropriate IValueConverter */;
+//
+//Integer returns PrimitiveTypes::Integer:
+//	'Integer' /* TODO: implement this rule and an appropriate IValueConverter */;

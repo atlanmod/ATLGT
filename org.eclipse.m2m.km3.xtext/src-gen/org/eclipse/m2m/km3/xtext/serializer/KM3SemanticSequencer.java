@@ -5,18 +5,8 @@ package org.eclipse.m2m.km3.xtext.serializer;
 
 import com.google.inject.Inject;
 import java.util.Set;
-import km3.Attribute;
-import km3.Classifier;
 import km3.DataType;
-import km3.EnumLiteral;
-import km3.Enumeration;
 import km3.KM3Package;
-import km3.Metamodel;
-import km3.Operation;
-import km3.Reference;
-import km3.StructuralFeature;
-import km3.TemplateParameter;
-import km3.TypedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.m2m.km3.xtext.services.KM3GrammarAccess;
@@ -42,47 +32,11 @@ public class KM3SemanticSequencer extends AbstractDelegatingSemanticSequencer {
 		Set<Parameter> parameters = context.getEnabledBooleanParameters();
 		if (epackage == KM3Package.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
-			case KM3Package.ATTRIBUTE:
-				sequence_Attribute(context, (Attribute) semanticObject); 
-				return; 
-			case KM3Package.CLASS:
-				sequence_Class(context, (km3.Class) semanticObject); 
-				return; 
-			case KM3Package.CLASSIFIER:
-				sequence_Classifier_Impl(context, (Classifier) semanticObject); 
-				return; 
 			case KM3Package.DATA_TYPE:
 				sequence_DataType(context, (DataType) semanticObject); 
 				return; 
-			case KM3Package.ENUM_LITERAL:
-				sequence_EnumLiteral(context, (EnumLiteral) semanticObject); 
-				return; 
-			case KM3Package.ENUMERATION:
-				sequence_Enumeration(context, (Enumeration) semanticObject); 
-				return; 
-			case KM3Package.METAMODEL:
-				sequence_Metamodel(context, (Metamodel) semanticObject); 
-				return; 
-			case KM3Package.OPERATION:
-				sequence_Operation(context, (Operation) semanticObject); 
-				return; 
 			case KM3Package.PACKAGE:
 				sequence_Package(context, (km3.Package) semanticObject); 
-				return; 
-			case KM3Package.PARAMETER:
-				sequence_Parameter(context, (km3.Parameter) semanticObject); 
-				return; 
-			case KM3Package.REFERENCE:
-				sequence_Reference(context, (Reference) semanticObject); 
-				return; 
-			case KM3Package.STRUCTURAL_FEATURE:
-				sequence_StructuralFeature_Impl(context, (StructuralFeature) semanticObject); 
-				return; 
-			case KM3Package.TEMPLATE_PARAMETER:
-				sequence_TemplateParameter(context, (TemplateParameter) semanticObject); 
-				return; 
-			case KM3Package.TYPED_ELEMENT:
-				sequence_TypedElement_Impl(context, (TypedElement) semanticObject); 
 				return; 
 			}
 		if (errorAcceptor != null)
@@ -91,350 +45,32 @@ public class KM3SemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Contexts:
-	 *     ModelElement returns Attribute
-	 *     StructuralFeature returns Attribute
-	 *     Attribute returns Attribute
-	 *
-	 * Constraint:
-	 *     (
-	 *         location=String0 
-	 *         name=String0 
-	 *         lower=Integer 
-	 *         upper=Integer 
-	 *         isOrdered=Boolean 
-	 *         isUnique=Boolean 
-	 *         type=[Classifier|STRING] 
-	 *         owner=[Class|STRING] 
-	 *         (subsetOf+=[StructuralFeature|STRING] subsetOf+=[StructuralFeature|STRING]*)? 
-	 *         (derivedFrom+=[StructuralFeature|STRING] derivedFrom+=[StructuralFeature|STRING]*)?
-	 *     )
-	 */
-	protected void sequence_Attribute(ISerializationContext context, Attribute semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     ModelElement returns Class
-	 *     Classifier returns Class
-	 *     Class returns Class
-	 *
-	 * Constraint:
-	 *     (
-	 *         location=String0 
-	 *         name=String0 
-	 *         isAbstract=Boolean 
-	 *         (parameters+=[TemplateParameter|STRING] parameters+=[TemplateParameter|STRING]*)? 
-	 *         (supertypes+=[Class|STRING] supertypes+=[Class|STRING]*)? 
-	 *         (structuralFeatures+=[StructuralFeature|STRING] structuralFeatures+=[StructuralFeature|STRING]*)? 
-	 *         (operations+=[Operation|STRING] operations+=[Operation|STRING]*)?
-	 *     )
-	 */
-	protected void sequence_Class(ISerializationContext context, km3.Class semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     ModelElement returns Classifier
-	 *     Classifier returns Classifier
-	 *     Classifier_Impl returns Classifier
-	 *
-	 * Constraint:
-	 *     (location=String0 name=String0)
-	 */
-	protected void sequence_Classifier_Impl(ISerializationContext context, Classifier semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, KM3Package.Literals.LOCATED_ELEMENT__LOCATION) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KM3Package.Literals.LOCATED_ELEMENT__LOCATION));
-			if (transientValues.isValueTransient(semanticObject, KM3Package.Literals.MODEL_ELEMENT__NAME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KM3Package.Literals.MODEL_ELEMENT__NAME));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getClassifier_ImplAccess().getLocationString0ParserRuleCall_3_0(), semanticObject.getLocation());
-		feeder.accept(grammarAccess.getClassifier_ImplAccess().getNameString0ParserRuleCall_5_0(), semanticObject.getName());
-		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
 	 *     ModelElement returns DataType
-	 *     Classifier returns DataType
 	 *     DataType returns DataType
 	 *
 	 * Constraint:
-	 *     (location=String0 name=String0)
+	 *     name=ID
 	 */
 	protected void sequence_DataType(ISerializationContext context, DataType semanticObject) {
 		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, KM3Package.Literals.LOCATED_ELEMENT__LOCATION) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KM3Package.Literals.LOCATED_ELEMENT__LOCATION));
 			if (transientValues.isValueTransient(semanticObject, KM3Package.Literals.MODEL_ELEMENT__NAME) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KM3Package.Literals.MODEL_ELEMENT__NAME));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getDataTypeAccess().getLocationString0ParserRuleCall_3_0(), semanticObject.getLocation());
-		feeder.accept(grammarAccess.getDataTypeAccess().getNameString0ParserRuleCall_5_0(), semanticObject.getName());
+		feeder.accept(grammarAccess.getDataTypeAccess().getNameIDTerminalRuleCall_1_0(), semanticObject.getName());
 		feeder.finish();
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     ModelElement returns EnumLiteral
-	 *     EnumLiteral returns EnumLiteral
-	 *
-	 * Constraint:
-	 *     (location=String0 name=String0 enum=[Enumeration|STRING])
-	 */
-	protected void sequence_EnumLiteral(ISerializationContext context, EnumLiteral semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, KM3Package.Literals.LOCATED_ELEMENT__LOCATION) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KM3Package.Literals.LOCATED_ELEMENT__LOCATION));
-			if (transientValues.isValueTransient(semanticObject, KM3Package.Literals.MODEL_ELEMENT__NAME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KM3Package.Literals.MODEL_ELEMENT__NAME));
-			if (transientValues.isValueTransient(semanticObject, KM3Package.Literals.ENUM_LITERAL__ENUM) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KM3Package.Literals.ENUM_LITERAL__ENUM));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getEnumLiteralAccess().getLocationString0ParserRuleCall_3_0(), semanticObject.getLocation());
-		feeder.accept(grammarAccess.getEnumLiteralAccess().getNameString0ParserRuleCall_5_0(), semanticObject.getName());
-		feeder.accept(grammarAccess.getEnumLiteralAccess().getEnumEnumerationSTRINGTerminalRuleCall_7_0_1(), semanticObject.getEnum());
-		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     ModelElement returns Enumeration
-	 *     Classifier returns Enumeration
-	 *     Enumeration returns Enumeration
-	 *
-	 * Constraint:
-	 *     (location=String0 name=String0 (literals+=[EnumLiteral|STRING] literals+=[EnumLiteral|STRING]*)?)
-	 */
-	protected void sequence_Enumeration(ISerializationContext context, Enumeration semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Metamodel returns Metamodel
-	 *
-	 * Constraint:
-	 *     (location=String0 (contents+=[Package|STRING] contents+=[Package|STRING]*)?)
-	 */
-	protected void sequence_Metamodel(ISerializationContext context, Metamodel semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     ModelElement returns Operation
-	 *     Operation returns Operation
-	 *
-	 * Constraint:
-	 *     (
-	 *         location=String0 
-	 *         name=String0 
-	 *         lower=Integer 
-	 *         upper=Integer 
-	 *         isOrdered=Boolean 
-	 *         isUnique=Boolean 
-	 *         type=[Classifier|STRING] 
-	 *         owner=[Class|STRING] 
-	 *         (parameters+=[Parameter|STRING] parameters+=[Parameter|STRING]*)?
-	 *     )
-	 */
-	protected void sequence_Operation(ISerializationContext context, Operation semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     ModelElement returns Package
 	 *     Package returns Package
 	 *
 	 * Constraint:
-	 *     (location=String0 name=String0 metamodel=[Metamodel|STRING] (contents+=ModelElement contents+=ModelElement*)?)
+	 *     (name=ID contents+=ModelElement*)
 	 */
 	protected void sequence_Package(ISerializationContext context, km3.Package semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     ModelElement returns Parameter
-	 *     Parameter returns Parameter
-	 *
-	 * Constraint:
-	 *     (
-	 *         location=String0 
-	 *         name=String0 
-	 *         lower=Integer 
-	 *         upper=Integer 
-	 *         isOrdered=Boolean 
-	 *         isUnique=Boolean 
-	 *         type=[Classifier|STRING] 
-	 *         owner=[Operation|STRING]
-	 *     )
-	 */
-	protected void sequence_Parameter(ISerializationContext context, km3.Parameter semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, KM3Package.Literals.LOCATED_ELEMENT__LOCATION) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KM3Package.Literals.LOCATED_ELEMENT__LOCATION));
-			if (transientValues.isValueTransient(semanticObject, KM3Package.Literals.MODEL_ELEMENT__NAME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KM3Package.Literals.MODEL_ELEMENT__NAME));
-			if (transientValues.isValueTransient(semanticObject, KM3Package.Literals.TYPED_ELEMENT__LOWER) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KM3Package.Literals.TYPED_ELEMENT__LOWER));
-			if (transientValues.isValueTransient(semanticObject, KM3Package.Literals.TYPED_ELEMENT__UPPER) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KM3Package.Literals.TYPED_ELEMENT__UPPER));
-			if (transientValues.isValueTransient(semanticObject, KM3Package.Literals.TYPED_ELEMENT__IS_ORDERED) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KM3Package.Literals.TYPED_ELEMENT__IS_ORDERED));
-			if (transientValues.isValueTransient(semanticObject, KM3Package.Literals.TYPED_ELEMENT__IS_UNIQUE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KM3Package.Literals.TYPED_ELEMENT__IS_UNIQUE));
-			if (transientValues.isValueTransient(semanticObject, KM3Package.Literals.TYPED_ELEMENT__TYPE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KM3Package.Literals.TYPED_ELEMENT__TYPE));
-			if (transientValues.isValueTransient(semanticObject, KM3Package.Literals.PARAMETER__OWNER) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KM3Package.Literals.PARAMETER__OWNER));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getParameterAccess().getLocationString0ParserRuleCall_3_0(), semanticObject.getLocation());
-		feeder.accept(grammarAccess.getParameterAccess().getNameString0ParserRuleCall_5_0(), semanticObject.getName());
-		feeder.accept(grammarAccess.getParameterAccess().getLowerIntegerParserRuleCall_7_0(), semanticObject.getLower());
-		feeder.accept(grammarAccess.getParameterAccess().getUpperIntegerParserRuleCall_9_0(), semanticObject.getUpper());
-		feeder.accept(grammarAccess.getParameterAccess().getIsOrderedBooleanParserRuleCall_11_0(), semanticObject.getIsOrdered());
-		feeder.accept(grammarAccess.getParameterAccess().getIsUniqueBooleanParserRuleCall_13_0(), semanticObject.getIsUnique());
-		feeder.accept(grammarAccess.getParameterAccess().getTypeClassifierSTRINGTerminalRuleCall_15_0_1(), semanticObject.getType());
-		feeder.accept(grammarAccess.getParameterAccess().getOwnerOperationSTRINGTerminalRuleCall_17_0_1(), semanticObject.getOwner());
-		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     ModelElement returns Reference
-	 *     StructuralFeature returns Reference
-	 *     Reference returns Reference
-	 *
-	 * Constraint:
-	 *     (
-	 *         location=String0 
-	 *         name=String0 
-	 *         lower=Integer 
-	 *         upper=Integer 
-	 *         isOrdered=Boolean 
-	 *         isUnique=Boolean 
-	 *         isContainer=Boolean 
-	 *         type=[Classifier|STRING] 
-	 *         owner=[Class|STRING] 
-	 *         (subsetOf+=[StructuralFeature|STRING] subsetOf+=[StructuralFeature|STRING]*)? 
-	 *         (derivedFrom+=[StructuralFeature|STRING] derivedFrom+=[StructuralFeature|STRING]*)? 
-	 *         opposite=[Reference|STRING]?
-	 *     )
-	 */
-	protected void sequence_Reference(ISerializationContext context, Reference semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     ModelElement returns StructuralFeature
-	 *     StructuralFeature returns StructuralFeature
-	 *     StructuralFeature_Impl returns StructuralFeature
-	 *
-	 * Constraint:
-	 *     (
-	 *         location=String0 
-	 *         name=String0 
-	 *         lower=Integer 
-	 *         upper=Integer 
-	 *         isOrdered=Boolean 
-	 *         isUnique=Boolean 
-	 *         type=[Classifier|STRING] 
-	 *         owner=[Class|STRING] 
-	 *         (subsetOf+=[StructuralFeature|STRING] subsetOf+=[StructuralFeature|STRING]*)? 
-	 *         (derivedFrom+=[StructuralFeature|STRING] derivedFrom+=[StructuralFeature|STRING]*)?
-	 *     )
-	 */
-	protected void sequence_StructuralFeature_Impl(ISerializationContext context, StructuralFeature semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     ModelElement returns TemplateParameter
-	 *     Classifier returns TemplateParameter
-	 *     TemplateParameter returns TemplateParameter
-	 *
-	 * Constraint:
-	 *     (location=String0 name=String0)
-	 */
-	protected void sequence_TemplateParameter(ISerializationContext context, TemplateParameter semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, KM3Package.Literals.LOCATED_ELEMENT__LOCATION) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KM3Package.Literals.LOCATED_ELEMENT__LOCATION));
-			if (transientValues.isValueTransient(semanticObject, KM3Package.Literals.MODEL_ELEMENT__NAME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KM3Package.Literals.MODEL_ELEMENT__NAME));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getTemplateParameterAccess().getLocationString0ParserRuleCall_3_0(), semanticObject.getLocation());
-		feeder.accept(grammarAccess.getTemplateParameterAccess().getNameString0ParserRuleCall_5_0(), semanticObject.getName());
-		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     ModelElement returns TypedElement
-	 *     TypedElement_Impl returns TypedElement
-	 *
-	 * Constraint:
-	 *     (
-	 *         location=String0 
-	 *         name=String0 
-	 *         lower=Integer 
-	 *         upper=Integer 
-	 *         isOrdered=Boolean 
-	 *         isUnique=Boolean 
-	 *         type=[Classifier|STRING]
-	 *     )
-	 */
-	protected void sequence_TypedElement_Impl(ISerializationContext context, TypedElement semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, KM3Package.Literals.LOCATED_ELEMENT__LOCATION) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KM3Package.Literals.LOCATED_ELEMENT__LOCATION));
-			if (transientValues.isValueTransient(semanticObject, KM3Package.Literals.MODEL_ELEMENT__NAME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KM3Package.Literals.MODEL_ELEMENT__NAME));
-			if (transientValues.isValueTransient(semanticObject, KM3Package.Literals.TYPED_ELEMENT__LOWER) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KM3Package.Literals.TYPED_ELEMENT__LOWER));
-			if (transientValues.isValueTransient(semanticObject, KM3Package.Literals.TYPED_ELEMENT__UPPER) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KM3Package.Literals.TYPED_ELEMENT__UPPER));
-			if (transientValues.isValueTransient(semanticObject, KM3Package.Literals.TYPED_ELEMENT__IS_ORDERED) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KM3Package.Literals.TYPED_ELEMENT__IS_ORDERED));
-			if (transientValues.isValueTransient(semanticObject, KM3Package.Literals.TYPED_ELEMENT__IS_UNIQUE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KM3Package.Literals.TYPED_ELEMENT__IS_UNIQUE));
-			if (transientValues.isValueTransient(semanticObject, KM3Package.Literals.TYPED_ELEMENT__TYPE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KM3Package.Literals.TYPED_ELEMENT__TYPE));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getTypedElement_ImplAccess().getLocationString0ParserRuleCall_3_0(), semanticObject.getLocation());
-		feeder.accept(grammarAccess.getTypedElement_ImplAccess().getNameString0ParserRuleCall_5_0(), semanticObject.getName());
-		feeder.accept(grammarAccess.getTypedElement_ImplAccess().getLowerIntegerParserRuleCall_7_0(), semanticObject.getLower());
-		feeder.accept(grammarAccess.getTypedElement_ImplAccess().getUpperIntegerParserRuleCall_9_0(), semanticObject.getUpper());
-		feeder.accept(grammarAccess.getTypedElement_ImplAccess().getIsOrderedBooleanParserRuleCall_11_0(), semanticObject.getIsOrdered());
-		feeder.accept(grammarAccess.getTypedElement_ImplAccess().getIsUniqueBooleanParserRuleCall_13_0(), semanticObject.getIsUnique());
-		feeder.accept(grammarAccess.getTypedElement_ImplAccess().getTypeClassifierSTRINGTerminalRuleCall_15_0_1(), semanticObject.getType());
-		feeder.finish();
 	}
 	
 	
