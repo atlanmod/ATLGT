@@ -329,7 +329,13 @@ public class KM3GrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
 		private final Keyword cLeftSquareBracketKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Keyword cRightSquareBracketKeyword_2_1 = (Keyword)cGroup_2.eContents().get(1);
+		private final Group cGroup_2_1 = (Group)cGroup_2.eContents().get(1);
+		private final Assignment cLowerAssignment_2_1_0 = (Assignment)cGroup_2_1.eContents().get(0);
+		private final RuleCall cLowerElementBoundParserRuleCall_2_1_0_0 = (RuleCall)cLowerAssignment_2_1_0.eContents().get(0);
+		private final Keyword cVerticalLineKeyword_2_1_1 = (Keyword)cGroup_2_1.eContents().get(1);
+		private final Assignment cUpperAssignment_2_2 = (Assignment)cGroup_2.eContents().get(2);
+		private final RuleCall cUpperElementBoundParserRuleCall_2_2_0 = (RuleCall)cUpperAssignment_2_2.eContents().get(0);
+		private final Keyword cRightSquareBracketKeyword_2_3 = (Keyword)cGroup_2.eContents().get(3);
 		private final Assignment cIsOrderedAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final Keyword cIsOrderedOrderedKeyword_3_0 = (Keyword)cIsOrderedAssignment_3.eContents().get(0);
 		private final Assignment cIsContainerAssignment_4 = (Assignment)cGroup.eContents().get(4);
@@ -346,7 +352,7 @@ public class KM3GrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_8 = (Keyword)cGroup.eContents().get(8);
 		
 		//Reference:
-		//	'reference' name=ID ('[' ']')?
+		//	'reference' name=ID ('[' (lower=ElementBound '|')? upper=ElementBound ']')?
 		//	//			$multiplicity
 		//	//		'lower' lower=Integer
 		//	//		'upper' upper=Integer
@@ -356,7 +362,7 @@ public class KM3GrammarAccess extends AbstractGrammarElementFinder {
 		//	';';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'reference' name=ID ('[' ']')? //			$multiplicity
+		//'reference' name=ID ('[' (lower=ElementBound '|')? upper=ElementBound ']')? //			$multiplicity
 		////		'lower' lower=Integer
 		////		'upper' upper=Integer
 		//isOrdered?='ordered'? isContainer?='container'? ':' type=[Classifier] ('oppositeOf' opposite=[Reference])? ';'
@@ -371,14 +377,32 @@ public class KM3GrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
 		
-		//('[' ']')?
+		//('[' (lower=ElementBound '|')? upper=ElementBound ']')?
 		public Group getGroup_2() { return cGroup_2; }
 		
 		//'['
 		public Keyword getLeftSquareBracketKeyword_2_0() { return cLeftSquareBracketKeyword_2_0; }
 		
+		//(lower=ElementBound '|')?
+		public Group getGroup_2_1() { return cGroup_2_1; }
+		
+		//lower=ElementBound
+		public Assignment getLowerAssignment_2_1_0() { return cLowerAssignment_2_1_0; }
+		
+		//ElementBound
+		public RuleCall getLowerElementBoundParserRuleCall_2_1_0_0() { return cLowerElementBoundParserRuleCall_2_1_0_0; }
+		
+		//'|'
+		public Keyword getVerticalLineKeyword_2_1_1() { return cVerticalLineKeyword_2_1_1; }
+		
+		//upper=ElementBound
+		public Assignment getUpperAssignment_2_2() { return cUpperAssignment_2_2; }
+		
+		//ElementBound
+		public RuleCall getUpperElementBoundParserRuleCall_2_2_0() { return cUpperElementBoundParserRuleCall_2_2_0; }
+		
 		//']'
-		public Keyword getRightSquareBracketKeyword_2_1() { return cRightSquareBracketKeyword_2_1; }
+		public Keyword getRightSquareBracketKeyword_2_3() { return cRightSquareBracketKeyword_2_3; }
 		
 		////			$multiplicity
 		////		'lower' lower=Integer
@@ -425,6 +449,27 @@ public class KM3GrammarAccess extends AbstractGrammarElementFinder {
 		//';'
 		public Keyword getSemicolonKeyword_8() { return cSemicolonKeyword_8; }
 	}
+	public class ElementBoundElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.m2m.km3.xtext.KM3.ElementBound");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Keyword cAsteriskKeyword_0 = (Keyword)cAlternatives.eContents().get(0);
+		private final RuleCall cINTTerminalRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//ElementBound ecore::EIntegerObject: // datatype rule handled by a value converter
+		//	'*' | INT
+		@Override public ParserRule getRule() { return rule; }
+		
+		//// datatype rule handled by a value converter
+		//'*' | INT
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//// datatype rule handled by a value converter
+		//'*'
+		public Keyword getAsteriskKeyword_0() { return cAsteriskKeyword_0; }
+		
+		//INT
+		public RuleCall getINTTerminalRuleCall_1() { return cINTTerminalRuleCall_1; }
+	}
 	
 	
 	private final MetamodelElements pMetamodel;
@@ -436,6 +481,7 @@ public class KM3GrammarAccess extends AbstractGrammarElementFinder {
 	private final ClassElements pClass;
 	private final AttributeElements pAttribute;
 	private final ReferenceElements pReference;
+	private final ElementBoundElements pElementBound;
 	
 	private final Grammar grammar;
 	
@@ -455,6 +501,7 @@ public class KM3GrammarAccess extends AbstractGrammarElementFinder {
 		this.pClass = new ClassElements();
 		this.pAttribute = new AttributeElements();
 		this.pReference = new ReferenceElements();
+		this.pElementBound = new ElementBoundElements();
 	}
 	
 	protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
@@ -578,7 +625,7 @@ public class KM3GrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Reference:
-	//	'reference' name=ID ('[' ']')?
+	//	'reference' name=ID ('[' (lower=ElementBound '|')? upper=ElementBound ']')?
 	//	//			$multiplicity
 	//	//		'lower' lower=Integer
 	//	//		'upper' upper=Integer
@@ -594,6 +641,16 @@ public class KM3GrammarAccess extends AbstractGrammarElementFinder {
 		return getReferenceAccess().getRule();
 	}
 	
+	//ElementBound ecore::EIntegerObject: // datatype rule handled by a value converter
+	//	'*' | INT
+	public ElementBoundElements getElementBoundAccess() {
+		return pElementBound;
+	}
+	
+	public ParserRule getElementBoundRule() {
+		return getElementBoundAccess().getRule();
+	}
+	
 	//terminal ID:
 	//	'^'? ('a'..'z' | 'A'..'Z' | '_') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;
 	public TerminalRule getIDRule() {
@@ -607,7 +664,8 @@ public class KM3GrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//terminal STRING:
-	//	'"' ('\\' . | !('\\' | '"'))* '"' | "'" ('\\' . | !('\\' | "'"))* "'";
+	//	'"' ('\\' . | !('\\' | '"'))* '"' |
+	//	"'" ('\\' . | !('\\' | "'"))* "'";
 	public TerminalRule getSTRINGRule() {
 		return gaTerminals.getSTRINGRule();
 	}

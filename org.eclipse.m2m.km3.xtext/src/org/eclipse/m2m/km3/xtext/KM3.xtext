@@ -49,7 +49,7 @@ Attribute:
 
 Reference:
 	'reference' name=ID
-	('[' ']')?
+	('[' (lower=ElementBound '|')? upper=ElementBound ']')?
 //			$multiplicity
 //		'lower' lower=Integer
 //		'upper' upper=Integer
@@ -60,6 +60,8 @@ Reference:
 	';'
 	;
 
+ElementBound returns ecore::EIntegerObject: // datatype rule handled by a value converter
+    '*' | INT;
 //
 //
 //

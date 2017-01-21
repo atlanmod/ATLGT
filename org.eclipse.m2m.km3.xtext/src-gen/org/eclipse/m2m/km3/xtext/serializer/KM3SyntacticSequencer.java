@@ -11,9 +11,6 @@ import org.eclipse.xtext.IGrammarAccess;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.serializer.analysis.GrammarAlias.AbstractElementAlias;
-import org.eclipse.xtext.serializer.analysis.GrammarAlias.GroupAlias;
-import org.eclipse.xtext.serializer.analysis.GrammarAlias.TokenAlias;
-import org.eclipse.xtext.serializer.analysis.ISyntacticSequencerPDAProvider.ISynNavigable;
 import org.eclipse.xtext.serializer.analysis.ISyntacticSequencerPDAProvider.ISynTransition;
 import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 
@@ -21,12 +18,10 @@ import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 public class KM3SyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected KM3GrammarAccess grammarAccess;
-	protected AbstractElementAlias match_Reference___LeftSquareBracketKeyword_2_0_RightSquareBracketKeyword_2_1__q;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (KM3GrammarAccess) access;
-		match_Reference___LeftSquareBracketKeyword_2_0_RightSquareBracketKeyword_2_1__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getReferenceAccess().getLeftSquareBracketKeyword_2_0()), new TokenAlias(false, false, grammarAccess.getReferenceAccess().getRightSquareBracketKeyword_2_1()));
 	}
 	
 	@Override
@@ -41,23 +36,8 @@ public class KM3SyntacticSequencer extends AbstractSyntacticSequencer {
 		List<INode> transitionNodes = collectNodes(fromNode, toNode);
 		for (AbstractElementAlias syntax : transition.getAmbiguousSyntaxes()) {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
-			if (match_Reference___LeftSquareBracketKeyword_2_0_RightSquareBracketKeyword_2_1__q.equals(syntax))
-				emit_Reference___LeftSquareBracketKeyword_2_0_RightSquareBracketKeyword_2_1__q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else acceptNodes(getLastNavigableState(), syntaxNodes);
+			acceptNodes(getLastNavigableState(), syntaxNodes);
 		}
 	}
 
-	/**
-	 * Ambiguous syntax:
-	 *     ('[' ']')?
-	 *
-	 * This ambiguous syntax occurs at:
-	 *     name=ID (ambiguity) ':' type=[Classifier|ID]
-	 *     name=ID (ambiguity) isContainer?='container'
-	 *     name=ID (ambiguity) isOrdered?='ordered'
-	 */
-	protected void emit_Reference___LeftSquareBracketKeyword_2_0_RightSquareBracketKeyword_2_1__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
-		acceptNodes(transition, nodes);
-	}
-	
 }

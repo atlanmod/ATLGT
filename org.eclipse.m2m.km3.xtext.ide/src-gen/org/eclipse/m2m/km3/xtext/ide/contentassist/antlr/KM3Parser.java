@@ -37,6 +37,7 @@ public class KM3Parser extends AbstractContentAssistParser {
 				{
 					put(grammarAccess.getModelElementAccess().getAlternatives(), "rule__ModelElement__Alternatives");
 					put(grammarAccess.getStructuralFeatureAccess().getAlternatives(), "rule__StructuralFeature__Alternatives");
+					put(grammarAccess.getElementBoundAccess().getAlternatives(), "rule__ElementBound__Alternatives");
 					put(grammarAccess.getMetamodelAccess().getGroup(), "rule__Metamodel__Group__0");
 					put(grammarAccess.getPackageAccess().getGroup(), "rule__Package__Group__0");
 					put(grammarAccess.getDataTypeAccess().getGroup(), "rule__DataType__Group__0");
@@ -46,6 +47,7 @@ public class KM3Parser extends AbstractContentAssistParser {
 					put(grammarAccess.getAttributeAccess().getGroup(), "rule__Attribute__Group__0");
 					put(grammarAccess.getReferenceAccess().getGroup(), "rule__Reference__Group__0");
 					put(grammarAccess.getReferenceAccess().getGroup_2(), "rule__Reference__Group_2__0");
+					put(grammarAccess.getReferenceAccess().getGroup_2_1(), "rule__Reference__Group_2_1__0");
 					put(grammarAccess.getReferenceAccess().getGroup_7(), "rule__Reference__Group_7__0");
 					put(grammarAccess.getMetamodelAccess().getContentsAssignment_1(), "rule__Metamodel__ContentsAssignment_1");
 					put(grammarAccess.getPackageAccess().getNameAssignment_1(), "rule__Package__NameAssignment_1");
@@ -61,6 +63,8 @@ public class KM3Parser extends AbstractContentAssistParser {
 					put(grammarAccess.getAttributeAccess().getIsOrderedAssignment_3(), "rule__Attribute__IsOrderedAssignment_3");
 					put(grammarAccess.getAttributeAccess().getTypeAssignment_5(), "rule__Attribute__TypeAssignment_5");
 					put(grammarAccess.getReferenceAccess().getNameAssignment_1(), "rule__Reference__NameAssignment_1");
+					put(grammarAccess.getReferenceAccess().getLowerAssignment_2_1_0(), "rule__Reference__LowerAssignment_2_1_0");
+					put(grammarAccess.getReferenceAccess().getUpperAssignment_2_2(), "rule__Reference__UpperAssignment_2_2");
 					put(grammarAccess.getReferenceAccess().getIsOrderedAssignment_3(), "rule__Reference__IsOrderedAssignment_3");
 					put(grammarAccess.getReferenceAccess().getIsContainerAssignment_4(), "rule__Reference__IsContainerAssignment_4");
 					put(grammarAccess.getReferenceAccess().getTypeAssignment_6(), "rule__Reference__TypeAssignment_6");

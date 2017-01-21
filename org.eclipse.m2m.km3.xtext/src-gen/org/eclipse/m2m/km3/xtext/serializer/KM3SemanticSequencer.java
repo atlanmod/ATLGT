@@ -133,7 +133,14 @@ public class KM3SemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     Reference returns Reference
 	 *
 	 * Constraint:
-	 *     (name=ID isOrdered?='ordered'? isContainer?='container'? type=[Classifier|ID] opposite=[Reference|ID]?)
+	 *     (
+	 *         name=ID 
+	 *         (lower=ElementBound? upper=ElementBound)? 
+	 *         isOrdered?='ordered'? 
+	 *         isContainer?='container'? 
+	 *         type=[Classifier|ID] 
+	 *         opposite=[Reference|ID]?
+	 *     )
 	 */
 	protected void sequence_Reference(ISerializationContext context, Reference semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
