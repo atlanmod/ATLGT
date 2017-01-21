@@ -27,7 +27,7 @@
       <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
           eType="#/0/TemplateParameter"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="isAbstract" ordered="false"
-          lowerBound="1" eType="#/1/Boolean"/>
+          lowerBound="1" eType="#/1/Boolean" defaultValueLiteral="false"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="supertypes" ordered="false"
           upperBound="-1" eType="#/0/Class"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="structuralFeatures" upperBound="-1"
@@ -58,7 +58,7 @@
     <eClassifiers xsi:type="ecore:EClass" name="Attribute" eSuperTypes="#/0/StructuralFeature"/>
     <eClassifiers xsi:type="ecore:EClass" name="Reference" eSuperTypes="#/0/StructuralFeature">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="isContainer" ordered="false"
-          lowerBound="1" eType="#/1/Boolean"/>
+          lowerBound="1" eType="#/1/Boolean" defaultValueLiteral="false"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="opposite" ordered="false"
           eType="#/0/Reference"/>
     </eClassifiers>

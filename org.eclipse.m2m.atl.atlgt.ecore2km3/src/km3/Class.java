@@ -43,6 +43,7 @@ public interface Class extends Classifier {
 
 	/**
 	 * Returns the value of the '<em><b>Is Abstract</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Is Abstract</em>' attribute isn't clear,
@@ -52,7 +53,7 @@ public interface Class extends Classifier {
 	 * @return the value of the '<em>Is Abstract</em>' attribute.
 	 * @see #setIsAbstract(Boolean)
 	 * @see km3.Km3Package#getClass_IsAbstract()
-	 * @model dataType="PrimitiveTypes.Boolean" required="true" ordered="false"
+	 * @model default="false" dataType="PrimitiveTypes.Boolean" required="true" ordered="false"
 	 * @generated
 	 */
 	Boolean getIsAbstract();
