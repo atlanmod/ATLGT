@@ -5,7 +5,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
-import org.eclipse.m2m.atl.atlgt.atlidfier.util.AtlHelpers;
 import org.eclipse.m2m.atl.common.ATL.ATLPackage;
 import org.eclipse.m2m.atl.core.ATLCoreException;
 import org.eclipse.m2m.atl.emftvm.EmftvmFactory;
@@ -40,26 +39,18 @@ public class AtlIdfierTransformationEmftvm implements AtlIdfierTransformation {
         resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xmi", new XMIResourceFactoryImpl());
         resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("emftvm", new EMFTVMResourceFactoryImpl());
 
+        // Load models (turn ATL file into model)
+        String outputXmi = module + ".xmi";
+
+        Model inOutModel = EmftvmFactory.eINSTANCE.createModel();
+        inOutModel.setResource(resourceSet.getResource(URI.createURI(module, true), true));
+        env.registerInOutModel("IN", inOutModel);
+        
         // Load metamodels
         final Metamodel atlMetamodel = EmftvmFactory.eINSTANCE.createMetamodel();
         atlMetamodel.setResource(ATLPackage.eINSTANCE.eResource());
         env.registerMetaModel("ATL", atlMetamodel);
-
-        // Load models (turn ATL file into model)
-        String outputXmi = module + ".xmi";
-
-        try {
-            AtlHelpers.extractToEmf(module, outputXmi);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
-
-        Model inOutModel = EmftvmFactory.eINSTANCE.createModel();
-        inOutModel.setResource(resourceSet.getResource(URI.createURI(outputXmi, true), true));
-        env.registerInOutModel("IN", inOutModel);
-
+        
         // Run transformation
 
         ModuleResolver moduleResolver = new DefaultModuleResolver(resourcesPath, resourceSet);
@@ -70,6 +61,8 @@ public class AtlIdfierTransformationEmftvm implements AtlIdfierTransformation {
         td.finish();
         System.out.println(td);
 
+        // Extract
+        
         try {
             inOutModel.getResource().save(Collections.emptyMap());
         }
@@ -77,8 +70,6 @@ public class AtlIdfierTransformationEmftvm implements AtlIdfierTransformation {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
-
-        // Extract
 
         String outputIds = Paths.get(outputDirectory).resolve(new File(module).getName().replace(".atl", "-ids.atl")).toString();
 
