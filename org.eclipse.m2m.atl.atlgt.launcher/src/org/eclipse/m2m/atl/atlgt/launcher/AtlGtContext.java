@@ -135,7 +135,6 @@ public class AtlGtContext {
     private static final class Keys {
 
         // Module
-        @SuppressWarnings("unused")
         private static final String MODULE_NAME = "Module Name";
         private static final String MODULE_PATH = "Module Path";
 
