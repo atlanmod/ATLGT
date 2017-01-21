@@ -1,25 +1,18 @@
 package org.eclipse.m2m.atl.atlgt.atlidfier;
 
+import java.io.IOException;
+import java.util.Collections;
+
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
-import org.eclipse.m2m.atl.common.ATL.ATLPackage;
 import org.eclipse.m2m.atl.core.ATLCoreException;
 import org.eclipse.m2m.atl.emftvm.EmftvmFactory;
 import org.eclipse.m2m.atl.emftvm.ExecEnv;
-import org.eclipse.m2m.atl.emftvm.Metamodel;
 import org.eclipse.m2m.atl.emftvm.Model;
-import org.eclipse.m2m.atl.emftvm.impl.resource.EMFTVMResourceFactoryImpl;
 import org.eclipse.m2m.atl.emftvm.util.DefaultModuleResolver;
 import org.eclipse.m2m.atl.emftvm.util.ModuleResolver;
 import org.eclipse.m2m.atl.emftvm.util.TimingData;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Paths;
-import java.util.Collections;
 
 public class AtlIdfierTransformationEmftvm implements AtlIdfierTransformation {
 
@@ -35,19 +28,11 @@ public class AtlIdfierTransformationEmftvm implements AtlIdfierTransformation {
         String resourcesPath = "platform:/plugin/" + BUNDLE_SYMBOLIC_NAME + "/resources/";
 
         ResourceSet resourceSet = new ResourceSetImpl();
-        resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("ecore", new EcoreResourceFactoryImpl());
-        resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xmi", new XMIResourceFactoryImpl());
-        resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("emftvm", new EMFTVMResourceFactoryImpl());
 
-        // Load models (turn ATL file into model)
+        // Load ATL model from file
         Model inOutModel = EmftvmFactory.eINSTANCE.createModel();
         inOutModel.setResource(resourceSet.getResource(URI.createURI(module, true), true));
         env.registerInOutModel("IN", inOutModel);
-        
-        // Load metamodels (they need to be loaded after the ATL model)
-        final Metamodel atlMetamodel = EmftvmFactory.eINSTANCE.createMetamodel();
-        atlMetamodel.setResource(ATLPackage.eINSTANCE.eResource());
-        env.registerMetaModel("ATL", atlMetamodel);
         
         // Run transformation
 
