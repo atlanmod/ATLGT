@@ -33,6 +33,7 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
     public void launch(ILaunchConfiguration launchConfiguration, String mode, ILaunch launch, IProgressMonitor monitor) throws CoreException {
         try {
             context = AtlGtContext.from(launchConfiguration);
+            System.out.println(context);
 
             // Register all metamodels
             context.getMetamodels().forEach(MetamodelHelpers::registerPackage);
@@ -43,7 +44,7 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
             // Step B: Transformation processing
             processTransformation();
 
-            System.out.println("ATL-GT - Executed!! " + context.getPath());
+            System.out.println("ATL-GT - Executed!! " + context.getOutputDirectory());
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -55,22 +56,22 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
      */
     private void processMetamodels() throws IOException, ATLCoreException {
         // A.1 Ecore to KM3
-        for (String metamodel : context.getMetamodels()) {
-            EmfToKm3TransformationFactory.withEmftvm().transform(context.getPath(), metamodel);
+        for (URI metamodel : context.getMetamodels()) {
+            EmfToKm3TransformationFactory.withEmftvm().transform(context.getOutputDirectory(), metamodel);
         }
 
-        List<String> relaxedMetamodels = new ArrayList<>();
+        List<URI> relaxedMetamodels = new ArrayList<>();
 
         // A.2 Ecore Relaxation
-        for (String metamodel : context.getMetamodels()) {
+        for (URI metamodel : context.getMetamodels()) {
             Iterable<EPackage> packages = MetamodelHelpers.readEcore(metamodel);
-            String relaxedMetamodel = MetamodelHelpers.relax(packages, context.getPath(), metamodel);
+            URI relaxedMetamodel = MetamodelHelpers.relax(packages, context.getOutputDirectory(), metamodel);
             relaxedMetamodels.add(relaxedMetamodel);
         }
 
         // A.3 Relaxed Ecore to Relaxed KM3
-        for (String relaxedMetamodel : relaxedMetamodels) {
-            EmfToKm3TransformationFactory.withEmftvm().transform(context.getPath(), relaxedMetamodel);
+        for (URI relaxedMetamodel : relaxedMetamodels) {
+            EmfToKm3TransformationFactory.withEmftvm().transform(context.getOutputDirectory(), relaxedMetamodel);
         }
     }
 
@@ -80,12 +81,12 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
     private void processTransformation() throws ATLCoreException, IOException {
         // B.1 ATLIDfier
         // Create a copy of the atl file
-        URI sourceUrl = URI.createURI("platform:/resource" + context.getModulePath());
-        URI targetUrl = URI.createURI("platform:/resource" + context.getPath() + context.getModulePath().substring(context.getModulePath().lastIndexOf('/') + 1));
-        copy(sourceUrl, targetUrl);
+        URI sourceUri = context.getModule().appendFileExtension("atl");
+        URI targetUri = context.getOutputDirectory().appendSegment(context.getModule().appendFileExtension("atl").lastSegment());
+        copy(sourceUri, targetUri);
 
         // Run in-place transformation
-        AtlIdfierTransformationFactory.withEmftvm().transform(context.getPath(), targetUrl.toString());
+        AtlIdfierTransformationFactory.withEmftvm().transform(context.getOutputDirectory(), targetUri);
     }
 
     private static void copy(URI source, URI target) throws IOException {

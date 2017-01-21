@@ -13,7 +13,6 @@ import org.eclipse.emf.ecore.util.ExtendedMetaData;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.stream.Collectors;
@@ -30,8 +29,8 @@ public class MetamodelHelpers {
      *
      * @param metamodel the metamodel to register
      */
-    public static void registerPackage(String metamodel) {
-        Resource resource = getResourceFrom(URI.createURI(metamodel));
+    public static void registerPackage(URI metamodel) {
+        Resource resource = getResourceFrom(metamodel);
 
         EObject eObject = resource.getContents().get(0);
         if (EPackage.class.isInstance(eObject)) {
@@ -56,8 +55,8 @@ public class MetamodelHelpers {
      *
      * @return ???
      */
-    public static Iterable<EPackage> readEcore(String metamodel) {
-        Resource resource = getResourceFrom(URI.createURI(metamodel));
+    public static Iterable<EPackage> readEcore(URI metamodel) {
+        Resource resource = getResourceFrom(metamodel);
 
         Iterable<EPackage> packages = resource.getContents().stream()
                 .filter(EPackage.class::isInstance)
@@ -83,15 +82,10 @@ public class MetamodelHelpers {
      *
      * @throws IOException if a I/O error occurs
      */
-    public static String relax(Iterable<EPackage> packages, String outputDirectory, String metamodel) throws IOException {
-        String outputName = new File(metamodel).getName();
-        if (outputName.lastIndexOf(".") != -1) {
-            outputName = outputName.substring(0, outputName.lastIndexOf("."));
-        }
+    public static URI relax(Iterable<EPackage> packages, URI outputDirectory, URI metamodel) throws IOException {
+        URI outputFile = outputDirectory.appendSegment(metamodel.lastSegment().replace(".ecore", "-relaxed.ecore"));
 
-        String outputFile = outputDirectory + outputName + "-relaxed.ecore";
-
-        Resource resource = createResourceFrom(URI.createURI(outputFile));
+        Resource resource = createResourceFrom(outputFile);
 
         StreamSupport.stream(packages.spliterator(), false)
                 .peek(ePackage -> ePackage.getEClassifiers().stream()

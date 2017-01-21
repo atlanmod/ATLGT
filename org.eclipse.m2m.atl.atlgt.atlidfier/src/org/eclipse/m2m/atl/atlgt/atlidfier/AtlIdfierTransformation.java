@@ -1,5 +1,6 @@
 package org.eclipse.m2m.atl.atlgt.atlidfier;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.atl.core.ATLCoreException;
 
 import java.io.IOException;
@@ -7,5 +8,5 @@ import java.io.IOException;
 @FunctionalInterface
 public interface AtlIdfierTransformation {
 
-    String transform(String outputDirectory, String module) throws ATLCoreException, IOException;
+    URI transform(URI outputDirectory, URI module) throws ATLCoreException, IOException;
 }

@@ -23,7 +23,7 @@ public class AtlIdfierTransformationEmftvm implements AtlIdfierTransformation {
     private static final String MODULE_NAME = "ATLIDfier";
 
     @Override
-    public String transform(String outputDirectory, String module) throws ATLCoreException, IOException {
+    public URI transform(URI outputDirectory, URI module) throws ATLCoreException, IOException {
         ExecEnv env = EmftvmFactory.eINSTANCE.createExecEnv();
 
         // TODO Find a dynamic way to have this URI
@@ -38,7 +38,7 @@ public class AtlIdfierTransformationEmftvm implements AtlIdfierTransformation {
         
         // Load ATL model from file
         Model inOutModel = EmftvmFactory.eINSTANCE.createModel();
-        inOutModel.setResource(resourceSet.getResource(URI.createURI(module, true), true));
+        inOutModel.setResource(resourceSet.getResource(module, true));
         env.registerInOutModel("IN", inOutModel);
         
         // Run transformation

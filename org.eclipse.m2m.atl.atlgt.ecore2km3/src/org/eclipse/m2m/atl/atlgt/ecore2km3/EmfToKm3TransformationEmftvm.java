@@ -15,32 +15,30 @@ import org.eclipse.m2m.atl.emftvm.util.DefaultModuleResolver;
 import org.eclipse.m2m.atl.emftvm.util.ModuleResolver;
 import org.eclipse.m2m.atl.emftvm.util.TimingData;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.Collections;
+import java.util.Objects;
 
 public class EmfToKm3TransformationEmftvm implements EmfToKm3Transformation {
 
-    public static final String BUNDLE_SYMBOLIC_NAME = "org.eclipse.m2m.atl.atlgt.ecore2km3";
+    private static final String BUNDLE_SYMBOLIC_NAME = "org.eclipse.m2m.atl.atlgt.ecore2km3";
 
     private static final String KM3_METAMODEL = "KM3.ecore";
 
     private static final String MODULE_NAME = "EMF2KM3";
 
     @Override
-    public String transform(String outputDirectory, String metamodel) {
-        if (!metamodel.endsWith(".ecore")) {
+    public URI transform(URI outputDirectory, URI metamodel) {
+        if (!Objects.equals(metamodel.fileExtension(), "ecore")) {
             throw new IllegalArgumentException("Only *.ecore files can be transformed.");
         }
 
-        String outputEcore = Paths.get(outputDirectory).resolve(new File(metamodel).getName().replace(".ecore", "-km3.ecore")).toString();
-        System.out.println("Transformation of '" + metamodel + "' to " + outputEcore);
+        URI outputEcore = outputDirectory.appendSegment(metamodel.lastSegment().replace(".ecore", "-km3.ecore"));
+        System.out.println("Transformation of '" + metamodel + "' to '" + outputEcore + "'");
 
         ExecEnv env = EmftvmFactory.eINSTANCE.createExecEnv();
 
-        // TODO Find a dynamic way to have this URI
-        String resourcesPath = "platform:/plugin/" + BUNDLE_SYMBOLIC_NAME + "/resources/";
+        URI resourcesDirectory = URI.createPlatformPluginURI(BUNDLE_SYMBOLIC_NAME + "/resources/", false);
 
         ResourceSet resourceSet = new ResourceSetImpl();
         resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("ecore", new EcoreResourceFactoryImpl());
@@ -54,22 +52,22 @@ public class EmfToKm3TransformationEmftvm implements EmfToKm3Transformation {
         env.registerMetaModel("MOF", ecoreMetamodel);
 
         final Metamodel km3Metamodel = EmftvmFactory.eINSTANCE.createMetamodel();
-        km3Metamodel.setResource(resourceSet.getResource(URI.createURI(resourcesPath + "/" + KM3_METAMODEL), true));
+        km3Metamodel.setResource(resourceSet.getResource(resourcesDirectory.appendSegment(KM3_METAMODEL), true));
         env.registerMetaModel("KM3", km3Metamodel);
 
         // Load models
 
         Model inModel = EmftvmFactory.eINSTANCE.createModel();
-        inModel.setResource(resourceSet.getResource(URI.createURI(metamodel, true), true));
+        inModel.setResource(resourceSet.getResource(metamodel, true));
         env.registerInputModel("IN", inModel);
 
         Model outModel = EmftvmFactory.eINSTANCE.createModel();
-        outModel.setResource(resourceSet.createResource(URI.createFileURI(outputEcore)));
+        outModel.setResource(resourceSet.createResource(outputEcore));
         env.registerOutputModel("OUT", outModel);
 
         // Run transformation
 
-        ModuleResolver moduleResolver = new DefaultModuleResolver(resourcesPath, resourceSet);
+        ModuleResolver moduleResolver = new DefaultModuleResolver(resourcesDirectory.toString(), resourceSet);
         TimingData td = new TimingData();
         env.loadModule(moduleResolver, MODULE_NAME);
         td.finishLoading();
@@ -84,11 +82,11 @@ public class EmfToKm3TransformationEmftvm implements EmfToKm3Transformation {
 
         // Extract
 
-        String outputKm3 = Paths.get(outputDirectory).resolve(new File(metamodel).getName().replace(".ecore", ".km3")).toString();
+        URI outputKm3 = outputDirectory.appendSegment(metamodel.lastSegment().replace(".ecore", ".km3"));
         System.out.println("Extraction of '" + outputEcore + "' to '" + outputKm3 + "'");
 
         // TODO Complete the extraction
 
-        return outputEcore;
+        return outputKm3;
     }
 }

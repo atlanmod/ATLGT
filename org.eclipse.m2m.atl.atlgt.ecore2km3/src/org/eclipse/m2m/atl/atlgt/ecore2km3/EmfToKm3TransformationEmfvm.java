@@ -1,6 +1,7 @@
 package org.eclipse.m2m.atl.atlgt.ecore2km3;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.atl.core.ATLCoreException;
 import org.eclipse.m2m.atl.core.IExtractor;
 import org.eclipse.m2m.atl.core.IInjector;
@@ -16,6 +17,7 @@ import org.eclipse.m2m.atl.engine.emfvm.launch.EMFVMLauncher;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collections;
+import java.util.Objects;
 
 /**
  * @deprecated use {@link EmfToKm3TransformationEmftvm} instead.
@@ -24,12 +26,12 @@ import java.util.Collections;
 public class EmfToKm3TransformationEmfvm implements EmfToKm3Transformation {
 
     @Override
-    public String transform(String outputDirectory, String metamodel) {
-        if (!metamodel.endsWith(".ecore")) {
+    public URI transform(URI outputDirectory, URI metamodel) {
+        if (!Objects.equals(metamodel.fileExtension(), "ecore")) {
             throw new IllegalArgumentException("Only *.ecore files can be transformed.");
         }
 
-        String outputFile = outputDirectory + metamodel.replace(".ecore", "-km3.ecore");
+        URI outputFile = outputDirectory.appendFragment(metamodel.lastSegment().replace(".ecore", "-km3.ecore"));
 
         ModelFactory modelFactory = new EMFModelFactory();
 
@@ -48,7 +50,7 @@ public class EmfToKm3TransformationEmfvm implements EmfToKm3Transformation {
             // Load models
 
             IModel inModel = modelFactory.newModel(ecoreMetamodel);
-            injector.inject(ecoreMetamodel, metamodel);
+            injector.inject(ecoreMetamodel, metamodel.toString());
             IModel outModel = modelFactory.newModel(km3Metamodel);
 
             ILauncher launcher = new EMFVMLauncher();
@@ -65,7 +67,7 @@ public class EmfToKm3TransformationEmfvm implements EmfToKm3Transformation {
             // Extract
 
             IExtractor extractor = new EMFExtractor();
-            extractor.extract(outModel, outputFile);
+            extractor.extract(outModel, outputFile.toString());
 
             return outputFile;
         }
