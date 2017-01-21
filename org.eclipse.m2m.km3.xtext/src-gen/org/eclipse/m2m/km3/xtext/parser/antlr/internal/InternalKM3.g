@@ -463,10 +463,64 @@ ruleAttribute returns [EObject current=null]
 			)
 		)
 		(
+			otherlv_3='['
+			{
+				newLeafNode(otherlv_3, grammarAccess.getAttributeAccess().getLeftSquareBracketKeyword_3_0());
+			}
 			(
-				lv_isOrdered_3_0='ordered'
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getAttributeAccess().getLowerElementBoundParserRuleCall_3_1_0_0());
+						}
+						lv_lower_4_0=ruleElementBound
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getAttributeRule());
+							}
+							set(
+								$current,
+								"lower",
+								lv_lower_4_0,
+								"org.eclipse.m2m.km3.xtext.KM3.ElementBound");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+				otherlv_5='-'
 				{
-					newLeafNode(lv_isOrdered_3_0, grammarAccess.getAttributeAccess().getIsOrderedOrderedKeyword_3_0());
+					newLeafNode(otherlv_5, grammarAccess.getAttributeAccess().getHyphenMinusKeyword_3_1_1());
+				}
+			)?
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getAttributeAccess().getUpperElementBoundParserRuleCall_3_2_0());
+					}
+					lv_upper_6_0=ruleElementBound
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getAttributeRule());
+						}
+						set(
+							$current,
+							"upper",
+							lv_upper_6_0,
+							"org.eclipse.m2m.km3.xtext.KM3.ElementBound");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+			otherlv_7=']'
+			{
+				newLeafNode(otherlv_7, grammarAccess.getAttributeAccess().getRightSquareBracketKeyword_3_3());
+			}
+		)?
+		(
+			(
+				lv_isOrdered_8_0='ordered'
+				{
+					newLeafNode(lv_isOrdered_8_0, grammarAccess.getAttributeAccess().getIsOrderedOrderedKeyword_4_0());
 				}
 				{
 					if ($current==null) {
@@ -476,9 +530,9 @@ ruleAttribute returns [EObject current=null]
 				}
 			)
 		)?
-		otherlv_4=':'
+		otherlv_9=':'
 		{
-			newLeafNode(otherlv_4, grammarAccess.getAttributeAccess().getColonKeyword_4());
+			newLeafNode(otherlv_9, grammarAccess.getAttributeAccess().getColonKeyword_5());
 		}
 		(
 			(
@@ -487,15 +541,15 @@ ruleAttribute returns [EObject current=null]
 						$current = createModelElement(grammarAccess.getAttributeRule());
 					}
 				}
-				otherlv_5=RULE_ID
+				otherlv_10=RULE_ID
 				{
-					newLeafNode(otherlv_5, grammarAccess.getAttributeAccess().getTypeClassifierCrossReference_5_0());
+					newLeafNode(otherlv_10, grammarAccess.getAttributeAccess().getTypeClassifierCrossReference_6_0());
 				}
 			)
 		)
-		otherlv_6=';'
+		otherlv_11=';'
 		{
-			newLeafNode(otherlv_6, grammarAccess.getAttributeAccess().getSemicolonKeyword_6());
+			newLeafNode(otherlv_11, grammarAccess.getAttributeAccess().getSemicolonKeyword_7());
 		}
 	)
 ;
@@ -563,9 +617,9 @@ ruleReference returns [EObject current=null]
 						}
 					)
 				)
-				otherlv_4='|'
+				otherlv_4='-'
 				{
-					newLeafNode(otherlv_4, grammarAccess.getReferenceAccess().getVerticalLineKeyword_2_1_1());
+					newLeafNode(otherlv_4, grammarAccess.getReferenceAccess().getHyphenMinusKeyword_2_1_1());
 				}
 			)?
 			(

@@ -1,9 +1,10 @@
 '*'=12
 ','=20
+'-'=25
 ':'=22
 ';'=17
-'['=24
-']'=25
+'['=23
+']'=24
 'abstract'=28
 'attribute'=21
 'class'=18
@@ -13,10 +14,9 @@
 'oppositeOf'=27
 'ordered'=30
 'package'=13
-'reference'=23
+'reference'=26
 'unique'=29
 '{'=14
-'|'=26
 '}'=15
 RULE_ANY_OTHER=11
 RULE_COMMENT=6

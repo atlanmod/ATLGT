@@ -257,29 +257,33 @@ public class KM3GrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cAttributeKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cNameIDTerminalRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
-		private final Assignment cIsOrderedAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final Keyword cIsOrderedOrderedKeyword_3_0 = (Keyword)cIsOrderedAssignment_3.eContents().get(0);
-		private final Keyword cColonKeyword_4 = (Keyword)cGroup.eContents().get(4);
-		private final Assignment cTypeAssignment_5 = (Assignment)cGroup.eContents().get(5);
-		private final CrossReference cTypeClassifierCrossReference_5_0 = (CrossReference)cTypeAssignment_5.eContents().get(0);
-		private final RuleCall cTypeClassifierIDTerminalRuleCall_5_0_1 = (RuleCall)cTypeClassifierCrossReference_5_0.eContents().get(1);
-		private final Keyword cSemicolonKeyword_6 = (Keyword)cGroup.eContents().get(6);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cLeftSquareBracketKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Group cGroup_3_1 = (Group)cGroup_3.eContents().get(1);
+		private final Assignment cLowerAssignment_3_1_0 = (Assignment)cGroup_3_1.eContents().get(0);
+		private final RuleCall cLowerElementBoundParserRuleCall_3_1_0_0 = (RuleCall)cLowerAssignment_3_1_0.eContents().get(0);
+		private final Keyword cHyphenMinusKeyword_3_1_1 = (Keyword)cGroup_3_1.eContents().get(1);
+		private final Assignment cUpperAssignment_3_2 = (Assignment)cGroup_3.eContents().get(2);
+		private final RuleCall cUpperElementBoundParserRuleCall_3_2_0 = (RuleCall)cUpperAssignment_3_2.eContents().get(0);
+		private final Keyword cRightSquareBracketKeyword_3_3 = (Keyword)cGroup_3.eContents().get(3);
+		private final Assignment cIsOrderedAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final Keyword cIsOrderedOrderedKeyword_4_0 = (Keyword)cIsOrderedAssignment_4.eContents().get(0);
+		private final Keyword cColonKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		private final Assignment cTypeAssignment_6 = (Assignment)cGroup.eContents().get(6);
+		private final CrossReference cTypeClassifierCrossReference_6_0 = (CrossReference)cTypeAssignment_6.eContents().get(0);
+		private final RuleCall cTypeClassifierIDTerminalRuleCall_6_0_1 = (RuleCall)cTypeClassifierCrossReference_6_0.eContents().get(1);
+		private final Keyword cSemicolonKeyword_7 = (Keyword)cGroup.eContents().get(7);
 		
 		//Attribute:
 		//	isUnique?='unique'?
-		//	'attribute' name=ID
-		//	//			$multiplicity
-		//	//		'lower' lower=Integer
-		//	//		'upper' upper=Integer
+		//	'attribute' name=ID ('[' (lower=ElementBound '-')? upper=ElementBound ']')?
 		//	isOrdered?='ordered'?
 		//	':' type=[Classifier]
 		//	';';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//isUnique?='unique'? 'attribute' name=ID //			$multiplicity
-		////		'lower' lower=Integer
-		////		'upper' upper=Integer
-		//isOrdered?='ordered'? ':' type=[Classifier] ';'
+		//isUnique?='unique'? 'attribute' name=ID ('[' (lower=ElementBound '-')? upper=ElementBound ']')? isOrdered?='ordered'?
+		//':' type=[Classifier] ';'
 		public Group getGroup() { return cGroup; }
 		
 		//isUnique?='unique'?
@@ -297,29 +301,53 @@ public class KM3GrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_2_0() { return cNameIDTerminalRuleCall_2_0; }
 		
-		////			$multiplicity
-		////		'lower' lower=Integer
-		////		'upper' upper=Integer
+		//('[' (lower=ElementBound '-')? upper=ElementBound ']')?
+		public Group getGroup_3() { return cGroup_3; }
+		
+		//'['
+		public Keyword getLeftSquareBracketKeyword_3_0() { return cLeftSquareBracketKeyword_3_0; }
+		
+		//(lower=ElementBound '-')?
+		public Group getGroup_3_1() { return cGroup_3_1; }
+		
+		//lower=ElementBound
+		public Assignment getLowerAssignment_3_1_0() { return cLowerAssignment_3_1_0; }
+		
+		//ElementBound
+		public RuleCall getLowerElementBoundParserRuleCall_3_1_0_0() { return cLowerElementBoundParserRuleCall_3_1_0_0; }
+		
+		//'-'
+		public Keyword getHyphenMinusKeyword_3_1_1() { return cHyphenMinusKeyword_3_1_1; }
+		
+		//upper=ElementBound
+		public Assignment getUpperAssignment_3_2() { return cUpperAssignment_3_2; }
+		
+		//ElementBound
+		public RuleCall getUpperElementBoundParserRuleCall_3_2_0() { return cUpperElementBoundParserRuleCall_3_2_0; }
+		
+		//']'
+		public Keyword getRightSquareBracketKeyword_3_3() { return cRightSquareBracketKeyword_3_3; }
+		
 		//isOrdered?='ordered'?
-		public Assignment getIsOrderedAssignment_3() { return cIsOrderedAssignment_3; }
+		public Assignment getIsOrderedAssignment_4() { return cIsOrderedAssignment_4; }
 		
 		//'ordered'
-		public Keyword getIsOrderedOrderedKeyword_3_0() { return cIsOrderedOrderedKeyword_3_0; }
+		public Keyword getIsOrderedOrderedKeyword_4_0() { return cIsOrderedOrderedKeyword_4_0; }
 		
 		//':'
-		public Keyword getColonKeyword_4() { return cColonKeyword_4; }
+		public Keyword getColonKeyword_5() { return cColonKeyword_5; }
 		
 		//type=[Classifier]
-		public Assignment getTypeAssignment_5() { return cTypeAssignment_5; }
+		public Assignment getTypeAssignment_6() { return cTypeAssignment_6; }
 		
 		//[Classifier]
-		public CrossReference getTypeClassifierCrossReference_5_0() { return cTypeClassifierCrossReference_5_0; }
+		public CrossReference getTypeClassifierCrossReference_6_0() { return cTypeClassifierCrossReference_6_0; }
 		
 		//ID
-		public RuleCall getTypeClassifierIDTerminalRuleCall_5_0_1() { return cTypeClassifierIDTerminalRuleCall_5_0_1; }
+		public RuleCall getTypeClassifierIDTerminalRuleCall_6_0_1() { return cTypeClassifierIDTerminalRuleCall_6_0_1; }
 		
 		//';'
-		public Keyword getSemicolonKeyword_6() { return cSemicolonKeyword_6; }
+		public Keyword getSemicolonKeyword_7() { return cSemicolonKeyword_7; }
 	}
 	public class ReferenceElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.m2m.km3.xtext.KM3.Reference");
@@ -332,7 +360,7 @@ public class KM3GrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup_2_1 = (Group)cGroup_2.eContents().get(1);
 		private final Assignment cLowerAssignment_2_1_0 = (Assignment)cGroup_2_1.eContents().get(0);
 		private final RuleCall cLowerElementBoundParserRuleCall_2_1_0_0 = (RuleCall)cLowerAssignment_2_1_0.eContents().get(0);
-		private final Keyword cVerticalLineKeyword_2_1_1 = (Keyword)cGroup_2_1.eContents().get(1);
+		private final Keyword cHyphenMinusKeyword_2_1_1 = (Keyword)cGroup_2_1.eContents().get(1);
 		private final Assignment cUpperAssignment_2_2 = (Assignment)cGroup_2.eContents().get(2);
 		private final RuleCall cUpperElementBoundParserRuleCall_2_2_0 = (RuleCall)cUpperAssignment_2_2.eContents().get(0);
 		private final Keyword cRightSquareBracketKeyword_2_3 = (Keyword)cGroup_2.eContents().get(3);
@@ -352,20 +380,15 @@ public class KM3GrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_8 = (Keyword)cGroup.eContents().get(8);
 		
 		//Reference:
-		//	'reference' name=ID ('[' (lower=ElementBound '|')? upper=ElementBound ']')?
-		//	//			$multiplicity
-		//	//		'lower' lower=Integer
-		//	//		'upper' upper=Integer
+		//	'reference' name=ID ('[' (lower=ElementBound '-')? upper=ElementBound ']')?
 		//	isOrdered?='ordered'?
 		//	isContainer?='container'?
 		//	':' type=[Classifier] ('oppositeOf' opposite=[Reference])?
 		//	';';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'reference' name=ID ('[' (lower=ElementBound '|')? upper=ElementBound ']')? //			$multiplicity
-		////		'lower' lower=Integer
-		////		'upper' upper=Integer
-		//isOrdered?='ordered'? isContainer?='container'? ':' type=[Classifier] ('oppositeOf' opposite=[Reference])? ';'
+		//'reference' name=ID ('[' (lower=ElementBound '-')? upper=ElementBound ']')? isOrdered?='ordered'?
+		//isContainer?='container'? ':' type=[Classifier] ('oppositeOf' opposite=[Reference])? ';'
 		public Group getGroup() { return cGroup; }
 		
 		//'reference'
@@ -377,13 +400,13 @@ public class KM3GrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
 		
-		//('[' (lower=ElementBound '|')? upper=ElementBound ']')?
+		//('[' (lower=ElementBound '-')? upper=ElementBound ']')?
 		public Group getGroup_2() { return cGroup_2; }
 		
 		//'['
 		public Keyword getLeftSquareBracketKeyword_2_0() { return cLeftSquareBracketKeyword_2_0; }
 		
-		//(lower=ElementBound '|')?
+		//(lower=ElementBound '-')?
 		public Group getGroup_2_1() { return cGroup_2_1; }
 		
 		//lower=ElementBound
@@ -392,8 +415,8 @@ public class KM3GrammarAccess extends AbstractGrammarElementFinder {
 		//ElementBound
 		public RuleCall getLowerElementBoundParserRuleCall_2_1_0_0() { return cLowerElementBoundParserRuleCall_2_1_0_0; }
 		
-		//'|'
-		public Keyword getVerticalLineKeyword_2_1_1() { return cVerticalLineKeyword_2_1_1; }
+		//'-'
+		public Keyword getHyphenMinusKeyword_2_1_1() { return cHyphenMinusKeyword_2_1_1; }
 		
 		//upper=ElementBound
 		public Assignment getUpperAssignment_2_2() { return cUpperAssignment_2_2; }
@@ -404,9 +427,6 @@ public class KM3GrammarAccess extends AbstractGrammarElementFinder {
 		//']'
 		public Keyword getRightSquareBracketKeyword_2_3() { return cRightSquareBracketKeyword_2_3; }
 		
-		////			$multiplicity
-		////		'lower' lower=Integer
-		////		'upper' upper=Integer
 		//isOrdered?='ordered'?
 		public Assignment getIsOrderedAssignment_3() { return cIsOrderedAssignment_3; }
 		
@@ -609,10 +629,7 @@ public class KM3GrammarAccess extends AbstractGrammarElementFinder {
 	
 	//Attribute:
 	//	isUnique?='unique'?
-	//	'attribute' name=ID
-	//	//			$multiplicity
-	//	//		'lower' lower=Integer
-	//	//		'upper' upper=Integer
+	//	'attribute' name=ID ('[' (lower=ElementBound '-')? upper=ElementBound ']')?
 	//	isOrdered?='ordered'?
 	//	':' type=[Classifier]
 	//	';';
@@ -625,10 +642,7 @@ public class KM3GrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Reference:
-	//	'reference' name=ID ('[' (lower=ElementBound '|')? upper=ElementBound ']')?
-	//	//			$multiplicity
-	//	//		'lower' lower=Integer
-	//	//		'upper' upper=Integer
+	//	'reference' name=ID ('[' (lower=ElementBound '-')? upper=ElementBound ']')?
 	//	isOrdered?='ordered'?
 	//	isContainer?='container'?
 	//	':' type=[Classifier] ('oppositeOf' opposite=[Reference])?

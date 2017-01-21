@@ -64,7 +64,7 @@ public class KM3SemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     Attribute returns Attribute
 	 *
 	 * Constraint:
-	 *     (isUnique?='unique'? name=ID isOrdered?='ordered'? type=[Classifier|ID])
+	 *     (isUnique?='unique'? name=ID (lower=ElementBound? upper=ElementBound)? isOrdered?='ordered'? type=[Classifier|ID])
 	 */
 	protected void sequence_Attribute(ISerializationContext context, Attribute semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
