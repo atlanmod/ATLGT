@@ -3,9 +3,15 @@
  */
 package org.eclipse.m2m.km3.xtext
 
+import org.eclipse.xtext.conversion.IValueConverterService
+import org.eclipse.m2m.km3.xtext.converter.MultiplicityValueConverterService
 
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
 class KM3RuntimeModule extends AbstractKM3RuntimeModule {
+	
+	override Class<? extends IValueConverterService> bindIValueConverterService() {
+    	return MultiplicityValueConverterService
+	}
 }

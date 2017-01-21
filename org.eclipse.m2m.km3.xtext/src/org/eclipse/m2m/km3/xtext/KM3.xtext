@@ -39,9 +39,7 @@ Class:
 Attribute:
 	(isUnique?='unique')?
 	'attribute' name=ID
-//			$multiplicity
-//		'lower' lower=Integer
-//		'upper' upper=Integer
+	('[' (lower=ElementBound '-')? upper=ElementBound ']')?
 	(isOrdered ?= 'ordered')?
 	':' type=[Classifier]
 	';'
@@ -49,10 +47,7 @@ Attribute:
 
 Reference:
 	'reference' name=ID
-	('[' ']')?
-//			$multiplicity
-//		'lower' lower=Integer
-//		'upper' upper=Integer
+	('[' (lower=ElementBound '-')? upper=ElementBound ']')?
 	(isOrdered?='ordered')?
 	(isContainer?='container')?
 	':' type=[Classifier]
@@ -60,6 +55,8 @@ Reference:
 	';'
 	;
 
+ElementBound returns ecore::EIntegerObject: // datatype rule handled by a value converter
+    '*' | INT;
 //
 //
 //

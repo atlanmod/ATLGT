@@ -3,6 +3,14 @@
  */
 package org.eclipse.m2m.km3.xtext.scoping
 
+import org.eclipse.xtext.scoping.Scopes
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.EReference
+import org.eclipse.m2m.km3.Km3Package
+import org.eclipse.xtext.EcoreUtil2
+import org.eclipse.m2m.km3.Classifier
+import org.eclipse.m2m.km3.StructuralFeature
+import org.eclipse.m2m.km3.Reference
 
 /**
  * This class contains custom scoping description.
@@ -11,5 +19,26 @@ package org.eclipse.m2m.km3.xtext.scoping
  * on how and when to use it.
  */
 class KM3ScopeProvider extends AbstractKM3ScopeProvider {
+
+	override getScope(EObject context, EReference reference) {
+		// We want to define the Scope for the Element's superElement cross-reference
+		if (context instanceof StructuralFeature && reference == Km3Package.Literals.TYPED_ELEMENT__TYPE) {
+			// Collect a list of candidates by going through the model
+			// EcoreUtil2 provides useful functionality to do that
+			// For example searching for all elements within the root Object's tree
+			val rootElement = EcoreUtil2.getRootContainer(context)
+			val candidates = EcoreUtil2.getAllContentsOfType(rootElement, Classifier)
+			// Create IEObjectDescriptions and puts them into an IScope instance
+			return Scopes.scopeFor(candidates)
+		}
+
+		if (context instanceof Reference && reference == Km3Package.Literals.REFERENCE__OPPOSITE) {
+			val package = context.eContainer.eContainer
+			val candidates = EcoreUtil2.getAllContentsOfType(package, Reference)
+			return Scopes.scopeFor(candidates)
+		}
+
+		return super.getScope(context, reference);
+	}
 
 }
