@@ -494,10 +494,20 @@ ruleReference returns [EObject current=null]
 			)
 		)
 		(
+			otherlv_2='['
+			{
+				newLeafNode(otherlv_2, grammarAccess.getReferenceAccess().getLeftSquareBracketKeyword_2_0());
+			}
+			otherlv_3=']'
+			{
+				newLeafNode(otherlv_3, grammarAccess.getReferenceAccess().getRightSquareBracketKeyword_2_1());
+			}
+		)?
+		(
 			(
-				lv_isOrdered_2_0='ordered'
+				lv_isOrdered_4_0='ordered'
 				{
-					newLeafNode(lv_isOrdered_2_0, grammarAccess.getReferenceAccess().getIsOrderedOrderedKeyword_2_0());
+					newLeafNode(lv_isOrdered_4_0, grammarAccess.getReferenceAccess().getIsOrderedOrderedKeyword_3_0());
 				}
 				{
 					if ($current==null) {
@@ -509,9 +519,9 @@ ruleReference returns [EObject current=null]
 		)?
 		(
 			(
-				lv_isContainer_3_0='container'
+				lv_isContainer_5_0='container'
 				{
-					newLeafNode(lv_isContainer_3_0, grammarAccess.getReferenceAccess().getIsContainerContainerKeyword_3_0());
+					newLeafNode(lv_isContainer_5_0, grammarAccess.getReferenceAccess().getIsContainerContainerKeyword_4_0());
 				}
 				{
 					if ($current==null) {
@@ -521,9 +531,9 @@ ruleReference returns [EObject current=null]
 				}
 			)
 		)?
-		otherlv_4=':'
+		otherlv_6=':'
 		{
-			newLeafNode(otherlv_4, grammarAccess.getReferenceAccess().getColonKeyword_4());
+			newLeafNode(otherlv_6, grammarAccess.getReferenceAccess().getColonKeyword_5());
 		}
 		(
 			(
@@ -532,16 +542,16 @@ ruleReference returns [EObject current=null]
 						$current = createModelElement(grammarAccess.getReferenceRule());
 					}
 				}
-				otherlv_5=RULE_ID
+				otherlv_7=RULE_ID
 				{
-					newLeafNode(otherlv_5, grammarAccess.getReferenceAccess().getTypeClassifierCrossReference_5_0());
+					newLeafNode(otherlv_7, grammarAccess.getReferenceAccess().getTypeClassifierCrossReference_6_0());
 				}
 			)
 		)
 		(
-			otherlv_6='oppositeOf'
+			otherlv_8='oppositeOf'
 			{
-				newLeafNode(otherlv_6, grammarAccess.getReferenceAccess().getOppositeOfKeyword_6_0());
+				newLeafNode(otherlv_8, grammarAccess.getReferenceAccess().getOppositeOfKeyword_7_0());
 			}
 			(
 				(
@@ -550,16 +560,16 @@ ruleReference returns [EObject current=null]
 							$current = createModelElement(grammarAccess.getReferenceRule());
 						}
 					}
-					otherlv_7=RULE_ID
+					otherlv_9=RULE_ID
 					{
-						newLeafNode(otherlv_7, grammarAccess.getReferenceAccess().getOppositeReferenceCrossReference_6_1_0());
+						newLeafNode(otherlv_9, grammarAccess.getReferenceAccess().getOppositeReferenceCrossReference_7_1_0());
 					}
 				)
 			)
 		)?
-		otherlv_8=';'
+		otherlv_10=';'
 		{
-			newLeafNode(otherlv_8, grammarAccess.getReferenceAccess().getSemicolonKeyword_7());
+			newLeafNode(otherlv_10, grammarAccess.getReferenceAccess().getSemicolonKeyword_8());
 		}
 	)
 ;

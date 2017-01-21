@@ -47,7 +47,8 @@ Attribute:
 
 Reference:
 	'reference' name=ID
-//		$multiplicity
+	('[' ']')?
+//			$multiplicity
 //		'lower' lower=Integer
 //		'upper' upper=Integer
 	(isOrdered?='ordered')?

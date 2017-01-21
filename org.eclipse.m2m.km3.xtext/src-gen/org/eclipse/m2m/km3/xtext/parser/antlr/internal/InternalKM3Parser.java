@@ -21,7 +21,7 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalKM3Parser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_COMMENT", "RULE_INT", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'package'", "'{'", "'}'", "'datatype'", "';'", "'abstract'", "'class'", "'extends'", "','", "'unique'", "'attribute'", "'ordered'", "':'", "'reference'", "'container'", "'oppositeOf'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_COMMENT", "RULE_INT", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'package'", "'{'", "'}'", "'datatype'", "';'", "'abstract'", "'class'", "'extends'", "','", "'unique'", "'attribute'", "'ordered'", "':'", "'reference'", "'['", "']'", "'container'", "'oppositeOf'"
     };
     public static final int RULE_STRING=7;
     public static final int RULE_SL_COMMENT=9;
@@ -40,7 +40,9 @@ public class InternalKM3Parser extends AbstractInternalAntlrParser {
     public static final int RULE_ANY_OTHER=11;
     public static final int T__26=26;
     public static final int T__27=27;
+    public static final int T__28=28;
     public static final int RULE_INT=6;
+    public static final int T__29=29;
     public static final int T__22=22;
     public static final int RULE_ML_COMMENT=8;
     public static final int T__23=23;
@@ -1161,29 +1163,31 @@ public class InternalKM3Parser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleReference"
-    // InternalKM3.g:466:1: ruleReference returns [EObject current=null] : (otherlv_0= 'reference' ( (lv_name_1_0= RULE_ID ) ) ( (lv_isOrdered_2_0= 'ordered' ) )? ( (lv_isContainer_3_0= 'container' ) )? otherlv_4= ':' ( (otherlv_5= RULE_ID ) ) (otherlv_6= 'oppositeOf' ( (otherlv_7= RULE_ID ) ) )? otherlv_8= ';' ) ;
+    // InternalKM3.g:466:1: ruleReference returns [EObject current=null] : (otherlv_0= 'reference' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '[' otherlv_3= ']' )? ( (lv_isOrdered_4_0= 'ordered' ) )? ( (lv_isContainer_5_0= 'container' ) )? otherlv_6= ':' ( (otherlv_7= RULE_ID ) ) (otherlv_8= 'oppositeOf' ( (otherlv_9= RULE_ID ) ) )? otherlv_10= ';' ) ;
     public final EObject ruleReference() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_0=null;
         Token lv_name_1_0=null;
-        Token lv_isOrdered_2_0=null;
-        Token lv_isContainer_3_0=null;
-        Token otherlv_4=null;
-        Token otherlv_5=null;
+        Token otherlv_2=null;
+        Token otherlv_3=null;
+        Token lv_isOrdered_4_0=null;
+        Token lv_isContainer_5_0=null;
         Token otherlv_6=null;
         Token otherlv_7=null;
         Token otherlv_8=null;
+        Token otherlv_9=null;
+        Token otherlv_10=null;
 
 
         	enterRule();
 
         try {
-            // InternalKM3.g:472:2: ( (otherlv_0= 'reference' ( (lv_name_1_0= RULE_ID ) ) ( (lv_isOrdered_2_0= 'ordered' ) )? ( (lv_isContainer_3_0= 'container' ) )? otherlv_4= ':' ( (otherlv_5= RULE_ID ) ) (otherlv_6= 'oppositeOf' ( (otherlv_7= RULE_ID ) ) )? otherlv_8= ';' ) )
-            // InternalKM3.g:473:2: (otherlv_0= 'reference' ( (lv_name_1_0= RULE_ID ) ) ( (lv_isOrdered_2_0= 'ordered' ) )? ( (lv_isContainer_3_0= 'container' ) )? otherlv_4= ':' ( (otherlv_5= RULE_ID ) ) (otherlv_6= 'oppositeOf' ( (otherlv_7= RULE_ID ) ) )? otherlv_8= ';' )
+            // InternalKM3.g:472:2: ( (otherlv_0= 'reference' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '[' otherlv_3= ']' )? ( (lv_isOrdered_4_0= 'ordered' ) )? ( (lv_isContainer_5_0= 'container' ) )? otherlv_6= ':' ( (otherlv_7= RULE_ID ) ) (otherlv_8= 'oppositeOf' ( (otherlv_9= RULE_ID ) ) )? otherlv_10= ';' ) )
+            // InternalKM3.g:473:2: (otherlv_0= 'reference' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '[' otherlv_3= ']' )? ( (lv_isOrdered_4_0= 'ordered' ) )? ( (lv_isContainer_5_0= 'container' ) )? otherlv_6= ':' ( (otherlv_7= RULE_ID ) ) (otherlv_8= 'oppositeOf' ( (otherlv_9= RULE_ID ) ) )? otherlv_10= ';' )
             {
-            // InternalKM3.g:473:2: (otherlv_0= 'reference' ( (lv_name_1_0= RULE_ID ) ) ( (lv_isOrdered_2_0= 'ordered' ) )? ( (lv_isContainer_3_0= 'container' ) )? otherlv_4= ':' ( (otherlv_5= RULE_ID ) ) (otherlv_6= 'oppositeOf' ( (otherlv_7= RULE_ID ) ) )? otherlv_8= ';' )
-            // InternalKM3.g:474:3: otherlv_0= 'reference' ( (lv_name_1_0= RULE_ID ) ) ( (lv_isOrdered_2_0= 'ordered' ) )? ( (lv_isContainer_3_0= 'container' ) )? otherlv_4= ':' ( (otherlv_5= RULE_ID ) ) (otherlv_6= 'oppositeOf' ( (otherlv_7= RULE_ID ) ) )? otherlv_8= ';'
+            // InternalKM3.g:473:2: (otherlv_0= 'reference' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '[' otherlv_3= ']' )? ( (lv_isOrdered_4_0= 'ordered' ) )? ( (lv_isContainer_5_0= 'container' ) )? otherlv_6= ':' ( (otherlv_7= RULE_ID ) ) (otherlv_8= 'oppositeOf' ( (otherlv_9= RULE_ID ) ) )? otherlv_10= ';' )
+            // InternalKM3.g:474:3: otherlv_0= 'reference' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '[' otherlv_3= ']' )? ( (lv_isOrdered_4_0= 'ordered' ) )? ( (lv_isContainer_5_0= 'container' ) )? otherlv_6= ':' ( (otherlv_7= RULE_ID ) ) (otherlv_8= 'oppositeOf' ( (otherlv_9= RULE_ID ) ) )? otherlv_10= ';'
             {
             otherlv_0=(Token)match(input,25,FOLLOW_3); 
 
@@ -1215,23 +1219,48 @@ public class InternalKM3Parser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalKM3.g:496:3: ( (lv_isOrdered_2_0= 'ordered' ) )?
+            // InternalKM3.g:496:3: (otherlv_2= '[' otherlv_3= ']' )?
             int alt10=2;
             int LA10_0 = input.LA(1);
 
-            if ( (LA10_0==23) ) {
+            if ( (LA10_0==26) ) {
                 alt10=1;
             }
             switch (alt10) {
                 case 1 :
-                    // InternalKM3.g:497:4: (lv_isOrdered_2_0= 'ordered' )
+                    // InternalKM3.g:497:4: otherlv_2= '[' otherlv_3= ']'
                     {
-                    // InternalKM3.g:497:4: (lv_isOrdered_2_0= 'ordered' )
-                    // InternalKM3.g:498:5: lv_isOrdered_2_0= 'ordered'
-                    {
-                    lv_isOrdered_2_0=(Token)match(input,23,FOLLOW_15); 
+                    otherlv_2=(Token)match(input,26,FOLLOW_15); 
 
-                    					newLeafNode(lv_isOrdered_2_0, grammarAccess.getReferenceAccess().getIsOrderedOrderedKeyword_2_0());
+                    				newLeafNode(otherlv_2, grammarAccess.getReferenceAccess().getLeftSquareBracketKeyword_2_0());
+                    			
+                    otherlv_3=(Token)match(input,27,FOLLOW_16); 
+
+                    				newLeafNode(otherlv_3, grammarAccess.getReferenceAccess().getRightSquareBracketKeyword_2_1());
+                    			
+
+                    }
+                    break;
+
+            }
+
+            // InternalKM3.g:506:3: ( (lv_isOrdered_4_0= 'ordered' ) )?
+            int alt11=2;
+            int LA11_0 = input.LA(1);
+
+            if ( (LA11_0==23) ) {
+                alt11=1;
+            }
+            switch (alt11) {
+                case 1 :
+                    // InternalKM3.g:507:4: (lv_isOrdered_4_0= 'ordered' )
+                    {
+                    // InternalKM3.g:507:4: (lv_isOrdered_4_0= 'ordered' )
+                    // InternalKM3.g:508:5: lv_isOrdered_4_0= 'ordered'
+                    {
+                    lv_isOrdered_4_0=(Token)match(input,23,FOLLOW_17); 
+
+                    					newLeafNode(lv_isOrdered_4_0, grammarAccess.getReferenceAccess().getIsOrderedOrderedKeyword_3_0());
                     				
 
                     					if (current==null) {
@@ -1248,23 +1277,23 @@ public class InternalKM3Parser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalKM3.g:510:3: ( (lv_isContainer_3_0= 'container' ) )?
-            int alt11=2;
-            int LA11_0 = input.LA(1);
+            // InternalKM3.g:520:3: ( (lv_isContainer_5_0= 'container' ) )?
+            int alt12=2;
+            int LA12_0 = input.LA(1);
 
-            if ( (LA11_0==26) ) {
-                alt11=1;
+            if ( (LA12_0==28) ) {
+                alt12=1;
             }
-            switch (alt11) {
+            switch (alt12) {
                 case 1 :
-                    // InternalKM3.g:511:4: (lv_isContainer_3_0= 'container' )
+                    // InternalKM3.g:521:4: (lv_isContainer_5_0= 'container' )
                     {
-                    // InternalKM3.g:511:4: (lv_isContainer_3_0= 'container' )
-                    // InternalKM3.g:512:5: lv_isContainer_3_0= 'container'
+                    // InternalKM3.g:521:4: (lv_isContainer_5_0= 'container' )
+                    // InternalKM3.g:522:5: lv_isContainer_5_0= 'container'
                     {
-                    lv_isContainer_3_0=(Token)match(input,26,FOLLOW_13); 
+                    lv_isContainer_5_0=(Token)match(input,28,FOLLOW_13); 
 
-                    					newLeafNode(lv_isContainer_3_0, grammarAccess.getReferenceAccess().getIsContainerContainerKeyword_3_0());
+                    					newLeafNode(lv_isContainer_5_0, grammarAccess.getReferenceAccess().getIsContainerContainerKeyword_4_0());
                     				
 
                     					if (current==null) {
@@ -1281,24 +1310,24 @@ public class InternalKM3Parser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_4=(Token)match(input,24,FOLLOW_3); 
+            otherlv_6=(Token)match(input,24,FOLLOW_3); 
 
-            			newLeafNode(otherlv_4, grammarAccess.getReferenceAccess().getColonKeyword_4());
+            			newLeafNode(otherlv_6, grammarAccess.getReferenceAccess().getColonKeyword_5());
             		
-            // InternalKM3.g:528:3: ( (otherlv_5= RULE_ID ) )
-            // InternalKM3.g:529:4: (otherlv_5= RULE_ID )
+            // InternalKM3.g:538:3: ( (otherlv_7= RULE_ID ) )
+            // InternalKM3.g:539:4: (otherlv_7= RULE_ID )
             {
-            // InternalKM3.g:529:4: (otherlv_5= RULE_ID )
-            // InternalKM3.g:530:5: otherlv_5= RULE_ID
+            // InternalKM3.g:539:4: (otherlv_7= RULE_ID )
+            // InternalKM3.g:540:5: otherlv_7= RULE_ID
             {
 
             					if (current==null) {
             						current = createModelElement(grammarAccess.getReferenceRule());
             					}
             				
-            otherlv_5=(Token)match(input,RULE_ID,FOLLOW_16); 
+            otherlv_7=(Token)match(input,RULE_ID,FOLLOW_18); 
 
-            					newLeafNode(otherlv_5, grammarAccess.getReferenceAccess().getTypeClassifierCrossReference_5_0());
+            					newLeafNode(otherlv_7, grammarAccess.getReferenceAccess().getTypeClassifierCrossReference_6_0());
             				
 
             }
@@ -1306,35 +1335,35 @@ public class InternalKM3Parser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalKM3.g:541:3: (otherlv_6= 'oppositeOf' ( (otherlv_7= RULE_ID ) ) )?
-            int alt12=2;
-            int LA12_0 = input.LA(1);
+            // InternalKM3.g:551:3: (otherlv_8= 'oppositeOf' ( (otherlv_9= RULE_ID ) ) )?
+            int alt13=2;
+            int LA13_0 = input.LA(1);
 
-            if ( (LA12_0==27) ) {
-                alt12=1;
+            if ( (LA13_0==29) ) {
+                alt13=1;
             }
-            switch (alt12) {
+            switch (alt13) {
                 case 1 :
-                    // InternalKM3.g:542:4: otherlv_6= 'oppositeOf' ( (otherlv_7= RULE_ID ) )
+                    // InternalKM3.g:552:4: otherlv_8= 'oppositeOf' ( (otherlv_9= RULE_ID ) )
                     {
-                    otherlv_6=(Token)match(input,27,FOLLOW_3); 
+                    otherlv_8=(Token)match(input,29,FOLLOW_3); 
 
-                    				newLeafNode(otherlv_6, grammarAccess.getReferenceAccess().getOppositeOfKeyword_6_0());
+                    				newLeafNode(otherlv_8, grammarAccess.getReferenceAccess().getOppositeOfKeyword_7_0());
                     			
-                    // InternalKM3.g:546:4: ( (otherlv_7= RULE_ID ) )
-                    // InternalKM3.g:547:5: (otherlv_7= RULE_ID )
+                    // InternalKM3.g:556:4: ( (otherlv_9= RULE_ID ) )
+                    // InternalKM3.g:557:5: (otherlv_9= RULE_ID )
                     {
-                    // InternalKM3.g:547:5: (otherlv_7= RULE_ID )
-                    // InternalKM3.g:548:6: otherlv_7= RULE_ID
+                    // InternalKM3.g:557:5: (otherlv_9= RULE_ID )
+                    // InternalKM3.g:558:6: otherlv_9= RULE_ID
                     {
 
                     						if (current==null) {
                     							current = createModelElement(grammarAccess.getReferenceRule());
                     						}
                     					
-                    otherlv_7=(Token)match(input,RULE_ID,FOLLOW_6); 
+                    otherlv_9=(Token)match(input,RULE_ID,FOLLOW_6); 
 
-                    						newLeafNode(otherlv_7, grammarAccess.getReferenceAccess().getOppositeReferenceCrossReference_6_1_0());
+                    						newLeafNode(otherlv_9, grammarAccess.getReferenceAccess().getOppositeReferenceCrossReference_7_1_0());
                     					
 
                     }
@@ -1348,9 +1377,9 @@ public class InternalKM3Parser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_8=(Token)match(input,16,FOLLOW_2); 
+            otherlv_10=(Token)match(input,16,FOLLOW_2); 
 
-            			newLeafNode(otherlv_8, grammarAccess.getReferenceAccess().getSemicolonKeyword_7());
+            			newLeafNode(otherlv_10, grammarAccess.getReferenceAccess().getSemicolonKeyword_8());
             		
 
             }
@@ -1391,8 +1420,10 @@ public class InternalKM3Parser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_11 = new BitSet(new long[]{0x0000000000400000L});
     public static final BitSet FOLLOW_12 = new BitSet(new long[]{0x0000000001800000L});
     public static final BitSet FOLLOW_13 = new BitSet(new long[]{0x0000000001000000L});
-    public static final BitSet FOLLOW_14 = new BitSet(new long[]{0x0000000005800000L});
-    public static final BitSet FOLLOW_15 = new BitSet(new long[]{0x0000000005000000L});
-    public static final BitSet FOLLOW_16 = new BitSet(new long[]{0x0000000008010000L});
+    public static final BitSet FOLLOW_14 = new BitSet(new long[]{0x0000000015800000L});
+    public static final BitSet FOLLOW_15 = new BitSet(new long[]{0x0000000008000000L});
+    public static final BitSet FOLLOW_16 = new BitSet(new long[]{0x0000000011800000L});
+    public static final BitSet FOLLOW_17 = new BitSet(new long[]{0x0000000011000000L});
+    public static final BitSet FOLLOW_18 = new BitSet(new long[]{0x0000000020010000L});
 
 }
