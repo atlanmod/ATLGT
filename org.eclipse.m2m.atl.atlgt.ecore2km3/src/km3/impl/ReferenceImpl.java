@@ -35,7 +35,7 @@ public class ReferenceImpl extends StructuralFeatureImpl implements Reference {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final Boolean IS_CONTAINER_EDEFAULT = null;
+	protected static final Boolean IS_CONTAINER_EDEFAULT = Boolean.FALSE;
 
 	/**
 	 * The cached value of the '{@link #getIsContainer() <em>Is Container</em>}' attribute.

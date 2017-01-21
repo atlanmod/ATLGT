@@ -1,4 +1,9 @@
 package ClassDiagram {
+	datatype Boolean;
+	
+	datatype Integer;
+	
+	datatype String;
 
 	abstract class NamedElement {
 		attribute name : String;
@@ -7,8 +12,8 @@ package ClassDiagram {
 	}
 
 	class Package extends NamedElement {
-	    reference ownedElements[*] container : Class;
-        }
+	    reference ownedElements container : Class;
+    }
 
 
 	abstract class Classifier extends NamedElement {}
@@ -16,9 +21,9 @@ package ClassDiagram {
 	class DataType extends Classifier {}
 
 	class Class extends Classifier {
-	        reference owner : Package;
---		reference super[*] : Class;			-- -: no sub reference
-		reference attr[*] ordered container : Attribute oppositeOf owner;
+	    reference owner : Package;
+--		reference super : Class;			-- -: no sub reference
+		reference attr ordered container : Attribute oppositeOf owner;
 		attribute isAbstract : Boolean;
 	}
 
@@ -26,12 +31,11 @@ package ClassDiagram {
 		attribute multiValued : Boolean;
 		reference type : Classifier;
 		reference owner : Class oppositeOf attr;	-- +: opposite of attr
-	}
+	}	
 }
 
 package PrimitiveTypes {
-	datatype Boolean;
-	datatype Integer;
-	datatype String;
+
+
 }
 

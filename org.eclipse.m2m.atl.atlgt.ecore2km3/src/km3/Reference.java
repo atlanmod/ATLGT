@@ -23,6 +23,7 @@ package km3;
 public interface Reference extends StructuralFeature {
 	/**
 	 * Returns the value of the '<em><b>Is Container</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Is Container</em>' attribute isn't clear,
@@ -32,7 +33,7 @@ public interface Reference extends StructuralFeature {
 	 * @return the value of the '<em>Is Container</em>' attribute.
 	 * @see #setIsContainer(Boolean)
 	 * @see km3.Km3Package#getReference_IsContainer()
-	 * @model dataType="PrimitiveTypes.Boolean" required="true" ordered="false"
+	 * @model default="false" dataType="PrimitiveTypes.Boolean" required="true" ordered="false"
 	 * @generated
 	 */
 	Boolean getIsContainer();

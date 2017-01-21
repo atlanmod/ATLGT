@@ -8,6 +8,7 @@ import java.util.Set;
 import km3.Attribute;
 import km3.DataType;
 import km3.Km3Package;
+import km3.Reference;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.m2m.km3.xtext.services.KM3GrammarAccess;
@@ -44,6 +45,9 @@ public class KM3SemanticSequencer extends AbstractDelegatingSemanticSequencer {
 				return; 
 			case Km3Package.PACKAGE:
 				sequence_Package(context, (km3.Package) semanticObject); 
+				return; 
+			case Km3Package.REFERENCE:
+				sequence_Reference(context, (Reference) semanticObject); 
 				return; 
 			}
 		if (errorAcceptor != null)
@@ -103,6 +107,19 @@ public class KM3SemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     (name=ID contents+=ModelElement*)
 	 */
 	protected void sequence_Package(ISerializationContext context, km3.Package semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     StructuralFeature returns Reference
+	 *     Reference returns Reference
+	 *
+	 * Constraint:
+	 *     (name=ID isOrdered?='ordered'? isContainer?='container'? type=[Classifier|ID] opposite=[Reference|ID]?)
+	 */
+	protected void sequence_Reference(ISerializationContext context, Reference semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

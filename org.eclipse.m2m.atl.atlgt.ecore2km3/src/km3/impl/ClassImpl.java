@@ -60,7 +60,7 @@ public class ClassImpl extends ClassifierImpl implements km3.Class {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final Boolean IS_ABSTRACT_EDEFAULT = null;
+	protected static final Boolean IS_ABSTRACT_EDEFAULT = Boolean.FALSE;
 
 	/**
 	 * The cached value of the '{@link #getIsAbstract() <em>Is Abstract</em>}' attribute.
