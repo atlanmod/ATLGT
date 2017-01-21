@@ -49,15 +49,12 @@ public class EmfToKm3TransformationEmftvm implements EmfToKm3Transformation {
         }
 
         URI resourcesDirectory = URI.createPlatformPluginURI(BUNDLE_SYMBOLIC_NAME, false).appendSegment("resources");
-        URI outputEcore = outputDirectory.appendSegment(metamodel.lastSegment().replace("." + ECORE_EXT, "-" + KM3_EXT + "." + ECORE_EXT));
+        URI outputEcore = outputDirectory.appendSegment(metamodel.lastSegment().replace("." + ECORE_EXT, "." + KM3_EXT));
         System.out.println("Transformation of '" + metamodel + "' to '" + outputEcore + "'");
 
         ExecEnv env = FACTORY.createExecEnv();
 
         ResourceSet resourceSet = new ResourceSetImpl();
-        resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(ECORE_EXT, new EcoreResourceFactoryImpl());
-        resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(XMI_EXT, new XMIResourceFactoryImpl());
-        resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(EMFTVM_EXT, new EMFTVMResourceFactoryImpl());
 
         // Load metamodels
 
