@@ -21,14 +21,6 @@ public class EmfToKm3TransformationEmftvm implements EmfToKm3Transformation {
 
     private static final String BUNDLE_SYMBOLIC_NAME = "org.eclipse.m2m.atl.atlgt.ecore2km3";
 
-    private static final String MOF = "MOF";
-    private static final String KM3 = "KM3";
-    private static final String IN = "IN";
-    private static final String OUT = "OUT";
-
-    private static final String KM3_EXT = "km3";
-    private static final String ECORE_EXT = "ecore";
-
     private static final String MODULE_NAME = "EMF2KM3";
 
     private static final EmftvmFactory FACTORY = EmftvmFactory.eINSTANCE;
@@ -44,8 +36,9 @@ public class EmfToKm3TransformationEmftvm implements EmfToKm3Transformation {
         }
 
         URI resourcesDirectory = URI.createPlatformPluginURI(BUNDLE_SYMBOLIC_NAME, false).appendSegment("resources");
-        URI outputEcore = outputDirectory.appendSegment(metamodel.lastSegment().replace("." + ECORE_EXT, "." + KM3_EXT));
-        System.out.println("Transformation of '" + metamodel + "' to '" + outputEcore + "'");
+        URI outputKm3 = outputDirectory.appendSegment(metamodel.lastSegment().replace(".ecore", ".km3"));
+
+        System.out.println("Transformation of '" + metamodel + "' to '" + outputKm3 + "'");
 
         ExecEnv env = FACTORY.createExecEnv();
 
@@ -55,21 +48,21 @@ public class EmfToKm3TransformationEmftvm implements EmfToKm3Transformation {
 
         final Metamodel ecoreMetamodel = FACTORY.createMetamodel();
         ecoreMetamodel.setResource(EcorePackage.eINSTANCE.eResource());
-        env.registerMetaModel(MOF, ecoreMetamodel);
+        env.registerMetaModel("MOF", ecoreMetamodel);
 
         final Metamodel km3Metamodel = FACTORY.createMetamodel();
         km3Metamodel.setResource(Km3Package.eINSTANCE.eResource());
-        env.registerMetaModel(KM3, km3Metamodel);
+        env.registerMetaModel("KM3", km3Metamodel);
 
         // Load models
 
         Model inModel = FACTORY.createModel();
         inModel.setResource(resourceSet.getResource(metamodel, true));
-        env.registerInputModel(IN, inModel);
+        env.registerInputModel("IN", inModel);
 
         Model outModel = FACTORY.createModel();
-        outModel.setResource(resourceSet.createResource(outputEcore));
-        env.registerOutputModel(OUT, outModel);
+        outModel.setResource(resourceSet.createResource(outputKm3));
+        env.registerOutputModel("OUT", outModel);
 
         // Run transformation
 
@@ -86,13 +79,6 @@ public class EmfToKm3TransformationEmftvm implements EmfToKm3Transformation {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
-
-        // Extract
-
-        URI outputKm3 = outputDirectory.appendSegment(metamodel.lastSegment().replace("." + ECORE_EXT, "." + KM3_EXT));
-        System.out.println("Extraction of '" + outputEcore + "' to '" + outputKm3 + "'");
-
-        // TODO Complete the extraction
 
         return outputKm3;
     }

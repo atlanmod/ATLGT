@@ -20,9 +20,6 @@ public class AtlIdfierTransformationEmftvm implements AtlIdfierTransformation {
 
     private static final String BUNDLE_SYMBOLIC_NAME = "org.eclipse.m2m.atl.atlgt.atlidfier";
 
-    private static final String ATL = "ATL";
-    private static final String IN = "IN";
-
     private static final String MODULE_NAME = "ATLIDfier";
 
     private static final EmftvmFactory FACTORY = EmftvmFactory.eINSTANCE;
@@ -30,6 +27,7 @@ public class AtlIdfierTransformationEmftvm implements AtlIdfierTransformation {
     @Override
     public URI transform(URI outputDirectory, URI module) throws ATLCoreException, IOException {
         URI resourcesDirectory = URI.createPlatformPluginURI(BUNDLE_SYMBOLIC_NAME, false).appendSegment("resources");
+
         System.out.println("In-place transformation of '" + module);
 
         ExecEnv env = FACTORY.createExecEnv();
@@ -40,13 +38,13 @@ public class AtlIdfierTransformationEmftvm implements AtlIdfierTransformation {
 
         final Metamodel atlMetamodel = EmftvmFactory.eINSTANCE.createMetamodel();
         atlMetamodel.setResource(ATLPackage.eINSTANCE.eResource());
-        env.registerMetaModel(ATL, atlMetamodel);
+        env.registerMetaModel("ATL", atlMetamodel);
 
         // Load models
 
         Model inOutModel = EmftvmFactory.eINSTANCE.createModel();
         inOutModel.setResource(resourceSet.getResource(module, true));
-        env.registerInOutModel(IN, inOutModel);
+        env.registerInOutModel("IN", inOutModel);
         
         // Run transformation
 
