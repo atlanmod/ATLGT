@@ -23,9 +23,9 @@ import static java.util.Objects.isNull;
 /**
  * Utility methods for working with Ecore metamodels.
  */
-public final class MetamodelHelpers {
+public final class Metamodels {
 
-    private MetamodelHelpers() {
+    private Metamodels() {
         throw new IllegalStateException("This class should not be initialized");
     }
 
@@ -107,18 +107,23 @@ public final class MetamodelHelpers {
         return outputFile;
     }
 
-    public static String firstPackage(URI metamodel) {
-        String packageName;
-
+    /**
+     * Returns the first {@link EPackage} instance of an Ecore {@code metamodel}.
+     *
+     * @param metamodel the Ecore metamodel
+     *
+     * @return the first {@link EPackage} of the {@code metamodel}
+     *
+     * @throws IllegalArgumentException if the first element if not an {@link EPackage}
+     */
+    public static EPackage firstPackage(URI metamodel) {
         EObject eObject = getResourceFrom(metamodel).getContents().get(0);
         if (EPackage.class.isInstance(eObject)) {
-            EPackage ePackage = (EPackage) eObject;
-            packageName = ePackage.getName();
-        } else {
+            return (EPackage) eObject;
+        }
+        else {
             throw new IllegalArgumentException("The first element is not an EPackage");
         }
-
-        return packageName;
     }
 
     private static Resource getResourceFrom(URI uri) {

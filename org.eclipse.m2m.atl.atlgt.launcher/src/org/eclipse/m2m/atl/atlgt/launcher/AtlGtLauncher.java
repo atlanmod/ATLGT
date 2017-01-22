@@ -10,8 +10,8 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.m2m.atl.atlgt.atlidfier.AtlIdfierTransformationFactory;
 import org.eclipse.m2m.atl.atlgt.ecore2km3.EmfToKm3TransformationFactory;
 import org.eclipse.m2m.atl.atlgt.tools.Commands;
-import org.eclipse.m2m.atl.atlgt.util.MetamodelHelpers;
-import org.eclipse.m2m.atl.atlgt.util.URIHelpers;
+import org.eclipse.m2m.atl.atlgt.util.Metamodels;
+import org.eclipse.m2m.atl.atlgt.util.URIs;
 import org.eclipse.m2m.atl.core.ATLCoreException;
 
 import java.io.IOException;
@@ -32,11 +32,11 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
 
             // Copy the original metamodels to the temporary directory
             Iterable<URI> metamodels = StreamSupport.stream(context.getMetamodels().spliterator(), false)
-                    .peek(uri -> URIHelpers.copy(uri, context.getTempDirectory().appendSegment(uri.lastSegment())))
+                    .peek(uri -> URIs.copy(uri, context.getTempDirectory().appendSegment(uri.lastSegment())))
                     .collect(Collectors.toList());
 
             // Register all metamodels
-            metamodels.forEach(MetamodelHelpers::registerPackage);
+            metamodels.forEach(Metamodels::registerPackage);
 
             /*
              * Step A: Metamodel processing
@@ -48,8 +48,8 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
             // A.2 Ecore Relaxation
             List<URI> relaxedMetamodels = new ArrayList<>();
             for (URI metamodel :metamodels) {
-                Iterable<EPackage> packages = MetamodelHelpers.readEcore(metamodel);
-                URI relaxedMetamodel = MetamodelHelpers.relax(packages, context.getTempDirectory(), metamodel);
+                Iterable<EPackage> packages = Metamodels.readEcore(metamodel);
+                URI relaxedMetamodel = Metamodels.relax(packages, context.getTempDirectory(), metamodel);
                 relaxedMetamodels.add(relaxedMetamodel);
             }
 
@@ -73,12 +73,12 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
             // B.2 ATL2UNQL
             // TODO Improve URIs resolution
             Commands.atlGt().atlToUnql().execute(
-                    "-atl", URIHelpers.toAbsolutePath(idfiedAtlModule), // hidden/ClassDiagram2Relational.atl
-                    "-uq", URIHelpers.toAbsolutePath(context.getTempDirectory().appendSegment(idfiedAtlModule.lastSegment().replace(".atl", ".unql"))), // hidden/ClassDiagram2Relational.unql
-                    "-ikm3", URIHelpers.toAbsolutePath(context.getTempDirectory().appendSegment(context.getInMetamodel().lastSegment().replace(".ecore", ".km3"))), // hidden/ClassDiagram.km3
-                    "-ipkg", MetamodelHelpers.firstPackage(context.getInMetamodel()), // ClassDiagram
-                    "-okm3", URIHelpers.toAbsolutePath(context.getTempDirectory().appendSegment(context.getOutMetamodel().lastSegment().replace(".ecore", "-relaxed.km3"))), // hidden/Relational-relaxed.km3
-                    "-opkg", MetamodelHelpers.firstPackage(context.getOutMetamodel())); // Relational
+                    "-atl", URIs.toAbsolutePath(idfiedAtlModule), // hidden/ClassDiagram2Relational.atl
+                    "-uq", URIs.toAbsolutePath(context.getTempDirectory().appendSegment(idfiedAtlModule.lastSegment().replace(".atl", ".unql"))), // hidden/ClassDiagram2Relational.unql
+                    "-ikm3", URIs.toAbsolutePath(context.getTempDirectory().appendSegment(context.getInMetamodel().lastSegment().replace(".ecore", ".km3"))), // hidden/ClassDiagram.km3
+                    "-ipkg", Metamodels.firstPackage(context.getInMetamodel()).getName(), // ClassDiagram
+                    "-okm3", URIs.toAbsolutePath(context.getTempDirectory().appendSegment(context.getOutMetamodel().lastSegment().replace(".ecore", "-relaxed.km3"))), // hidden/Relational-relaxed.km3
+                    "-opkg", Metamodels.firstPackage(context.getOutMetamodel()).getName()); // Relational
 
             /*
              * Step C: Forward transformation
@@ -86,32 +86,32 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
 
             // C.1 XMI2DOT (we choose the first package name but we support only one package)
             Commands.atlGt().xmiToDot().execute(
-                    "-xmi", URIHelpers.toAbsolutePath(context.getInModel()), // ClassDiagram/Sample-ClassDiagram.xmi
-                    "-dot", URIHelpers.toAbsolutePath(context.getTempDirectory().appendSegment(context.getInModel().lastSegment().replace(".xmi", ".dot"))), // hidden/Sample-ClassDiagram.dot
-                    "-km3", URIHelpers.toAbsolutePath(context.getTempDirectory().appendSegment(context.getInMetamodel().lastSegment().replace(".ecore", ".km3"))), // hidden/ClassDiagram.km3
-                    "-pkg", MetamodelHelpers.firstPackage(context.getInMetamodel()));// ClassDiagram
+                    "-xmi", URIs.toAbsolutePath(context.getInModel()), // ClassDiagram/Sample-ClassDiagram.xmi
+                    "-dot", URIs.toAbsolutePath(context.getTempDirectory().appendSegment(context.getInModel().lastSegment().replace(".xmi", ".dot"))), // hidden/Sample-ClassDiagram.dot
+                    "-km3", URIs.toAbsolutePath(context.getTempDirectory().appendSegment(context.getInMetamodel().lastSegment().replace(".ecore", ".km3"))), // hidden/ClassDiagram.km3
+                    "-pkg", Metamodels.firstPackage(context.getInMetamodel()).getName());// ClassDiagram
 
             // C.2 Forward UnCAL
             Commands.gRoundTram().fwdUncal().execute(
                     "-ge", "-sb", "-cl", "-zn", "-fi", "-np", "-sa", "-t", "-rw", "-as",
-                    "-db", URIHelpers.toAbsolutePath(context.getTempDirectory().appendSegment(context.getInModel().lastSegment().replace(".xmi", ".dot"))), // hidden/Sample-ClassDiagram.dot
-                    "-uq", URIHelpers.toAbsolutePath(context.getTempDirectory().appendSegment(idfiedAtlModule.lastSegment().replace(".atl", ".unql"))), // hidden/ClassDiagram2Relational.unql
-                    "-dot", URIHelpers.toAbsolutePath(context.getTempDirectory().appendSegment(idfiedAtlModule.lastSegment().replace(".atl", "-target.dot"))), // hidden/ClassDiagram2Relational-target.dot
-                    "-xg", URIHelpers.toAbsolutePath(context.getTempDirectory().appendSegment(idfiedAtlModule.lastSegment().replace(".atl", ".xg"))), // hidden/ClassDiagram2Relational.xg
-                    "-ei", URIHelpers.toAbsolutePath(context.getTempDirectory().appendSegment(idfiedAtlModule.lastSegment().replace(".atl", ".ei")))); // hidden/ClassDiagram2Relational.ei
+                    "-db", URIs.toAbsolutePath(context.getTempDirectory().appendSegment(context.getInModel().lastSegment().replace(".xmi", ".dot"))), // hidden/Sample-ClassDiagram.dot
+                    "-uq", URIs.toAbsolutePath(context.getTempDirectory().appendSegment(idfiedAtlModule.lastSegment().replace(".atl", ".unql"))), // hidden/ClassDiagram2Relational.unql
+                    "-dot", URIs.toAbsolutePath(context.getTempDirectory().appendSegment(idfiedAtlModule.lastSegment().replace(".atl", "-target.dot"))), // hidden/ClassDiagram2Relational-target.dot
+                    "-xg", URIs.toAbsolutePath(context.getTempDirectory().appendSegment(idfiedAtlModule.lastSegment().replace(".atl", ".xg"))), // hidden/ClassDiagram2Relational.xg
+                    "-ei", URIs.toAbsolutePath(context.getTempDirectory().appendSegment(idfiedAtlModule.lastSegment().replace(".atl", ".ei")))); // hidden/ClassDiagram2Relational.ei
 
             // C.2.1 Normalize (up-to isomorphism)
             Commands.gRoundTram().bxContract().execute(
                     "-batch",
-                    "-src", URIHelpers.toAbsolutePath(context.getTempDirectory().appendSegment(idfiedAtlModule.lastSegment().replace(".atl", "-target.dot"))), // hidden/ClassDiagram2Relational-target.dot
-                    "-dst", URIHelpers.toAbsolutePath(context.getTempDirectory().appendSegment(idfiedAtlModule.lastSegment().replace(".atl", "-target-normal.dot")))); // hidden/ClassDiagram2Relational-target-normal.dot
+                    "-src", URIs.toAbsolutePath(context.getTempDirectory().appendSegment(idfiedAtlModule.lastSegment().replace(".atl", "-target.dot"))), // hidden/ClassDiagram2Relational-target.dot
+                    "-dst", URIs.toAbsolutePath(context.getTempDirectory().appendSegment(idfiedAtlModule.lastSegment().replace(".atl", "-target-normal.dot")))); // hidden/ClassDiagram2Relational-target-normal.dot
 
             // C.2.2 DOT2XMI
             Commands.atlGt().dotToXmi().execute(
-                    "-dot", URIHelpers.toAbsolutePath(context.getTempDirectory().appendSegment(idfiedAtlModule.lastSegment().replace(".atl", "-target-normal.dot"))), // hidden/ClassDiagram2Relational-target-normal.dot
-                    "-xmi", URIHelpers.toAbsolutePath(context.getTempDirectory().appendSegment(idfiedAtlModule.lastSegment().replace(".atl", "-target-normal.xmi"))), // hidden/ClassDiagram2Relational-target-normal.xmi
-                    "-km3", URIHelpers.toAbsolutePath(context.getTempDirectory().appendSegment(context.getOutMetamodel().lastSegment().replace(".ecore", "-relaxed.km3"))), // hidden/Relational-relaxed.km3
-                    "-pkg", MetamodelHelpers.firstPackage(context.getOutMetamodel())); // Relational
+                    "-dot", URIs.toAbsolutePath(context.getTempDirectory().appendSegment(idfiedAtlModule.lastSegment().replace(".atl", "-target-normal.dot"))), // hidden/ClassDiagram2Relational-target-normal.dot
+                    "-xmi", URIs.toAbsolutePath(context.getTempDirectory().appendSegment(idfiedAtlModule.lastSegment().replace(".atl", "-target-normal.xmi"))), // hidden/ClassDiagram2Relational-target-normal.xmi
+                    "-km3", URIs.toAbsolutePath(context.getTempDirectory().appendSegment(context.getOutMetamodel().lastSegment().replace(".ecore", "-relaxed.km3"))), // hidden/Relational-relaxed.km3
+                    "-pkg", Metamodels.firstPackage(context.getOutMetamodel()).getName()); // Relational
 
             // C.3 Execution of ATL with IDs
             // TODO
@@ -147,7 +147,7 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
         // Create a copy of the atl file
         URI atlModule = module.appendFileExtension("atl");
         URI idfiedAtlModule = context.getTempDirectory().appendSegment(module.appendFileExtension("atl").lastSegment());
-        URIHelpers.copy(atlModule, idfiedAtlModule);
+        URIs.copy(atlModule, idfiedAtlModule);
 
         // Run in-place transformation
         return AtlIdfierTransformationFactory.withEmftvm().transform(context.getTempDirectory(), idfiedAtlModule);

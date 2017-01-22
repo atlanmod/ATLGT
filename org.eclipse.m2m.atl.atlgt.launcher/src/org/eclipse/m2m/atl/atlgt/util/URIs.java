@@ -17,12 +17,19 @@ import java.nio.file.Paths;
 /**
  * Utility methods for working with {@link URI}s.
  */
-public final class URIHelpers {
+public final class URIs {
 
-    private URIHelpers() {
+    private URIs() {
         throw new IllegalStateException("This class should not be initialized");
     }
 
+    /**
+     * Returns the absolute path of the platform-based {@code uri}.
+     *
+     * @param uri the URI for which to find the absolute path
+     *
+     * @return the absolute path of the URI
+     */
     public static String toAbsolutePath(URI uri) {
         return Paths.get(
                 ResourcesPlugin.getWorkspace()
