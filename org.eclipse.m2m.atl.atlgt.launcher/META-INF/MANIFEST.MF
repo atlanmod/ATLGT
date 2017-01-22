@@ -13,7 +13,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.m2m.atl.emftvm.launcher,
  org.eclipse.emf.ecore,
  org.eclipse.m2m.atl.atlgt.ecore2km3,
- org.eclipse.m2m.atl.atlgt.atlidfier
+ org.eclipse.m2m.atl.atlgt.atlidfier,
+ org.eclipse.m2m.atl.atlgt.groundtram
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.debug.core,
@@ -25,4 +26,5 @@ Import-Package: org.eclipse.debug.core,
  org.eclipse.emf.common,
  org.eclipse.emf.ecore,
  org.eclipse.m2m.atl.core,
- org.eclipse.m2m.atl.emftvm.launcher
+ org.eclipse.m2m.atl.emftvm.launcher,
+ org.eclipse.m2m.atl.atlgt.ecore2km3

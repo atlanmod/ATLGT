@@ -11,6 +11,7 @@ import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
 import org.eclipse.m2m.atl.atlgt.atlidfier.AtlIdfierTransformationFactory;
 import org.eclipse.m2m.atl.atlgt.ecore2km3.EmfToKm3TransformationFactory;
+import org.eclipse.m2m.atl.atlgt.groundtram.Executors;
 import org.eclipse.m2m.atl.atlgt.util.MetamodelHelpers;
 import org.eclipse.m2m.atl.core.ATLCoreException;
 
@@ -23,7 +24,6 @@ import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.WritableByteChannel;
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class AtlGtLauncher implements ILaunchConfigurationDelegate {
 
@@ -43,6 +43,39 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
 
             // Step B: Transformation processing
             processTransformation();
+
+            // 1. XMI2DOT (we choose the first package name but we support only one package)
+            // TODO Fill args
+            Executors.atlGt().execute("xmi2dot_generic_command",
+                    "-xmi", "",
+                    "-dot", "",
+                    "-km3", "",
+                    "-pkg", "");
+
+            // 2. Forward UnCAL
+            // TODO Fill args
+            Executors.gRoundTram().execute("fwd_uncal",
+                    "-ge", "-sb", "-cl", "-zn", "-fi", "-np", "-sa", "-t", "-rw", "-as",
+                    " -db", "",
+                    " -uq", "",
+                    " -dot", "",
+                    " -xg", "",
+                    " -ei", "");
+
+            // 2.1 Normalize (up-to isomorphism)
+            // TODO Fill args
+            Executors.gRoundTram().execute("bx_contract",
+                    "-batch",
+                    "-src", "",
+                    "-dst", "");
+
+            // 2.2 DOT2XMI
+            // TODO Fill args
+            Executors.atlGt().execute("dot2xmi_command",
+                    "-dot", "",
+                    "-xmi", "",
+                    "-km3", "",
+                    "-pkg", "");
 
             System.out.println("ATL-GT - Executed!! " + context.getOutputDirectory());
         }
@@ -87,13 +120,23 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
 
         // Run in-place transformation
         AtlIdfierTransformationFactory.withEmftvm().transform(context.getOutputDirectory(), targetUri);
+
+        // B.2 ATL2UNQL
+        // TODO Fill args
+        Executors.atlGt().execute("atl2unql",
+                "-atl", "",
+                "-uq", "",
+                "-ikm3", "",
+                "-ipkg", "",
+                "-okm3", "",
+                "-opkg", "");
     }
 
     private static void copy(URI source, URI target) throws IOException {
-    	URIConverter uriConverter = new ExtensibleURIConverterImpl();
-    	uriConverter.createInputStream(source);
-    	uriConverter.createOutputStream(target);
-    	
+        URIConverter uriConverter = new ExtensibleURIConverterImpl();
+        uriConverter.createInputStream(source);
+        uriConverter.createOutputStream(target);
+
         try (InputStream inputStream = uriConverter.createInputStream(source); OutputStream outputStream = uriConverter.createOutputStream(target)) {
             try (ReadableByteChannel inputChannel = Channels.newChannel(inputStream); WritableByteChannel outputChannel = Channels.newChannel(outputStream)) {
                 final ByteBuffer buffer = ByteBuffer.allocateDirect(16 * 1024);
