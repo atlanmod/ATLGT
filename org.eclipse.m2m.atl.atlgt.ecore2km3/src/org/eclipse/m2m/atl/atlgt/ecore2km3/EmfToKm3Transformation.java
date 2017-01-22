@@ -17,11 +17,12 @@ public interface EmfToKm3Transformation {
      * Transforms an Ecore {@code metamodel} to a KM3 metamodel.
      *
      * @param outputDirectory the directory where to store the resulting models
-     * @param metamodel the Ecore metamodel to transform
+     * @param metamodel       the Ecore metamodel to transform
      *
      * @return the URI of the created KM3 model
      *
-     * @throws IllegalArgumentException if the given metamodel is not an Ecore model (if its extension is {@code != "ecore"})
+     * @throws IllegalArgumentException if the given metamodel is not an Ecore model (if its extension is {@code !=
+     *                                  "ecore"})
      */
     URI transform(URI outputDirectory, URI metamodel);
 }

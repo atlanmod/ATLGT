@@ -17,10 +17,10 @@ import java.util.Map;
  * A factory of {@link CommandBuilder}s.
  */
 public class Commands {
-	
-	private static final String BUNDLE_SYMBOLIC_NAME = "org.eclipse.m2m.atl.atlgt.tools";
 
-	private static final String PATH_PATTERN = "lib/%s/bin";
+    private static final String BUNDLE_SYMBOLIC_NAME = "org.eclipse.m2m.atl.atlgt.tools";
+
+    private static final String PATH_PATTERN = "lib/%s/bin";
 
     private Commands() {
         throw new IllegalStateException("This class should not be initialized");
@@ -58,8 +58,8 @@ public class Commands {
         Map<String, String> options = Collections.emptyMap();
 
         try {
-        	URL url = FileLocator.resolve(FileLocator.find(bundle, path, options));
-        	return Paths.get(url.toURI());
+            URL url = FileLocator.resolve(FileLocator.find(bundle, path, options));
+            return Paths.get(url.toURI());
         }
         catch (IOException | URISyntaxException e) {
             e.printStackTrace();

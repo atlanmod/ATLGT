@@ -17,7 +17,7 @@ public class AtlGtContext {
 
     private final URI pluginUri;
     private final String moduleName;
-    
+
     private final Iterable<URI> metamodels;
     private final Iterable<URI> inModels;
     private final Iterable<URI> inOutModels;
@@ -29,7 +29,7 @@ public class AtlGtContext {
     private AtlGtContext(URI pluginUri, String moduleName, Iterable<URI> metamodels, Iterable<URI> inModels, Iterable<URI> inOutModels, Iterable<URI> outModels, boolean forward, boolean backward) {
         this.pluginUri = pluginUri;
         this.moduleName = moduleName;
-        
+
         this.metamodels = metamodels;
         this.inModels = inModels;
         this.inOutModels = inOutModels;
@@ -89,7 +89,7 @@ public class AtlGtContext {
     public URI getModule() {
         return pluginUri.appendSegment(moduleName);
     }
-    
+
     public Iterable<URI> getMetamodels() {
         return metamodels;
     }

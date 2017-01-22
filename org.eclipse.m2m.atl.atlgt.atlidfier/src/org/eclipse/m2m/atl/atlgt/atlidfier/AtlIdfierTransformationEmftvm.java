@@ -1,8 +1,5 @@
 package org.eclipse.m2m.atl.atlgt.atlidfier;
 
-import java.io.IOException;
-import java.util.Collections;
-
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -14,6 +11,9 @@ import org.eclipse.m2m.atl.emftvm.Model;
 import org.eclipse.m2m.atl.emftvm.util.DefaultModuleResolver;
 import org.eclipse.m2m.atl.emftvm.util.ModuleResolver;
 import org.eclipse.m2m.atl.emftvm.util.TimingData;
+
+import java.io.IOException;
+import java.util.Collections;
 
 /**
  * A {@link AtlIdfierTransformation} that is executed on a 'EMFTVM' virtual machine.
@@ -45,7 +45,7 @@ public class AtlIdfierTransformationEmftvm implements AtlIdfierTransformation {
         Model inOutModel = EmftvmFactory.eINSTANCE.createModel();
         inOutModel.setResource(resourceSet.getResource(module, true));
         env.registerInOutModel("IN", inOutModel);
-        
+
         // Run transformation
 
         ModuleResolver moduleResolver = new DefaultModuleResolver(resourcesDirectory.toString() + "/", resourceSet);
@@ -54,7 +54,7 @@ public class AtlIdfierTransformationEmftvm implements AtlIdfierTransformation {
         td.finishLoading();
         env.run(td);
         td.finish();
-        
+
         try {
             inOutModel.getResource().save(Collections.emptyMap());
         }

@@ -76,7 +76,8 @@ public class EmfToKm3TransformationEmftvm implements EmfToKm3Transformation {
 
         try {
             outModel.getResource().save(Collections.emptyMap());
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
         }

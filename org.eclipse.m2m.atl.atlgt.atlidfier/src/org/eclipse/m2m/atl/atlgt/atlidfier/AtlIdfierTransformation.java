@@ -17,7 +17,7 @@ public interface AtlIdfierTransformation {
      * Transforms an ATL {@code module}.
      *
      * @param outputDirectory the directory where to store the resulting models
-     * @param module the ATL module to transform
+     * @param module          the ATL module to transform
      *
      * @return the URI of the created ATL module
      */

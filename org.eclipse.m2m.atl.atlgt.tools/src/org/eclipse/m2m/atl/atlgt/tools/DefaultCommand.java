@@ -30,7 +30,7 @@ public class DefaultCommand implements Command {
     /**
      * Constructs a new {@code DefaultCommand} on the given {@code path} with the specified {@code program}.
      *
-     * @param path the path to the execution of the command
+     * @param path    the path to the execution of the command
      * @param program the program to execute
      */
     protected DefaultCommand(Path path, String program) {
