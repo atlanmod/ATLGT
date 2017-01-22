@@ -30,7 +30,7 @@ rule Class2Table {
 rule SingleValuedAttribute2Column {
   from
     a:ClassDiagram!Attribute
-     (not a.multivalued)
+     (not a.multiValued)
   to
     c:Relational!Column 
      (name<-a.owner.name+'_'+a.name,
