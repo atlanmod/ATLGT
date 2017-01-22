@@ -69,11 +69,11 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
             // TODO Fill args
             Commands.atlGt().atlToUnql().execute(
                     "-atl", URIHelpers.toAbsolutePath(idfiedAtlModule), // hidden/ClassDiagram2Relational.atl
-                    "-uq", URIHelpers.toAbsolutePath(idfiedAtlModule).replace(".atl", ".unql"), // hidden/ClassDiagram2Relational.unql
+                    "-uq", URIHelpers.toAbsolutePath(context.getTempDirectory().appendSegment(idfiedAtlModule.lastSegment().replace(".atl", ".unql"))), // hidden/ClassDiagram2Relational.unql
                     "-ikm3", URIHelpers.toAbsolutePath(context.getTempDirectory().appendSegment(context.getInMetamodel().lastSegment().replace(".ecore", ".km3"))), // hidden/ClassDiagram.km3
-                    "-ipkg", "ClassDiagram", // ClassDiagram
+                    "-ipkg", context.getInMetamodel().lastSegment().replace(".ecore", ""), // ClassDiagram
                     "-okm3", URIHelpers.toAbsolutePath(context.getTempDirectory().appendSegment(context.getOutMetamodel().lastSegment().replace(".ecore", "-relaxed.km3"))), // hidden/Relational-relaxed.km3
-                    "-opkg", "Relational"); // Relational
+                    "-opkg", context.getOutMetamodel().lastSegment().replace(".ecore", "")); // Relational
 
             /*
              * Step C: ???
