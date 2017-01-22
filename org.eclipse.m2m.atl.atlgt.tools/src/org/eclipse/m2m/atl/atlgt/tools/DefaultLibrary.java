@@ -1,4 +1,4 @@
-package org.eclipse.m2m.atl.atlgt.groundtram;
+package org.eclipse.m2m.atl.atlgt.tools;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,11 +12,11 @@ import java.util.List;
 /**
  *
  */
-class DefaultExecutor implements Executor {
+class DefaultLibrary implements Library {
 
     private final Path path;
 
-    DefaultExecutor(Path path) {
+    DefaultLibrary(Path path) {
         this.path = path;
     }
 

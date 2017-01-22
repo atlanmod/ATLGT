@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: GRoundTram
-Bundle-SymbolicName: org.eclipse.m2m.atl.atlgt.groundtram
+Bundle-SymbolicName: org.eclipse.m2m.atl.atlgt.tools
 Bundle-Version: 1.0.0.qualifier
-Bundle-Activator: org.eclipse.m2m.atl.atlgt.groundtram.Activator
+Bundle-Activator: org.eclipse.m2m.atl.atlgt.tools.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
@@ -11,4 +11,4 @@ Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.emf.common,
  org.eclipse.core.runtime,
  org.osgi.framework
-Export-Package: org.eclipse.m2m.atl.atlgt.groundtram
+Export-Package: org.eclipse.m2m.atl.atlgt.tools

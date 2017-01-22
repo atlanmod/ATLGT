@@ -1,4 +1,4 @@
-package org.eclipse.m2m.atl.atlgt.groundtram;
+package org.eclipse.m2m.atl.atlgt.tools;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
@@ -16,18 +16,18 @@ import java.util.Map;
 /**
  *
  */
-public class Executors {
+public class Libraries {
 
-    private Executors() {
+    private Libraries() {
         throw new IllegalStateException("This class should not be initialized");
     }
 
-    public static Executor atlGt() {
-        return new DefaultExecutor(resolve("ATL-GT"));
+    public static Library atlGt() {
+        return new DefaultLibrary(resolve("ATL-GT"));
     }
 
-    public static Executor gRoundTram() {
-        return new DefaultExecutor(resolve("ground_tram-0.9.5"));
+    public static Library gRoundTram() {
+        return new DefaultLibrary(resolve("ground_tram-0.9.5"));
     }
 
     private static Path resolve(String name) {
