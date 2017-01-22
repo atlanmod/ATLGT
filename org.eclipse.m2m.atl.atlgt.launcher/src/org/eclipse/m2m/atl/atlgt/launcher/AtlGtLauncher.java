@@ -82,36 +82,36 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
             // C.1 XMI2DOT (we choose the first package name but we support only one package)
             // TODO Fill args
             Commands.atlGt().xmiToDot().execute(
-                    "-xmi", "", // ClassDiagram/Sample-ClassDiagram.xmi
-                    "-dot", "", // hidden/Sample-ClassDiagram.dot
-                    "-km3", "", // hidden/ClassDiagram.km3
-                    "-pkg", "");// ClassDiagram
+                    "-xmi", URIHelpers.toAbsolutePath(context.getInModel()), // ClassDiagram/Sample-ClassDiagram.xmi
+                    "-dot", URIHelpers.toAbsolutePath(context.getTempDirectory().appendSegment(context.getInModel().lastSegment().replace(".xmi", ".dot"))), // hidden/Sample-ClassDiagram.dot
+                    "-km3", URIHelpers.toAbsolutePath(context.getTempDirectory().appendSegment(context.getInMetamodel().lastSegment().replace(".ecore", ".km3"))), // hidden/ClassDiagram.km3
+                    "-pkg", MetamodelHelpers.firstPackage(context.getInMetamodel()));// ClassDiagram
 
             // C.2 Forward UnCAL
             // TODO Fill args
             Commands.gRoundTram().fwdUncal().execute(
                     "-ge", "-sb", "-cl", "-zn", "-fi", "-np", "-sa", "-t", "-rw", "-as",
-                    " -db", "", // hidden/Sample-ClassDiagram.dot
-                    " -uq", "", // hidden/ClassDiagram2Relational.unql
-                    " -dot", "",// hidden/ClassDiagram2Relational-target.dot
-                    " -xg", "", // hidden/ClassDiagram2Relational.xg
-                    " -ei", "");// hidden/ClassDiagram2Relational.ei
+                    "-db", URIHelpers.toAbsolutePath(context.getTempDirectory().appendSegment(context.getInModel().lastSegment().replace(".xmi", ".dot"))), // hidden/Sample-ClassDiagram.dot
+                    "-uq", URIHelpers.toAbsolutePath(context.getTempDirectory().appendSegment(idfiedAtlModule.lastSegment().replace(".atl", ".unql"))), // hidden/ClassDiagram2Relational.unql
+                    "-dot", URIHelpers.toAbsolutePath(context.getTempDirectory().appendSegment(idfiedAtlModule.lastSegment().replace(".atl", "-target.dot"))), // hidden/ClassDiagram2Relational-target.dot
+                    "-xg", URIHelpers.toAbsolutePath(context.getTempDirectory().appendSegment(idfiedAtlModule.lastSegment().replace(".atl", ".xg"))), // hidden/ClassDiagram2Relational.xg
+                    "-ei", URIHelpers.toAbsolutePath(context.getTempDirectory().appendSegment(idfiedAtlModule.lastSegment().replace(".atl", ".ei")))); // hidden/ClassDiagram2Relational.ei
 
             // C.2.1 Normalize (up-to isomorphism)
             // TODO Fill args
             Commands.gRoundTram().bxContract().execute(
                     "-batch",
-                    "-src", "", // hidden/ClassDiagram2Relational-target.dot
-                    "-dst", "");// hidden/ClassDiagram2Relational-target-normal.dot
+                    "-src", URIHelpers.toAbsolutePath(context.getTempDirectory().appendSegment(idfiedAtlModule.lastSegment().replace(".atl", "-target.dot"))), // hidden/ClassDiagram2Relational-target.dot
+                    "-dst", URIHelpers.toAbsolutePath(context.getTempDirectory().appendSegment(idfiedAtlModule.lastSegment().replace(".atl", "-target-normal.dot")))); // hidden/ClassDiagram2Relational-target-normal.dot
 
             // C.2.2 DOT2XMI
             // TODO Fill args
             Commands.atlGt().dotToXmi().execute(
-                    "-dot", "", // hidden/ClassDiagram2Relational-target-normal.dot
-                    "-xmi", "", // hidden/ClassDiagram2Relational-target-normal.xmi
-                    "-km3", "", // hidden/Relational-relaxed.km3
-                    "-pkg", "");// Relational
-            
+                    "-dot", URIHelpers.toAbsolutePath(context.getTempDirectory().appendSegment(idfiedAtlModule.lastSegment().replace(".atl", "-target-normal.dot"))), // hidden/ClassDiagram2Relational-target-normal.dot
+                    "-xmi", URIHelpers.toAbsolutePath(context.getTempDirectory().appendSegment(idfiedAtlModule.lastSegment().replace(".atl", "-target-normal.xmi"))), // hidden/ClassDiagram2Relational-target-normal.xmi
+                    "-km3", URIHelpers.toAbsolutePath(context.getTempDirectory().appendSegment(context.getOutMetamodel().lastSegment().replace(".ecore", "-relaxed.km3"))), // hidden/Relational-relaxed.km3
+                    "-pkg", MetamodelHelpers.firstPackage(context.getOutMetamodel())); // Relational
+
             // C.3 Execution of ATL with IDs
             // TODO
 
