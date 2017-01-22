@@ -9,6 +9,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * A default {@link Command} that executes a program using {@link ProcessBuilder}s and {@link Process}s.
@@ -49,12 +50,12 @@ public class DefaultCommand implements Command {
         pb.redirectErrorStream(true);
         pb.redirectOutput();
 
+        System.out.println("Executing: " + command.stream().collect(Collectors.joining(" ")));
+
         Process process = pb.start();
         try {
             int result = process.waitFor();
-
             printStream(process.getInputStream(), System.out);
-
             return result;
         }
         catch (InterruptedException e) {
@@ -75,7 +76,7 @@ public class DefaultCommand implements Command {
         try (BufferedReader input = new BufferedReader(new InputStreamReader(inputStream))) {
             String line;
             while ((line = input.readLine()) != null) {
-                printStream.println(line);
+                printStream.println("    > " + line);
             }
         }
     }
