@@ -83,10 +83,10 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
             // C.1 XMI2DOT (we choose the first package name but we support only one package)
             // TODO Fill args
             Commands.atlGt().xmiToDot().execute(
-                    "-xmi", "",
-                    "-dot", "",
-                    "-km3", "",
-                    "-pkg", "");
+                    "-xmi", "", // ClassDiagram/Sample-ClassDiagram.xmi
+                    "-dot", "", // hidden/Sample-ClassDiagram.dot
+                    "-km3", "", // hidden/ClassDiagram.km3
+                    "-pkg", "");// ClassDiagram
 
             // C.2 Forward UnCAL
             // TODO Fill args
