@@ -8,6 +8,7 @@ type config = {
     mutable dot_file : string ; (* input DOT file *)
     mutable km3_file : string ; (* input KM3 file *)
     mutable pkg_name : string ; (* package name in KM3 file *)
+    mutable uri      : string ; (* URI for XMI header *)
     mutable xmi_file : string ; (* output XMI file *)
     mutable dgm_file : string ; (* output DOT file (diagram) *)
     mutable vv_level  : int   ; (* verbosity level *)
@@ -16,6 +17,7 @@ type config = {
 let cf = {  dot_file = "";
 	    km3_file = "";
 	    pkg_name = "";
+	    uri      = "";
 	    xmi_file = "";
 	    dgm_file = "";
 	    vv_level  = 0;
@@ -27,6 +29,7 @@ let speclist =
      ("-dot",  Arg.String (fun s->cf.dot_file  <-s),   " source DOT file");
      ("-km3",  Arg.String (fun s->cf.km3_file  <-s),   " input KM3 file");
      ("-pkg",  Arg.String (fun s->cf.pkg_name  <-s),   " package name in KM3 file");
+     ("-uri",  Arg.String (fun s->cf.uri       <-s),   " URI for XMI header");
      ("-xmi",  Arg.String (fun s->cf.xmi_file  <-s),   " output XMI file");
      ("-dgm",  Arg.String (fun s->cf.dgm_file  <-s),   " output DOT file (diagram)");
      ("-vv",   Arg.Unit   (fun ()->cf.vv_level <- cf.vv_level + 1)," verbosity level");
@@ -35,7 +38,7 @@ let speclist =
 let speclist = add_version_spec speclist
 
 let usage_msg = 
-  "Usage: "^Sys.executable_name^" -dot input.dot -km3 input.km3 -pkg pkg_name \
+  "Usage: "^Sys.executable_name^" -dot input.dot -km3 input.km3 -pkg pkg_name [-uri uri] \
    [-xmi output.xmi|-dgm output.dot]  [-vv]"
 
 let read_args () =
@@ -56,7 +59,8 @@ let _ =
   else begin
     let _ = if cf.vv_level > 0 then Km3util.km3util_verbose := true in
     if cf.xmi_file <> "" then
-       dot2xmi cf.dot_file cf.km3_file cf.pkg_name cf.xmi_file;
+       let uri_option = if cf.uri="" then None else Some cf.uri in
+       dot2xmi ~uri:uri_option cf.dot_file cf.km3_file cf.pkg_name cf.xmi_file;
     if cf.dgm_file <> "" then 
       dot2dot_diagram cf.dot_file cf.km3_file cf.pkg_name cf.dgm_file;
     end

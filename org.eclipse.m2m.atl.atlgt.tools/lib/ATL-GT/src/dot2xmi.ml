@@ -61,7 +61,7 @@ let pp_vtx2xmi_element_Map = VMap.pp_t "" pp_vtx pp_xmi_element
 (* top-level only graph test  *)
 
 (* generate xmi file *)
-let g2xmi (g:graph) (pname:name) (mm:metamodel) =
+let g2xmi ?(uri=None) (g:graph) (pname:name) (mm:metamodel) =
   let (_,mapV,_) = clean_id_aux g in
   (* let vtx2id vtx = string_of pr_vtx vtx in *)
   let (root,m) = g2vtx2xmi_element_Map g pname mm in
@@ -124,18 +124,22 @@ let g2xmi (g:graph) (pname:name) (mm:metamodel) =
     let xmi_element = (pname ^":" ^name,attrmap,refmap,childmap) in
     (xmi_element2xml v xmi_element)::xs
   ) top_vs [] in
+  let namespace_uri = match uri with 
+    Some uri -> uri
+  | None     -> pname in
+  (* Namespace prefix may not be equal to the name of the package. *)
   Xml.Element ("xmi:XMI",[("xmi:version", "2.0"); ("xmlns:xmi", "http://www.omg.org/XMI");
 			  ("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance"); 
-			  ("xmlns:" ^ pname, pname)],
+			  ("xmlns:" ^ pname, namespace_uri)],
 	       top_children)
 
 let parseKm3_file = Parse.parse_file ~parse:ParseKm3.entry ~lex:LexKm3.token 
 
-let dot2xmi (dot_file:string) (km3_file:string) (pname:name) (xmi_file:string) =
+let dot2xmi  ?uri (dot_file:string) (km3_file:string) (pname:name) (xmi_file:string) =
   let dot = parseDot_file dot_file in
   let km3 = parseKm3_file km3_file in
   let g = dot2g dot in
-  let xmi = g2xmi g pname km3 in
+  let xmi = g2xmi g pname km3 ?uri in
   let oc = open_out xmi_file in
   let fmt = Format.formatter_of_out_channel oc in
   let xmldecl="<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>" in
