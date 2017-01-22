@@ -2,14 +2,22 @@ package org.eclipse.m2m.atl.atlgt.ecore2km3;
 
 import org.eclipse.emf.common.util.URI;
 
+/**
+ * A ATL transformation
+ */
 @FunctionalInterface
 public interface EmfToKm3Transformation {
 
     /**
-     * Transforms an Ecore model to a KM3 model.
+     * The ATL module.
+     */
+    String MODULE = "EMF2KM3";
+
+    /**
+     * Transforms an Ecore {@code metamodel} to a KM3 metamodel.
      *
      * @param outputDirectory the directory where to store the resulting models
-     * @param metamodel the metamodel to transform
+     * @param metamodel the Ecore metamodel to transform
      *
      * @return the URI of the created KM3 model
      *

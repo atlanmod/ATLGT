@@ -17,11 +17,12 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.Objects;
 
+/**
+ * A {@link EmfToKm3Transformation} that is executed on a 'EMFTVM' virtual machine.
+ */
 public class EmfToKm3TransformationEmftvm implements EmfToKm3Transformation {
 
     private static final String BUNDLE_SYMBOLIC_NAME = "org.eclipse.m2m.atl.atlgt.ecore2km3";
-
-    private static final String MODULE_NAME = "EMF2KM3";
 
     private static final EmftvmFactory FACTORY = EmftvmFactory.eINSTANCE;
 
@@ -68,7 +69,7 @@ public class EmfToKm3TransformationEmftvm implements EmfToKm3Transformation {
 
         ModuleResolver moduleResolver = new DefaultModuleResolver(resourcesDirectory.toString() + "/", resourceSet);
         TimingData td = new TimingData();
-        env.loadModule(moduleResolver, MODULE_NAME);
+        env.loadModule(moduleResolver, MODULE);
         td.finishLoading();
         env.run(td);
         td.finish();

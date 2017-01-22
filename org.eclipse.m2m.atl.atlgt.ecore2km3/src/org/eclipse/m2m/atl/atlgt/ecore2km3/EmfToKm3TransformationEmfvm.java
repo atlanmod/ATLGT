@@ -20,6 +20,8 @@ import java.util.Collections;
 import java.util.Objects;
 
 /**
+ * A {@link EmfToKm3Transformation} that is executed on a 'EMFTVM' virtual machine.
+ *
  * @deprecated use {@link EmfToKm3TransformationEmftvm} instead.
  */
 @Deprecated
