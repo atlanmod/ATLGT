@@ -114,6 +114,7 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
                     "-pkg", "");
             
             // C.3 Execution of ATL with IDs
+            // TODO
 
             System.out.println("ATL-GT: Successfully executed");
             System.out.println(context.getTempDirectory());
