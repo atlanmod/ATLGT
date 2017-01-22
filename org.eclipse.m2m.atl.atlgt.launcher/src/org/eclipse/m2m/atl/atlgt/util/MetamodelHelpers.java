@@ -109,6 +109,20 @@ public final class MetamodelHelpers {
         return outputFile;
     }
 
+    public static String firstPackage(URI metamodel) {
+        String packageName;
+
+        EObject eObject = getResourceFrom(metamodel).getContents().get(0);
+        if (EPackage.class.isInstance(eObject)) {
+            EPackage ePackage = (EPackage) eObject;
+            packageName = ePackage.getName();
+        } else {
+            throw new IllegalArgumentException("The first element is not an EPackage");
+        }
+
+        return packageName;
+    }
+
     private static Resource getResourceFrom(URI uri) {
         return newResourceSet().getResource(uri, true);
     }

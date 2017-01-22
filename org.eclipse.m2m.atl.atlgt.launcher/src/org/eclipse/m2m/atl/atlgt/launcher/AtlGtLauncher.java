@@ -67,14 +67,13 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
 
             // B.2 ATL2UNQL
             // TODO Improve URIs resolution
-            // TODO '-ipkg' and '-opkg' expect a package name (which can be different from filename)
             Commands.atlGt().atlToUnql().execute(
                     "-atl", URIHelpers.toAbsolutePath(idfiedAtlModule), // hidden/ClassDiagram2Relational.atl
                     "-uq", URIHelpers.toAbsolutePath(context.getTempDirectory().appendSegment(idfiedAtlModule.lastSegment().replace(".atl", ".unql"))), // hidden/ClassDiagram2Relational.unql
                     "-ikm3", URIHelpers.toAbsolutePath(context.getTempDirectory().appendSegment(context.getInMetamodel().lastSegment().replace(".ecore", ".km3"))), // hidden/ClassDiagram.km3
-                    "-ipkg", context.getInMetamodel().lastSegment().replace(".ecore", ""), // ClassDiagram
+                    "-ipkg", MetamodelHelpers.firstPackage(context.getInMetamodel()), // ClassDiagram
                     "-okm3", URIHelpers.toAbsolutePath(context.getTempDirectory().appendSegment(context.getOutMetamodel().lastSegment().replace(".ecore", "-relaxed.km3"))), // hidden/Relational-relaxed.km3
-                    "-opkg", context.getOutMetamodel().lastSegment().replace(".ecore", "")); // Relational
+                    "-opkg", MetamodelHelpers.firstPackage(context.getOutMetamodel())); // Relational
 
             /*
              * Step C: Forward transformation
