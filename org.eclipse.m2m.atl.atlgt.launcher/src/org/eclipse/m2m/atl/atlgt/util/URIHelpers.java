@@ -38,26 +38,33 @@ public final class URIHelpers {
      * @param source the URI to copy
      * @param target the URI of the copy
      *
-     * @throws IOException if an I/O error occurs
+     * @return the {@code target} URI
      */
-    public static void copy(URI source, URI target) throws IOException {
-        URIConverter uriConverter = new ExtensibleURIConverterImpl();
-        uriConverter.createInputStream(source);
-        uriConverter.createOutputStream(target);
+    public static URI copy(URI source, URI target) {
+        try {
+            URIConverter uriConverter = new ExtensibleURIConverterImpl();
+            uriConverter.createInputStream(source);
+            uriConverter.createOutputStream(target);
 
-        try (InputStream inputStream = uriConverter.createInputStream(source); OutputStream outputStream = uriConverter.createOutputStream(target)) {
-            try (ReadableByteChannel inputChannel = Channels.newChannel(inputStream); WritableByteChannel outputChannel = Channels.newChannel(outputStream)) {
-                final ByteBuffer buffer = ByteBuffer.allocateDirect(16 * 1024);
-                while (inputChannel.read(buffer) != -1) {
+            try (InputStream inputStream = uriConverter.createInputStream(source); OutputStream outputStream = uriConverter.createOutputStream(target)) {
+                try (ReadableByteChannel inputChannel = Channels.newChannel(inputStream); WritableByteChannel outputChannel = Channels.newChannel(outputStream)) {
+                    final ByteBuffer buffer = ByteBuffer.allocateDirect(16 * 1024);
+                    while (inputChannel.read(buffer) != -1) {
+                        buffer.flip();
+                        outputChannel.write(buffer);
+                        buffer.compact();
+                    }
                     buffer.flip();
-                    outputChannel.write(buffer);
-                    buffer.compact();
-                }
-                buffer.flip();
-                while (buffer.hasRemaining()) {
-                    outputChannel.write(buffer);
+                    while (buffer.hasRemaining()) {
+                        outputChannel.write(buffer);
+                    }
                 }
             }
+            return target;
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 }

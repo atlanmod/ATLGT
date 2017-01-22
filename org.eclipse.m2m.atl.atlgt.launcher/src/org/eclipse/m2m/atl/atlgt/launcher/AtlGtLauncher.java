@@ -30,19 +30,24 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
             // Loads the current context
             context = AtlGtContext.from(launchConfiguration);
 
+            // Copy the original metamodels to the temporary directory
+            Iterable<URI> metamodels = StreamSupport.stream(context.getMetamodels().spliterator(), false)
+                    .peek(uri -> URIHelpers.copy(uri, context.getTempDirectory().appendSegment(uri.lastSegment())))
+                    .collect(Collectors.toList());
+
             // Register all metamodels
-            context.getMetamodels().forEach(MetamodelHelpers::registerPackage);
+            metamodels.forEach(MetamodelHelpers::registerPackage);
 
             /*
              * Step A: Metamodel processing
              */
 
             // A.1 Ecore to KM3
-            transformMetamodelsToKm3(context.getMetamodels());
+            transformMetamodelsToKm3(metamodels);
 
             // A.2 Ecore Relaxation
             List<URI> relaxedMetamodels = new ArrayList<>();
-            for (URI metamodel : context.getMetamodels()) {
+            for (URI metamodel :metamodels) {
                 Iterable<EPackage> packages = MetamodelHelpers.readEcore(metamodel);
                 URI relaxedMetamodel = MetamodelHelpers.relax(packages, context.getTempDirectory(), metamodel);
                 relaxedMetamodels.add(relaxedMetamodel);
