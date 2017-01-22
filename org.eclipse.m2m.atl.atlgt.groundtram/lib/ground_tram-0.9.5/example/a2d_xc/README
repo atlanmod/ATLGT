@@ -1,0 +1,8 @@
+This example shows how an insertion on the view
+can be correctly reflected to the source graph
+based on the unversal reverse computation.
+
+One may test this function by executing the 
+following command:
+
+> make

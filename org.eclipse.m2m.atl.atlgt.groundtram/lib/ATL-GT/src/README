@@ -1,0 +1,75 @@
+This directory includes OCaml source of commands 
+built on top of GRoundTram distribution.
+GRoundTram (0.9.5 release candidate) source has been downloaded by
+
+ $ pushd ../..
+ $ wget -nd http://www.biglab.org/src/ground_tram-0.9.5-rc.tgz
+ $ gzip -cd ground_tram-0.9.5-rc.tgz | tar xvf -
+ $ popd
+
+We also enclose XML-Light whose source has been downloaded and unpacked by
+ $ wget -nd http://tech.motion-twin.com/zip/xml-light-2.2.zip
+ $ unzip xml-light-2.2.zip
+
+* PREREQUISITES
+  Same as those for GRoundTram. See ../../ground_tram-0.9.5/INSTALL.
+  MONA is only necessary for static typechecking (chkuncal) of transformations.
+
+* INSTALL
+
+ 1. Make GRoundTram commands and libraries
+
+   $ pushd ../../ground_tram-0.9.5
+   $ ./configure
+   $ make
+   $ popd
+
+ 2. Make XML-Light libraries
+
+   $ pushd xml-light
+   $ make opt
+   $ popd
+
+   These are necessary only once.
+
+ 3. Make ATL-GRoundTram integration commands
+
+   $ make
+
+   The following programs will be produced:
+
+  - atl2unql  (ATL to UnQL translator)
+  - xmi2dot_generic_command (XMI to DOT converter)
+  - dot2xmi_command (DOT to XMI converter)
+
+  The following commands are not used
+  - fixdot
+  - dot2dgm_command (object diagram visualizer for DOT file encoding models)
+
+ 4. Stand-alone test a sample (Optional)
+ 
+ 4.1 Forward transformation
+
+  $ make Makefile.test fwd
+  
+ 4.2 Edit target XMI file with any text editor
+ 
+  $ vi ClassDiagram2Relational-target.xmi
+  
+  Note that only in-place update on singleton of primitive data type attributes
+  are currently supported for demonstration.
+
+ 4.3 Backward transformation
+
+  $ make Makefile.test bwd
+
+  New source XMI file Sample-ClassDiagram_UPD.xmi is generated as the result of 
+  backward transformation.
+
+* Acknowledgment
+
+ We thank Dr. Isao Sasano for jointly working with an earlier version of 
+ ATL to UnQL and XMI to DOT translater.
+
+
+

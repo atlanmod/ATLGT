@@ -1,0 +1,11 @@
+package annot_out {
+
+  class Out {
+    reference keep [0-*]: In;
+  }
+
+  class In {
+    reference keep [0-*]: In;
+  }
+
+}

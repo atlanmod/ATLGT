@@ -1,0 +1,14 @@
+#load "unix.cma"
+#directory "../../ground_tram-0.9.5/src"
+#load "unql.cma"
+#directory "xml-light"
+#load "xml-light.cma"
+
+#load "str.cma"
+
+#load "lexatl.cmo"
+#load "parseatl.cmo"
+#load "objectGraph.cmo"
+#load "g2objectGraph.cmo"
+#load "dot2xmi.cmo"
+#load "dispdotXMI.cmo"

@@ -1,0 +1,39 @@
+package Class {
+
+	datatype String;
+	datatype Boolean;
+--	datatype Integer;
+
+	abstract class NamedElt {
+		attribute name : String;
+		attribute xmi_id : String;
+	}
+
+	class DataType2 extends NamedElt {
+	}
+
+	class Package extends NamedElt {
+	    reference ownedElement[*] : Classifier;
+        }
+
+
+	abstract class Classifier extends NamedElt {
+		attribute name : String;                       -- it should have been inherited
+	}
+
+	class DataType extends Classifier {
+	}
+
+	class Class extends Classifier {
+		reference super[*] : Class;			-- -: no sub reference
+		reference attr[*] ordered container : Attribute;
+--		attribute isAbstract : Boolean;
+	}
+
+	class Attribute extends NamedElt {
+		attribute multiValued : Boolean;
+		reference type : Classifier;
+		reference owner : Class oppositeOf attr;	-- +: opposite of attr
+	}
+}
+

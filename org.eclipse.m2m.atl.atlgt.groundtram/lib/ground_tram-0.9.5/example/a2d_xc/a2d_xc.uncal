@@ -1,0 +1,5 @@
+(*	$Id: a2d_xc.uncal,v 1.1 2010/04/29 06:37:55 hu Exp $	*)
+rec(\ ($l,$g).
+  if $l = a then {d: &}
+  else if $l = c then & 
+  else                {$l: &})($db)

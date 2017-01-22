@@ -1,0 +1,19 @@
+package Order {
+
+  datatype String;
+  datatype Int;
+
+  class Order {
+    reference no: Int;
+    reference date: String;
+    reference customer_name: String;
+    reference add[0-*]: Address;
+  }  
+
+ class Address {
+    reference type: String;
+    reference code: String;
+    reference info[0-*]: String;
+  }
+
+} 

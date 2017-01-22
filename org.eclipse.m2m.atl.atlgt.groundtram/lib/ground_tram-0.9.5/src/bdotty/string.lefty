@@ -1,0 +1,68 @@
+# 	$Id: string.lefty,v 1.1 2009/05/24 14:27:11 hidaka Exp $	
+load('kmp.lefty');
+max = function(i,j) { if (i<=j) return j; else return i; };
+min = function(i,j) { if (i<=j) return i; else return j; };
+
+substr_n = function(s,i,n) {
+    local t,rs,j,endpos;
+    endpos = min(i+n,strlen(s)-1);
+    #echo("endpos=",endpos);
+    rs = "";
+    if (i < 0) { 
+	echo(concat('substr_n: ',"negative start position")); 
+	return;
+    }
+    t = split(s,"");
+    for (j=i;j<=endpos;j=j+1) {
+	rs = concat(rs,t[j]);
+    }
+    return rs;
+};
+substr = function (s,i) { return substr_n(s,i,strlen(s)-1); };
+
+split_mc = function(str,delim) {
+    local pos,len,T,index, s;
+    dlen = strlen(delim);
+    len = strlen(str);
+    T = [];
+    index = 0;
+    pos = 0;
+    s = str;
+    # echo("len=",len);
+    while ((pos = kmp_search(s,delim)) < len) {
+	#echo("pos=",pos);
+	T[index] = substr_n(s,0,pos-1);
+	s = substr(s,pos+dlen);
+	len = strlen(s);
+	#echo("len=",len);
+	#echo("s=",s);
+	index = index + 1;
+    }
+    T[index] = s;
+    return T;
+};
+
+unsplit_mc = function (array,delim) {
+    local s, i, len; 
+    s = "";
+    len = tablesize(array);
+    if (len == 0) return s; else s = array[0];
+    for (i=1;i<len;i=i+1) 
+	s = concat(s,delim,array[i]);
+    return s;
+};
+
+is_whitespace = function (s) {
+    if ((typeof(s) == "string") & (tablesize(split(s," "))==0))
+	return 1;
+    else 
+	return 0;
+}
+
+###################### TEST CODE #########################
+# ss = "{&z1; &z2}\n3\n{&4}";
+# ss = "{&zn1; &n2}\n3\n{&n4}";
+# ss = "\N\n{&}";
+#echo(unsplit_mc([0='&x1';1='&n2';],"\n"));
+#echo(unsplit_mc([],"\n"));
+

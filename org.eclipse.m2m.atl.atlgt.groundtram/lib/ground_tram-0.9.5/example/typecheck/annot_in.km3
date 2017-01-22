@@ -1,0 +1,7 @@
+package annot_in {
+
+  class In {
+    reference keep [0-*]: In;
+  }
+
+}
