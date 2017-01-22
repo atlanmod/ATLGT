@@ -5,18 +5,23 @@ import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.emf.common.util.URI;
 
 import java.util.Collections;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
  * A class representing an execution context that manages and pre-processes the parameters from a
  * {@link ILaunchConfiguration}.
  */
+// TODO Improve IN/OUT metamodels detection
 public class AtlGtContext {
 
-    private static final String OUTPUT_DIRECTORY_NAME = "hidden";
+    private static final String TEMP_DIRECTORY_NAME = "hidden";
 
     private final URI pluginUri;
     private final String moduleName;
+
+    private final URI inMetamodel;
+    private final URI outMetamodel;
 
     private final Iterable<URI> metamodels;
     private final Iterable<URI> inModels;
@@ -26,11 +31,13 @@ public class AtlGtContext {
     private final boolean forward;
     private final boolean backward;
 
-    private AtlGtContext(URI pluginUri, String moduleName, Iterable<URI> metamodels, Iterable<URI> inModels, Iterable<URI> inOutModels, Iterable<URI> outModels, boolean forward, boolean backward) {
+    private AtlGtContext(URI pluginUri, String moduleName, Map<String, URI> metamodels, Iterable<URI> inModels, Iterable<URI> inOutModels, Iterable<URI> outModels, boolean forward, boolean backward) {
         this.pluginUri = pluginUri;
         this.moduleName = moduleName;
 
-        this.metamodels = metamodels;
+        this.inMetamodel = metamodels.get(Keys.METAMODEL_IN);
+        this.outMetamodel = metamodels.get(Keys.METAMODEL_OUT);
+        this.metamodels = metamodels.values();
         this.inModels = inModels;
         this.inOutModels = inOutModels;
 
@@ -45,10 +52,9 @@ public class AtlGtContext {
         String modulePath = launchConfiguration.getAttribute(Keys.MODULE_PATH, "");
         URI pluginUri = URI.createPlatformResourceURI(modulePath.substring(0, modulePath.lastIndexOf("/")), false);
 
-        Iterable<URI> metamodels = launchConfiguration.getAttribute(Keys.METAMODELS, Collections.emptyMap()).values()
+        Map<String, URI> metamodels = launchConfiguration.getAttribute(Keys.METAMODELS, Collections.emptyMap()).entrySet()
                 .stream()
-                .map(URI::createURI)
-                .collect(Collectors.toList());
+                .collect(Collectors.toMap(Map.Entry::getKey, p -> URI.createURI(p.getValue())));
 
         Iterable<URI> inModels = launchConfiguration.getAttribute(Keys.INPUT_MODELS, Collections.emptyMap()).values()
                 .stream()
@@ -77,8 +83,8 @@ public class AtlGtContext {
      *
      * @return the URI
      */
-    public URI getOutputDirectory() {
-        return pluginUri.appendSegment(OUTPUT_DIRECTORY_NAME);
+    public URI getTempDirectory() {
+        return pluginUri.appendSegment(TEMP_DIRECTORY_NAME);
     }
 
     /**
@@ -129,6 +135,14 @@ public class AtlGtContext {
         return sb.toString();
     }
 
+    public URI getInMetamodel() {
+        return inMetamodel;
+    }
+
+    public URI getOutMetamodel() {
+        return outMetamodel;
+    }
+
     /**
      * Utility class that contains all the defined keys that can be used in this context.
      */
@@ -142,6 +156,9 @@ public class AtlGtContext {
         private static final String METAMODELS = "Metamodels";
         @SuppressWarnings("unused")
         private static final String METAMODEL_OPTIONS = "Metamodel Options";
+
+        private static final String METAMODEL_IN = "IN";
+        private static final String METAMODEL_OUT = "OUT";
 
         // Input models
         private static final String INPUT_MODELS = "Input Models";

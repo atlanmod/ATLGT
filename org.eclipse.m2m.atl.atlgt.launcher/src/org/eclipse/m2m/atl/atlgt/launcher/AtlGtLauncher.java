@@ -44,36 +44,36 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
             List<URI> relaxedMetamodels = new ArrayList<>();
             for (URI metamodel : context.getMetamodels()) {
                 Iterable<EPackage> packages = MetamodelHelpers.readEcore(metamodel);
-                URI relaxedMetamodel = MetamodelHelpers.relax(packages, context.getOutputDirectory(), metamodel);
+                URI relaxedMetamodel = MetamodelHelpers.relax(packages, context.getTempDirectory(), metamodel);
                 relaxedMetamodels.add(relaxedMetamodel);
             }
 
             // A.3 Relaxed Ecore to Relaxed KM3
             Iterable<URI> km3RelaxedMetamodels = transformMetamodelsToKm3(relaxedMetamodels);
-            
+
             // A.4 KM3 to KM3 with IDs
             // Adding an optional attribute with name __xmiID__ and type String to each class
             // TODO
-            
+
             // A.5 Relaxed KM3 to Relaxed KM3 with IDs
             // TODO
             
             /*
              * Step B: Transformation processing
              */
-            
-			// B.1 ATLIDfier
+
+            // B.1 ATLIDfier
             URI idfiedAtlModule = transformModule(context.getModule());
 
             // B.2 ATL2UNQL
             // TODO Fill args
             Commands.atlGt().atlToUnql().execute(
-                    "-atl", "",		// hidden/ClassDiagram2Relational.atl
-                    "-uq", "",		// hidden/ClassDiagram2Relational.unql
-                    "-ikm3", "",	// hidden/ClassDiagram.km3
-                    "-ipkg", "",	// ClassDiagram
-                    "-okm3", "",	// hidden/Relational-relaxed.km3
-                    "-opkg", "");	// Relational
+                    "-atl", URIHelpers.toAbsolutePath(idfiedAtlModule), // hidden/ClassDiagram2Relational.atl
+                    "-uq", URIHelpers.toAbsolutePath(idfiedAtlModule).replace(".atl", ".unql"), // hidden/ClassDiagram2Relational.unql
+                    "-ikm3", URIHelpers.toAbsolutePath(context.getTempDirectory().appendSegment(context.getInMetamodel().lastSegment().replace(".ecore", ".km3"))), // hidden/ClassDiagram.km3
+                    "-ipkg", "ClassDiagram", // ClassDiagram
+                    "-okm3", URIHelpers.toAbsolutePath(context.getTempDirectory().appendSegment(context.getOutMetamodel().lastSegment().replace(".ecore", "-relaxed.km3"))), // hidden/Relational-relaxed.km3
+                    "-opkg", "Relational"); // Relational
 
             /*
              * Step C: ???
@@ -113,7 +113,7 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
                     "-pkg", "");
 
             System.out.println("ATL-GT: Successfully executed");
-            System.out.println(context.getOutputDirectory());
+            System.out.println(context.getTempDirectory());
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -130,7 +130,7 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
     private Iterable<URI> transformMetamodelsToKm3(Iterable<URI> metamodels) {
         return StreamSupport
                 .stream(metamodels.spliterator(), false)
-                .peek(metamodel -> EmfToKm3TransformationFactory.withEmftvm().transform(context.getOutputDirectory(), metamodel))
+                .peek(metamodel -> EmfToKm3TransformationFactory.withEmftvm().transform(context.getTempDirectory(), metamodel))
                 .collect(Collectors.toList());
     }
 
@@ -142,10 +142,10 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
     private URI transformModule(URI module) throws ATLCoreException, IOException {
         // Create a copy of the atl file
         URI atlModule = module.appendFileExtension("atl");
-        URI idfiedAtlModule = context.getOutputDirectory().appendSegment(module.appendFileExtension("atl").lastSegment());
+        URI idfiedAtlModule = context.getTempDirectory().appendSegment(module.appendFileExtension("atl").lastSegment());
         URIHelpers.copy(atlModule, idfiedAtlModule);
 
         // Run in-place transformation
-        return AtlIdfierTransformationFactory.withEmftvm().transform(context.getOutputDirectory(), idfiedAtlModule);
+        return AtlIdfierTransformationFactory.withEmftvm().transform(context.getTempDirectory(), idfiedAtlModule);
     }
 }

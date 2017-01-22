@@ -12,7 +12,6 @@ import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.WritableByteChannel;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 
 /**
@@ -24,13 +23,13 @@ public final class URIHelpers {
         throw new IllegalStateException("This class should not be initialized");
     }
 
-    public static Path toAbsolutePath(URI uri) {
+    public static String toAbsolutePath(URI uri) {
         return Paths.get(
                 ResourcesPlugin.getWorkspace()
                         .getRoot()
                         .getFile(new org.eclipse.core.runtime.Path(uri.toPlatformString(true)))
                         .getRawLocation()
-                        .toOSString());
+                        .toOSString()).toString();
     }
 
     /**
