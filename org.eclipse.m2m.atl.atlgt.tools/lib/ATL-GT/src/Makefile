@@ -10,6 +10,10 @@ XLCMA  = $(XLDIR)/xml-light.cma
 GT_TARGETS = all.$(GTDIR) clean.$(GTDIR)
 XL_TARGETS = all.$(XLDIR)   opt.$(XLDIR)
 
+INSTALL = /usr/bin/install
+PREFIX = /usr/local
+BINDIR = $(PREFIX)/bin
+
 # .PHONY: all $(GT_TARGETS) 
 
 # .PHONY: clean all
@@ -173,3 +177,13 @@ clean:
 
 cleanexec:
 	rm -rf $(PROGRAMS) *.byte  *.exe
+
+
+install: $(PROGRAMS) install-mkdir
+	@PROGRAMS="$(PROGRAMS)"; \
+	for p in $$PROGRAMS; do \
+		$(INSTALL) -v $$p $(BINDIR) || break; \
+	done
+
+install-mkdir:
+	mkdir -p $(PREFIX)/bin
