@@ -12,3 +12,9 @@ Require-Bundle: org.eclipse.emf.ecore,
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.m2m.atl.atlgt.atlidfier
+Import-Package: org.osgi.framework,
+ org.eclipse.emf.common,
+ org.eclipse.emf.ecore,
+ org.eclipse.m2m.atl.core,
+ org.eclipse.m2m.atl.common,
+ org.eclipse.m2m.atl.emftvm
