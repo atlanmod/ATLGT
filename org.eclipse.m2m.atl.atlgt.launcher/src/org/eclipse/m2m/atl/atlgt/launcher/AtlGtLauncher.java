@@ -24,6 +24,8 @@ import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.WritableByteChannel;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 public class AtlGtLauncher implements ILaunchConfigurationDelegate {
 
@@ -32,17 +34,49 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
     @Override
     public void launch(ILaunchConfiguration launchConfiguration, String mode, ILaunch launch, IProgressMonitor monitor) throws CoreException {
         try {
+            // Loads the current context
             context = AtlGtContext.from(launchConfiguration);
-            System.out.println(context);
 
             // Register all metamodels
             context.getMetamodels().forEach(MetamodelHelpers::registerPackage);
 
-            // Step A: Metamodel processing
-            processMetamodels();
+            /*
+             * Step A: Metamodel processing
+             */
 
-            // Step B: Transformation processing
-            processTransformation();
+            // A.1 Ecore to KM3
+            Iterable<URI> km3Metamodels = transformMetamodelsToKm3(context.getMetamodels());
+
+            // A.2 Ecore Relaxation
+            List<URI> relaxedMetamodels = new ArrayList<>();
+            for (URI metamodel : context.getMetamodels()) {
+                Iterable<EPackage> packages = MetamodelHelpers.readEcore(metamodel);
+                URI relaxedMetamodel = MetamodelHelpers.relax(packages, context.getOutputDirectory(), metamodel);
+                relaxedMetamodels.add(relaxedMetamodel);
+            }
+
+            // A.3 Relaxed Ecore to Relaxed KM3
+            Iterable<URI> km3RelaxedMetamodels = transformMetamodelsToKm3(relaxedMetamodels);
+
+            /*
+             * Step B: Transformation processing
+             */
+
+            URI idfiedAtlModule = transformModule(context.getModule());
+
+            // B.2 ATL2UNQL
+            // TODO Fill args
+            Commands.atlGt().atlToUnql().execute(
+                    "-atl", "",
+                    "-uq", "",
+                    "-ikm3", "",
+                    "-ipkg", "",
+                    "-okm3", "",
+                    "-opkg", "");
+
+            /*
+             * Step C: ???
+             */
 
             // 1. XMI2DOT (we choose the first package name but we support only one package)
             // TODO Fill args
@@ -77,7 +111,8 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
                     "-km3", "",
                     "-pkg", "");
 
-            System.out.println("ATL-GT - Executed!! " + context.getOutputDirectory());
+            System.out.println("ATL-GT: Successfully executed");
+            System.out.println(context.getOutputDirectory());
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -85,53 +120,42 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
     }
 
     /**
-     * Metamodel processing. (Step A)
+     * Transforms Ecore {@code metamodels} to KM3 metamodels.
+     *
+     * @param metamodels the Ecore metamodels to transform
+     *
+     * @return the created KM3 metamodels
      */
-    private void processMetamodels() throws IOException, ATLCoreException {
-        // A.1 Ecore to KM3
-        for (URI metamodel : context.getMetamodels()) {
-            EmfToKm3TransformationFactory.withEmftvm().transform(context.getOutputDirectory(), metamodel);
-        }
-
-        List<URI> relaxedMetamodels = new ArrayList<>();
-
-        // A.2 Ecore Relaxation
-        for (URI metamodel : context.getMetamodels()) {
-            Iterable<EPackage> packages = MetamodelHelpers.readEcore(metamodel);
-            URI relaxedMetamodel = MetamodelHelpers.relax(packages, context.getOutputDirectory(), metamodel);
-            relaxedMetamodels.add(relaxedMetamodel);
-        }
-
-        // A.3 Relaxed Ecore to Relaxed KM3
-        for (URI relaxedMetamodel : relaxedMetamodels) {
-            EmfToKm3TransformationFactory.withEmftvm().transform(context.getOutputDirectory(), relaxedMetamodel);
-        }
+    private Iterable<URI> transformMetamodelsToKm3(Iterable<URI> metamodels) {
+        return StreamSupport
+                .stream(metamodels.spliterator(), false)
+                .peek(metamodel -> EmfToKm3TransformationFactory.withEmftvm().transform(context.getOutputDirectory(), metamodel))
+                .collect(Collectors.toList());
     }
 
     /**
-     * Transformation processing. (Step B)
+     * Adds identifier to the given {@code module}.
+     *
+     * @return the created module, with identifiers
      */
-    private void processTransformation() throws ATLCoreException, IOException {
-        // B.1 ATLIDfier
+    private URI transformModule(URI module) throws ATLCoreException, IOException {
         // Create a copy of the atl file
-        URI sourceUri = context.getModule().appendFileExtension("atl");
-        URI targetUri = context.getOutputDirectory().appendSegment(context.getModule().appendFileExtension("atl").lastSegment());
-        copy(sourceUri, targetUri);
+        URI atlModule = module.appendFileExtension("atl");
+        URI idfiedAtlModule = context.getOutputDirectory().appendSegment(module.appendFileExtension("atl").lastSegment());
+        copy(atlModule, idfiedAtlModule);
 
         // Run in-place transformation
-        AtlIdfierTransformationFactory.withEmftvm().transform(context.getOutputDirectory(), targetUri);
-
-        // B.2 ATL2UNQL
-        // TODO Fill args
-        Commands.atlGt().atlToUnql().execute(
-                "-atl", "",
-                "-uq", "",
-                "-ikm3", "",
-                "-ipkg", "",
-                "-okm3", "",
-                "-opkg", "");
+        return AtlIdfierTransformationFactory.withEmftvm().transform(context.getOutputDirectory(), idfiedAtlModule);
     }
 
+    /**
+     * Copies the content of the {@code source} {@link URI} to the {@code target} {@link URI}.
+     *
+     * @param source the URI to copy
+     * @param target the URI of the copy
+     *
+     * @throws IOException if an I/O error occurs
+     */
     private static void copy(URI source, URI target) throws IOException {
         URIConverter uriConverter = new ExtensibleURIConverterImpl();
         uriConverter.createInputStream(source);
