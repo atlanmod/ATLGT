@@ -1,24 +1,24 @@
 ### Eclipse
-**/.metadata/
-**/bin/
-**/.settings/
+.metadata/
+bin/
+.settings/
 
 # Only root files
-.classpath
-.project
+/.classpath
+/.project
 
 # ATL & Co
-**.asm
-**.emftvm
+*.asm
+*.emftvm
 
 ### IntelliJ
-**/.idea/
-**.iws
-**.iml
-**.eml
+.idea/
+*.iws
+*.iml
+*.eml
 
 ### Generated sources
-**/src-gen/
-**/xtend-gen/
-!**/src-gen/.empty
-!**/xtend-gen/.empty
+*/src-gen/*
+*/xtend-gen/*
+!*/src-gen/.empty
+!*/xtend-gen/.empty
