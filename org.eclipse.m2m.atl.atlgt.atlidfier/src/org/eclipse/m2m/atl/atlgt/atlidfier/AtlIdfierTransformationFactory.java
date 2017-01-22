@@ -5,6 +5,10 @@ package org.eclipse.m2m.atl.atlgt.atlidfier;
  */
 public final class AtlIdfierTransformationFactory {
 
+    private AtlIdfierTransformationFactory() {
+        throw new IllegalStateException("This class should not be initialized");
+    }
+
     /**
      * Creates an {@link AtlIdfierTransformation} that is executed on an 'EMFTVM' virtual machine.
      *

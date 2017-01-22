@@ -20,9 +20,16 @@ import java.util.stream.StreamSupport;
 
 import static java.util.Objects.isNull;
 
-public class MetamodelHelpers {
+/**
+ * Utility methods for working with Ecore metamodels.
+ */
+public final class MetamodelHelpers {
 
     private static final String ECORE = "ecore";
+
+    private MetamodelHelpers() {
+        throw new IllegalStateException("This class should not be initialized");
+    }
 
     /**
      * Registers a metamodel to the {@link EPackage.Registry}.

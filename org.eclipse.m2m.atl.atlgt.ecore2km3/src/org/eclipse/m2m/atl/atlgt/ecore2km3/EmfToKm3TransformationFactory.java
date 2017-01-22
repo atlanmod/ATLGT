@@ -5,6 +5,10 @@ package org.eclipse.m2m.atl.atlgt.ecore2km3;
  */
 public final class EmfToKm3TransformationFactory {
 
+    private EmfToKm3TransformationFactory() {
+        throw new IllegalStateException("This class should not be initialized");
+    }
+
     /**
      * Creates an {@link EmfToKm3Transformation} that is executed on an 'EMFVM' virtual machine.
      *
