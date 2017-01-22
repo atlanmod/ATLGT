@@ -31,7 +31,7 @@ Workflow {
 		language = StandardLanguage {
 			name = "org.eclipse.m2m.km3.xtext.KM3"
 			fileExtensions = "km3"
-			referencedResource = "platform:/resource/org.eclipse.m2m.atl.atlgt.ecore2km3/resources/KM3.genmodel"
+			referencedResource = "platform:/resource/org.eclipse.m2m.km3/models/KM3.genmodel"
 			
 			fragment = ecore2xtext.Ecore2XtextValueConverterServiceFragment2 auto-inject {}
 

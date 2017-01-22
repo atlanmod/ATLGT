@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
-    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipse.m2m.atl.atlgt.ecore2km3/src-gen" modelPluginID="org.eclipse.m2m.atl.atlgt.ecore2km3"
-    modelName="KM3" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
-    importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
-    operationReflection="true" importOrganizing="true">
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipse.m2m.km3/src-gen" editDirectory="/org.eclipse.m2m.km3.edit/src-gen"
+    editorDirectory="/org.eclipse.m2m.km3.editor/src-gen" modelPluginID="org.eclipse.m2m.km3"
+    modelName="KM3" modelPluginClass="" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    testsDirectory="/org.eclipse.m2m.km3.tests/src-gen" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="8.0" copyrightFields="false" operationReflection="true" importOrganizing="true">
   <foreignModel>KM3.ecore</foreignModel>
   <genPackages prefix="Km3" basePackage="org.eclipse.m2m" disposableProviderFactory="true"
       ecorePackage="KM3.ecore#/0">
@@ -56,10 +57,10 @@
     </genClasses>
     <genClasses ecoreClass="KM3.ecore#/0/Package">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KM3.ecore#/0/Package/contents"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference KM3.ecore#/0/Package/metamodel"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference KM3.ecore#/0/Package/metamodel"/>
     </genClasses>
     <genClasses ecoreClass="KM3.ecore#/0/Metamodel">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference KM3.ecore#/0/Metamodel/contents"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KM3.ecore#/0/Metamodel/contents"/>
     </genClasses>
   </genPackages>
   <genPackages prefix="Km3Primitives" basePackage="org.eclipse.m2m.km3" disposableProviderFactory="true"

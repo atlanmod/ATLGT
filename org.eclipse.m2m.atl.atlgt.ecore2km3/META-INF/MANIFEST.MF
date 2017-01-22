@@ -1,29 +1,25 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: %pluginName
+Bundle-Name: Ecore2Km3
 Bundle-SymbolicName: org.eclipse.m2m.atl.atlgt.ecore2km3;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.eclipse.m2m.atl.atlgt.ecore2km3.Activator
-Bundle-Vendor: %providerName
-Bundle-Localization: plugin
+Bundle-Vendor: Atlanmod-Hosei
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .
-Export-Package: org.eclipse.m2m.atl.atlgt.ecore2km3,
- org.eclipse.m2m.km3,
- org.eclipse.m2m.km3.impl,
- org.eclipse.m2m.km3.util,
- org.eclipse.m2m.km3.primitives,
- org.eclipse.m2m.km3.primitives.impl
+Export-Package: org.eclipse.m2m.atl.atlgt.ecore2km3
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
  org.eclipse.m2m.atl.engine.vm,
  org.eclipse.m2m.atl.engine.emfvm,
- org.eclipse.m2m.atl.emftvm
+ org.eclipse.m2m.atl.emftvm,
+ org.eclipse.m2m.km3
 Import-Package: org.osgi.framework,
  org.eclipse.core.runtime,
  org.eclipse.emf.common,
  org.eclipse.emf.ecore,
  org.eclipse.m2m.atl.core,
  org.eclipse.m2m.atl.engine.emfvm,
- org.eclipse.m2m.atl.emftvm
+ org.eclipse.m2m.atl.emftvm,
+ org.eclipse.m2m.km3
