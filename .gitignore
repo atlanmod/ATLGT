@@ -18,7 +18,7 @@
 **.eml
 
 ### Generated sources
-**/src-gen
-**/xtend-gen
+**/src-gen/
+**/xtend-gen/
 !**/src-gen/.empty
 !**/xtend-gen/.empty
