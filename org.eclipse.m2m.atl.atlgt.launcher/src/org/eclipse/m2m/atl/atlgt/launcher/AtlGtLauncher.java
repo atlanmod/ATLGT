@@ -92,11 +92,11 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
             // TODO Fill args
             Commands.gRoundTram().fwdUncal().execute(
                     "-ge", "-sb", "-cl", "-zn", "-fi", "-np", "-sa", "-t", "-rw", "-as",
-                    " -db", "",
-                    " -uq", "",
-                    " -dot", "",
-                    " -xg", "",
-                    " -ei", "");
+                    " -db", "", // hidden/Sample-ClassDiagram.dot
+                    " -uq", "", // hidden/ClassDiagram2Relational.unql
+                    " -dot", "",// hidden/ClassDiagram2Relational-target.dot
+                    " -xg", "", // hidden/ClassDiagram2Relational.xg
+                    " -ei", "");// hidden/ClassDiagram2Relational.ei
 
             // C.2.1 Normalize (up-to isomorphism)
             // TODO Fill args
