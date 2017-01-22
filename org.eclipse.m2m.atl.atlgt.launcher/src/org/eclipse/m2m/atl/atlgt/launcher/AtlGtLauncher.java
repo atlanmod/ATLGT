@@ -91,26 +91,26 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
             // TODO Fill args
             Commands.gRoundTram().fwdUncal().execute(
                     "-ge", "-sb", "-cl", "-zn", "-fi", "-np", "-sa", "-t", "-rw", "-as",
-                    " -db", "",
-                    " -uq", "",
-                    " -dot", "",
-                    " -xg", "",
-                    " -ei", "");
+                    " -db", "", // hidden/Sample-ClassDiagram.dot
+                    " -uq", "", // hidden/ClassDiagram2Relational.unql
+                    " -dot", "",// hidden/ClassDiagram2Relational-target.dot
+                    " -xg", "", // hidden/ClassDiagram2Relational.xg
+                    " -ei", "");// hidden/ClassDiagram2Relational.ei
 
             // C.2.1 Normalize (up-to isomorphism)
             // TODO Fill args
             Commands.gRoundTram().bxContract().execute(
                     "-batch",
-                    "-src", "",
-                    "-dst", "");
+                    "-src", "", // hidden/ClassDiagram2Relational-target.dot
+                    "-dst", "");// hidden/ClassDiagram2Relational-target-normal.dot
 
             // C.2.2 DOT2XMI
             // TODO Fill args
             Commands.atlGt().dotToXmi().execute(
-                    "-dot", "",
-                    "-xmi", "",
-                    "-km3", "",
-                    "-pkg", "");
+                    "-dot", "", // hidden/ClassDiagram2Relational-target-normal.dot
+                    "-xmi", "", // hidden/ClassDiagram2Relational-target-normal.xmi
+                    "-km3", "", // hidden/Relational-relaxed.km3
+                    "-pkg", "");// Relational
             
             // C.3 Execution of ATL with IDs
             // TODO
