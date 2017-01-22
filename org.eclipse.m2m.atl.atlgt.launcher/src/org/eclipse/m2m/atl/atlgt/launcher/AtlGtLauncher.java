@@ -111,7 +111,8 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
                     "-dot", URIs.absolutePath(context.getTempDirectory().appendSegment(URIs.filename(idfiedAtlModule, "-target-normal.dot"))), // hidden/ClassDiagram2Relational-target-normal.dot
                     "-xmi", URIs.absolutePath(context.getTempDirectory().appendSegment(URIs.filename(idfiedAtlModule, "-target-normal.xmi"))), // hidden/ClassDiagram2Relational-target-normal.xmi
                     "-km3", URIs.absolutePath(context.getTempDirectory().appendSegment(URIs.filename(context.getOutMetamodel(), "-relaxed.km3"))), // hidden/Relational-relaxed.km3
-                    "-pkg", Metamodels.firstPackage(context.getOutMetamodel()).getName()); // Relational
+                    "-pkg", Metamodels.firstPackage(context.getOutMetamodel()).getName(),
+                    "-uri", Metamodels.firstPackage(context.getOutMetamodel()).getNsURI()); // Relational
 
             // C.3 Execution of ATL with IDs
             // TODO
