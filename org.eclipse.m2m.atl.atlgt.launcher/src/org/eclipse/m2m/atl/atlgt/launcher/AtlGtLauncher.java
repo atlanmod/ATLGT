@@ -77,10 +77,10 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
                     "-opkg", context.getOutMetamodel().lastSegment().replace(".ecore", "")); // Relational
 
             /*
-             * Step C: ???
+             * Step C: Forward transformation
              */
 
-            // 1. XMI2DOT (we choose the first package name but we support only one package)
+            // C.1 XMI2DOT (we choose the first package name but we support only one package)
             // TODO Fill args
             Commands.atlGt().xmiToDot().execute(
                     "-xmi", "",
@@ -88,7 +88,7 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
                     "-km3", "",
                     "-pkg", "");
 
-            // 2. Forward UnCAL
+            // C.2 Forward UnCAL
             // TODO Fill args
             Commands.gRoundTram().fwdUncal().execute(
                     "-ge", "-sb", "-cl", "-zn", "-fi", "-np", "-sa", "-t", "-rw", "-as",
@@ -98,20 +98,22 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
                     " -xg", "",
                     " -ei", "");
 
-            // 2.1 Normalize (up-to isomorphism)
+            // C.2.1 Normalize (up-to isomorphism)
             // TODO Fill args
             Commands.gRoundTram().bxContract().execute(
                     "-batch",
                     "-src", "",
                     "-dst", "");
 
-            // 2.2 DOT2XMI
+            // C.2.2 DOT2XMI
             // TODO Fill args
             Commands.atlGt().dotToXmi().execute(
                     "-dot", "",
                     "-xmi", "",
                     "-km3", "",
                     "-pkg", "");
+            
+            // C.3 Execution of ATL with IDs
 
             System.out.println("ATL-GT: Successfully executed");
             System.out.println(context.getTempDirectory());
