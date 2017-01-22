@@ -54,18 +54,19 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
             /*
              * Step B: Transformation processing
              */
-
+            
+			// B.1 ATLIDfier
             URI idfiedAtlModule = transformModule(context.getModule());
 
             // B.2 ATL2UNQL
             // TODO Fill args
             Commands.atlGt().atlToUnql().execute(
-                    "-atl", "",
-                    "-uq", "",
-                    "-ikm3", "",
-                    "-ipkg", "",
-                    "-okm3", "",
-                    "-opkg", "");
+                    "-atl", "",		// hidden/ClassDiagram2Relational.atl
+                    "-uq", "",		// hidden/ClassDiagram2Relational.unql
+                    "-ikm3", "",	// hidden/ClassDiagram.km3
+                    "-ipkg", "",	// ClassDiagram
+                    "-okm3", "",	// hidden/Relational-relaxed.km3
+                    "-opkg", "");	// Relational
 
             /*
              * Step C: ???
