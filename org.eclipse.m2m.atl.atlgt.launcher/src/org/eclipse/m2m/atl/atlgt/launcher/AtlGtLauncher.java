@@ -38,7 +38,7 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
              */
 
             // A.1 Ecore to KM3
-            Iterable<URI> km3Metamodels = transformMetamodelsToKm3(context.getMetamodels());
+            transformMetamodelsToKm3(context.getMetamodels());
 
             // A.2 Ecore Relaxation
             List<URI> relaxedMetamodels = new ArrayList<>();
@@ -49,7 +49,7 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
             }
 
             // A.3 Relaxed Ecore to Relaxed KM3
-            Iterable<URI> km3RelaxedMetamodels = transformMetamodelsToKm3(relaxedMetamodels);
+            transformMetamodelsToKm3(relaxedMetamodels);
 
             // A.4 KM3 to KM3 with IDs
             // Adding an optional attribute with name __xmiID__ and type String to each class

@@ -25,8 +25,6 @@ import static java.util.Objects.isNull;
  */
 public final class MetamodelHelpers {
 
-    private static final String ECORE = "ecore";
-
     private MetamodelHelpers() {
         throw new IllegalStateException("This class should not be initialized");
     }
@@ -132,7 +130,7 @@ public final class MetamodelHelpers {
     }
 
     private static ResourceSet newResourceSet() {
-        Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put(ECORE, new EcoreResourceFactoryImpl());
+        Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("ecore", new EcoreResourceFactoryImpl());
 
         final ResourceSet resourceSet = new ResourceSetImpl();
 
@@ -140,7 +138,6 @@ public final class MetamodelHelpers {
         final ExtendedMetaData extendedMetaData = new BasicExtendedMetaData(EPackage.Registry.INSTANCE);
         resourceSet.getLoadOptions().put(XMLResource.OPTION_EXTENDED_META_DATA, extendedMetaData);
 
-        resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(ECORE, new EcoreResourceFactoryImpl());
         return resourceSet;
     }
 }
