@@ -24,24 +24,23 @@ public class AtlGtContext {
     private final URI outMetamodel;
 
     private final Iterable<URI> metamodels;
-    private final Iterable<URI> inModels;
-    private final Iterable<URI> inOutModels;
-    private final Iterable<URI> outModels;
+    private final URI inModel;
+    private final URI outModel;
 
     private final boolean forward;
     private final boolean backward;
 
-    private AtlGtContext(URI pluginUri, String moduleName, Map<String, URI> metamodels, Iterable<URI> inModels, Iterable<URI> inOutModels, Iterable<URI> outModels, boolean forward, boolean backward) {
+    private AtlGtContext(URI pluginUri, String moduleName, Map<String, URI> metamodels, URI inModel, URI outModel, boolean forward, boolean backward) {
         this.pluginUri = pluginUri;
         this.moduleName = moduleName;
 
         this.inMetamodel = metamodels.get(Keys.METAMODEL_IN);
         this.outMetamodel = metamodels.get(Keys.METAMODEL_OUT);
         this.metamodels = metamodels.values();
-        this.inModels = inModels;
-        this.inOutModels = inOutModels;
 
-        this.outModels = outModels;
+        this.inModel = inModel;
+        this.outModel = outModel;
+
         this.forward = forward;
         this.backward = backward;
     }
@@ -56,26 +55,14 @@ public class AtlGtContext {
                 .stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, p -> URI.createURI(p.getValue())));
 
-        Iterable<URI> inModels = launchConfiguration.getAttribute(Keys.INPUT_MODELS, Collections.emptyMap()).values()
-                .stream()
-                .map(URI::createURI)
-                .collect(Collectors.toList());
-
-        Iterable<URI> inOutModels = launchConfiguration.getAttribute(Keys.INOUT_MODELS, Collections.emptyMap()).values()
-                .stream()
-                .map(URI::createURI)
-                .collect(Collectors.toList());
-
-        Iterable<URI> outModels = launchConfiguration.getAttribute(Keys.OUTPUT_MODELS, Collections.emptyMap()).values()
-                .stream()
-                .map(URI::createURI)
-                .collect(Collectors.toList());
+        URI inModel = URI.createURI(launchConfiguration.getAttribute(Keys.INPUT_MODELS, Collections.emptyMap()).values().iterator().next());
+        URI outModel = URI.createURI(launchConfiguration.getAttribute(Keys.OUTPUT_MODELS, Collections.emptyMap()).values().iterator().next());
 
         boolean forward = launchConfiguration.getAttribute(Keys.FORWARD, false);
         boolean backward = launchConfiguration.getAttribute(Keys.BACKWARD, false);
 
 
-        return new AtlGtContext(pluginUri, moduleName, metamodels, inModels, inOutModels, outModels, forward, backward);
+        return new AtlGtContext(pluginUri, moduleName, metamodels, inModel, outModel, forward, backward);
     }
 
     /**
@@ -96,20 +83,24 @@ public class AtlGtContext {
         return pluginUri.appendSegment(moduleName);
     }
 
+    public URI getInMetamodel() {
+        return inMetamodel;
+    }
+
+    public URI getOutMetamodel() {
+        return outMetamodel;
+    }
+
     public Iterable<URI> getMetamodels() {
         return metamodels;
     }
 
-    public Iterable<URI> getInModels() {
-        return inModels;
+    public URI getInModel() {
+        return inModel;
     }
 
-    public Iterable<URI> getInOutModels() {
-        return inOutModels;
-    }
-
-    public Iterable<URI> getOutModels() {
-        return outModels;
+    public URI getOutModel() {
+        return outModel;
     }
 
     public boolean isForward() {
@@ -126,21 +117,13 @@ public class AtlGtContext {
 
         sb.append("Module:              ").append(moduleName).append('\n');
         sb.append("Plugin:              ").append(pluginUri).append('\n');
-        sb.append("Metamodels:          ").append(metamodels).append('\n');
-        sb.append("Input models:        ").append(inModels).append('\n');
-        sb.append("Input/Output models: ").append(inOutModels).append('\n');
-        sb.append("Output models:       ").append(outModels).append('\n');
+        sb.append("Input metamodel:     ").append(inMetamodel).append('\n');
+        sb.append("Input model:         ").append(inModel).append('\n');
+        sb.append("Output model:        ").append(outModel).append('\n');
+        sb.append("Output metamodel:    ").append(outMetamodel).append('\n');
         sb.append("F/B:                 ").append(forward ? "Forward" : "Backward");
 
         return sb.toString();
-    }
-
-    public URI getInMetamodel() {
-        return inMetamodel;
-    }
-
-    public URI getOutMetamodel() {
-        return outMetamodel;
     }
 
     /**
