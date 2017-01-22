@@ -66,7 +66,8 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
             URI idfiedAtlModule = transformModule(context.getModule());
 
             // B.2 ATL2UNQL
-            // TODO Fill args
+            // TODO Improve URIs resolution
+            // TODO '-ipkg' and '-opkg' expect a package name (which can be different from filename)
             Commands.atlGt().atlToUnql().execute(
                     "-atl", URIHelpers.toAbsolutePath(idfiedAtlModule), // hidden/ClassDiagram2Relational.atl
                     "-uq", URIHelpers.toAbsolutePath(context.getTempDirectory().appendSegment(idfiedAtlModule.lastSegment().replace(".atl", ".unql"))), // hidden/ClassDiagram2Relational.unql
