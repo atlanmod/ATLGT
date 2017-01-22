@@ -4,21 +4,10 @@ Bundle-Name: Atlidfier
 Bundle-SymbolicName: org.eclipse.m2m.atl.atlgt.atlidfier
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.eclipse.m2m.atl.atlgt.atlidfier.Activator
-Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.emf.ecore,
- org.eclipse.emf.ecore.xmi,
+Require-Bundle: org.eclipse.emf.ecore,
  org.eclipse.m2m.atl.core,
- org.eclipse.m2m.atl.core.emf,
  org.eclipse.m2m.atl.common,
- org.eclipse.m2m.atl.engine,
  org.eclipse.m2m.atl.emftvm
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
-Import-Package: org.osgi.framework,
- org.eclipse.emf.common,
- org.eclipse.emf.ecore,
- org.eclipse.m2m.atl.core,
- org.eclipse.m2m.atl.common,
- org.eclipse.m2m.atl.engine,
- org.eclipse.m2m.atl.emftvm
 Export-Package: org.eclipse.m2m.atl.atlgt.atlidfier

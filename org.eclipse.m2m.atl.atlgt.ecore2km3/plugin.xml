@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.0"?>
 
-<!--
--->
-
 <plugin>
-
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated KM3 -->
       <package
@@ -13,7 +9,6 @@
             class="org.eclipse.m2m.km3.Km3Package"
             genModel="resources/KM3.genmodel"/>
    </extension>
-
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated KM3 -->
       <package
@@ -21,5 +16,4 @@
             class="org.eclipse.m2m.km3.primitives.Km3PrimitivesPackage"
             genModel="resources/KM3.genmodel"/>
    </extension>
-
 </plugin>

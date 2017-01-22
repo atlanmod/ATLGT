@@ -13,23 +13,9 @@ Export-Package: org.eclipse.m2m.atl.atlgt.ecore2km3,
  org.eclipse.m2m.km3.util,
  org.eclipse.m2m.km3.primitives,
  org.eclipse.m2m.km3.primitives.impl
-Require-Bundle: org.eclipse.swt,
- org.eclipse.ui,
- org.eclipse.osgi,
- org.eclipse.equinox.common,
+Require-Bundle: org.eclipse.emf.ecore;visibility:=reexport,
  org.eclipse.m2m.atl.engine.vm,
  org.eclipse.m2m.atl.engine.emfvm,
- org.eclipse.m2m.atl.emftvm,
- org.eclipse.core.runtime,
- org.eclipse.emf.ecore;visibility:=reexport
+ org.eclipse.m2m.atl.emftvm
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Import-Package: org.eclipse.core.runtime,
- org.eclipse.ui,
- org.eclipse.jface,
- org.osgi.framework,
- org.eclipse.emf.common,
- org.eclipse.emf.ecore,
- org.eclipse.m2m.atl.core,
- org.eclipse.m2m.atl.engine.emfvm,
- org.eclipse.m2m.atl.emftvm
