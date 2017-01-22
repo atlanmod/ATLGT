@@ -11,7 +11,7 @@ import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
 import org.eclipse.m2m.atl.atlgt.atlidfier.AtlIdfierTransformationFactory;
 import org.eclipse.m2m.atl.atlgt.ecore2km3.EmfToKm3TransformationFactory;
-import org.eclipse.m2m.atl.atlgt.tools.Libraries;
+import org.eclipse.m2m.atl.atlgt.tools.Commands;
 import org.eclipse.m2m.atl.atlgt.util.MetamodelHelpers;
 import org.eclipse.m2m.atl.core.ATLCoreException;
 
@@ -46,7 +46,7 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
 
             // 1. XMI2DOT (we choose the first package name but we support only one package)
             // TODO Fill args
-            Libraries.atlGt().execute("xmi2dot_generic_command",
+            Commands.atlGt().xmiToDot().execute(
                     "-xmi", "",
                     "-dot", "",
                     "-km3", "",
@@ -54,7 +54,7 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
 
             // 2. Forward UnCAL
             // TODO Fill args
-            Libraries.gRoundTram().execute("fwd_uncal",
+            Commands.gRoundTram().fwdUncal().execute(
                     "-ge", "-sb", "-cl", "-zn", "-fi", "-np", "-sa", "-t", "-rw", "-as",
                     " -db", "",
                     " -uq", "",
@@ -64,14 +64,14 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
 
             // 2.1 Normalize (up-to isomorphism)
             // TODO Fill args
-            Libraries.gRoundTram().execute("bx_contract",
+            Commands.gRoundTram().bxContract().execute(
                     "-batch",
                     "-src", "",
                     "-dst", "");
 
             // 2.2 DOT2XMI
             // TODO Fill args
-            Libraries.atlGt().execute("dot2xmi_command",
+            Commands.atlGt().dotToXmi().execute(
                     "-dot", "",
                     "-xmi", "",
                     "-km3", "",
@@ -123,7 +123,7 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
 
         // B.2 ATL2UNQL
         // TODO Fill args
-        Libraries.atlGt().execute("atl2unql",
+        Commands.atlGt().atlToUnql().execute(
                 "-atl", "",
                 "-uq", "",
                 "-ikm3", "",

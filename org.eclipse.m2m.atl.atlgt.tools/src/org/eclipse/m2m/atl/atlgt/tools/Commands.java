@@ -13,20 +13,20 @@ import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.Map;
 
-public class Libraries {
+public class Commands {
 	
 	private static final String BUNDLE_SYMBOLIC_NAME = "org.eclipse.m2m.atl.atlgt.tools";
 
-    private Libraries() {
+    private Commands() {
         throw new IllegalStateException("This class should not be initialized");
     }
 
-    public static Library atlGt() {
-        return new DefaultLibrary(resolve("ATL-GT"));
+    public static AtlGtCommandBuilder atlGt() {
+        return new AtlGtCommandBuilder(resolve("ATL-GT"));
     }
 
-    public static Library gRoundTram() {
-        return new DefaultLibrary(resolve("ground_tram-0.9.5"));
+    public static GRoundTramCommandBuilder gRoundTram() {
+        return new GRoundTramCommandBuilder(resolve("ground_tram-0.9.5"));
     }
 
     private static Path resolve(String name) {

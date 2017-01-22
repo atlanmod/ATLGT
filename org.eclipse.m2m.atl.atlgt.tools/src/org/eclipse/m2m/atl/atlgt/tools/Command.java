@@ -6,7 +6,7 @@ import java.io.IOException;
  *
  */
 @FunctionalInterface
-public interface Library {
+public interface Command {
 
-    int execute(String program, String... args) throws IOException;
+    int execute(String... args) throws IOException;
 }

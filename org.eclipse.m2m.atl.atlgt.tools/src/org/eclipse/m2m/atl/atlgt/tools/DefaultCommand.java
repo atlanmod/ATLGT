@@ -12,16 +12,19 @@ import java.util.List;
 /**
  *
  */
-class DefaultLibrary implements Library {
+public class DefaultCommand implements Command {
 
     private final Path path;
 
-    DefaultLibrary(Path path) {
+    private final String program;
+
+    protected DefaultCommand(Path path, String program) {
         this.path = path;
+        this.program = program;
     }
 
     @Override
-    public int execute(String program, String... args) throws IOException {
+    public int execute(String... args) throws IOException {
         List<String> command = new ArrayList<>();
         command.add(path.resolve(program).toString());
         command.addAll(Arrays.asList(args));
