@@ -27,19 +27,18 @@ public class EmfToKm3TransformationEmftvm implements EmfToKm3Transformation {
     private static final EmftvmFactory FACTORY = EmftvmFactory.eINSTANCE;
 
     @Override
-    public URI transform(URI outputDirectory, URI metamodel) {
-        if (!Objects.equals(metamodel.fileExtension(), "ecore")) {
-            throw new IllegalArgumentException("Only *.ecore files can be transformed.");
+    public URI transform(URI source, URI target) {
+        if (!Objects.equals(source.fileExtension(), "ecore")) {
+            throw new IllegalArgumentException("Only *.ecore files can be transformed");
         }
 
-        if (outputDirectory.isFile()) {
-            throw new IllegalArgumentException("The 'outputDirectory' is not a directory.");
+        if (!Objects.equals(target.fileExtension(), "km3")) {
+            throw new IllegalArgumentException("The target file must be a *.km3 file");
         }
 
         URI resourcesDirectory = URI.createPlatformPluginURI(BUNDLE_SYMBOLIC_NAME, false).appendSegment("resources");
-        URI outputKm3 = outputDirectory.appendSegment(metamodel.lastSegment().replace(".ecore", ".km3"));
 
-        System.out.println("Transformation of '" + metamodel + "' to '" + outputKm3 + "'");
+        System.out.println("Transformation of '" + source + "' to '" + target + "'");
 
         ExecEnv env = FACTORY.createExecEnv();
 
@@ -58,11 +57,11 @@ public class EmfToKm3TransformationEmftvm implements EmfToKm3Transformation {
         // Load models
 
         Model inModel = FACTORY.createModel();
-        inModel.setResource(resourceSet.getResource(metamodel, true));
+        inModel.setResource(resourceSet.getResource(source, true));
         env.registerInputModel("IN", inModel);
 
         Model outModel = FACTORY.createModel();
-        outModel.setResource(resourceSet.createResource(outputKm3));
+        outModel.setResource(resourceSet.createResource(target));
         env.registerOutputModel("OUT", outModel);
 
         // Run transformation
@@ -82,6 +81,6 @@ public class EmfToKm3TransformationEmftvm implements EmfToKm3Transformation {
             throw new RuntimeException(e);
         }
 
-        return outputKm3;
+        return target;
     }
 }

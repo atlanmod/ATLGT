@@ -10,9 +10,7 @@ import org.eclipse.m2m.atl.atlgt.ecore2km3.EmfToKm3TransformationFactory;
 import org.eclipse.m2m.atl.atlgt.tools.Commands;
 import org.eclipse.m2m.atl.atlgt.util.Metamodels;
 import org.eclipse.m2m.atl.atlgt.util.URIs;
-import org.eclipse.m2m.atl.core.ATLCoreException;
 
-import java.io.IOException;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -43,15 +41,21 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
              */
 
             // A.1 Ecore to KM3
-            Iterable<URI> km3Metamodels = transformMetamodelsToKm3(metamodels);
+            Iterable<URI> km3Metamodels = StreamSupport.stream(metamodels.spliterator(), false)
+                    .map(metamodel -> EmfToKm3TransformationFactory.withEmftvm().transform(metamodel, context.tempDirectory().appendSegment(URIs.filename(metamodel, ".km3"))))
+                    .collect(Collectors.toList());
+            ;
 
             // A.2 Ecore Relaxation
             Iterable<URI> relaxedMetamodels = StreamSupport.stream(metamodels.spliterator(), false)
-                    .map(metamodel -> Metamodels.relax(context.tempDirectory(), metamodel))
+                    .map(metamodel -> Metamodels.relax(metamodel, context.tempDirectory().appendSegment(URIs.filename(metamodel, "-relaxed.ecore"))))
                     .collect(Collectors.toList());
 
             // A.3 Relaxed Ecore to Relaxed KM3
-            Iterable<URI> km3RelaxedMetamodels = transformMetamodelsToKm3(relaxedMetamodels);
+            Iterable<URI> km3RelaxedMetamodels = StreamSupport.stream(relaxedMetamodels.spliterator(), false)
+                    .map(metamodel -> EmfToKm3TransformationFactory.withEmftvm().transform(metamodel, context.tempDirectory().appendSegment(URIs.filename(metamodel, ".km3"))))
+                    .collect(Collectors.toList());
+            ;
 
             // A.4 KM3 to KM3 with IDs
             // Adding an optional attribute with name __xmiID__ and type String to each class
@@ -65,7 +69,13 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
              */
 
             // B.1 ATLIDfier
-            URI idfiedAtlModule = transformModule(context.module());
+            // Create a copy of the atl file
+            URI atlModule = context.module().appendFileExtension("atl");
+            URI idfiedAtlModule = context.tempDirectory().appendSegment(context.module().appendFileExtension("atl").lastSegment());
+            URIs.copy(atlModule, idfiedAtlModule);
+
+            // Run in-place transformation
+            AtlIdfierTransformationFactory.withEmftvm().transform(idfiedAtlModule);
 
             // B.2 ATL2UNQL
             // TODO Improve URIs resolution
@@ -120,33 +130,5 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
         catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * Transforms Ecore {@code metamodels} to KM3 metamodels.
-     *
-     * @param metamodels the Ecore metamodels to transform
-     *
-     * @return the created KM3 metamodels
-     */
-    private Iterable<URI> transformMetamodelsToKm3(Iterable<URI> metamodels) {
-        return StreamSupport.stream(metamodels.spliterator(), false)
-                .map(metamodel -> EmfToKm3TransformationFactory.withEmftvm().transform(context.tempDirectory(), metamodel))
-                .collect(Collectors.toList());
-    }
-
-    /**
-     * Adds identifier to the given {@code module}.
-     *
-     * @return the created module, with identifiers
-     */
-    private URI transformModule(URI module) throws ATLCoreException, IOException {
-        // Create a copy of the atl file
-        URI atlModule = module.appendFileExtension("atl");
-        URI idfiedAtlModule = context.tempDirectory().appendSegment(module.appendFileExtension("atl").lastSegment());
-        URIs.copy(atlModule, idfiedAtlModule);
-
-        // Run in-place transformation
-        return AtlIdfierTransformationFactory.withEmftvm().transform(context.tempDirectory(), idfiedAtlModule);
     }
 }

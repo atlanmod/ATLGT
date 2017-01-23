@@ -14,15 +14,15 @@ public interface EmfToKm3Transformation {
     String MODULE = "EMF2KM3";
 
     /**
-     * Transforms an Ecore {@code metamodel} to a KM3 metamodel.
+     * Transforms an Ecore metamodel to a KM3 metamodel.
      *
-     * @param outputDirectory the directory where to store the resulting models
-     * @param metamodel       the Ecore metamodel to transform
+     * @param source the Ecore metamodel to transform
+     * @param target the KM3 metamodel to create
      *
-     * @return the URI of the created KM3 model
+     * @return the {@code target} URI
      *
      * @throws IllegalArgumentException if the given metamodel is not an Ecore model (if its extension is {@code !=
      *                                  "ecore"})
      */
-    URI transform(URI outputDirectory, URI metamodel);
+    URI transform(URI source, URI target);
 }

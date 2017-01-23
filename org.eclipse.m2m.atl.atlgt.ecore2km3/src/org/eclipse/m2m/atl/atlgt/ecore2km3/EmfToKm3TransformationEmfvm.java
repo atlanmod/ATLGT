@@ -28,12 +28,10 @@ import java.util.Objects;
 public class EmfToKm3TransformationEmfvm implements EmfToKm3Transformation {
 
     @Override
-    public URI transform(URI outputDirectory, URI metamodel) {
-        if (!Objects.equals(metamodel.fileExtension(), "ecore")) {
+    public URI transform(URI source, URI target) {
+        if (!Objects.equals(source.fileExtension(), "ecore")) {
             throw new IllegalArgumentException("Only *.ecore files can be transformed.");
         }
-
-        URI outputFile = outputDirectory.appendFragment(metamodel.lastSegment().replace(".ecore", "-km3.ecore"));
 
         ModelFactory modelFactory = new EMFModelFactory();
 
@@ -52,7 +50,7 @@ public class EmfToKm3TransformationEmfvm implements EmfToKm3Transformation {
             // Load models
 
             IModel inModel = modelFactory.newModel(ecoreMetamodel);
-            injector.inject(ecoreMetamodel, metamodel.toString());
+            injector.inject(ecoreMetamodel, source.toString());
             IModel outModel = modelFactory.newModel(km3Metamodel);
 
             ILauncher launcher = new EMFVMLauncher();
@@ -69,9 +67,9 @@ public class EmfToKm3TransformationEmfvm implements EmfToKm3Transformation {
             // Extract
 
             IExtractor extractor = new EMFExtractor();
-            extractor.extract(outModel, outputFile.toString());
+            extractor.extract(outModel, target.toString());
 
-            return outputFile;
+            return target;
         }
         catch (IOException | ATLCoreException e) {
             e.printStackTrace();

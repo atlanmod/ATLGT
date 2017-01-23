@@ -67,25 +67,20 @@ public final class Metamodels {
     /**
      * ???
      *
-     * @param outputDirectory the output directory
-     * @param metamodel       the Ecore metamodel
-     *
-     * @return the path of the relaxed metamodel
+     * @return the {@code target} URI
      */
-    public static URI relax(URI outputDirectory, URI metamodel) {
-        if (!Objects.equals(metamodel.fileExtension(), "ecore")) {
+    public static URI relax(URI source, URI target) {
+        if (!Objects.equals(source.fileExtension(), "ecore")) {
             throw new IllegalArgumentException("Only Ecore metamodels can be relaxed");
         }
 
         // Retreive all packages
-        Iterable<EPackage> allPackages = getResourceFrom(metamodel).getContents().stream()
+        Iterable<EPackage> allPackages = getResourceFrom(source).getContents().stream()
                 .filter(EPackage.class::isInstance)
                 .map(eObject -> (EPackage) eObject)
                 .collect(Collectors.toList());
 
-        URI outputFile = outputDirectory.appendSegment(URIs.filename(metamodel, "-relaxed.ecore"));
-
-        Resource resource = createResourceFrom(outputFile);
+        Resource resource = createResourceFrom(target);
 
         // Define the lowerBound to 0 for each feature
         StreamSupport.stream(allPackages.spliterator(), false)
@@ -104,9 +99,9 @@ public final class Metamodels {
             throw new RuntimeException(e);
         }
 
-        System.out.println("Relaxed metamodel of '" + metamodel + "' in " + outputFile);
+        System.out.println("Relaxed metamodel of '" + source + "' in " + target);
 
-        return outputFile;
+        return target;
     }
 
     /**

@@ -25,7 +25,7 @@ public class AtlIdfierTransformationEmftvm implements AtlIdfierTransformation {
     private static final EmftvmFactory FACTORY = EmftvmFactory.eINSTANCE;
 
     @Override
-    public URI transform(URI outputDirectory, URI module) {
+    public URI transform(URI module) {
         URI resourcesDirectory = URI.createPlatformPluginURI(BUNDLE_SYMBOLIC_NAME, false).appendSegment("resources");
 
         System.out.println("In-place transformation of '" + module);
