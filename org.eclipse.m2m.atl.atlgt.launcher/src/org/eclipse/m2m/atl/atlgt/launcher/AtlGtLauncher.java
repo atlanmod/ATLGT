@@ -5,7 +5,6 @@ import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.model.ILaunchConfigurationDelegate;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.m2m.atl.atlgt.atlidfier.AtlIdfierTransformationFactory;
 import org.eclipse.m2m.atl.atlgt.ecore2km3.EmfToKm3TransformationFactory;
 import org.eclipse.m2m.atl.atlgt.tools.Commands;
@@ -14,8 +13,6 @@ import org.eclipse.m2m.atl.atlgt.util.URIs;
 import org.eclipse.m2m.atl.core.ATLCoreException;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -35,36 +32,33 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
 
             // Copy the original metamodels to the temporary directory
             Iterable<URI> metamodels = StreamSupport.stream(context.metamodels().spliterator(), false)
-                    .peek(uri -> URIs.copy(uri, context.tempDirectory().appendSegment(uri.lastSegment())))
+                    .map(uri -> URIs.copy(uri, context.tempDirectory().appendSegment(uri.lastSegment())))
                     .collect(Collectors.toList());
 
             // Register all metamodels
-            metamodels.forEach(Metamodels::registerPackage);
+            metamodels.forEach(Metamodels::register);
 
             /*
              * Step A: Metamodel processing
              */
 
             // A.1 Ecore to KM3
-            transformMetamodelsToKm3(metamodels);
+            Iterable<URI> km3Metamodels = transformMetamodelsToKm3(metamodels);
 
             // A.2 Ecore Relaxation
-            List<URI> relaxedMetamodels = new ArrayList<>();
-            for (URI metamodel : metamodels) {
-                Iterable<EPackage> packages = Metamodels.readEcore(metamodel);
-                URI relaxedMetamodel = Metamodels.relax(packages, context.tempDirectory(), metamodel);
-                relaxedMetamodels.add(relaxedMetamodel);
-            }
+            Iterable<URI> relaxedMetamodels = StreamSupport.stream(metamodels.spliterator(), false)
+                    .map(metamodel -> Metamodels.relax(context.tempDirectory(), metamodel))
+                    .collect(Collectors.toList());
 
             // A.3 Relaxed Ecore to Relaxed KM3
-            transformMetamodelsToKm3(relaxedMetamodels);
+            Iterable<URI> km3RelaxedMetamodels = transformMetamodelsToKm3(relaxedMetamodels);
 
             // A.4 KM3 to KM3 with IDs
             // Adding an optional attribute with name __xmiID__ and type String to each class
-            // TODO
+            km3Metamodels.forEach(Metamodels::identify);
 
             // A.5 Relaxed KM3 to Relaxed KM3 with IDs
-            // TODO
+            km3RelaxedMetamodels.forEach(Metamodels::identify);
             
             /*
              * Step B: Transformation processing
@@ -136,9 +130,8 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
      * @return the created KM3 metamodels
      */
     private Iterable<URI> transformMetamodelsToKm3(Iterable<URI> metamodels) {
-        return StreamSupport
-                .stream(metamodels.spliterator(), false)
-                .peek(metamodel -> EmfToKm3TransformationFactory.withEmftvm().transform(context.tempDirectory(), metamodel))
+        return StreamSupport.stream(metamodels.spliterator(), false)
+                .map(metamodel -> EmfToKm3TransformationFactory.withEmftvm().transform(context.tempDirectory(), metamodel))
                 .collect(Collectors.toList());
     }
 

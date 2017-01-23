@@ -2,7 +2,6 @@ package org.eclipse.m2m.atl.atlgt.util;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -12,9 +11,17 @@ import org.eclipse.emf.ecore.util.BasicExtendedMetaData;
 import org.eclipse.emf.ecore.util.ExtendedMetaData;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
+import org.eclipse.m2m.km3.Attribute;
+import org.eclipse.m2m.km3.Class;
+import org.eclipse.m2m.km3.DataType;
+import org.eclipse.m2m.km3.Km3Factory;
+import org.eclipse.m2m.km3.Metamodel;
+import org.eclipse.m2m.km3.primitives.Km3PrimitivesPackage;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -25,6 +32,10 @@ import static java.util.Objects.isNull;
  */
 public final class Metamodels {
 
+    static {
+        Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("ecore", new EcoreResourceFactoryImpl());
+    }
+
     private Metamodels() {
         throw new IllegalStateException("This class should not be initialized");
     }
@@ -34,7 +45,7 @@ public final class Metamodels {
      *
      * @param metamodel the metamodel to register
      */
-    public static void registerPackage(URI metamodel) {
+    public static void register(URI metamodel) {
         Resource resource = getResourceFrom(metamodel);
 
         EObject eObject = resource.getContents().get(0);
@@ -56,55 +67,96 @@ public final class Metamodels {
     /**
      * ???
      *
-     * @param metamodel the metamodel to read
+     * @param outputDirectory the output directory
+     * @param metamodel       the Ecore metamodel
      *
-     * @return ???
+     * @return the path of the relaxed metamodel
      */
-    public static Iterable<EPackage> readEcore(URI metamodel) {
-        Resource resource = getResourceFrom(metamodel);
+    public static URI relax(URI outputDirectory, URI metamodel) {
+        if (!Objects.equals(metamodel.fileExtension(), "ecore")) {
+            throw new IllegalArgumentException("Only Ecore metamodels can be relaxed");
+        }
 
-        Iterable<EPackage> packages = resource.getContents().stream()
+        // Retreive all packages
+        Iterable<EPackage> allPackages = getResourceFrom(metamodel).getContents().stream()
                 .filter(EPackage.class::isInstance)
                 .map(eObject -> (EPackage) eObject)
                 .collect(Collectors.toList());
 
-        System.out.println("EPackages in '" + metamodel + "': " +
-                StreamSupport.stream(packages.spliterator(), false)
-                        .map(ENamedElement::getName)
-                        .collect(Collectors.joining(", ", "[", "]")));
-
-        return packages;
-    }
-
-    /**
-     * ???
-     *
-     * @param packages        ???
-     * @param outputDirectory the output directory
-     * @param metamodel       the metamodel to relax
-     *
-     * @return the path of the relaxed metamodel
-     *
-     * @throws IOException if a I/O error occurs
-     */
-    public static URI relax(Iterable<EPackage> packages, URI outputDirectory, URI metamodel) throws IOException {
-        URI outputFile = outputDirectory.appendSegment(metamodel.lastSegment().replace(".ecore", "-relaxed.ecore"));
+        URI outputFile = outputDirectory.appendSegment(URIs.filename(metamodel, "-relaxed.ecore"));
 
         Resource resource = createResourceFrom(outputFile);
 
-        StreamSupport.stream(packages.spliterator(), false)
+        // Define the lowerBound to 0 for each feature
+        StreamSupport.stream(allPackages.spliterator(), false)
                 .peek(ePackage -> ePackage.getEClassifiers().stream()
                         .filter(EClass.class::isInstance)
                         .map(eClassifier -> (EClass) eClassifier)
                         .forEach(eClass -> eClass.getEAllStructuralFeatures()
-                                .forEach(sf -> sf.setLowerBound(0))))
+                                .forEach(feature -> feature.setLowerBound(0))))
                 .forEach(ePackage -> resource.getContents().add(ePackage));
 
-        resource.save(Collections.emptyMap());
+        try {
+            resource.save(Collections.emptyMap());
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
 
         System.out.println("Relaxed metamodel of '" + metamodel + "' in " + outputFile);
 
         return outputFile;
+    }
+
+    /**
+     * Defines the {@code __xmiID__} attribute in each class of the given KM3 {@code metamodel}.
+     *
+     * @param metamodel the KM3 metamodel
+     */
+    public static void identify(URI metamodel) {
+        if (!Objects.equals(metamodel.fileExtension(), "km3")) {
+            throw new IllegalArgumentException("Only KM3 metamodels can be identified");
+        }
+
+        Resource resource = getResourceFrom(metamodel);
+
+        Iterable<EObject> allContents = ((Metamodel) resource.getContents().get(0))::eAllContents;
+
+        // Retreive the 'String' datatype
+        final Optional<DataType> dataType = StreamSupport.stream(allContents.spliterator(), false)
+                .filter(DataType.class::isInstance)
+                .map(DataType.class::cast)
+                .filter(datatype -> Objects.equals(datatype.getName(), Km3PrimitivesPackage.Literals.STRING.getName()))
+                .findFirst();
+
+        if (!dataType.isPresent()) {
+            throw new NullPointerException(
+                    "Unable to find the '" + Km3PrimitivesPackage.Literals.STRING.getName() + "' datatype");
+        }
+
+        // Add the '__xmiID__' attribute in each class
+        StreamSupport.stream(allContents.spliterator(), false)
+                .filter(Class.class::isInstance)
+                .map(Class.class::cast)
+                .forEach(clazz -> {
+                    Attribute attr = Km3Factory.eINSTANCE.createAttribute();
+                    attr.setName("__xmiID__");
+                    attr.setType(dataType.get());
+                    attr.setLower(0);
+                    attr.setUpper(1);
+                    clazz.getStructuralFeatures().add(attr);
+                });
+
+        try {
+            resource.save(Collections.emptyMap());
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+
+        System.out.println("Identified metamodel of '" + metamodel);
     }
 
     /**
@@ -126,17 +178,35 @@ public final class Metamodels {
         }
     }
 
+    /**
+     * Returns the {@link Resource} resolved by the {@code uri}.
+     *
+     * @param uri the URI to resolve
+     *
+     * @return the {@link Resource} resolved by the URI, or {@code null} if there isn't one and it's not being demand
+     * loaded
+     */
     private static Resource getResourceFrom(URI uri) {
         return newResourceSet().getResource(uri, true);
     }
 
+    /**
+     * Creates a new {@link Resource}, of the appropriate type, and returns it.
+     *
+     * @param uri the URI of the resource to create
+     *
+     * @return a new {@link Resource}, or {@code null} if no factory is registered
+     */
     private static Resource createResourceFrom(URI uri) {
         return newResourceSet().createResource(uri);
     }
 
+    /**
+     * Creates a new initialized {@link ResourceSet}.
+     *
+     * @return a new {@link ResourceSet}
+     */
     private static ResourceSet newResourceSet() {
-        Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("ecore", new EcoreResourceFactoryImpl());
-
         final ResourceSet resourceSet = new ResourceSetImpl();
 
         // Enables extended meta-data, for EMFTVM.
