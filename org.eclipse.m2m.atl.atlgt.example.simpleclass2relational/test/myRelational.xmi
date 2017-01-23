@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Relational="Relational">
+  <Relational:Schema xmi:id="12" name="p1">
+    <ownedElements xmi:id="15" xsi:type="Relational:Table" name="c3" owner="12"/>
+    <ownedElements xmi:id="14" xsi:type="Relational:Table" name="c2" owner="12">
+      <col xmi:id="16" xsi:type="Relational:Column" name="c2_family" owner="14"/>
+    </ownedElements>
+    <ownedElements xmi:id="13" xsi:type="Relational:Table" name="c1" owner="12"/>
+  </Relational:Schema>
+</xmi:XMI>
