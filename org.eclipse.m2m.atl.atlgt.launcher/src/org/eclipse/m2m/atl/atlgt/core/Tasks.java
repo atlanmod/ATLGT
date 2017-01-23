@@ -132,6 +132,9 @@ public final class Tasks {
             // Example: transform ClassDiagram/Sample-ClassDiagram.xmi to Class2Relational-target.xmi using hidden/Class2Relational.atl
             Metamodels.transform(context.inModel(), context.outModel(), context.tempDirectory(), context.module().lastSegment());
 
+            // C.4 Copy the target model to the hidden folder
+            // Example: copy Class2Relational-target.xmi to hidden/Class2Relational-target.xmi
+
             return context;
         };
     }
