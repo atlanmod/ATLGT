@@ -14,8 +14,6 @@ import java.util.stream.Collectors;
  */
 public class Context {
 
-    private static final String TEMP_DIRECTORY_NAME = "hidden";
-
     private final URI pluginUri;
     private final String moduleName;
 
@@ -79,7 +77,7 @@ public class Context {
      * @return the URI
      */
     public URI tempDirectory() {
-        return pluginUri.appendSegment(TEMP_DIRECTORY_NAME);
+    	return outModel.trimFileExtension().trimSegments(1).appendSegment(inModel.trimFileExtension().lastSegment() + "2" + outModel.trimFileExtension().lastSegment()+"-trace");
     }
 
     /**
