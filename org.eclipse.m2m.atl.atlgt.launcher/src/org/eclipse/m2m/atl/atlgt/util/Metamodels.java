@@ -11,6 +11,13 @@ import org.eclipse.emf.ecore.util.BasicExtendedMetaData;
 import org.eclipse.emf.ecore.util.ExtendedMetaData;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
+import org.eclipse.m2m.atl.emftvm.EmftvmFactory;
+import org.eclipse.m2m.atl.emftvm.ExecEnv;
+import org.eclipse.m2m.atl.emftvm.Model;
+import org.eclipse.m2m.atl.emftvm.util.DefaultModuleResolver;
+import org.eclipse.m2m.atl.emftvm.util.ModuleResolver;
+import org.eclipse.m2m.atl.emftvm.util.TimingData;
 import org.eclipse.m2m.km3.Attribute;
 import org.eclipse.m2m.km3.Class;
 import org.eclipse.m2m.km3.DataType;
@@ -34,6 +41,7 @@ public final class Metamodels {
 
     static {
         Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("ecore", new EcoreResourceFactoryImpl());
+        Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("xmi", new XMIResourceFactoryImpl());
     }
 
     private Metamodels() {
@@ -170,6 +178,57 @@ public final class Metamodels {
         }
         else {
             throw new IllegalArgumentException("The first element is not an EPackage");
+        }
+    }
+
+    /**
+     * Transforms a {@code source} model to another, using an ATL {@code module}.
+     *
+     * @param source    the model to transform
+     * @param target    the result of the transformation
+     * @param directory the module directory
+     * @param module    the ATL module used to the transformation
+     */
+    public static void transform(URI source, URI target, URI directory, String module) {
+        if (!Objects.equals(source.fileExtension(), "xmi") || !Objects.equals(target.fileExtension(), "xmi")) {
+            throw new IllegalArgumentException("Only XMI models can be transformed");
+        }
+
+        System.out.println("Transformation of '" + source + "' to '" + target + "' by using the module '" + module + "' @ " + directory);
+
+        EmftvmFactory factory = EmftvmFactory.eINSTANCE;
+        ExecEnv env = factory.createExecEnv();
+
+        ResourceSet resourceSet = new ResourceSetImpl();
+
+        // Load metamodels
+        // TODO If needed
+
+        // Load models
+
+        Model inModel = factory.createModel();
+        inModel.setResource(resourceSet.getResource(source, true));
+        env.registerInputModel("IN", inModel);
+
+        Model outModel = factory.createModel();
+        outModel.setResource(resourceSet.createResource(target));
+        env.registerOutputModel("OUT", outModel);
+
+        // Run transformation
+
+        ModuleResolver moduleResolver = new DefaultModuleResolver(directory.toString() + "/", resourceSet);
+        TimingData td = new TimingData();
+        env.loadModule(moduleResolver, module);
+        td.finishLoading();
+        env.run(td);
+        td.finish();
+
+        try {
+            outModel.getResource().save(Collections.emptyMap());
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 

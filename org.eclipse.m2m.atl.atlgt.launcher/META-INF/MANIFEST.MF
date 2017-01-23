@@ -17,7 +17,8 @@ Require-Bundle: org.eclipse.swt,
  org.eclipse.m2m.atl.core,
  org.eclipse.m2m.atl.atlgt.tools,
  org.eclipse.m2m.atl.emftvm.launcher,
- org.eclipse.m2m.km3
+ org.eclipse.m2m.km3,
+ org.eclipse.m2m.atl.emftvm
 Import-Package: org.osgi.framework,
  org.eclipse.core.runtime,
  org.eclipse.core.resources,
@@ -30,4 +31,5 @@ Import-Package: org.osgi.framework,
  org.eclipse.m2m.atl.emftvm.launcher,
  org.eclipse.m2m.atl.atlgt.ecore2km3,
  org.eclipse.m2m.atl.atlgt.atlidfier,
- org.eclipse.m2m.km3
+ org.eclipse.m2m.km3,
+ org.eclipse.m2m.atl.emftvm
