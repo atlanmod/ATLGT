@@ -27,6 +27,7 @@ import org.eclipse.m2m.km3.primitives.Km3PrimitivesPackage;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -233,6 +234,7 @@ public final class Metamodels {
         td.finish();
 
         try {
+        	((XMLResource) outModel.getResource()).getDefaultSaveOptions().put(XMLResource.OPTION_SAVE_TYPE_INFORMATION, Boolean.TRUE);
             outModel.getResource().save(Collections.emptyMap());
         }
         catch (IOException e) {
