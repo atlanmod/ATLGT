@@ -1,6 +1,6 @@
 -- @atlcompiler emftvm
 
-module Class2Relational;
+module ClassDiagram2Relational;
 create OUT : Relational from IN : ClassDiagram;
 rule Package2Schema{
   from
