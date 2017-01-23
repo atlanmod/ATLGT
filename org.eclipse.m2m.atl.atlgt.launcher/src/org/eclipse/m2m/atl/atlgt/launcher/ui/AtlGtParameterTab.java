@@ -4,7 +4,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.debug.ui.AbstractLaunchConfigurationTab;
-import org.eclipse.m2m.atl.atlgt.launcher.AtlGtLauncherConstant;
+import org.eclipse.m2m.atl.atlgt.launcher.Context.Direction;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -37,7 +37,7 @@ public class AtlGtParameterTab extends AbstractLaunchConfigurationTab {
         parameterGroup.setText("Transformation Direction");
 
         forward = new Button(parameterGroup, SWT.RADIO);
-        forward.setText(AtlGtLauncherConstant.FORWARD);
+        forward.setText(Direction.FORWARD.getName());
         forward.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -46,7 +46,7 @@ public class AtlGtParameterTab extends AbstractLaunchConfigurationTab {
         });
 
         backward = new Button(parameterGroup, SWT.RADIO);
-        backward.setText(AtlGtLauncherConstant.BACKWARD);
+        backward.setText(Direction.BACKWARD.getName());
         backward.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -59,15 +59,15 @@ public class AtlGtParameterTab extends AbstractLaunchConfigurationTab {
 
     @Override
     public void setDefaults(ILaunchConfigurationWorkingCopy configuration) {
-        configuration.setAttribute(AtlGtLauncherConstant.FORWARD, true);
-        configuration.setAttribute(AtlGtLauncherConstant.BACKWARD, false);
+        configuration.setAttribute(Direction.FORWARD.getName(), true);
+        configuration.setAttribute(Direction.BACKWARD.getName(), false);
     }
 
     @Override
     public void initializeFrom(ILaunchConfiguration configuration) {
         try {
-            forward.setSelection(configuration.getAttribute(AtlGtLauncherConstant.FORWARD, true));
-            backward.setSelection(configuration.getAttribute(AtlGtLauncherConstant.BACKWARD, false));
+            forward.setSelection(configuration.getAttribute(Direction.FORWARD.getName(), true));
+            backward.setSelection(configuration.getAttribute(Direction.BACKWARD.getName(), false));
         }
         catch (CoreException e) {
             e.printStackTrace();
@@ -76,8 +76,8 @@ public class AtlGtParameterTab extends AbstractLaunchConfigurationTab {
 
     @Override
     public void performApply(ILaunchConfigurationWorkingCopy configuration) {
-        configuration.setAttribute(AtlGtLauncherConstant.FORWARD, forward.getSelection());
-        configuration.setAttribute(AtlGtLauncherConstant.BACKWARD, backward.getSelection());
+        configuration.setAttribute(Direction.FORWARD.getName(), forward.getSelection());
+        configuration.setAttribute(Direction.BACKWARD.getName(), backward.getSelection());
     }
 
     @Override
