@@ -125,8 +125,8 @@ public final class Tasks {
                     "-dot", URIs.absolutePath(context.tempDirectory().appendSegment(URIs.filename(context.module(), "-target-normal.dot"))), // hidden/ClassDiagram2Relational-target-normal.dot
                     "-xmi", URIs.absolutePath(context.tempDirectory().appendSegment(URIs.filename(context.module(), "-target-normal.xmi"))), // hidden/ClassDiagram2Relational-target-normal.xmi
                     "-km3", URIs.absolutePath(context.tempDirectory().appendSegment(URIs.filename(context.outMetamodel(), "-relaxed.km3"))), // hidden/Relational-relaxed.km3
-                    "-pkg", Metamodels.firstPackage(context.outMetamodel()).getName(), // http://example.org/Relational
-                    "-uri", Metamodels.firstPackage(context.outMetamodel()).getNsURI()); // Relational
+                    "-pkg", Metamodels.firstPackage(context.outMetamodel()).getName(), // Relational
+                    "-uri", Metamodels.firstPackage(context.outMetamodel()).getNsURI()); // http://example.org/Relational
 
             // C.3 Execution of ATL with IDs
             // Example: transform ClassDiagram/Sample-ClassDiagram.xmi to Class2Relational-target.xmi using hidden/Class2Relational.atl
@@ -136,6 +136,51 @@ public final class Tasks {
             // Example: copy Class2Relational-target.xmi to hidden/Class2Relational-target.xmi
             URIs.copy(context.outModel(), context.tempDirectory().appendSegment(context.outModel().lastSegment()));
 
+            return context;
+        };
+    }
+
+    /**
+     * Step D: Forward transformation.
+     *
+     * @return a new function
+     */
+    public static Function<Context, Context> backwardTransformation() {
+        return context -> {
+            System.out.println();
+            System.out.println("### Backward transformation");
+
+            // D.1 XMI2DOT
+            Commands.atlGt().xmiToDot().execute(
+                    "-xmi", "", // test/myRelational.xmi
+                    "-dot", "", // test/myClassDiagram2myRelational-trace/ClassDiagram2Relational-target-normal-updated.dot
+                    "-odot", "", // test/myClassDiagram2myRelational-trace/ClassDiagram2Relational-target-normal.dot
+                    "-km3", "", // test/myClassDiagram2myRelational-trace/Relational.km3
+                    "-pkg", ""); // Relational
+
+            // D.2 Denormalization
+            Commands.gRoundTram().bxContract().execute(
+                    "-batch",
+                    "-src", "", // test/myClassDiagram2myRelational-trace/ClassDiagram2Relational-target.dot
+                    "-dst", "", // test/myClassDiagram2myRelational-trace/ClassDiagram2Relational-target-normal-updated.dot
+                    "-usrc", ""); // test/myClassDiagram2myRelational-trace/ClassDiagram2Relational-target-updated.dot
+
+            // E.1 Backward UnCAL
+            Commands.gRoundTram().bwdUncal().execute(
+                    "-t",
+                    "-db", "", // test/myClassDiagram2myRelational-trace/myClassDiagram.dot
+                    "-udot", "", // test/myClassDiagram2myRelational-trace/myClassDiagram-updated.dot
+                    "-dot", "", // test/myClassDiagram2myRelational-trace/ClassDiagram2Relational-target-updated.dot
+                    "-xg", "", // test/myClassDiagram2myRelational-trace/ClassDiagram2Relational.xg
+                    "-ei", ""); //test/myClassDiagram2myRelational-trace/ClassDiagram2Relational.ei
+
+            // F.1 DOT2XMI
+            Commands.atlGt().dotToXmi().execute(
+                    "-dot", "", // test/myClassDiagram2myRelational-trace/myClassDiagram-updated.dot
+                    "-xmi", "", // test/myClassDiagram.xmi
+                    "-km3", "", // test/myClassDiagram2myRelational-trace/ClassDiagram.km3
+                    "-pkg", "", // ClassDiagram
+                    "-uri", ""); // http://example.org/ClassDiagram
             return context;
         };
     }
