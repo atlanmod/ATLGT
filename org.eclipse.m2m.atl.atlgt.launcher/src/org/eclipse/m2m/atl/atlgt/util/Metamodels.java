@@ -228,7 +228,7 @@ public final class Metamodels {
      	    }
         }
 	   
-	    
+	    // please check
         Resource r2 = resourceSet.getResource(targetMetamodel, true);
         for( EObject eObject : r2.getContents()){
         	 if (eObject instanceof EPackage) {
