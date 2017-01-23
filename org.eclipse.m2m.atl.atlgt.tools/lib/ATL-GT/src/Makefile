@@ -22,7 +22,7 @@ BINDIR = $(PREFIX)/bin
 # all: all.$(GTDIR) $(XL_TARGETS) trace.byte trace xmi2dot_command xmi2dot_command.byte \
 # 	atl2unql fixdot dot2dgm_command dot2xmi_command
 all: all.$(GTDIR) $(XL_TARGETS) trace.byte trace \
-	atl2unql fixdot dot2dgm_command dot2xmi_command xmi2dot_generic_command
+	atl2unql fixdot dot2dgm_command dot2xmi_command xmi2dot_generic_command restrictxmi_xmi2dot_command
 
 
 # include $(GTDIR)/Makefile
@@ -61,8 +61,8 @@ OCAMLOPTFLAGS = -w yu
 # Files
 ##############################################################################
 
-SRC_ATL-GT  := atl.ml lexatl.mll parseatl.mly objectGraph.ml g2objectGraph.ml dot2xmi.ml dispdotXMI.ml xmi2dot_generic.ml atlMin2unql.ml
-SRC_COMMAND := trace.ml xmi2dot_generic_command.ml atl2unql.ml dot2dgm_command.ml dot2xmi_command.ml
+SRC_ATL-GT  := atl.ml lexatl.mll parseatl.mly objectGraph.ml g2objectGraph.ml dot2xmi.ml dispdotXMI.ml xmi2dot_generic.ml atlMin2unql.ml restrictObject.ml
+SRC_COMMAND := trace.ml xmi2dot_generic_command.ml atl2unql.ml dot2dgm_command.ml dot2xmi_command.ml restrictxmi_xmi2dot_command.ml
 
 SRCS_CORE   := $(SRC_ATL-GT)
 SRCS_PARSER := \
@@ -80,7 +80,7 @@ OBJS = $(SRCS_ML:.ml=.cmo)
 OPTOBJS = $(SRCS_ML:.ml=.cmx) 
 
 PROGRAMS = \
-	trace xmi2dot_generic_command dot2xmi_command atl2unql
+	trace xmi2dot_generic_command dot2xmi_command atl2unql restrictxmi_xmi2dot_command
 
 
 ##############################################################################
@@ -126,6 +126,12 @@ atl2unql.byte: $(GTCMA) $(XLCMA) atl.cmo lexatl.cmo parseatl.cmo atlMin2unql.cmo
 	$(OCAMLC) $(OCAMLFLAGS) unix.cma str.cma -o $@ $^
 
 fixdot: $(GTCMXA) fixdot.cmx
+	$(OCAMLOPT) $(OCAMLOPTFLAGS) unix.cmxa str.cmxa -o $@ $^
+
+restrictxmi_xmi2dot_command.byte: $(GTCMA) $(XLCMA) objectGraph.cmo g2objectGraph.cmo dot2xmi.cmo xmi2dot_generic.cmo restrictObject.cmo restrictxmi_xmi2dot_command.cmo
+	$(OCAMLC) $(OCAMLFLAGS) unix.cma str.cma -o $@ $^
+
+restrictxmi_xmi2dot_command: $(GTCMXA) $(XLCMXA) objectGraph.cmx g2objectGraph.cmx dot2xmi.cmx xmi2dot_generic.cmx restrictObject.cmx restrictxmi_xmi2dot_command.cmx
 	$(OCAMLOPT) $(OCAMLOPTFLAGS) unix.cmxa str.cmxa -o $@ $^
 
 ##############################################################################

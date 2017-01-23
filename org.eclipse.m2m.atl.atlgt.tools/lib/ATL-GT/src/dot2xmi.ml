@@ -29,8 +29,12 @@ let pp_primset fmt x = match x with
   | SetofBol bset -> fprintf fmt "SetofBol %a" (SetofBol.pp_t "" (pp_pair pp_bool   pp_vto)) bset
 let pp_attrmap = NameMap.pp_t "" pp_name (pp_pair pp_name pp_primset)
 
-let pp_xmi_element fmt (name,attrmap,refmap,childmap) = 
-  fprintf fmt "@[<1>(%a,@,%a,@,%a,@,%a)@]" pp_name name pp_attrmap attrmap pp_refmap refmap pp_childmap childmap
+let pp_xmi_element fmt r =
+  pp_record [ pp_field "xe_kname"  pp_name     r.xe_kname;
+              pp_field "xe_is_top" pp_bool     r.xe_is_top;
+              pp_field "attrmap"   pp_attrmap  r.attrmap;
+              pp_field "refmap"    pp_refmap   r.refmap;
+	      pp_field "childmap"  pp_childmap r.childmap ] fmt
 
 let pp_vtx2xmi_element_Map = VMap.pp_t "" pp_vtx pp_xmi_element
 
