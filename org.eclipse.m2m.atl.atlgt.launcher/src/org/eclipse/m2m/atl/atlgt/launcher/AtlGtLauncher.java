@@ -28,9 +28,7 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
                     .apply(context);
         }
         else if (context.direction() == Direction.BACKWARD) {
-            Tasks.metamodelProcessing()
-                    .andThen(Tasks.transformationProcessing())
-                    .andThen(Tasks.backwardTransformation())
+            Tasks.backwardTransformation()
                     .apply(context);
         }
         else {
