@@ -10,6 +10,7 @@ bin/
 # ATL & Co
 *.asm
 *.emftvm
+**-trace
 
 ### IntelliJ
 .idea/

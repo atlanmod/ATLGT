@@ -14,6 +14,8 @@ import java.util.stream.Collectors;
  */
 public class Context {
 
+    private final URI tempDirectory;
+
     private final URI pluginUri;
     private final String moduleName;
 
@@ -37,6 +39,8 @@ public class Context {
         this.outModel = outModel;
 
         this.direction = direction;
+
+        tempDirectory = outModel.trimFileExtension().trimSegments(1).appendSegment(inModel.trimFileExtension().lastSegment() + "2" + outModel.trimFileExtension().lastSegment() + "-trace");
     }
 
     /**
@@ -77,7 +81,7 @@ public class Context {
      * @return the URI
      */
     public URI tempDirectory() {
-    	return outModel.trimFileExtension().trimSegments(1).appendSegment(inModel.trimFileExtension().lastSegment() + "2" + outModel.trimFileExtension().lastSegment()+"-trace");
+        return tempDirectory;
     }
 
     /**
