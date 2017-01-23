@@ -184,12 +184,14 @@ public final class Metamodels {
     /**
      * Transforms a {@code source} model to another, using an ATL {@code module}.
      *
-     * @param source    the model to transform
-     * @param target    the result of the transformation
-     * @param directory the module directory
-     * @param module    the ATL module used to the transformation
+     * @param source          the model to transform
+     * @param target          the result of the transformation
+     * @param sourceMetamodel the metamodel of the {@code source}
+     * @param targetMetamodel the metamodel of the {@code target}
+     * @param directory       the module directory
+     * @param module          the ATL module used to the transformation
      */
-    public static void transform(URI source, URI target, URI directory, String module) {
+    public static void transform(URI source, URI target, URI sourceMetamodel, URI targetMetamodel, URI directory, String module) {
         if (!Objects.equals(source.fileExtension(), "xmi") || !Objects.equals(target.fileExtension(), "xmi")) {
             throw new IllegalArgumentException("Only XMI models can be transformed");
         }
@@ -202,6 +204,15 @@ public final class Metamodels {
         ResourceSet resourceSet = new ResourceSetImpl();
 
         // Load metamodels
+        // TODO Dynamically find the name of the metamodel
+        org.eclipse.m2m.atl.emftvm.Metamodel inMetamodel = factory.createMetamodel();
+        inMetamodel.setResource(resourceSet.getResource(sourceMetamodel, true));
+        env.registerMetaModel("ClassDiagram", inMetamodel);
+
+        org.eclipse.m2m.atl.emftvm.Metamodel outMetamodel = factory.createMetamodel();
+        outMetamodel.setResource(resourceSet.getResource(targetMetamodel, true));
+        env.registerMetaModel("Relational", outMetamodel);
+
         // TODO If needed
 
         // Load models
