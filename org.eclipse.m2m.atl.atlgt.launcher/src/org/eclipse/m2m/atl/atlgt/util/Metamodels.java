@@ -15,7 +15,6 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.m2m.atl.emftvm.EmftvmFactory;
 import org.eclipse.m2m.atl.emftvm.ExecEnv;
 import org.eclipse.m2m.atl.emftvm.Model;
-import org.eclipse.m2m.atl.emftvm.impl.resource.EMFTVMResourceFactoryImpl;
 import org.eclipse.m2m.atl.emftvm.util.DefaultModuleResolver;
 import org.eclipse.m2m.atl.emftvm.util.ModuleResolver;
 import org.eclipse.m2m.atl.emftvm.util.TimingData;
@@ -33,8 +32,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static java.util.Objects.isNull;
-
 /**
  * Utility methods for working with Ecore metamodels.
  */
@@ -50,27 +47,25 @@ public final class Metamodels {
     }
 
     /**
-     * Registers a metamodel to the {@link EPackage.Registry}.
+     * Registers the {@link EPackage} of a {@code metamodel} to the {@link EPackage.Registry}.
      *
      * @param metamodel the metamodel to register
      */
     public static void register(URI metamodel) {
-        Resource resource = getResourceFrom(metamodel);
-
-        EObject eObject = resource.getContents().get(0);
-        if (EPackage.class.isInstance(eObject)) {
-            EPackage ePackage = (EPackage) eObject;
-
-            // Register EPackage
-            String nsURI = ePackage.getNsURI();
-            if (isNull(nsURI)) {
-                nsURI = ePackage.getName();
-                ePackage.setNsURI(nsURI);
-            }
-            EPackage.Registry.INSTANCE.put(nsURI, ePackage);
-        }
-
+        register(getResourceFrom(metamodel));
         System.out.println("Registered metamodel: " + metamodel);
+    }
+
+    /**
+     * Registers the {@link EPackage}s of the {@code resource} to the {@link EPackage.Registry}.
+     *
+     * @param resource the resource to register
+     */
+    public static void register(Resource resource) {
+        resource.getContents().stream()
+                .filter(EPackage.class::isInstance)
+                .map(EPackage.class::cast)
+                .forEach(p -> EPackage.Registry.INSTANCE.put(p.getNsURI(), p));
     }
 
     /**
@@ -203,45 +198,20 @@ public final class Metamodels {
         ExecEnv env = factory.createExecEnv();
 
         ResourceSet resourceSet = new ResourceSetImpl();
-        resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xmi", new XMIResourceFactoryImpl());
-		
-        resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("emftvm", new EMFTVMResourceFactoryImpl());
-        resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("ecore", new EcoreResourceFactoryImpl());
-		
+
         // Load metamodels
-        // TODO Dynamically find the name of the metamodel
+
+        Resource inMetamodelResource = resourceSet.getResource(sourceMetamodel, true);
+        register(inMetamodelResource);
         org.eclipse.m2m.atl.emftvm.Metamodel inMetamodel = factory.createMetamodel();
-        inMetamodel.setResource(resourceSet.getResource(sourceMetamodel, true));
-        env.registerMetaModel("ClassDiagram", inMetamodel);
+        inMetamodel.setResource(inMetamodelResource);
+        env.registerMetaModel(firstPackage(sourceMetamodel).getName(), inMetamodel);
 
+        Resource outMetamodelResource = resourceSet.getResource(targetMetamodel, true);
+        register(outMetamodelResource);
         org.eclipse.m2m.atl.emftvm.Metamodel outMetamodel = factory.createMetamodel();
-        outMetamodel.setResource(resourceSet.getResource(targetMetamodel, true));
-        env.registerMetaModel("Relational", outMetamodel);
-        
-        Resource r = resourceSet.getResource(sourceMetamodel, true);
-        for( EObject eObject : r.getContents()){
-        	 if (eObject instanceof EPackage) {
-     	        EPackage p = (EPackage)eObject;
-
-     	        EPackage.Registry.INSTANCE.put(p.getNsURI(), p);
-     	        
-     	    }
-        }
-	   
-	    // please check
-        Resource r2 = resourceSet.getResource(targetMetamodel, true);
-        for( EObject eObject : r2.getContents()){
-        	 if (eObject instanceof EPackage) {
-     	        EPackage p = (EPackage)eObject;
-
-     	        EPackage.Registry.INSTANCE.put(p.getNsURI(), p);
-     	        
-     	    }
-        }
-	    
-        
-
-        // TODO If needed
+        outMetamodel.setResource(outMetamodelResource);
+        env.registerMetaModel(firstPackage(targetMetamodel).getName(), outMetamodel);
 
         // Load models
 
@@ -271,28 +241,6 @@ public final class Metamodels {
         }
     }
 
-    
-	private String lazyMetamodelRegistration(String metamodelPath){
-		
-		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("ecore", new EcoreResourceFactoryImpl());
-   	
-	    ResourceSet rs = new ResourceSetImpl();
-	    // Enables extended meta-data, weird we have to do this but well...
-	    final ExtendedMetaData extendedMetaData = new BasicExtendedMetaData(EPackage.Registry.INSTANCE);
-	    rs.getLoadOptions().put(XMLResource.OPTION_EXTENDED_META_DATA, extendedMetaData);
-	
-	    Resource r = rs.getResource(URI.createFileURI(metamodelPath), true);
-	    EObject eObject = r.getContents().get(0);
-	    // A meta-model might have multiple packages we assume the main package is the first one listed
-	    if (eObject instanceof EPackage) {
-	        EPackage p = (EPackage)eObject;
-	        System.out.println(p.getNsURI());
-	        EPackage.Registry.INSTANCE.put(p.getNsURI(), p);
-	        return p.getNsURI();
-	    }
-	    return null;
-	}
-	
     /**
      * Returns the {@link Resource} resolved by the {@code uri}.
      *
