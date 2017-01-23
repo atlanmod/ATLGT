@@ -153,7 +153,7 @@ public final class Tasks {
                     "-xmi", URIs.absolutePath(context.outModel()), // myRelational.xmi
                     "-dot", URIs.absolutePath(context.tempDirectory().appendSegment(URIs.filename(context.module(), "-target-normal-updated.dot"))), // tmp/ClassDiagram2Relational-target-normal-updated.dot
                     "-odot", URIs.absolutePath(context.tempDirectory().appendSegment(URIs.filename(context.module(), "-target-normal.dot"))), // tmp/ClassDiagram2Relational-target-normal.dot
-                    "-km3", URIs.absolutePath(context.tempDirectory().appendSegment(URIs.filename(context.outMetamodel(), ".km3"))), // tmp/Relational.km3
+                    "-km3", URIs.absolutePath(context.tempDirectory().appendSegment(URIs.filename(context.outMetamodel(), "-relaxed.km3"))), // tmp/Relational-relaxed.km3
                     "-pkg", Metamodels.firstPackage(context.outMetamodel()).getName()); // Relational
 
             // D.2 Denormalization
