@@ -1,4 +1,4 @@
-package org.eclipse.m2m.atl.atlgt.launcher;
+package org.eclipse.m2m.atl.atlgt.core;
 
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.emf.common.util.URI;
@@ -143,21 +143,5 @@ public class Context {
      */
     public Direction direction() {
         return direction;
-    }
-
-    public enum Direction {
-
-        FORWARD("Forward"),
-        BACKWARD("Backward");
-
-        private final String name;
-
-        Direction(String name) {
-            this.name = name;
-        }
-
-        public String getName() {
-            return name;
-        }
     }
 }

@@ -40,7 +40,7 @@ public class DefaultCommand implements Command {
     }
 
     @Override
-    public int execute(String... args) throws IOException {
+    public int execute(String... args) {
         List<String> command = new ArrayList<>();
         command.add(path.resolve(program).toString());
         command.addAll(Arrays.asList(args));
@@ -51,16 +51,15 @@ public class DefaultCommand implements Command {
         pb.redirectOutput();
 
         System.out.println("Executing: " + command.stream().collect(Collectors.joining(" ")));
-
-        Process process = pb.start();
         try {
+            Process process = pb.start();
             int result = process.waitFor();
             printStream(process.getInputStream(), System.out);
             return result;
         }
-        catch (InterruptedException e) {
+        catch (IOException | InterruptedException e) {
             e.printStackTrace();
-            throw new IOException(e);
+            throw new RuntimeException(e);
         }
     }
 

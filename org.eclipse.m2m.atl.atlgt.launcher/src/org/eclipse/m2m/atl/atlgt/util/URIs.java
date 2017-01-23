@@ -14,6 +14,7 @@ import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.WritableByteChannel;
 import java.nio.file.Paths;
 
+import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
 /**
@@ -51,12 +52,15 @@ public final class URIs {
      * extension.
      */
     public static String filename(URI uri, String suffix) {
-        if (uri.fileExtension().isEmpty()) {
-            return uri.lastSegment();
-        }
-
         String file = uri.lastSegment();
-        String filename = file.substring(0, file.lastIndexOf('.'));
+
+        String filename;
+        if (isNull(uri.fileExtension())) {
+            filename = file;
+        }
+        else {
+            filename = file.substring(0, file.lastIndexOf('.'));
+        }
 
         if (nonNull(suffix) && !suffix.isEmpty()) {
             filename += suffix;
