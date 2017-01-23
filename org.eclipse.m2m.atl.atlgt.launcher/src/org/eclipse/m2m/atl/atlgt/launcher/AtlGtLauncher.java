@@ -64,7 +64,7 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
             // B.1 ATLIDfier
             // Create a copy of the atl file
             URI atlModule = context.module().appendFileExtension("atl");
-            URI idfiedAtlModule = context.tempDirectory().appendSegment(context.module().appendFileExtension("atl").lastSegment());
+            URI idfiedAtlModule = context.tempDirectory().appendSegment(atlModule.lastSegment());
             URIs.copy(atlModule, idfiedAtlModule);
 
             // Run in-place transformation
