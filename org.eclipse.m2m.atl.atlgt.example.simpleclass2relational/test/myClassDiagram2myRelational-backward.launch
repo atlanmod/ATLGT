@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.m2m.atl.atlgt.launcher">
-<booleanAttribute key="Backward" value="true"/>
-<booleanAttribute key="Forward" value="false"/>
+<booleanAttribute key="Backward" value="false"/>
+<booleanAttribute key="Forward" value="true"/>
 <mapAttribute key="Inout Model Options"/>
 <mapAttribute key="Inout Models"/>
 <mapAttribute key="Inout Models Output Locations"/>
 <mapAttribute key="Input Model Options"/>
 <mapAttribute key="Input Models">
-<mapEntry key="IN" value="platform:/resource/org.eclipse.m2m.atl.atlgt.example.simpleclass2relational/test/myRelational.xmi"/>
+<mapEntry key="IN" value="platform:/resource/org.eclipse.m2m.atl.atlgt.example.simpleclass2relational/test/myClassDiagram.xmi"/>
 </mapAttribute>
 <mapAttribute key="Metamodel Options"/>
 <mapAttribute key="Metamodels">
-<mapEntry key="IN" value="platform:/resource/org.eclipse.m2m.atl.atlgt.example.simpleclass2relational/transformation/Relational.ecore"/>
-<mapEntry key="OUT" value="platform:/resource/org.eclipse.m2m.atl.atlgt.example.simpleclass2relational/transformation/ClassDiagram.ecore"/>
+<mapEntry key="IN" value="platform:/resource/org.eclipse.m2m.atl.atlgt.example.simpleclass2relational/transformation/ClassDiagram.ecore"/>
+<mapEntry key="OUT" value="platform:/resource/org.eclipse.m2m.atl.atlgt.example.simpleclass2relational/transformation/Relational.ecore"/>
 </mapAttribute>
 <stringAttribute key="Module Name" value="ClassDiagram2Relational"/>
 <stringAttribute key="Module Path" value="/org.eclipse.m2m.atl.atlgt.example.simpleclass2relational/transformation/ClassDiagram2Relational.atl"/>
@@ -20,7 +20,7 @@
 <mapEntry key="OUT" value="allowIntermodelReferences derivedFile"/>
 </mapAttribute>
 <mapAttribute key="Output Models">
-<mapEntry key="OUT" value="platform:/resource/org.eclipse.m2m.atl.atlgt.example.simpleclass2relational/test/myClassDiagram.xmi"/>
+<mapEntry key="OUT" value="platform:/resource/org.eclipse.m2m.atl.atlgt.example.simpleclass2relational/myRelational.xmi"/>
 </mapAttribute>
 <stringAttribute key="name" value="&lt;unnamed&gt;"/>
 </launchConfiguration>
