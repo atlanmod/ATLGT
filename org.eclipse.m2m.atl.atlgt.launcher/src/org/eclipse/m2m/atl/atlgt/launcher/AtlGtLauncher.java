@@ -112,6 +112,7 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
                     "-uri", Metamodels.firstPackage(context.outMetamodel()).getNsURI()); // Relational
 
             // C.3 Execution of ATL with IDs
+            // Example: transform ClassDiagram/Sample-ClassDiagram.xmi to Class2Relational-target.xmi using hidden/Class2Relational.atl
             // TODO
 
             System.out.println("ATL-GT: Successfully executed");
