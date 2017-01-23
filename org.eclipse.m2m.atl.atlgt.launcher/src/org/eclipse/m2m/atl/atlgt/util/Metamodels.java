@@ -27,7 +27,6 @@ import org.eclipse.m2m.km3.primitives.Km3PrimitivesPackage;
 
 import java.io.IOException;
 import java.util.Collections;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -54,7 +53,6 @@ public final class Metamodels {
      */
     public static void register(URI metamodel) {
         register(getResourceFrom(metamodel));
-        System.out.println("Registered metamodel: " + metamodel);
     }
 
     /**
@@ -79,7 +77,10 @@ public final class Metamodels {
             throw new IllegalArgumentException("Only Ecore metamodels can be relaxed");
         }
 
+        System.out.println("Relaxation of metamodel '" + source + "' to " + target);
+
         // Retreive all packages
+
         Iterable<EPackage> allPackages = getResourceFrom(source).getContents().stream()
                 .filter(EPackage.class::isInstance)
                 .map(eObject -> (EPackage) eObject)
@@ -88,6 +89,7 @@ public final class Metamodels {
         Resource resource = createResourceFrom(target);
 
         // Define the lowerBound to 0 for each feature
+
         StreamSupport.stream(allPackages.spliterator(), false)
                 .peek(ePackage -> ePackage.getEClassifiers().stream()
                         .filter(EClass.class::isInstance)
@@ -96,6 +98,8 @@ public final class Metamodels {
                                 .forEach(feature -> feature.setLowerBound(0))))
                 .forEach(ePackage -> resource.getContents().add(ePackage));
 
+        // Save changes
+
         try {
             resource.save(Collections.emptyMap());
         }
@@ -103,8 +107,6 @@ public final class Metamodels {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
-
-        System.out.println("Relaxed metamodel of '" + source + "' in " + target);
 
         return target;
     }
@@ -119,11 +121,14 @@ public final class Metamodels {
             throw new IllegalArgumentException("Only KM3 metamodels can be identified");
         }
 
+        System.out.println("Identifying of metamodel '" + metamodel + "'");
+
         Resource resource = getResourceFrom(metamodel);
 
         Iterable<EObject> allContents = ((Metamodel) resource.getContents().get(0))::eAllContents;
 
         // Retreive the 'String' datatype
+
         final Optional<DataType> dataType = StreamSupport.stream(allContents.spliterator(), false)
                 .filter(DataType.class::isInstance)
                 .map(DataType.class::cast)
@@ -136,6 +141,7 @@ public final class Metamodels {
         }
 
         // Add the '__xmiID__' attribute in each class
+
         StreamSupport.stream(allContents.spliterator(), false)
                 .filter(Class.class::isInstance)
                 .map(Class.class::cast)
@@ -148,6 +154,8 @@ public final class Metamodels {
                     clazz.getStructuralFeatures().add(attr);
                 });
 
+        // Save changes
+
         try {
             resource.save(Collections.emptyMap());
         }
@@ -155,8 +163,6 @@ public final class Metamodels {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
-
-        System.out.println("Identified metamodel of '" + metamodel);
     }
 
     /**
@@ -181,14 +187,13 @@ public final class Metamodels {
     /**
      * Transforms a {@code source} model to another, using an ATL {@code module}.
      *
-     * @param source          the model to transform
-     * @param target          the result of the transformation
-     * @param sourceMetamodel the metamodel of the {@code source}
-     * @param targetMetamodel the metamodel of the {@code target}
-     * @param directory       the module directory
-     * @param module          the ATL module used to the transformation
+     * @param source     the model to transform
+     * @param target     the result of the transformation
+     * @param metamodels the metamodels
+     * @param directory  the module directory
+     * @param module     the ATL module used to the transformation
      */
-    public static void transform(URI source, URI target, URI sourceMetamodel, URI targetMetamodel, URI directory, String module) {
+    public static void transform(URI source, URI target, Iterable<URI> metamodels, URI directory, String module) {
         if (!Objects.equals(source.fileExtension(), "xmi") || !Objects.equals(target.fileExtension(), "xmi")) {
             throw new IllegalArgumentException("Only XMI models can be transformed");
         }
@@ -202,17 +207,14 @@ public final class Metamodels {
 
         // Load metamodels
 
-        Resource inMetamodelResource = resourceSet.getResource(sourceMetamodel, true);
-        register(inMetamodelResource);
-        org.eclipse.m2m.atl.emftvm.Metamodel inMetamodel = factory.createMetamodel();
-        inMetamodel.setResource(inMetamodelResource);
-        env.registerMetaModel(firstPackage(sourceMetamodel).getName(), inMetamodel);
+        metamodels.forEach(metamodel -> {
+            Resource inMetamodelResource = resourceSet.getResource(metamodel, true);
+            register(inMetamodelResource);
 
-        Resource outMetamodelResource = resourceSet.getResource(targetMetamodel, true);
-        register(outMetamodelResource);
-        org.eclipse.m2m.atl.emftvm.Metamodel outMetamodel = factory.createMetamodel();
-        outMetamodel.setResource(outMetamodelResource);
-        env.registerMetaModel(firstPackage(targetMetamodel).getName(), outMetamodel);
+            org.eclipse.m2m.atl.emftvm.Metamodel inMetamodel = factory.createMetamodel();
+            inMetamodel.setResource(inMetamodelResource);
+            env.registerMetaModel(firstPackage(metamodel).getName(), inMetamodel);
+        });
 
         // Load models
 
@@ -233,8 +235,10 @@ public final class Metamodels {
         env.run(td);
         td.finish();
 
+        // Save changes
+
         try {
-        	((XMLResource) outModel.getResource()).getDefaultSaveOptions().put(XMLResource.OPTION_SAVE_TYPE_INFORMATION, Boolean.TRUE);
+            ((XMLResource) outModel.getResource()).getDefaultSaveOptions().put(XMLResource.OPTION_SAVE_TYPE_INFORMATION, true);
             outModel.getResource().save(Collections.emptyMap());
         }
         catch (IOException e) {

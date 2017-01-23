@@ -14,7 +14,6 @@ import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.WritableByteChannel;
 import java.nio.file.Paths;
 
-import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
 /**
@@ -33,7 +32,7 @@ public final class URIs {
      *
      * @return the absolute path of the URI
      */
-    public static String absolutePath(URI uri) {
+    public static String abs(URI uri) {
         return Paths.get(
                 ResourcesPlugin.getWorkspace()
                         .getRoot()
@@ -51,22 +50,8 @@ public final class URIs {
      * @return the filename of the {@code uri}. If {@code suffix} is {@code null}, returns the filename without its
      * extension.
      */
-    public static String filename(URI uri, String suffix) {
-        String file = uri.lastSegment();
-
-        String filename;
-        if (isNull(uri.fileExtension())) {
-            filename = file;
-        }
-        else {
-            filename = file.substring(0, file.lastIndexOf('.'));
-        }
-
-        if (nonNull(suffix) && !suffix.isEmpty()) {
-            filename += suffix;
-        }
-
-        return filename;
+    public static String fn(URI uri, String suffix) {
+        return uri.trimFileExtension().lastSegment().concat(nonNull(suffix) ? suffix : "");
     }
 
     /**
