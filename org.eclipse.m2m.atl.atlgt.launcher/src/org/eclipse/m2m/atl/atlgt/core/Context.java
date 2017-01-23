@@ -13,7 +13,8 @@ import java.util.stream.Collectors;
  * {@link ILaunchConfiguration}.
  */
 public class Context {
-
+	
+	private final String transformationInstance;
     private final URI tempDirectory;
 
     private final URI pluginUri;
@@ -40,7 +41,8 @@ public class Context {
 
         this.direction = direction;
 
-        tempDirectory = outModel.trimFileExtension().trimSegments(1).appendSegment(inModel.trimFileExtension().lastSegment() + "2" + outModel.trimFileExtension().lastSegment() + "-trace");
+        transformationInstance = inModel.trimFileExtension().lastSegment() + "2" + outModel.trimFileExtension().lastSegment();
+        tempDirectory = outModel.trimFileExtension().trimSegments(1).appendSegment( transformationInstance + "-trace");
     }
 
     /**
@@ -82,6 +84,15 @@ public class Context {
      */
     public URI tempDirectory() {
         return tempDirectory;
+    }
+    
+    /**
+     * Returns the name of the current transformation instance.
+     *
+     * @return the name
+     */
+    public String transformationInstance() {
+        return transformationInstance;
     }
 
     /**

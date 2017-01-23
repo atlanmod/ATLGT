@@ -110,20 +110,20 @@ public final class Tasks {
                     "-ge", "-sb", "-cl", "-zn", "-fi", "-np", "-sa", "-t", "-rw", "-as",
                     "-db", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.inModel(), ".dot"))),
                     "-uq", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.module(), ".unql"))),
-                    "-dot", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.module(), "-target.dot"))),
-                    "-xg", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.module(), ".xg"))),
-                    "-ei", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.module(), ".ei"))));
+                    "-dot", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.outModel(), ".dot"))),
+                    "-xg", URIs.abs(context.tempDirectory().appendSegment(context.transformationInstance() + ".xg")),
+                    "-ei", URIs.abs(context.tempDirectory().appendSegment(context.transformationInstance() + ".ei")));
 
             // C.2.1 Normalize (up-to isomorphism)
             Commands.gRoundTram().bxContract().execute(
                     "-batch",
-                    "-src", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.module(), "-target.dot"))),
-                    "-dst", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.module(), "-target-normal.dot"))));
+                    "-src", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.outModel(), ".dot"))),
+                    "-dst", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.outModel(), "-normal.dot"))));
 
             // C.2.2 DOT2XMI
             Commands.atlGt().dotToXmi().execute(
-                    "-dot", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.module(), "-target-normal.dot"))),
-                    "-xmi", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.module(), "-target-normal.xmi"))),
+                    "-dot", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.outModel(), "-normal.dot"))),
+                    "-xmi", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.outModel(), "-normal.xmi"))),
                     "-km3", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.outMetamodel(), "-relaxed.km3"))),
                     "-pkg", Metamodels.firstPackage(context.outMetamodel()).getName(),
                     "-uri", Metamodels.firstPackage(context.outMetamodel()).getNsURI());
@@ -151,26 +151,26 @@ public final class Tasks {
             // D.1 XMI2DOT
             Commands.atlGt().xmiToDot().execute(
                     "-xmi", URIs.abs(context.outModel()),
-                    "-dot", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.module(), "-target-normal-updated.dot"))),
-                    "-odot", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.module(), "-target-normal.dot"))),
+                    "-dot", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.outModel(), "-normal-updated.dot"))),
+                    "-odot", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.outModel(), "-normal.dot"))),
                     "-km3", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.outMetamodel(), "-relaxed.km3"))),
                     "-pkg", Metamodels.firstPackage(context.outMetamodel()).getName());
 
             // D.2 Denormalization
             Commands.gRoundTram().bxContract().execute(
                     "-batch",
-                    "-src", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.module(), "-target.dot"))),
-                    "-dst", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.module(), "-target-normal-updated.dot"))),
-                    "-usrc", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.module(), "-target-updated.dot"))));
+                    "-src", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.outModel(), ".dot"))),
+                    "-dst", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.outModel(), "-normal-updated.dot"))),
+                    "-usrc", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.outModel(), "-updated.dot"))));
 
             // E.1 Backward UnCAL
             Commands.gRoundTram().bwdUncal().execute(
                     "-t",
                     "-db", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.inModel(), ".dot"))),
                     "-udot", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.inModel(), "-updated.dot"))),
-                    "-dot", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.module(), "-target-updated.dot"))),
-                    "-xg", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.module(), ".xg"))),
-                    "-ei", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.module(), ".ei"))));
+                    "-dot", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.outModel(), "-updated.dot"))),
+                    "-xg", URIs.abs(context.tempDirectory().appendSegment(context.transformationInstance() + ".xg")),
+                    "-ei", URIs.abs(context.tempDirectory().appendSegment(context.transformationInstance() + ".ei")));
 
             // F.1 DOT2XMI
             Commands.atlGt().dotToXmi().execute(
