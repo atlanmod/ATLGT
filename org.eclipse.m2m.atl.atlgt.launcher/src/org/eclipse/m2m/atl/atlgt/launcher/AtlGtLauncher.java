@@ -28,26 +28,20 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
             // Loads the current context
             context = Context.from(launchConfiguration);
 
-            // Copy the original metamodels to the temporary directory
-            Iterable<URI> metamodels = StreamSupport.stream(context.metamodels().spliterator(), false)
-                    .map(uri -> URIs.copy(uri, context.tempDirectory().appendSegment(uri.lastSegment())))
-                    .collect(Collectors.toList());
-
             // Register all metamodels
-            metamodels.forEach(Metamodels::register);
+            context.metamodels().forEach(Metamodels::register);
 
             /*
              * Step A: Metamodel processing
              */
 
             // A.1 Ecore to KM3
-            Iterable<URI> km3Metamodels = StreamSupport.stream(metamodels.spliterator(), false)
+            Iterable<URI> km3Metamodels = StreamSupport.stream(context.metamodels().spliterator(), false)
                     .map(metamodel -> EmfToKm3TransformationFactory.withEmftvm().transform(metamodel, context.tempDirectory().appendSegment(URIs.filename(metamodel, ".km3"))))
                     .collect(Collectors.toList());
-            ;
 
             // A.2 Ecore Relaxation
-            Iterable<URI> relaxedMetamodels = StreamSupport.stream(metamodels.spliterator(), false)
+            Iterable<URI> relaxedMetamodels = StreamSupport.stream(context.metamodels().spliterator(), false)
                     .map(metamodel -> Metamodels.relax(metamodel, context.tempDirectory().appendSegment(URIs.filename(metamodel, "-relaxed.ecore"))))
                     .collect(Collectors.toList());
 
@@ -55,7 +49,6 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
             Iterable<URI> km3RelaxedMetamodels = StreamSupport.stream(relaxedMetamodels.spliterator(), false)
                     .map(metamodel -> EmfToKm3TransformationFactory.withEmftvm().transform(metamodel, context.tempDirectory().appendSegment(URIs.filename(metamodel, ".km3"))))
                     .collect(Collectors.toList());
-            ;
 
             // A.4 KM3 to KM3 with IDs
             // Adding an optional attribute with name __xmiID__ and type String to each class
