@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ASCII"?>
+<Relational:Schema xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:Relational="http://example.org/Relational" xmi:id="IN/0.Package2Schema.out" name="p1">
+  <ownedElements xmi:id="IN//@ownedElements.0.Class2Table.t" name="c1"/>
+  <ownedElements xmi:id="IN//@ownedElements.1.Class2Table.t" name="c2">
+    <col xmi:id="IN6.SingleValuedAttribute2Column.c" name="c2_family"/>
+  </ownedElements>
+  <ownedElements xmi:id="IN//@ownedElements.2.Class2Table.t" name="c3"/>
+</Relational:Schema>
