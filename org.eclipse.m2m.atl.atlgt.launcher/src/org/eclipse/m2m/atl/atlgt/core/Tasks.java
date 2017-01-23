@@ -150,11 +150,11 @@ public final class Tasks {
 
             // D.1 XMI2DOT
             Commands.atlGt().xmiToDot().execute(
-                    "-xmi", URIs.absolutePath(context.inModel()), // myRelational.xmi
+                    "-xmi", URIs.absolutePath(context.outModel()), // myRelational.xmi
                     "-dot", URIs.absolutePath(context.tempDirectory().appendSegment(URIs.filename(context.module(), "-target-normal-updated.dot"))), // tmp/ClassDiagram2Relational-target-normal-updated.dot
                     "-odot", URIs.absolutePath(context.tempDirectory().appendSegment(URIs.filename(context.module(), "-target-normal.dot"))), // tmp/ClassDiagram2Relational-target-normal.dot
-                    "-km3", URIs.absolutePath(context.tempDirectory().appendSegment(URIs.filename(context.inMetamodel(), ".km3"))), // tmp/Relational.km3
-                    "-pkg", Metamodels.firstPackage(context.inMetamodel()).getName()); // Relational
+                    "-km3", URIs.absolutePath(context.tempDirectory().appendSegment(URIs.filename(context.outMetamodel(), ".km3"))), // tmp/Relational.km3
+                    "-pkg", Metamodels.firstPackage(context.outMetamodel()).getName()); // Relational
 
             // D.2 Denormalization
             Commands.gRoundTram().bxContract().execute(
@@ -166,19 +166,19 @@ public final class Tasks {
             // E.1 Backward UnCAL
             Commands.gRoundTram().bwdUncal().execute(
                     "-t",
-                    "-db", URIs.absolutePath(context.tempDirectory().appendSegment(URIs.filename(context.outModel(), ".dot"))), // tmp/myClassDiagram.dot
-                    "-udot", URIs.absolutePath(context.tempDirectory().appendSegment(URIs.filename(context.outModel(), "-updated.dot"))), // tmp/myClassDiagram-updated.dot
+                    "-db", URIs.absolutePath(context.tempDirectory().appendSegment(URIs.filename(context.inModel(), ".dot"))), // tmp/myClassDiagram.dot
+                    "-udot", URIs.absolutePath(context.tempDirectory().appendSegment(URIs.filename(context.inModel(), "-updated.dot"))), // tmp/myClassDiagram-updated.dot
                     "-dot", URIs.absolutePath(context.tempDirectory().appendSegment(URIs.filename(context.module(), "-target-updated.dot"))), // tmp/ClassDiagram2Relational-target-updated.dot
                     "-xg", URIs.absolutePath(context.tempDirectory().appendSegment(URIs.filename(context.module(), ".xg"))), // tmp/ClassDiagram2Relational.xg
                     "-ei", URIs.absolutePath(context.tempDirectory().appendSegment(URIs.filename(context.module(), ".ei")))); // tmp/ClassDiagram2Relational.ei
 
             // F.1 DOT2XMI
             Commands.atlGt().dotToXmi().execute(
-                    "-dot", URIs.absolutePath(context.tempDirectory().appendSegment(URIs.filename(context.outModel(), "-updated.dot"))), // tmp/myClassDiagram-updated.dot
-                    "-xmi", URIs.absolutePath(context.outModel()), // myClassDiagram.xmi
-                    "-km3", URIs.absolutePath(context.tempDirectory().appendSegment(URIs.filename(context.outMetamodel(), ".km3"))), // tmp/ClassDiagram.km3
-                    "-pkg", Metamodels.firstPackage(context.outMetamodel()).getName(), // ClassDiagram
-                    "-uri", Metamodels.firstPackage(context.outMetamodel()).getNsURI()); // http://example.org/ClassDiagram
+                    "-dot", URIs.absolutePath(context.tempDirectory().appendSegment(URIs.filename(context.inModel(), "-updated.dot"))), // tmp/myClassDiagram-updated.dot
+                    "-xmi", URIs.absolutePath(context.inModel()), // myClassDiagram.xmi
+                    "-km3", URIs.absolutePath(context.tempDirectory().appendSegment(URIs.filename(context.inMetamodel(), ".km3"))), // tmp/ClassDiagram.km3
+                    "-pkg", Metamodels.firstPackage(context.inMetamodel()).getName(), // ClassDiagram
+                    "-uri", Metamodels.firstPackage(context.inMetamodel()).getNsURI()); // http://example.org/ClassDiagram
             return context;
         };
     }
