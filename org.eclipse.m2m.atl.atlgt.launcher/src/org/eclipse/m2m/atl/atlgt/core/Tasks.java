@@ -362,7 +362,7 @@ public final class Tasks {
 
             // D.1 XMI2DOT
             Commands.atlGt().restrictAndXmiToDot().execute(
-            		"-pxmi", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.outModel(), "-normal.xmi"))),
+                    "-pxmi", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.outModel(), "-normal.xmi"))),
                     "-xmi", URIs.abs(context.outModel()),
                     "-km3", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(outMetamodel, "-relaxed.km3"))),
                     "-pkg", outPackage.getName(),
