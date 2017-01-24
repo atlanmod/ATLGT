@@ -26,6 +26,9 @@ public class Context {
     private final String transformationInstance;
     private final URI tempDirectory;
 
+    private URI inMetamodel;
+    private URI outMetamodel;
+
     /**
      * Constructs a new {@code Context} with the given parameters.
      */
@@ -138,5 +141,43 @@ public class Context {
      */
     public URI tempDirectory() {
         return tempDirectory;
+    }
+
+    /**
+     * Returns the metamodel of the source model.
+     *
+     * @return the URI of the metamodel, or {@code null} if it is not defined
+     */
+    public URI inMetamodel() {
+        return inMetamodel;
+    }
+
+    /**
+     * Defines the metamodel of the source model.
+     *
+     * @param inMetamodel the URI of the metamodel
+     */
+    public void inMetamodel(URI inMetamodel) {
+        System.out.println("Source metamodel: " + inMetamodel);
+        this.inMetamodel = inMetamodel;
+    }
+
+    /**
+     * Returns the metamodel of the target model.
+     *
+     * @return the URI of the metamodel, or {@code null} if it is not defined
+     */
+    public URI outMetamodel() {
+        return outMetamodel;
+    }
+
+    /**
+     * Defines the metamodel of the target model.
+     *
+     * @param outMetamodel the URI of the metamodel
+     */
+    public void outMetamodel(URI outMetamodel) {
+        System.out.println("Target metamodel: " + outMetamodel);
+        this.outMetamodel = outMetamodel;
     }
 }

@@ -8,9 +8,13 @@ import org.eclipse.m2m.atl.atlgt.tools.Commands;
 import org.eclipse.m2m.atl.atlgt.util.Metamodels;
 import org.eclipse.m2m.atl.atlgt.util.URIs;
 
+import java.util.List;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
+
+import static java.util.Objects.isNull;
 
 /**
  * Static class that regroups the different tasks of ATL-GT.
@@ -19,6 +23,35 @@ public final class Tasks {
 
     private Tasks() {
         throw new IllegalStateException("This class should not be initialized");
+    }
+
+    /**
+     * Initialize the context.
+     */
+    private static Function<Context, Context> initialize() {
+        return context -> {
+
+            if (isNull(context.inMetamodel())) {
+                // Retrieve the metamodels
+                URI inMetamodel = Metamodels.metamodelOf(context.inModel());
+
+                List<URI> otherMetamodels = StreamSupport.stream(context.metamodels().spliterator(), false)
+                        .filter(uri -> !Objects.equals(uri, inMetamodel))
+                        .collect(Collectors.toList());
+
+                if (otherMetamodels.size() != 1) {
+                    throw new IllegalArgumentException("Exactly 2 metamodels must be defined in an ATL-GT transformation");
+                }
+
+                URI outMetamodel = otherMetamodels.get(0);
+
+                // Define the metamodels
+                context.inMetamodel(inMetamodel);
+                context.outMetamodel(outMetamodel);
+            }
+
+            return context;
+        };
     }
 
     /**
@@ -34,7 +67,8 @@ public final class Tasks {
             System.out.println();
             System.out.println("### Metamodel processing");
 
-            ecoreToKm3()
+            initialize()
+                    .andThen(ecoreToKm3())
                     .andThen(relaxedEcoreToRelaxedKm3())
                     .apply(context);
 
@@ -55,7 +89,8 @@ public final class Tasks {
             System.out.println();
             System.out.println("### Transformation processing");
 
-            atlIdfier()
+            initialize()
+                    .andThen(atlIdfier())
                     .andThen(atlToUnql())
                     .apply(context);
 
@@ -76,7 +111,8 @@ public final class Tasks {
             System.out.println();
             System.out.println("### Forward transformation");
 
-            fwdXmiToDot()
+            initialize()
+                    .andThen(fwdXmiToDot())
                     .andThen(fwdUncal())
                     .andThen(fwdNormalize())
                     .andThen(fwdDotToXmi())
@@ -105,7 +141,8 @@ public final class Tasks {
             System.out.println();
             System.out.println("### Backward transformation");
 
-            bwdRestrictAndXmiToDot()
+            initialize()
+                    .andThen(bwdRestrictAndXmiToDot())
                     .andThen(bwdDenormalize())
                     .andThen(bwdUncal())
                     .andThen(bwdDotToXmi())
@@ -198,8 +235,8 @@ public final class Tasks {
     private static Function<Context, Context> atlToUnql() {
         return context -> {
 
-            URI inMetamodel = Metamodels.metamodelOf(context.inModel());
-            URI outMetamodel = Metamodels.metamodelOf(context.outModel());
+            URI inMetamodel = context.inMetamodel();
+            URI outMetamodel = context.outMetamodel();
 
             EPackage inPackage = Metamodels.firstPackage(inMetamodel);
             EPackage outPackage = Metamodels.firstPackage(outMetamodel);
@@ -227,7 +264,7 @@ public final class Tasks {
     private static Function<Context, Context> fwdXmiToDot() {
         return context -> {
 
-            URI inMetamodel = Metamodels.metamodelOf(context.inModel());
+            URI inMetamodel = context.inMetamodel();
             EPackage inPackage = Metamodels.firstPackage(inMetamodel);
 
             // C.1 XMI2DOT
@@ -295,7 +332,7 @@ public final class Tasks {
     private static Function<Context, Context> fwdDotToXmi() {
         return context -> {
 
-            URI outMetamodel = Metamodels.metamodelOf(context.outModel());
+            URI outMetamodel = context.outMetamodel();
             EPackage outPackage = Metamodels.firstPackage(outMetamodel);
 
             // C.2.2 DOT2XMI
@@ -320,7 +357,7 @@ public final class Tasks {
     private static Function<Context, Context> bwdRestrictAndXmiToDot() {
         return context -> {
 
-            URI outMetamodel = Metamodels.metamodelOf(context.outModel());
+            URI outMetamodel = context.outMetamodel();
             EPackage outPackage = Metamodels.firstPackage(outMetamodel);
 
             // D.1 XMI2DOT
@@ -390,7 +427,7 @@ public final class Tasks {
     private static Function<Context, Context> bwdDotToXmi() {
         return context -> {
 
-            URI inMetamodel = Metamodels.metamodelOf(context.inModel());
+            URI inMetamodel = context.inMetamodel();
             EPackage inPackage = Metamodels.firstPackage(inMetamodel);
 
             // F.1 DOT2XMI
