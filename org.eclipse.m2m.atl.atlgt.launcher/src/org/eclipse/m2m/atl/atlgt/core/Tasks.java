@@ -104,7 +104,7 @@ public final class Tasks {
             System.out.println();
             System.out.println("### Backward transformation");
 
-            bwdXmiToDot()
+            bwdRestrictAndXmiToDot()
                     .andThen(bwdDenormalize())
                     .andThen(bwdUncal())
                     .andThen(bwdDotToXmi())
@@ -304,16 +304,17 @@ public final class Tasks {
      *
      * @return a new function
      */
-    private static Function<Context, Context> bwdXmiToDot() {
+    private static Function<Context, Context> bwdRestrictAndXmiToDot() {
         return context -> {
 
             // D.1 XMI2DOT
-            Commands.atlGt().xmiToDot().execute(
+            Commands.atlGt().restrictAndXmiToDot().execute(
+            		"-pxmi", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.outModel(), "-normal.xmi"))),
                     "-xmi", URIs.abs(context.outModel()),
-                    "-dot", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.outModel(), "-normal-updated.dot"))),
-                    "-odot", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.outModel(), "-normal.dot"))),
                     "-km3", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.outMetamodel(), "-relaxed.km3"))),
-                    "-pkg", Metamodels.firstPackage(context.outMetamodel()).getName());
+                    "-pkg", Metamodels.firstPackage(context.outMetamodel()).getName(),
+                    "-odot", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.outModel(), "-normal.dot"))),
+                    "-udot", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.outModel(), "-normal-updated.dot"))));
 
             return context;
         };
