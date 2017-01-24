@@ -11,7 +11,7 @@
       xmi:id="//@ownedElements.0"
       name="Family"
       isAbstract="false">
-    <attr xmi:id="5" xsi:type="ClassDiagram:Attribute" owner="//@ownedElements.0" name="name" multiValued="false" type="//@ownedElements.2"/>
+    <attr xmi:id="5" xsi:type="ClassDiagram:Attribute" owner="//@ownedElements.0" name="name" multiValued="false" type="/1"/>
     <attr xmi:id="4" xsi:type="ClassDiagram:Attribute" owner="//@ownedElements.0" name="members" multiValued="true" type="//@ownedElements.1"/>
   </ownedElements>
   <ownedElements
@@ -21,12 +21,8 @@
       name="Person"
       isAbstract="false">
     <attr xmi:id="6" xsi:type="ClassDiagram:Attribute" owner="//@ownedElements.1" name="family" multiValued="false" type="//@ownedElements.0"/>
-    <attr xmi:id="7" xsi:type="ClassDiagram:Attribute" owner="//@ownedElements.1" name="personId" multiValued="false" type="//@ownedElements.2"/>
+    <attr xmi:id="7" xsi:type="ClassDiagram:Attribute" owner="//@ownedElements.1" name="personId" multiValued="false" type="/1"/>
   </ownedElements>
-  <ownedElements
-      xsi:type="ClassDiagram:DataType"
-      owner="/0"
-      xmi:id="//@ownedElements.2"
-      name="String"/>
-  </ClassDiagram:Package>
+  </ClassDiagram:Package>  
+  <ClassDiagram:DataType xmi:id="/1" name="String"/>
 </xmi:XMI>

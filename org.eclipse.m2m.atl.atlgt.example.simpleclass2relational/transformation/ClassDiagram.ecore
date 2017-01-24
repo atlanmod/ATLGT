@@ -8,12 +8,9 @@
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="Package" eSuperTypes="#/0/NamedElement">
       <eStructuralFeatures xsi:type="ecore:EReference" name="ownedElements" ordered="false"
-          upperBound="-1" eType="#/0/Classifier" containment="true" eOpposite="#/0/Classifier/owner"/>
+          upperBound="-1" eType="#/0/Class" containment="true" eOpposite="#/0/Class/owner"/>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="Classifier" abstract="true" eSuperTypes="#/0/NamedElement">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="owner" ordered="false"
-          lowerBound="1" eType="#/0/Package" eOpposite="#/0/Package/ownedElements"/>
-    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Classifier" abstract="true" eSuperTypes="#/0/NamedElement"/>
     <eClassifiers xsi:type="ecore:EClass" name="DataType" eSuperTypes="#/0/Classifier"/>
     <eClassifiers xsi:type="ecore:EClass" name="Class" eSuperTypes="#/0/Classifier">
       <eStructuralFeatures xsi:type="ecore:EReference" name="super" ordered="false"
@@ -22,6 +19,8 @@
           eType="#/0/Attribute" containment="true" eOpposite="#/0/Attribute/owner"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="isAbstract" ordered="false"
           unique="false" lowerBound="1" eType="#/1/Boolean"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="owner" ordered="false"
+          lowerBound="1" eType="#/0/Package" eOpposite="#/0/Package/ownedElements"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="Attribute" eSuperTypes="#/0/NamedElement">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="multiValued" ordered="false"
