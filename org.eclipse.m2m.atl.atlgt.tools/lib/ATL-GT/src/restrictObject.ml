@@ -25,8 +25,9 @@ let merge_refmaps (og1':xmi_element NameMap.t) (refmap':NameVtxSet.t NameMap.t) 
       | Some nvtxp',None -> (* feature insertion OR reference to nonBX part *)
        let s = NameVtxSet.filter (fun (name,_,_) ->
          if (NameMap.mem name og1') then
-           (* reference to BX part inserted, which is not supported *) 
-           myfail ("feature insertion not implemented yet : feature" ^ fname)
+           (* Reference to BX part, either of nontranslatable, or inserted (which is not supported) *)
+           (dprintf "Discarding non-translated reference %s to submodel. If it is an insered reference, it is not supported@." fname;
+ 	    false)
          else (* reference to nonBX part. discard *)
            false 
          ) nvtxp' in
