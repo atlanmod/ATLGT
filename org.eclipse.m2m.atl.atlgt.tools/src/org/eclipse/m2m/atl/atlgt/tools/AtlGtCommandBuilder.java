@@ -69,14 +69,5 @@ public class AtlGtCommandBuilder extends AbstractCommandBuilder {
     public Command restrictAndXmiToDot() {
         return build("restrictxmi_xmi2dot_command");
     }
-
-
-    /**
-     * ???
-     *
-     * @return a new command
-     */
-    public Command xmiToDotRestricted() {
-        return build("restrictxmi_xmi2dot_command");
-    }
+    
 }
