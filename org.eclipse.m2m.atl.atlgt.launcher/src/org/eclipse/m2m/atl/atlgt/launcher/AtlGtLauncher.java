@@ -32,10 +32,9 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
                     .apply(context);
         }
         else {
-            throw new IllegalArgumentException("Unknown direction");
+            throw new IllegalStateException("Unknown direction");
         }
 
         System.out.println("ATL-GT: Successfully executed");
-        System.out.println(context.tempDirectory());
     }
 }
