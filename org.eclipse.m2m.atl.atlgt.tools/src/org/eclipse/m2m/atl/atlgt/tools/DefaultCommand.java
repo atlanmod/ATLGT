@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * A default {@link Command} that executes a program using {@link ProcessBuilder}s and {@link Process}s.
@@ -50,7 +51,8 @@ public class DefaultCommand implements Command {
         pb.redirectErrorStream(true);
         pb.redirectOutput();
 
-        System.out.println("Executing: " + command.stream().collect(Collectors.joining(" ")));
+        System.out.println("Executing " + program + " " + Stream.of(args).collect(Collectors.joining(" ", "[", "]")));
+
         try {
             Process process = pb.start();
             int result = process.waitFor();
@@ -71,7 +73,7 @@ public class DefaultCommand implements Command {
      *
      * @throws IOException if an I/O error occurs
      */
-    private void printStream(InputStream inputStream, PrintStream printStream) throws IOException {
+    private static void printStream(InputStream inputStream, PrintStream printStream) throws IOException {
         try (BufferedReader input = new BufferedReader(new InputStreamReader(inputStream))) {
             String line;
             while ((line = input.readLine()) != null) {
