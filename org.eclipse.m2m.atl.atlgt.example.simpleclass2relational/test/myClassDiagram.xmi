@@ -1,31 +1,28 @@
 <?xml version="1.0" encoding="ASCII"?>
-<ClassDiagram:Package
+<xmi:XMI
     xmi:version="2.0" 
     xmlns:xmi="http://www.omg.org/XMI" 
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-    xmlns:ClassDiagram="http://example.org/ClassDiagram"
-    xmi:id="/0"
-    name="p1">
+    xmlns:ClassDiagram="http://example.org/ClassDiagram">
+  <ClassDiagram:Package xmi:id="/0" name="Families">
   <ownedElements
       xsi:type="ClassDiagram:Class"
       owner="/0"
       xmi:id="//@ownedElements.0"
-      name="c1"
+      name="Family"
       isAbstract="false">
-    <attr xmi:id="4" xsi:type="ClassDiagram:Attribute" owner="//@ownedElements.0" name="members" multiValued="true" type="//@ownedElements.0"/>
+    <attr xmi:id="5" xsi:type="ClassDiagram:Attribute" owner="//@ownedElements.0" name="name" multiValued="false" type="/1"/>
+    <attr xmi:id="4" xsi:type="ClassDiagram:Attribute" owner="//@ownedElements.0" name="members" multiValued="true" type="//@ownedElements.1"/>
   </ownedElements>
   <ownedElements
       xsi:type="ClassDiagram:Class"
       owner="/0"
       xmi:id="//@ownedElements.1"
-      name="c2"
+      name="Person"
       isAbstract="false">
     <attr xmi:id="6" xsi:type="ClassDiagram:Attribute" owner="//@ownedElements.1" name="family" multiValued="false" type="//@ownedElements.0"/>
+    <attr xmi:id="7" xsi:type="ClassDiagram:Attribute" owner="//@ownedElements.1" name="personId" multiValued="false" type="/1"/>
   </ownedElements>
-  <ownedElements
-      xsi:type="ClassDiagram:Class"
-      owner="/0"
-      xmi:id="//@ownedElements.2"
-      name="c3"
-      isAbstract="false"/>
-</ClassDiagram:Package>
+  </ClassDiagram:Package>
+  <ClassDiagram:DataType xmi:id="/1" name="String"/>
+</xmi:XMI>
