@@ -27,31 +27,33 @@ public class DefaultCommand implements Command {
     /**
      * The program to execute.
      */
-    private final String program;
+    private final String executable;
 
     /**
      * Constructs a new {@code DefaultCommand} on the given {@code path} with the specified {@code program}.
      *
      * @param path    the path to the execution of the command
-     * @param program the program to execute
+     * @param executable the program to execute
      */
-    protected DefaultCommand(Path path, String program) {
+    protected DefaultCommand(Path path, String executable) {
         this.path = path;
-        this.program = program;
+        this.executable = executable;
     }
 
     @Override
     public int execute(String... args) {
         List<String> command = new ArrayList<>();
-        command.add(path.resolve(program).toString());
+        command.add(executable);
         command.addAll(Arrays.asList(args));
 
-        ProcessBuilder pb = new ProcessBuilder();
-        pb.command(command);
-        pb.redirectErrorStream(true);
-        pb.redirectOutput();
+        ProcessBuilder pb = new ProcessBuilder()
+                .command(command)
+                .directory(path.toFile())
+                .redirectErrorStream(true);
 
-        System.out.println("Executing " + program + " " + Stream.of(args).collect(Collectors.joining(" ", "[", "]")));
+        System.out.println(
+                "Executing " + executable + " " +
+                        Stream.of(args).collect(Collectors.joining(" ", "[", "]")));
 
         try {
             Process process = pb.start();
