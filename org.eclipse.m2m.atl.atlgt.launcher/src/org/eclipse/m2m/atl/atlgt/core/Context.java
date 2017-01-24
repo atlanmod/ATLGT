@@ -13,9 +13,6 @@ import java.util.stream.Collectors;
  * {@link ILaunchConfiguration}.
  */
 public class Context {
-	
-	private final String transformationInstance;
-    private final URI tempDirectory;
 
     private final URI pluginUri;
     private final String moduleName;
@@ -26,6 +23,9 @@ public class Context {
     private final URI outModel;
 
     private final Direction direction;
+
+    private final String transformationInstance;
+    private final URI tempDirectory;
 
     /**
      * Constructs a new {@code Context} with the given parameters.
@@ -42,7 +42,7 @@ public class Context {
         this.direction = direction;
 
         transformationInstance = inModel.trimFileExtension().lastSegment() + "2" + outModel.trimFileExtension().lastSegment();
-        tempDirectory = outModel.trimFileExtension().trimSegments(1).appendSegment( transformationInstance + "-trace");
+        tempDirectory = outModel.trimFileExtension().trimSegments(1).appendSegment(transformationInstance + "-trace");
     }
 
     /**
@@ -75,24 +75,6 @@ public class Context {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
-    }
-
-    /**
-     * Returns the {@link URI} of the output directory.
-     *
-     * @return the URI
-     */
-    public URI tempDirectory() {
-        return tempDirectory;
-    }
-    
-    /**
-     * Returns the name of the current transformation instance.
-     *
-     * @return the name
-     */
-    public String transformationInstance() {
-        return transformationInstance;
     }
 
     /**
@@ -156,5 +138,23 @@ public class Context {
      */
     public Direction direction() {
         return direction;
+    }
+
+    /**
+     * Returns the name of the current transformation instance.
+     *
+     * @return the name
+     */
+    public String transformationInstance() {
+        return transformationInstance;
+    }
+
+    /**
+     * Returns the {@link URI} of the output directory.
+     *
+     * @return the URI
+     */
+    public URI tempDirectory() {
+        return tempDirectory;
     }
 }

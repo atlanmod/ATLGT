@@ -51,7 +51,20 @@ public final class URIs {
      * extension.
      */
     public static String fn(URI uri, String suffix) {
-        return uri.trimFileExtension().lastSegment().concat(nonNull(suffix) ? suffix : "");
+        return fn(uri.trimFileExtension().lastSegment(), suffix);
+    }
+
+    /**
+     * Returns the filename of the {@code uri} with a new {@code suffix}.
+     *
+     * @param uri    the literal representation of the uri
+     * @param suffix the new suffix of the filename.
+     *
+     * @return the filename of the {@code uri}. If {@code suffix} is {@code null}, returns the filename without its
+     * extension.
+     */
+    public static String fn(String uri, String suffix) {
+        return uri.concat(nonNull(suffix) ? suffix : "");
     }
 
     /**
