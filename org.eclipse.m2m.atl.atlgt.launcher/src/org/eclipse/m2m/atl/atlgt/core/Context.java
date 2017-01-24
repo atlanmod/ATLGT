@@ -5,7 +5,6 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.atl.emftvm.launcher.EMFTVMLaunchConstants;
 
 import java.util.Collections;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -17,7 +16,7 @@ public class Context {
     private final URI pluginUri;
     private final String moduleName;
 
-    private final Map<String, URI> metamodels;
+    private final Iterable<URI> metamodels;
 
     private final URI inModel;
     private final URI outModel;
@@ -30,7 +29,7 @@ public class Context {
     /**
      * Constructs a new {@code Context} with the given parameters.
      */
-    private Context(URI pluginUri, String moduleName, Map<String, URI> metamodels, URI inModel, URI outModel, Direction direction) {
+    private Context(URI pluginUri, String moduleName, Iterable<URI> metamodels, URI inModel, URI outModel, Direction direction) {
         this.pluginUri = pluginUri;
         this.moduleName = moduleName;
 
@@ -59,9 +58,10 @@ public class Context {
             String modulePath = configuration.getAttribute(EMFTVMLaunchConstants.MODULE_PATH, "");
             URI pluginUri = URI.createPlatformResourceURI(modulePath.substring(0, modulePath.lastIndexOf("/")), false);
 
-            Map<String, URI> metamodels = configuration.getAttribute(EMFTVMLaunchConstants.METAMODELS, Collections.emptyMap()).entrySet()
-                    .stream()
-                    .collect(Collectors.toMap(Map.Entry::getKey, p -> URI.createURI(p.getValue())));
+            Iterable<URI> metamodels = configuration.getAttribute(EMFTVMLaunchConstants.METAMODELS, Collections.emptyMap())
+                    .values().stream()
+                    .map(URI::createURI)
+                    .collect(Collectors.toList());
 
             URI inModel = URI.createURI(configuration.getAttribute(EMFTVMLaunchConstants.INPUT_MODELS, Collections.emptyMap()).values().iterator().next());
             URI outModel = URI.createURI(configuration.getAttribute(EMFTVMLaunchConstants.OUTPUT_MODELS, Collections.emptyMap()).values().iterator().next());
@@ -92,25 +92,7 @@ public class Context {
      * @return an immutable list
      */
     public Iterable<URI> metamodels() {
-        return Collections.unmodifiableCollection(metamodels.values());
-    }
-
-    /**
-     * Returns the input metamodel.
-     *
-     * @return the metamodel
-     */
-    public URI inMetamodel() {
-        return metamodels.get("IN");
-    }
-
-    /**
-     * Returns the output metamodel.
-     *
-     * @return the metamodel
-     */
-    public URI outMetamodel() {
-        return metamodels.get("OUT");
+        return metamodels;
     }
 
     /**

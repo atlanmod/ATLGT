@@ -248,6 +248,40 @@ public final class Metamodels {
     }
 
     /**
+     * Returns the metamodel of the {@code model}. The metamodel must be previously registered with the
+     * {@link #register(URI)} method.
+     *
+     * @param model the model
+     *
+     * @return the URI of the metamodel
+     */
+    public static URI metamodelOf(URI model) {
+        if (!Objects.equals(model.fileExtension(), "xmi")) {
+            throw new IllegalArgumentException("Only XMI models can have a metamodel");
+        }
+
+        Resource resource = getResourceFrom(model);
+
+        // Retrieve all EPackage instances used
+        Iterable<EObject> allContents = resource::getAllContents;
+        Optional<String> nsUri = StreamSupport.stream(allContents.spliterator(), false)
+                .map(e -> e.eClass().getEPackage().getNsURI())
+                .findFirst();
+
+        if (!nsUri.isPresent()) {
+            throw new NullPointerException("Unable to find the used URI");
+        }
+
+        Optional<URI> uri = Optional.ofNullable(EPackage.Registry.INSTANCE.getEPackage(nsUri.get()).eResource().getURI());
+
+        if (!uri.isPresent()) {
+            throw new NullPointerException("Unable to find the URI of the namespace " + nsUri);
+        }
+
+        return uri.get();
+    }
+
+    /**
      * Returns the {@link Resource} resolved by the {@code uri}.
      *
      * @param uri the URI to resolve

@@ -1,6 +1,7 @@
 package org.eclipse.m2m.atl.atlgt.core;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.m2m.atl.atlgt.atlidfier.AtlIdfierTransformationFactory;
 import org.eclipse.m2m.atl.atlgt.ecore2km3.EmfToKm3TransformationFactory;
 import org.eclipse.m2m.atl.atlgt.tools.Commands;
@@ -197,14 +198,20 @@ public final class Tasks {
     private static Function<Context, Context> atlToUnql() {
         return context -> {
 
+            URI inMetamodel = Metamodels.metamodelOf(context.inModel());
+            URI outMetamodel = Metamodels.metamodelOf(context.outModel());
+
+            EPackage inPackage = Metamodels.firstPackage(inMetamodel);
+            EPackage outPackage = Metamodels.firstPackage(outMetamodel);
+
             // B.2 ATL2UNQL
             Commands.atlGt().atlToUnql().execute(
                     "-atl", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.module(), ".atl"))),
                     "-uq", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.module(), ".unql"))),
-                    "-ikm3", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.inMetamodel(), ".km3"))),
-                    "-ipkg", Metamodels.firstPackage(context.inMetamodel()).getName(),
-                    "-okm3", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.outMetamodel(), "-relaxed.km3"))),
-                    "-opkg", Metamodels.firstPackage(context.outMetamodel()).getName());
+                    "-ikm3", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(inMetamodel, ".km3"))),
+                    "-ipkg", inPackage.getName(),
+                    "-okm3", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(outMetamodel, "-relaxed.km3"))),
+                    "-opkg", outPackage.getName());
 
             return context;
         };
@@ -220,13 +227,16 @@ public final class Tasks {
     private static Function<Context, Context> fwdXmiToDot() {
         return context -> {
 
+            URI inMetamodel = Metamodels.metamodelOf(context.inModel());
+            EPackage inPackage = Metamodels.firstPackage(inMetamodel);
+
             // C.1 XMI2DOT
             // NOTE: We choose the first package name but we support only one package.
             Commands.atlGt().xmiToDot().execute(
                     "-xmi", URIs.abs(context.inModel()),
                     "-dot", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.inModel(), ".dot"))),
-                    "-km3", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.inMetamodel(), ".km3"))),
-                    "-pkg", Metamodels.firstPackage(context.inMetamodel()).getName());
+                    "-km3", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(inMetamodel, ".km3"))),
+                    "-pkg", inPackage.getName());
 
             return context;
         };
@@ -285,13 +295,16 @@ public final class Tasks {
     private static Function<Context, Context> fwdDotToXmi() {
         return context -> {
 
+            URI outMetamodel = Metamodels.metamodelOf(context.outModel());
+            EPackage outPackage = Metamodels.firstPackage(outMetamodel);
+
             // C.2.2 DOT2XMI
             Commands.atlGt().dotToXmi().execute(
                     "-dot", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.outModel(), "-normal.dot"))),
                     "-xmi", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.outModel(), "-normal.xmi"))),
-                    "-km3", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.outMetamodel(), "-relaxed.km3"))),
-                    "-pkg", Metamodels.firstPackage(context.outMetamodel()).getName(),
-                    "-uri", Metamodels.firstPackage(context.outMetamodel()).getNsURI());
+                    "-km3", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(outMetamodel, "-relaxed.km3"))),
+                    "-pkg", outPackage.getName(),
+                    "-uri", outPackage.getNsURI());
 
             return context;
         };
@@ -307,12 +320,15 @@ public final class Tasks {
     private static Function<Context, Context> bwdRestrictAndXmiToDot() {
         return context -> {
 
+            URI outMetamodel = Metamodels.metamodelOf(context.outModel());
+            EPackage outPackage = Metamodels.firstPackage(outMetamodel);
+
             // D.1 XMI2DOT
             Commands.atlGt().restrictAndXmiToDot().execute(
             		"-pxmi", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.outModel(), "-normal.xmi"))),
                     "-xmi", URIs.abs(context.outModel()),
-                    "-km3", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.outMetamodel(), "-relaxed.km3"))),
-                    "-pkg", Metamodels.firstPackage(context.outMetamodel()).getName(),
+                    "-km3", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(outMetamodel, "-relaxed.km3"))),
+                    "-pkg", outPackage.getName(),
                     "-odot", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.outModel(), "-normal.dot"))),
                     "-udot", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.outModel(), "-normal-updated.dot"))));
 
@@ -374,13 +390,16 @@ public final class Tasks {
     private static Function<Context, Context> bwdDotToXmi() {
         return context -> {
 
+            URI inMetamodel = Metamodels.metamodelOf(context.inModel());
+            EPackage inPackage = Metamodels.firstPackage(inMetamodel);
+
             // F.1 DOT2XMI
             Commands.atlGt().dotToXmi().execute(
                     "-dot", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.inModel(), "-updated.dot"))),
                     "-xmi", URIs.abs(context.inModel()),
-                    "-km3", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.inMetamodel(), ".km3"))),
-                    "-pkg", Metamodels.firstPackage(context.inMetamodel()).getName(),
-                    "-uri", Metamodels.firstPackage(context.inMetamodel()).getNsURI());
+                    "-km3", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(inMetamodel, ".km3"))),
+                    "-pkg", inPackage.getName(),
+                    "-uri", inPackage.getNsURI());
 
             return context;
         };

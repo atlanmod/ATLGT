@@ -60,7 +60,7 @@ public class AtlGtCommandBuilder extends AbstractCommandBuilder {
     public Command xmiToDot() {
         return build("xmi2dot_generic_command");
     }
-    
+
     /**
      * ???
      *
@@ -69,5 +69,4 @@ public class AtlGtCommandBuilder extends AbstractCommandBuilder {
     public Command restrictAndXmiToDot() {
         return build("restrictxmi_xmi2dot_command");
     }
-    
 }
