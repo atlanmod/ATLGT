@@ -43,7 +43,7 @@ public class DefaultCommand implements Command {
     @Override
     public int execute(String... args) {
         List<String> command = new ArrayList<>();
-        command.add(executable);
+        command.add(path.resolve(executable).toString());
         command.addAll(Arrays.asList(args));
 
         ProcessBuilder pb = new ProcessBuilder()
@@ -51,9 +51,7 @@ public class DefaultCommand implements Command {
                 .directory(path.toFile())
                 .redirectErrorStream(true);
 
-        System.out.println(
-                "Executing " + executable + " " +
-                        Stream.of(args).collect(Collectors.joining(" ", "[", "]")));
+        System.out.println("Executing: " + executable + " " + Stream.of(args).collect(Collectors.joining(" ")));
 
         try {
             Process process = pb.start();

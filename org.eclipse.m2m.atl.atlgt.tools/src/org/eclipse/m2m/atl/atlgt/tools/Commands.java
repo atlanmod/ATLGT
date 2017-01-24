@@ -5,11 +5,9 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Platform;
 import org.osgi.framework.Bundle;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
@@ -53,22 +51,13 @@ public class Commands {
      * @return the absolute path of the library
      */
     private static Path resolve(String name) {
-        IPath internalPath = new org.eclipse.core.runtime.Path(String.format("lib/%s", name));
+        IPath internalPath = new org.eclipse.core.runtime.Path(String.format("lib/%s/bin", name));
         Bundle bundle = Platform.getBundle(BUNDLE_SYMBOLIC_NAME);
         Map<String, String> options = Collections.emptyMap();
 
         try {
-            // Resolve the path
             URL url = FileLocator.resolve(FileLocator.find(bundle, internalPath, options));
-            Path path = Paths.get(url.toURI()).resolve("bin");
-
-            // Create the directory if it doesn't exist
-            File file = path.toFile();
-            if (!file.exists()) {
-                Files.createDirectory(file.toPath());
-            }
-
-            return path;
+            return Paths.get(url.toURI());
         }
         catch (IOException | URISyntaxException e) {
             e.printStackTrace();
