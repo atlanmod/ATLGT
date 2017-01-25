@@ -6,11 +6,13 @@ import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import static java.util.Objects.nonNull;
+import static java.util.Objects.isNull;
 
 /**
  * An {@link XMIResource} with additional features to ensure a complete understanding with the tools used.
@@ -35,7 +37,22 @@ public class ExtendedXMIResource extends XMIResourceImpl implements XMIResource 
      * @return the new identifier
      */
     private static String transformID(String id) {
-        return nonNull(id) ? String.valueOf(id.hashCode()) : null;
+        if (isNull(id)) {
+            return null;
+        }
+        try {
+            MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+            byte[] newID = messageDigest.digest(id.getBytes());
+            StringBuilder sb = new StringBuilder();
+            for (byte aNewID : newID) {
+                sb.append(Integer.toHexString((aNewID & 0xFF) | 0x100).substring(1, 3));
+            }
+            return sb.toString();
+        }
+        catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
