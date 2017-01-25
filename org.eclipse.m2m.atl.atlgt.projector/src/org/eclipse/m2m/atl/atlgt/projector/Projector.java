@@ -28,8 +28,8 @@ public class Projector {
 	// We can translate them if they do not refer to anything bad (missing
 	// CollectionOperationCallExp OperatorCallExp OperationCallExp)
 	final String[] translatableClasses = { "Module", "OclModel", "MatchedRule", "OutPattern", "SimpleOutPatternElement",
-			"OclModelElement", "Binding", "NavigationOrAttributeCallExp", "VariableExp", "StringExp", "InPattern",
-			"IfExp", "Iterator", "IteratorExp", "OclUndefinedExp", "SimpleInPatternElement" };
+			"OclModelElement", "Binding", "NavigationOrAttributeCallExp", "VariableExp", "StringExp", "InPattern", 
+			"Iterator", "IteratorExp", "OclUndefinedExp", "SimpleInPatternElement" };
 	Set<String> translatableClassesSet = new HashSet<String>(Arrays.asList(translatableClasses));
 	
 	final String[][] translatablePatterns = {{ "OperationCallExp", "operationName", "isEmpty"}, 
