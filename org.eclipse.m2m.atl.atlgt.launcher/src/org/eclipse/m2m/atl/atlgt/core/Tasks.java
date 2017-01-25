@@ -26,11 +26,12 @@ public final class Tasks {
     }
 
     /**
-     * Initialize the context.
+     * Step -: Initialize the context.
      */
     private static Function<Context, Context> initialize() {
         return context -> {
 
+            // -.1 Link metamodels to their model
             if (isNull(context.inMetamodel())) {
                 // Retrieve the metamodels
                 URI inMetamodel = Metamodels.metamodelOf(context.inModel());
@@ -49,6 +50,11 @@ public final class Tasks {
                 context.inMetamodel(inMetamodel);
                 context.outMetamodel(outMetamodel);
             }
+
+            // -.2 Pre-process the source model
+            Metamodels.copy(
+                    context.inModel(),
+                    context.tempDirectory().appendSegment(context.inModel().lastSegment()));
 
             return context;
         };
@@ -119,10 +125,17 @@ public final class Tasks {
                     .apply(context);
 
             // C.3 Execution of ATL with IDs
-            Metamodels.transform(context.inModel(), context.outModel(), context.metamodels(), context.tempDirectory(), context.module().lastSegment());
+            Metamodels.transform(
+                    context.tempDirectory().appendSegment(context.inModel().lastSegment()),
+                    context.tempDirectory().appendSegment(context.outModel().lastSegment()),
+                    context.metamodels(),
+                    context.tempDirectory(),
+                    context.module().lastSegment());
 
-            // C.4 Copy the target model to the hidden folder
-            URIs.copy(context.outModel(), context.tempDirectory().appendSegment(context.outModel().lastSegment()));
+            // C.4 Post-process the target model
+            URIs.copy(
+                    context.tempDirectory().appendSegment(context.outModel().lastSegment()),
+                    context.outModel());
 
             return context;
         };
@@ -270,7 +283,7 @@ public final class Tasks {
             // C.1 XMI2DOT
             // NOTE: We choose the first package name but we support only one package.
             Commands.atlGt().xmiToDot().execute(
-                    "-xmi", URIs.abs(context.inModel()),
+                    "-xmi", URIs.abs(context.tempDirectory().appendSegment(context.inModel().lastSegment())),
                     "-dot", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.inModel(), ".dot"))),
                     "-km3", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(inMetamodel, ".km3"))),
                     "-pkg", inPackage.getName());
@@ -363,7 +376,7 @@ public final class Tasks {
             // D.1 XMI2DOT
             Commands.atlGt().restrictAndXmiToDot().execute(
                     "-pxmi", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.outModel(), "-normal.xmi"))),
-                    "-xmi", URIs.abs(context.outModel()),
+                    "-xmi", URIs.abs(context.tempDirectory().appendSegment(context.outModel().lastSegment())),
                     "-km3", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(outMetamodel, "-relaxed.km3"))),
                     "-pkg", outPackage.getName(),
                     "-odot", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.outModel(), "-normal.dot"))),
@@ -433,7 +446,7 @@ public final class Tasks {
             // F.1 DOT2XMI
             Commands.atlGt().dotToXmi().execute(
                     "-dot", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.inModel(), "-updated.dot"))),
-                    "-xmi", URIs.abs(context.inModel()),
+                    "-xmi", URIs.abs(context.tempDirectory().appendSegment(context.inModel().lastSegment())),
                     "-km3", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(inMetamodel, ".km3"))),
                     "-pkg", inPackage.getName(),
                     "-uri", inPackage.getNsURI());

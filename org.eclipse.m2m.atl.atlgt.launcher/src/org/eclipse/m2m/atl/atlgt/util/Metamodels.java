@@ -8,10 +8,11 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.BasicExtendedMetaData;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.ExtendedMetaData;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
-import org.eclipse.m2m.atl.atlgt.resource.VerboseXMIResourceFactory;
+import org.eclipse.m2m.atl.atlgt.resource.ExtendedXMIResourceFactory;
 import org.eclipse.m2m.atl.emftvm.EmftvmFactory;
 import org.eclipse.m2m.atl.emftvm.ExecEnv;
 import org.eclipse.m2m.atl.emftvm.Model;
@@ -39,7 +40,7 @@ public final class Metamodels {
 
     static {
         Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("ecore", new EcoreResourceFactoryImpl());
-        Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("xmi", new VerboseXMIResourceFactory());
+        Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("xmi", new ExtendedXMIResourceFactory());
     }
 
     private Metamodels() {
@@ -278,6 +279,31 @@ public final class Metamodels {
         }
 
         return uri.get();
+    }
+
+    /**
+     * Copies the {@code source} model to the {@code target} model.
+     *
+     * @param source the model to copy
+     * @param target the model where data should be saved
+     *
+     * @return the {@code target} model
+     */
+    public static URI copy(URI source, URI target) {
+        Resource sourceResource = getResourceFrom(source);
+        Resource targetResource = createResourceFrom(target);
+
+        targetResource.getContents().addAll(EcoreUtil.copyAll(sourceResource.getContents()));
+
+        try {
+            targetResource.save(Collections.emptyMap());
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+
+        return target;
     }
 
     /**

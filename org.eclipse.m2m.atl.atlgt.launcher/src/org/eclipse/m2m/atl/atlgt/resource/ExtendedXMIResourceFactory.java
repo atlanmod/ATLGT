@@ -7,14 +7,14 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 /**
  *
  */
-public class VerboseXMIResourceFactory extends XMIResourceFactoryImpl {
+public class ExtendedXMIResourceFactory extends XMIResourceFactoryImpl {
 
-    public VerboseXMIResourceFactory() {
+    public ExtendedXMIResourceFactory() {
         super();
     }
 
     @Override
     public Resource createResource(URI uri) {
-        return new VerboseXMIResource(uri);
+        return new ExtendedXMIResource(uri);
     }
 }
