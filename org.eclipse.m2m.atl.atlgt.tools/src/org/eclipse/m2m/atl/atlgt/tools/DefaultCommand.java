@@ -55,9 +55,13 @@ public class DefaultCommand implements Command {
 
         try {
             Process process = pb.start();
-            int result = process.waitFor();
+            int exitValue = process.waitFor();
             printStream(process.getInputStream(), System.out);
-            return result;
+
+            if (exitValue != 0) {
+                throw new RuntimeException("The execution ended with an error: " + exitValue + ". See the trace for more information");
+            }
+            return exitValue;
         }
         catch (IOException | InterruptedException e) {
             e.printStackTrace();
