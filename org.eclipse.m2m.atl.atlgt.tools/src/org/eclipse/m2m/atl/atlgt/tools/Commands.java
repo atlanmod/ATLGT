@@ -51,7 +51,7 @@ public class Commands {
      * @return the absolute path of the library
      */
     private static Path resolve(String name) {
-        IPath internalPath = new org.eclipse.core.runtime.Path(String.format("lib/%s/%s/bin", name, os()));
+        IPath internalPath = new org.eclipse.core.runtime.Path(String.format("lib/%s/bin/%s", name, os()));
         Bundle bundle = Platform.getBundle(BUNDLE_SYMBOLIC_NAME);
         Map<String, String> options = Collections.emptyMap();
 
