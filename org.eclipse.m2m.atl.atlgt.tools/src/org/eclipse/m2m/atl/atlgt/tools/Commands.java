@@ -13,6 +13,8 @@ import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.Map;
 
+import static java.util.Objects.isNull;
+
 /**
  * A factory of {@link CommandBuilder}s.
  */
@@ -55,10 +57,13 @@ public class Commands {
         Bundle bundle = Platform.getBundle(BUNDLE_SYMBOLIC_NAME);
         Map<String, String> options = Collections.emptyMap();
 
-        System.out.println("Resolving " + internalPath);
-
         try {
             URL url = FileLocator.resolve(FileLocator.find(bundle, internalPath, options));
+
+            if (isNull(url)) {
+                throw new NullPointerException("Unable to find the binaries in '" + internalPath + "'");
+            }
+
             return Paths.get(url.toURI());
         }
         catch (IOException | URISyntaxException e) {
