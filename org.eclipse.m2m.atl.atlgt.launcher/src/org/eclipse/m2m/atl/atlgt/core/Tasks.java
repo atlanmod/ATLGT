@@ -124,7 +124,7 @@ public final class Tasks {
             // C.5 Copy the target model to the user folder
             URIs.copy(context.tempDirectory().appendSegment(context.outModel().lastSegment()), context.outModel());
             
-            // C.6 Copy the target model to the hidden folder
+            // C.6 Launch forward transformation in GRoundTram
             initialize()
 	            .andThen(fwdXmiToDot())
 	            .andThen(fwdUncal())
