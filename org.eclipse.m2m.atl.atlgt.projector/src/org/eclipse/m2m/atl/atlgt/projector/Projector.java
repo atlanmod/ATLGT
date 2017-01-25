@@ -11,8 +11,10 @@ import java.util.Set;
 
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -46,10 +48,16 @@ public class Projector {
 		System.out.println("Projection of '" + program);
 
 		Resource resource = (new ResourceSetImpl()).getResource(program, true);
+		
+		EObject root = resource.getContents().get(0);
+		EStructuralFeature programNameAttribute = root.eClass().getEStructuralFeature("name");
+		String oldProgramName = (String) root.eGet(programNameAttribute);
+		root.eSet(programNameAttribute, oldProgramName+"Projected");	
+		
 		TreeIterator<EObject> allContents = resource.getAllContents();
 		while (allContents.hasNext())
 			toProcess.add(allContents.next());
-		
+				
 		ArrayList<EObject> toProcessB = new ArrayList<EObject>();
 		for (EObject eo: toProcess) {
 			toProcessB.add(eo);

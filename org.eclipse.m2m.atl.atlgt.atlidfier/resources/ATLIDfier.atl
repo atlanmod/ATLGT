@@ -5,6 +5,15 @@
 module ATLIDfier;
 create OUT : ATL refining IN : ATL;
 
+rule Module {
+	from
+		s : ATL!Module
+	to
+		t : ATL!Module (
+			name <- s.name + 'Ids'
+		)
+}
+
 -- 'IN'.concat(s.__xmiID__.concat('.Class2Table.t')),
 rule OutPatternElement {
 		from
