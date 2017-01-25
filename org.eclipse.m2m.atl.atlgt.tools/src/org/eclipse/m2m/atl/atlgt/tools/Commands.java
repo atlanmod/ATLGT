@@ -51,9 +51,11 @@ public class Commands {
      * @return the absolute path of the library
      */
     private static Path resolve(String name) {
-        IPath internalPath = new org.eclipse.core.runtime.Path(String.format("lib/%s/bin", name));
+        IPath internalPath = new org.eclipse.core.runtime.Path(String.format("lib/%s/%s/bin", name, os()));
         Bundle bundle = Platform.getBundle(BUNDLE_SYMBOLIC_NAME);
         Map<String, String> options = Collections.emptyMap();
+
+        System.out.println("Resolving " + internalPath);
 
         try {
             URL url = FileLocator.resolve(FileLocator.find(bundle, internalPath, options));
@@ -63,5 +65,29 @@ public class Commands {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
+    }
+
+    private static String os() {
+        String name = System.getProperty("os.name").toLowerCase();
+        String arch = System.getProperty("os.arch").toLowerCase();
+
+        if (name.contains("win")) {
+            name = "win";
+        }
+        else if (name.contains("mac")) {
+            name = "osx";
+        }
+        else {
+            name = "linux";
+        }
+
+        if (arch.contains("64")) {
+            arch = "64";
+        }
+        else {
+            arch = "32";
+        }
+
+        return String.format("%s-%s", name, arch);
     }
 }
