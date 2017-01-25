@@ -4,6 +4,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.m2m.atl.atlgt.atlidfier.AtlIdfierTransformationFactory;
 import org.eclipse.m2m.atl.atlgt.ecore2km3.EmfToKm3TransformationFactory;
+import org.eclipse.m2m.atl.atlgt.projector.ProjectorFactory;
 import org.eclipse.m2m.atl.atlgt.tools.Commands;
 import org.eclipse.m2m.atl.atlgt.util.Metamodels;
 import org.eclipse.m2m.atl.atlgt.util.URIs;
@@ -97,6 +98,7 @@ public final class Tasks {
 
             initialize()
                     .andThen(atlIdfier())
+                    .andThen(atlToUnqlProjector())
                     .andThen(atlToUnql())
                     .apply(context);
 
@@ -130,7 +132,7 @@ public final class Tasks {
                     context.tempDirectory().appendSegment(context.outModel().lastSegment()),
                     context.metamodels(),
                     context.tempDirectory(),
-                    context.module().lastSegment());
+                    URIs.fn(context.module(), "Ids"));
 
             // C.4 Post-process the target model
             URIs.copy(
@@ -228,7 +230,7 @@ public final class Tasks {
             // B.1 ATLIDfier
             // Create a copy of the atl file
             URI atlModule = context.module().appendFileExtension("atl");
-            URI idfiedAtlModule = context.tempDirectory().appendSegment(atlModule.lastSegment());
+            URI idfiedAtlModule = context.tempDirectory().appendSegment(URIs.fn(context.module(), "Ids.atl"));
             URIs.copy(atlModule, idfiedAtlModule);
 
             // Run in-place transformation
@@ -239,7 +241,30 @@ public final class Tasks {
     }
 
     /**
-     * Step B.2: ATL2UNQL.
+     * Step B.2: ATL2UnQL Projector.
+     * <p>
+     * ???
+     *
+     * @return a new function
+     */
+    private static Function<Context, Context> atlToUnqlProjector() {
+        return context -> {
+
+            // B.3 ATL2UnQL Projector
+            // Create a copy of the atl file
+            URI idfiedAtlModule = context.tempDirectory().appendSegment(URIs.fn(context.module(), "Ids.atl"));
+            URI projectedAtlModule = context.tempDirectory().appendSegment(URIs.fn(context.module(), "IdsProjected.atl"));
+            URIs.copy(idfiedAtlModule,projectedAtlModule);
+
+            // Run in-place transformation
+            ProjectorFactory.withEmftvm().transform(projectedAtlModule);
+
+            return context;
+        };
+    }
+
+    /**
+     * Step B.3: ATL2UNQL.
      * <p>
      * ???
      *
@@ -254,10 +279,10 @@ public final class Tasks {
             EPackage inPackage = Metamodels.firstPackage(inMetamodel);
             EPackage outPackage = Metamodels.firstPackage(outMetamodel);
 
-            // B.2 ATL2UNQL
+            // B.3 ATL2UNQL
             Commands.atlGt().atlToUnql().execute(
-                    "-atl", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.module(), ".atl"))),
-                    "-uq", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.module(), ".unql"))),
+                    "-atl", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.module(), "IdsProjected.atl"))),
+                    "-uq", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.module(), "IdsProjected.unql"))),
                     "-ikm3", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(inMetamodel, ".km3"))),
                     "-ipkg", inPackage.getName(),
                     "-okm3", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(outMetamodel, "-relaxed.km3"))),
@@ -306,7 +331,7 @@ public final class Tasks {
             Commands.gRoundTram().fwdUncal().execute(
                     "-ge", "-sb", "-cl", "-zn", "-fi", "-np", "-sa", "-t", "-rw", "-as",
                     "-db", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.inModel(), ".dot"))),
-                    "-uq", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.module(), ".unql"))),
+                    "-uq", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.module(), "IdsProjected.unql"))),
                     "-dot", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.outModel(), ".dot"))),
                     "-xg", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.transformationInstance(), ".xg"))),
                     "-ei", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.transformationInstance(), ".ei"))));

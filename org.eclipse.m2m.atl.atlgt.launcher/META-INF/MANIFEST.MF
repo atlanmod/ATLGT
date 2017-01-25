@@ -18,7 +18,8 @@ Require-Bundle: org.eclipse.swt,
  org.eclipse.m2m.atl.atlgt.tools,
  org.eclipse.m2m.atl.emftvm.launcher,
  org.eclipse.m2m.km3,
- org.eclipse.m2m.atl.emftvm
+ org.eclipse.m2m.atl.emftvm,
+ org.eclipse.m2m.atl.atlgt.projector
 Import-Package: org.osgi.framework,
  org.eclipse.core.runtime,
  org.eclipse.core.resources,
