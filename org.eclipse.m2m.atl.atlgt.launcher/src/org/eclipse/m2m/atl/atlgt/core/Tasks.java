@@ -113,20 +113,27 @@ public final class Tasks {
             System.out.println();
             System.out.println("### Forward transformation");
 
-            initialize()
-                    .andThen(fwdXmiToDot())
-                    .andThen(fwdUncal())
-                    .andThen(fwdNormalize())
-                    .andThen(fwdDotToXmi())
-                    .apply(context);
-
             // C.3 Execution of ATL with IDs
-            Metamodels.transform(context.inModel(), context.outModel(), context.metamodels(), context.tempDirectory(), URIs.fn(context.module(), "Ids"));
+            Metamodels.transform(context.inModel(), context.tempDirectory().appendSegment(context.outModel().lastSegment()),
+            		context.metamodels(), context.tempDirectory(), URIs.fn(context.module(), "Ids"));
 
-            // C.4 Copy the target model to the hidden folder
-            URIs.copy(context.outModel(), context.tempDirectory().appendSegment(context.outModel().lastSegment()));
-
+            // C.4 Execution of ATL with IDs projected
+            Metamodels.transform(context.inModel(), context.tempDirectory().appendSegment(URIs.fn(context.outModel(), "-partial.xmi")),
+            		context.metamodels(), context.tempDirectory(), URIs.fn(context.module(), "IdsProjected"));
+            
+            // C.5 Copy the target model to the user folder
+            URIs.copy(context.tempDirectory().appendSegment(context.outModel().lastSegment()), context.outModel());
+            
+            // C.6 Copy the target model to the hidden folder
+            initialize()
+	            .andThen(fwdXmiToDot())
+	            .andThen(fwdUncal())
+	            .andThen(fwdNormalize())
+	            .andThen(fwdDotToXmi())
+	            .apply(context);
+            
             return context;
+
         };
     }
 
