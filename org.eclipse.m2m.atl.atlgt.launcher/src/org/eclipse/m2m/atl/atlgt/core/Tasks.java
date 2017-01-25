@@ -4,6 +4,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.m2m.atl.atlgt.atlidfier.AtlIdfierTransformationFactory;
 import org.eclipse.m2m.atl.atlgt.ecore2km3.EmfToKm3TransformationFactory;
+import org.eclipse.m2m.atl.atlgt.projector.ProjectorFactory;
 import org.eclipse.m2m.atl.atlgt.tools.Commands;
 import org.eclipse.m2m.atl.atlgt.util.Metamodels;
 import org.eclipse.m2m.atl.atlgt.util.URIs;
@@ -91,6 +92,7 @@ public final class Tasks {
 
             initialize()
                     .andThen(atlIdfier())
+                    .andThen(atlToUnqlProjector())
                     .andThen(atlToUnql())
                     .apply(context);
 
@@ -224,9 +226,33 @@ public final class Tasks {
             return context;
         };
     }
+    
+    /**
+     * Step B.2: ATL2UnQL Projector.
+     * <p>
+     * ???
+     *
+     * @return a new function
+     */
+    private static Function<Context, Context> atlToUnqlProjector() {
+        return context -> {
+
+            // B.3 ATL2UnQL Projector
+            // Create a copy of the atl file
+            URI atlModule = context.module().appendFileExtension("atl");
+            URI idfiedAtlModule = context.tempDirectory().appendSegment(atlModule.lastSegment());
+            URI projectedAtlModule = context.tempDirectory().appendSegment((URIs.fn(atlModule, "-projected.atl")));
+            URIs.copy(idfiedAtlModule,projectedAtlModule);
+
+            // Run in-place transformation
+            ProjectorFactory.withEmftvm().transform(projectedAtlModule);
+
+            return context;
+        };
+    }
 
     /**
-     * Step B.2: ATL2UNQL.
+     * Step B.3: ATL2UNQL.
      * <p>
      * ???
      *
@@ -241,7 +267,7 @@ public final class Tasks {
             EPackage inPackage = Metamodels.firstPackage(inMetamodel);
             EPackage outPackage = Metamodels.firstPackage(outMetamodel);
 
-            // B.2 ATL2UNQL
+            // B.3 ATL2UNQL
             Commands.atlGt().atlToUnql().execute(
                     "-atl", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.module(), ".atl"))),
                     "-uq", URIs.abs(context.tempDirectory().appendSegment(URIs.fn(context.module(), ".unql"))),
