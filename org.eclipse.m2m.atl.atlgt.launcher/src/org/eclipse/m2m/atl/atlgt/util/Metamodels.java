@@ -11,7 +11,7 @@ import org.eclipse.emf.ecore.util.BasicExtendedMetaData;
 import org.eclipse.emf.ecore.util.ExtendedMetaData;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
+import org.eclipse.m2m.atl.atlgt.resource.VerboseXMIResourceFactory;
 import org.eclipse.m2m.atl.emftvm.EmftvmFactory;
 import org.eclipse.m2m.atl.emftvm.ExecEnv;
 import org.eclipse.m2m.atl.emftvm.Model;
@@ -39,7 +39,7 @@ public final class Metamodels {
 
     static {
         Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("ecore", new EcoreResourceFactoryImpl());
-        Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("xmi", new XMIResourceFactoryImpl());
+        Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("xmi", new VerboseXMIResourceFactory());
     }
 
     private Metamodels() {
@@ -238,7 +238,6 @@ public final class Metamodels {
         // Save changes
 
         try {
-            ((XMLResource) outModel.getResource()).getDefaultSaveOptions().put(XMLResource.OPTION_SAVE_TYPE_INFORMATION, true);
             outModel.getResource().save(Collections.emptyMap());
         }
         catch (IOException e) {

@@ -13,6 +13,8 @@ import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.Map;
 
+import static java.util.Objects.isNull;
+
 /**
  * A factory of {@link CommandBuilder}s.
  */
@@ -51,17 +53,46 @@ public class Commands {
      * @return the absolute path of the library
      */
     private static Path resolve(String name) {
-        IPath internalPath = new org.eclipse.core.runtime.Path(String.format("lib/%s/bin", name));
+        IPath internalPath = new org.eclipse.core.runtime.Path(String.format("lib/%s/bin/%s", name, os()));
         Bundle bundle = Platform.getBundle(BUNDLE_SYMBOLIC_NAME);
         Map<String, String> options = Collections.emptyMap();
 
         try {
             URL url = FileLocator.resolve(FileLocator.find(bundle, internalPath, options));
+
+            if (isNull(url)) {
+                throw new NullPointerException("Unable to find the binaries in '" + internalPath + "'");
+            }
+
             return Paths.get(url.toURI());
         }
         catch (IOException | URISyntaxException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
+    }
+
+    private static String os() {
+        String name = System.getProperty("os.name").toLowerCase();
+        String arch = System.getProperty("os.arch").toLowerCase();
+
+        if (name.contains("win")) {
+            name = "win";
+        }
+        else if (name.contains("mac")) {
+            name = "osx";
+        }
+        else {
+            name = "linux";
+        }
+
+        if (arch.contains("64")) {
+            arch = "64";
+        }
+        else {
+            arch = "32";
+        }
+
+        return String.format("%s-%s", name, arch);
     }
 }
