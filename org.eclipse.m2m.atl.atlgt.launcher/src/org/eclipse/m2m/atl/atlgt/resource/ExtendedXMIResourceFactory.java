@@ -5,13 +5,9 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 
 /**
- *
+ * A factory of {@code Resource.Factory} that creates {@link ExtendedXMIResource}s.
  */
-public class ExtendedXMIResourceFactory extends XMIResourceFactoryImpl {
-
-    public ExtendedXMIResourceFactory() {
-        super();
-    }
+public class ExtendedXMIResourceFactory extends XMIResourceFactoryImpl implements Resource.Factory {
 
     @Override
     public Resource createResource(URI uri) {
