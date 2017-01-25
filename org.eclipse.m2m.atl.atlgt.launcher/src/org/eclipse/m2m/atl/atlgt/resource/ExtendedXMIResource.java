@@ -29,8 +29,8 @@ public class ExtendedXMIResource extends XMIResourceImpl implements XMIResource 
     }
 
     /**
-     * Transforms the given {@code id} to another. The {@link #hashCode()} method is used to ensure consistency between
-     * the original identifier and the new.
+     * Transforms the given {@code id} to another. The MD5 algorithm is used to ensure consistency between the original
+     * identifier and the new.
      *
      * @param id the identifier to transform
      *
