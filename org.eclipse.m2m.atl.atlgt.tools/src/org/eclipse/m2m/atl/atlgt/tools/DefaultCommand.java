@@ -70,8 +70,9 @@ public class DefaultCommand implements Command {
 
         System.out.println("Executing: " + executable + " " + Stream.of(args).collect(Collectors.joining(" ")));
 
+        Process process = null;
         try {
-            Process process = pb.start();
+            process = pb.start();
             int exitValue = process.waitFor();
             printStream(process.getInputStream(), System.out);
 
@@ -80,9 +81,14 @@ public class DefaultCommand implements Command {
             }
             return exitValue;
         }
-        catch (IOException | InterruptedException e) {
+        catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
+        }
+        catch (InterruptedException e) {
+            e.printStackTrace();
+            process.destroyForcibly();
+            return 0;
         }
     }
 }
