@@ -32,12 +32,29 @@ public class DefaultCommand implements Command {
     /**
      * Constructs a new {@code DefaultCommand} on the given {@code path} with the specified {@code program}.
      *
-     * @param path    the path to the execution of the command
+     * @param path       the path to the execution of the command
      * @param executable the program to execute
      */
     protected DefaultCommand(Path path, String executable) {
         this.path = path;
         this.executable = executable;
+    }
+
+    /**
+     * Prints a {@code inputStream} in a {@code printStream}.
+     *
+     * @param inputStream the stream to print
+     * @param printStream the stream where to print
+     *
+     * @throws IOException if an I/O error occurs
+     */
+    private static void printStream(InputStream inputStream, PrintStream printStream) throws IOException {
+        try (BufferedReader input = new BufferedReader(new InputStreamReader(inputStream))) {
+            String line;
+            while ((line = input.readLine()) != null) {
+                printStream.println("    > " + line);
+            }
+        }
     }
 
     @Override
@@ -66,23 +83,6 @@ public class DefaultCommand implements Command {
         catch (IOException | InterruptedException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * Prints a {@code inputStream} in a {@code printStream}.
-     *
-     * @param inputStream the stream to print
-     * @param printStream the stream where to print
-     *
-     * @throws IOException if an I/O error occurs
-     */
-    private static void printStream(InputStream inputStream, PrintStream printStream) throws IOException {
-        try (BufferedReader input = new BufferedReader(new InputStreamReader(inputStream))) {
-            String line;
-            while ((line = input.readLine()) != null) {
-                printStream.println("    > " + line);
-            }
         }
     }
 }

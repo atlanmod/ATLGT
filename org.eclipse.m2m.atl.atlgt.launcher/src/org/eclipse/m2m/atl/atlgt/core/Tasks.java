@@ -123,7 +123,7 @@ public final class Tasks {
             Metamodels.transform(
                     context.tempDirectory().appendSegment(context.inModel().lastSegment()),
                     context.tempDirectory().appendSegment(context.outModel().lastSegment()),
-            		context.metamodels(),
+                    context.metamodels(),
                     context.tempDirectory(),
                     URIs.fn(context.module(), "Ids"));
 
@@ -131,7 +131,7 @@ public final class Tasks {
             Metamodels.transform(
                     context.tempDirectory().appendSegment(context.inModel().lastSegment()),
                     context.tempDirectory().appendSegment(URIs.fn(context.outModel(), "-partial.xmi")),
-            		context.metamodels(),
+                    context.metamodels(),
                     context.tempDirectory(),
                     URIs.fn(context.module(), "IdsProjected"));
 
@@ -140,11 +140,11 @@ public final class Tasks {
 
             // C.6 Launch forward transformation in GRoundTram
             initialize()
-	            .andThen(fwdXmiToDot())
-	            .andThen(fwdUncal())
-	            .andThen(fwdNormalize())
-	            .andThen(fwdDotToXmi())
-	            .apply(context);
+                    .andThen(fwdXmiToDot())
+                    .andThen(fwdUncal())
+                    .andThen(fwdNormalize())
+                    .andThen(fwdDotToXmi())
+                    .apply(context);
 
             return context;
         };
@@ -261,7 +261,7 @@ public final class Tasks {
             // Create a copy of the atl file
             URI idfiedAtlModule = context.tempDirectory().appendSegment(URIs.fn(context.module(), "Ids.atl"));
             URI projectedAtlModule = context.tempDirectory().appendSegment(URIs.fn(context.module(), "IdsProjected.atl"));
-            URIs.copy(idfiedAtlModule,projectedAtlModule);
+            URIs.copy(idfiedAtlModule, projectedAtlModule);
 
             // Run in-place transformation
             ProjectorFactory.withEmftvm().transform(projectedAtlModule);
