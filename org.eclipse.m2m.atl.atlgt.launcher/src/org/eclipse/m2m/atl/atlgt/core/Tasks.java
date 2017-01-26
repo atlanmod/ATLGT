@@ -174,6 +174,9 @@ public final class Tasks {
             System.out.println();
             System.out.println("### Backward transformation");
 
+            // Copy the updated target model from the user folder
+            URIs.copy(context.outModel(), context.tempDirectory().appendSegment(context.outModel().lastSegment()));
+            
             initialize()
                     .andThen(bwdRestrictAndXmiToDot())
                     .andThen(bwdDenormalize())
