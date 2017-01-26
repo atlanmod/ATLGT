@@ -4,23 +4,25 @@
     xmlns:xmi="http://www.omg.org/XMI" 
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
     xmlns:ClassDiagram="http://example.org/ClassDiagram">
-  <ClassDiagram:Package name="Families">
+  <ClassDiagram:Package xmi:id="0" name="Families">
   <ownedElements
       xsi:type="ClassDiagram:Class"
       owner="0"
+      xmi:id="1"
       name="Family"
       isAbstract="false">
     <attr xsi:type="ClassDiagram:Attribute" owner="1" name="name" multiValued="false" type="7"/>
-    <attr xsi:type="ClassDiagram:Attribute" owner="1" name="members" multiValued="true" type="4"/>
+    <attr xmi:id="3" xsi:type="ClassDiagram:Attribute" owner="1" name="members" multiValued="true" type="4"/>
   </ownedElements>
   <ownedElements
       xsi:type="ClassDiagram:Class"
       owner="0"
+      xmi:id="4"
       name="Person"
       isAbstract="false">
-    <attr xsi:type="ClassDiagram:Attribute" owner="4" name="family" multiValued="false" type="1"/>
-    <attr xsi:type="ClassDiagram:Attribute" owner="4" name="personId" multiValued="false" type="7"/>
+    <attr xmi:id="5" xsi:type="ClassDiagram:Attribute" owner="4" name="family" multiValued="false" type="1"/>
+    <attr xmi:id="6" xsi:type="ClassDiagram:Attribute" owner="4" name="personId" multiValued="false" type="7"/>
   </ownedElements>
   </ClassDiagram:Package>  
-  <ClassDiagram:DataType name="String"/>
+  <ClassDiagram:DataType xmi:id="7" name="String"/>
 </xmi:XMI>
