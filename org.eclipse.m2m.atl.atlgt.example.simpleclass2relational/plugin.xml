@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="org.eclipse.m2m.atl.atlgt.example"
+            name="ATL-GT"
+            parentCategory="org.eclipse.ui.Examples">
+      </category>
+      <wizard
+            category="org.eclipse.m2m.atl.atlgt.example"
+            class="org.eclipse.m2m.atl.atlgt.example.simpleclass2relational.ClassDiagram2RelationalWizard"
+            id="org.eclipse.m2m.atl.atlgt.example.simpleclass2relational"
+            name="ClassDiagram2Relational"
+            project="true">
+      </wizard>
+   </extension>
+</plugin>
