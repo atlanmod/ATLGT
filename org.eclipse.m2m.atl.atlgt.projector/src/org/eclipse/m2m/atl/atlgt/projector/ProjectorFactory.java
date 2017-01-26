@@ -15,6 +15,6 @@ public final class ProjectorFactory {
      * @return a new projector
      */
     public static Projector withEmftvm() {
-        return new Projector();
+        return new ProjectorEmftvm();
     }
 }
