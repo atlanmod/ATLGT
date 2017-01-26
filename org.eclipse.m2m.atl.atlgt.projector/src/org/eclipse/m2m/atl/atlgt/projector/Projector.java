@@ -27,8 +27,8 @@ public class Projector {
 
     private static final String[] additivityModules = {"Binding", "OutPatternElement", "MatchedRule", "Helper", "Module"};
 
-    // We can translate them if they do not refer to anything bad (missing
-    // CollectionOperationCallExp OperatorCallExp OperationCallExp)
+    // We can translate them if they do not refer to anything bad
+    // Missing: CollectionOperationCallExp OperatorCallExp OperationCallExp
     private static final String[] translatableClasses = {"Module", "OclModel", "MatchedRule", "OutPattern",
             "SimpleOutPatternElement", "OclModelElement", "Binding", "NavigationOrAttributeCallExp", "VariableExp",
             "StringExp", "InPattern", "Iterator", "IteratorExp", "OclUndefinedExp", "SimpleInPatternElement"};
