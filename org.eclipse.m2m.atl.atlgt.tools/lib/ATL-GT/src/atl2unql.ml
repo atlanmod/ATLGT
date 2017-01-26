@@ -12,6 +12,7 @@ type config = {
     mutable ikm3_pkg  : string ; (* input pakage name *)
     mutable okm3_file : string ; (* output metamodel KM3 file *)
     mutable okm3_pkg  : string ; (* output pakage name *)
+    mutable pa_flag   : bool   ; (* print inut ATL file if true *)
 
 }
 
@@ -21,6 +22,7 @@ let cf = {  atl_file  = "";
 	    okm3_file = "";
 	    ikm3_pkg  = "";
 	    okm3_pkg  = ""; 
+	    pa_flag   = false;
           }
 
 let speclist = 
@@ -32,12 +34,13 @@ let speclist =
      ("-ipkg", Arg.String (fun s->cf.ikm3_pkg <-s),   " input package");
      ("-okm3", Arg.String (fun s->cf.okm3_file<-s),   " output metamodel KM3 file");
      ("-opkg", Arg.String (fun s->cf.okm3_pkg <-s),   " output package");
+     ("-pa",   Arg.Unit   (fun ()->cf.pa_flag<-true), " print inpt ATL file (experimental)");
    ]
 
 let speclist = add_version_spec speclist
 
 let usage_msg = 
-  "Usage: "^Sys.executable_name^" -atl input.atl -uq output.unql -ikm3 input.km3 -ipkg Ipkg -okm3 output.km3 -opkg Opkg"
+  "Usage: "^Sys.executable_name^" -atl input.atl [-pa] -uq output.unql -ikm3 input.km3 -ipkg Ipkg -okm3 output.km3 -opkg Opkg"
 
 let read_args () = 
   let cf = cf in 
@@ -59,6 +62,9 @@ let _ =
   else if cf.ikm3_pkg = "" then failwith_msg "Package name in input metamodel KM3 file unspecified."
   else if cf.okm3_pkg = "" then failwith_msg "Package name in output metamodel KM3 file unspecified."
   else
+     let _ = if cf.pa_flag then
+       let atlMin = parseatl_file cf.atl_file in
+       Format.printf "%a" Printatl.ppr_atl_module atlMin in
      let unql = atlMin2unql_driver cf.atl_file cf.ikm3_file cf.ikm3_pkg cf.okm3_file cf.okm3_pkg in
      let oc = open_out cf.uq_file in
      let fmt = formatter_of_out_channel oc in

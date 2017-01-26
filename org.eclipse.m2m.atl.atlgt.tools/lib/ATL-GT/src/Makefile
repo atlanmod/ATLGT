@@ -61,7 +61,7 @@ OCAMLOPTFLAGS = -w yu
 # Files
 ##############################################################################
 
-SRC_ATL-GT  := atl.ml lexatl.mll parseatl.mly objectGraph.ml g2objectGraph.ml dot2xmi.ml dispdotXMI.ml xmi2dot_generic.ml atlMin2unql.ml restrictObject.ml
+SRC_ATL-GT  := atl.ml lexatl.mll parseatl.mly printatl.ml objectGraph.ml g2objectGraph.ml dot2xmi.ml dispdotXMI.ml xmi2dot_generic.ml atlMin2unql.ml restrictObject.ml
 SRC_COMMAND := trace.ml xmi2dot_generic_command.ml atl2unql.ml dot2dgm_command.ml dot2xmi_command.ml restrictxmi_xmi2dot_command.ml
 
 SRCS_CORE   := $(SRC_ATL-GT)
@@ -119,10 +119,10 @@ dot2dgm_command: $(GTCMXA) $(XLCMXA) objectGraph.cmx g2objectGraph.cmx dispdotXM
 dot2dgm_command.byte: $(GTCMA) $(XLCMA) objectGraph.cmo g2objectGraph.cmo dispdotXMI.cmo dot2dgm_command.cmo
 	$(OCAMLC) $(OCAMLFLAGS) unix.cma str.cma -o $@ $^
 
-atl2unql: $(GTCMXA) $(XLCMXA) atl.cmx lexatl.cmx parseatl.cmx atlMin2unql.cmx atl2unql.cmx
+atl2unql: $(GTCMXA) $(XLCMXA) atl.cmx lexatl.cmx parseatl.cmx printatl.cmx atlMin2unql.cmx atl2unql.cmx
 	$(OCAMLOPT) $(OCAMLOPTFLAGS) unix.cmxa str.cmxa -o $@ $^
 
-atl2unql.byte: $(GTCMA) $(XLCMA) atl.cmo lexatl.cmo parseatl.cmo atlMin2unql.cmo atl2unql.cmo
+atl2unql.byte: $(GTCMA) $(XLCMA) atl.cmo lexatl.cmo parseatl.cmo printatl.cmo atlMin2unql.cmo atl2unql.cmo
 	$(OCAMLC) $(OCAMLFLAGS) unix.cma str.cma -o $@ $^
 
 fixdot: $(GTCMXA) fixdot.cmx
