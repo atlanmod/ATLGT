@@ -185,10 +185,20 @@ public class Context {
         this.outMetamodel = outMetamodel;
     }
 
+    /**
+     * Checks whether that this context has been initialized.
+     *
+     * @return {@code true} if the context has been initialized
+     */
     public boolean isInitialized() {
         return initialized;
     }
 
+    /**
+     * Defines whether that this context has been initialized.
+     *
+     * @param initialized {@code true} if the context has been initialized
+     */
     public void setInitialized(boolean initialized) {
         this.initialized = initialized;
     }
