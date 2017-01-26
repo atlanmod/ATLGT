@@ -181,6 +181,9 @@ public final class Tasks {
                     .andThen(bwdDotToXmi())
                     .apply(context);
 
+            // Copy the source model to the user folder
+            URIs.copy(context.tempDirectory().appendSegment(context.inModel().lastSegment()), context.inModel());
+            
             return context;
         };
     }
