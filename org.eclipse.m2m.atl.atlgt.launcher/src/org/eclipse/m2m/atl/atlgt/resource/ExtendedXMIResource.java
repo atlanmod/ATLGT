@@ -12,6 +12,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 import static java.util.Objects.isNull;
 
@@ -19,6 +20,13 @@ import static java.util.Objects.isNull;
  * An {@link XMIResource} with additional features to ensure a complete understanding with the tools used.
  */
 public class ExtendedXMIResource extends XMIResourceImpl implements XMIResource {
+
+    /**
+     * The regex of a valid identifier.
+     * <p>
+     * A valid identifier can only contain numbers and lowercase characters.
+     */
+    private static final Pattern VALID_ID_PATTERN = Pattern.compile("[a-f0-9]+");
 
     /**
      * Constructs a new {@code ExtendedXMIResource} with the given {@code uri}.
@@ -41,12 +49,16 @@ public class ExtendedXMIResource extends XMIResourceImpl implements XMIResource 
         if (isNull(id)) {
             return null;
         }
+        if (isValid(id)) {
+            return id;
+        }
+
         try {
             MessageDigest messageDigest = MessageDigest.getInstance("MD5");
             byte[] newID = messageDigest.digest(id.getBytes());
             StringBuilder sb = new StringBuilder();
-            for (byte aNewID : newID) {
-                sb.append(Integer.toHexString((aNewID & 0xFF) | 0x100).substring(1, 3));
+            for (byte byteId : newID) {
+                sb.append(Integer.toHexString((byteId & 0xFF) | 0x100).substring(1, 3));
             }
             return sb.toString();
         }
@@ -54,6 +66,17 @@ public class ExtendedXMIResource extends XMIResourceImpl implements XMIResource 
             e.printStackTrace();
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * Checks if the given {@code id} is valid.
+     *
+     * @param id the identifier to check
+     *
+     * @return {@code true} if the identifier matches {@link #VALID_ID_PATTERN}.
+     */
+    private static boolean isValid(String id) {
+        return VALID_ID_PATTERN.matcher(id).matches();
     }
 
     @Override
