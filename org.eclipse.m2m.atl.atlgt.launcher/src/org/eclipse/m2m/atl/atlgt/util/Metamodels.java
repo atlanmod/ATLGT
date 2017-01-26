@@ -293,7 +293,7 @@ public final class Metamodels {
         Resource sourceResource = getResourceFrom(source);
         Resource targetResource = createResourceFrom(target);
 
-        targetResource.getContents().addAll(EcoreUtil.copyAll(sourceResource.getContents()));
+        targetResource.getContents().addAll(sourceResource.getContents());
 
         try {
             targetResource.save(Collections.emptyMap());
