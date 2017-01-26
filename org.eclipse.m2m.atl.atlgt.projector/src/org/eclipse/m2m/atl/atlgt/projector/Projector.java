@@ -78,10 +78,7 @@ public class Projector {
         boolean changed = true;
         while (changed) {
             changed = false;
-            toProcessB = new ArrayList<>();
-            for (EObject eo : toProcess) {
-                toProcessB.add(eo);
-            }
+            toProcessB = new ArrayList<>(toProcess);
 
             for (EObject eo : toProcessB) {
                 if (!isTranslatable(eo)) {
