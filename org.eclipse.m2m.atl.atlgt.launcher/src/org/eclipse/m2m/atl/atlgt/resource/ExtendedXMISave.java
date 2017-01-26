@@ -61,9 +61,11 @@ public class ExtendedXMISave extends XMISaveImpl {
             if (reference.isContainment()) {
                 // Retrieve the container of the object
                 EObject referencedObject = (EObject) object.eGet(reference.getEOpposite());
-                if (nonNull(referencedObject) && !Objects.equals(object, referencedObject)) {
+                String id = helper.getID(referencedObject);
+
+                if (nonNull(id) && nonNull(referencedObject) && !Objects.equals(object, referencedObject)) {
                     // Print the containment reference
-                    doc.addAttribute(reference.getEOpposite().getName(), helper.getID(referencedObject));
+                    doc.addAttribute(reference.getEOpposite().getName(), id);
                 }
             }
         }
