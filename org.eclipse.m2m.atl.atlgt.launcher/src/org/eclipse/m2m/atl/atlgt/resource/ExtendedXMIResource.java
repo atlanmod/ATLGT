@@ -2,13 +2,12 @@ package org.eclipse.m2m.atl.atlgt.resource;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emf.ecore.xmi.XMLSave;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 
 import java.io.IOException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -54,19 +53,7 @@ public class ExtendedXMIResource extends XMIResourceImpl implements XMIResource 
             return id;
         }
 
-        try {
-            MessageDigest messageDigest = MessageDigest.getInstance("MD5");
-            byte[] newID = messageDigest.digest(id.getBytes());
-            StringBuilder sb = new StringBuilder();
-            for (byte byteId : newID) {
-                sb.append(Integer.toHexString((byteId & 0xFF) | 0x100).substring(1, 3));
-            }
-            return sb.toString();
-        }
-        catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
+        return EcoreUtil.generateUUID();
     }
 
     /**
