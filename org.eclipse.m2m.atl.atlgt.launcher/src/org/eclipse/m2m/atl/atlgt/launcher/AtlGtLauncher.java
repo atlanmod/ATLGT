@@ -1,6 +1,7 @@
 package org.eclipse.m2m.atl.atlgt.launcher;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.model.ILaunchConfigurationDelegate;
@@ -14,8 +15,11 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
     @Override
     public void launch(ILaunchConfiguration launchConfiguration, String mode, ILaunch launch, IProgressMonitor monitor) {
 
+        SubMonitor subMonitor = SubMonitor.convert(monitor);
+        subMonitor.beginTask("ATL-GT Transformation", 100);
+
         // Loads the current context
-        Context context = Context.from(launchConfiguration, monitor);
+        Context context = Context.from(launchConfiguration, subMonitor);
 
         // Register all metamodels
         context.metamodels().forEach(Metamodels::register);
@@ -34,6 +38,8 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
         else {
             throw new IllegalStateException("Unknown direction");
         }
+
+        subMonitor.done();
 
         System.out.println("ATL-GT: Successfully executed");
     }

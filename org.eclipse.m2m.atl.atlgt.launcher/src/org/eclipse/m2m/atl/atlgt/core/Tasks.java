@@ -30,6 +30,8 @@ public final class Tasks {
     private static Function<Context, Context> initialize() {
         return context -> {
 
+            context.monitor().subTask("Initialization");
+
             if (!context.isInitialized()) {
                 // -.1 Link metamodels to their model
 
@@ -72,6 +74,8 @@ public final class Tasks {
     public static Function<Context, Context> metamodelProcessing() {
         return context -> {
 
+            context.monitor().subTask("Metamodel processing");
+
             System.out.println();
             System.out.println("### Metamodel processing");
 
@@ -93,6 +97,8 @@ public final class Tasks {
      */
     public static Function<Context, Context> transformationProcessing() {
         return context -> {
+
+            context.monitor().subTask("Transformation processing");
 
             System.out.println();
             System.out.println("### Transformation processing");
@@ -116,6 +122,8 @@ public final class Tasks {
      */
     public static Function<Context, Context> forwardTransformation() {
         return context -> {
+
+            context.monitor().subTask("Forward transformation");
 
             System.out.println();
             System.out.println("### Forward transformation");
@@ -161,6 +169,8 @@ public final class Tasks {
     public static Function<Context, Context> backwardTransformation() {
         return context -> {
 
+            context.monitor().subTask("Backward transformation");
+
             System.out.println();
             System.out.println("### Backward transformation");
 
@@ -185,6 +195,8 @@ public final class Tasks {
     private static Function<Context, Context> ecoreToKm3() {
         return context -> {
 
+            context.monitor().subTask("Ecore to KM3");
+
             // A.1 Ecore to KM3
             Iterable<URI> km3Metamodels = StreamSupport.stream(context.metamodels().spliterator(), false)
                     .map(metamodel -> EmfToKm3TransformationFactory.withEmftvm().transform(metamodel, context.tempDirectory().appendSegment(URIs.fn(metamodel, ".km3"))))
@@ -207,6 +219,8 @@ public final class Tasks {
      */
     private static Function<Context, Context> relaxedEcoreToRelaxedKm3() {
         return context -> {
+
+            context.monitor().subTask("Relaxed Ecore to Relaxed KM3");
 
             // A.3 Ecore Relaxation
             Iterable<URI> relaxedMetamodels = StreamSupport.stream(context.metamodels().spliterator(), false)
@@ -235,6 +249,8 @@ public final class Tasks {
     private static Function<Context, Context> atlIdfier() {
         return context -> {
 
+            context.monitor().subTask("ATL idifier");
+
             // B.1 ATLIDfier
             // Create a copy of the atl file
             URI atlModule = context.module().appendFileExtension("atl");
@@ -258,11 +274,15 @@ public final class Tasks {
     private static Function<Context, Context> atlToUnqlProjector() {
         return context -> {
 
+            context.monitor().subTask("ATL to UNQL projection");
+
             // B.3 ATL2UnQL Projector
             // Create a copy of the atl file
             URI idfiedAtlModule = context.tempDirectory().appendSegment(URIs.fn(context.module(), "Ids.atl"));
             URI projectedAtlModule = context.tempDirectory().appendSegment(URIs.fn(context.module(), "IdsProjected.atl"));
             URIs.copy(idfiedAtlModule, projectedAtlModule);
+
+            context.monitor().subTask("ATL to UNQL projection");
 
             // Run in-place transformation
             ProjectorFactory.withEmftvm().transform(projectedAtlModule);
@@ -280,6 +300,8 @@ public final class Tasks {
      */
     private static Function<Context, Context> atlToUnql() {
         return context -> {
+
+            context.monitor().subTask("Conversion of ATL to UNQL");
 
             URI inMetamodel = context.inMetamodel();
             URI outMetamodel = context.outMetamodel();
@@ -310,6 +332,8 @@ public final class Tasks {
     private static Function<Context, Context> fwdXmiToDot() {
         return context -> {
 
+            context.monitor().subTask("Conversion of XMI to DOT");
+
             URI inMetamodel = context.inMetamodel();
             EPackage inPackage = Metamodels.firstPackage(inMetamodel);
 
@@ -335,6 +359,8 @@ public final class Tasks {
     private static Function<Context, Context> fwdUncal() {
         return context -> {
 
+            context.monitor().subTask("Uncal");
+
             // C.2 Forward UnCAL
             Commands.gRoundTram().fwdUncal().execute(
                     "-ge", "-sb", "-cl", "-zn", "-fi", "-np", "-sa", "-t", "-rw", "-as",
@@ -358,6 +384,8 @@ public final class Tasks {
     private static Function<Context, Context> fwdNormalize() {
         return context -> {
 
+            context.monitor().subTask("Normalization");
+
             // C.2.1 Normalize (up-to isomorphism)
             Commands.gRoundTram().bxContract().execute(
                     "-batch",
@@ -377,6 +405,8 @@ public final class Tasks {
      */
     private static Function<Context, Context> fwdDotToXmi() {
         return context -> {
+
+            context.monitor().subTask("Conversion of DOT to XMI");
 
             URI outMetamodel = context.outMetamodel();
             EPackage outPackage = Metamodels.firstPackage(outMetamodel);
@@ -402,6 +432,8 @@ public final class Tasks {
      */
     private static Function<Context, Context> bwdRestrictAndXmiToDot() {
         return context -> {
+
+            context.monitor().subTask("Conversion of XMI to DOT");
 
             URI outMetamodel = context.outMetamodel();
             EPackage outPackage = Metamodels.firstPackage(outMetamodel);
@@ -429,6 +461,8 @@ public final class Tasks {
     private static Function<Context, Context> bwdDenormalize() {
         return context -> {
 
+            context.monitor().subTask("Denormalization");
+
             // D.2 Denormalization
             Commands.gRoundTram().bxContract().execute(
                     "-batch",
@@ -449,6 +483,8 @@ public final class Tasks {
      */
     private static Function<Context, Context> bwdUncal() {
         return context -> {
+
+            context.monitor().subTask("Uncal");
 
             // E.1 Backward UnCAL
             Commands.gRoundTram().bwdUncal().execute(
@@ -472,6 +508,8 @@ public final class Tasks {
      */
     private static Function<Context, Context> bwdDotToXmi() {
         return context -> {
+
+            context.monitor().subTask("Conversion of DOT to XMI");
 
             URI inMetamodel = context.inMetamodel();
             EPackage inPackage = Metamodels.firstPackage(inMetamodel);
