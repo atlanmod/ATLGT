@@ -33,4 +33,6 @@ Import-Package: org.osgi.framework,
  org.eclipse.m2m.atl.atlgt.ecore2km3,
  org.eclipse.m2m.atl.atlgt.atlidfier,
  org.eclipse.m2m.km3,
- org.eclipse.m2m.atl.emftvm
+ org.eclipse.m2m.atl.emftvm,
+ org.eclipse.m2m.atl.atlgt.projector,
+ org.eclipse.m2m.atl.atlgt.tools

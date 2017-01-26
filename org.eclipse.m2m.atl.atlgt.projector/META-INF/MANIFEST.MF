@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Atlidfier
-Bundle-SymbolicName: org.eclipse.m2m.atl.atlgt.projector
+Bundle-SymbolicName: org.eclipse.m2m.atl.atlgt.projector;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.eclipse.m2m.atl.atlgt.projector.Activator
 Bundle-Vendor: Atlanmod-Hosei
