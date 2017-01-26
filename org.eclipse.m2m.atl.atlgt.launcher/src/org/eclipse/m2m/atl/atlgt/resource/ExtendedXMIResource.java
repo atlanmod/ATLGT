@@ -26,7 +26,8 @@ public class ExtendedXMIResource extends XMIResourceImpl implements XMIResource 
      * <p>
      * A valid identifier can only contain numbers and lowercase characters.
      */
-    private static final Pattern VALID_ID_PATTERN = Pattern.compile("[a-f0-9]+");
+    private static final Pattern PATTERN_INVALID_IDENTIFIER =
+            Pattern.compile("/\\d(?:/@\\w+(?:\\.\\w))*", Pattern.UNICODE_CASE);
 
     /**
      * Constructs a new {@code ExtendedXMIResource} with the given {@code uri}.
@@ -73,10 +74,10 @@ public class ExtendedXMIResource extends XMIResourceImpl implements XMIResource 
      *
      * @param id the identifier to check
      *
-     * @return {@code true} if the identifier matches {@link #VALID_ID_PATTERN}.
+     * @return {@code true} if the identifier matches {@link #PATTERN_INVALID_IDENTIFIER}.
      */
     private static boolean isValid(String id) {
-        return VALID_ID_PATTERN.matcher(id).matches();
+        return !PATTERN_INVALID_IDENTIFIER.matcher(id).matches();
     }
 
     @Override
