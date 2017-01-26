@@ -10,9 +10,9 @@ public final class ProjectorFactory {
     }
 
     /**
-     * Creates an {@link AtlIdfierTransformation} that is executed on an 'EMFTVM' virtual machine.
+     * Creates an {@link Projector} that is executed on an 'EMFTVM' virtual machine.
      *
-     * @return a new transformation
+     * @return a new projector
      */
     public static Projector withEmftvm() {
         return new Projector();
