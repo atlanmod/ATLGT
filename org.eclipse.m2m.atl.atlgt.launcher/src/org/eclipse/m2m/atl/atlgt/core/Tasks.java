@@ -15,8 +15,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static java.util.Objects.isNull;
-
 /**
  * Static class that regroups the different tasks of ATL-GT.
  */
@@ -32,8 +30,9 @@ public final class Tasks {
     private static Function<Context, Context> initialize() {
         return context -> {
 
-            // -.1 Link metamodels to their model
-            if (isNull(context.inMetamodel())) {
+            if (!context.isInitialized()) {
+                // -.1 Link metamodels to their model
+
                 // Retrieve the metamodels
                 URI inMetamodel = Metamodels.metamodelOf(context.inModel());
 
@@ -50,12 +49,14 @@ public final class Tasks {
                 // Define the metamodels
                 context.inMetamodel(inMetamodel);
                 context.outMetamodel(outMetamodel);
-            }
 
-            // -.2 Pre-process the source model
-            Metamodels.copy(
-                    context.inModel(),
-                    context.tempDirectory().appendSegment(context.inModel().lastSegment()));
+                // -.2 Pre-process the source model
+                Metamodels.copy(
+                        context.inModel(),
+                        context.tempDirectory().appendSegment(context.inModel().lastSegment()));
+
+                context.setInitialized(true);
+            }
 
             return context;
         };

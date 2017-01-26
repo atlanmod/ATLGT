@@ -26,6 +26,8 @@ public class Context {
     private final String transformationInstance;
     private final URI tempDirectory;
 
+    private boolean initialized;
+
     private URI inMetamodel;
     private URI outMetamodel;
 
@@ -45,6 +47,8 @@ public class Context {
 
         transformationInstance = inModel.trimFileExtension().lastSegment() + "2" + outModel.trimFileExtension().lastSegment();
         tempDirectory = outModel.trimFileExtension().trimSegments(1).appendSegment(transformationInstance + "-trace");
+
+        initialized = false;
     }
 
     /**
@@ -179,5 +183,13 @@ public class Context {
     public void outMetamodel(URI outMetamodel) {
         System.out.println("Target metamodel: " + outMetamodel);
         this.outMetamodel = outMetamodel;
+    }
+
+    public boolean isInitialized() {
+        return initialized;
+    }
+
+    public void setInitialized(boolean initialized) {
+        this.initialized = initialized;
     }
 }
