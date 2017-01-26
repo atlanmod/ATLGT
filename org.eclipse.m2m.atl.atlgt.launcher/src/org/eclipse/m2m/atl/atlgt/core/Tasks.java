@@ -55,7 +55,7 @@ public final class Tasks {
                         context.inModel(),
                         context.tempDirectory().appendSegment(context.inModel().lastSegment()));
 
-                context.setInitialized(true);
+                context.setInitialized();
             }
 
             return context;

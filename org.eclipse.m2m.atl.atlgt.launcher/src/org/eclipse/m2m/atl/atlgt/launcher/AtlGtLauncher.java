@@ -15,7 +15,7 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
     public void launch(ILaunchConfiguration launchConfiguration, String mode, ILaunch launch, IProgressMonitor monitor) {
 
         // Loads the current context
-        Context context = Context.from(launchConfiguration);
+        Context context = Context.from(launchConfiguration, monitor);
 
         // Register all metamodels
         context.metamodels().forEach(Metamodels::register);

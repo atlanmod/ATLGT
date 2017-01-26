@@ -1,5 +1,6 @@
 package org.eclipse.m2m.atl.atlgt.core;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.atl.emftvm.launcher.EMFTVMLaunchConstants;
@@ -26,6 +27,8 @@ public class Context {
     private final String transformationInstance;
     private final URI tempDirectory;
 
+    private final IProgressMonitor monitor;
+
     private boolean initialized;
 
     private URI inMetamodel;
@@ -34,7 +37,7 @@ public class Context {
     /**
      * Constructs a new {@code Context} with the given parameters.
      */
-    private Context(URI pluginUri, String moduleName, Iterable<URI> metamodels, URI inModel, URI outModel, Direction direction) {
+    private Context(URI pluginUri, String moduleName, Iterable<URI> metamodels, URI inModel, URI outModel, Direction direction, IProgressMonitor monitor) {
         this.pluginUri = pluginUri;
         this.moduleName = moduleName;
 
@@ -44,6 +47,8 @@ public class Context {
         this.outModel = outModel;
 
         this.direction = direction;
+
+        this.monitor = monitor;
 
         transformationInstance = inModel.trimFileExtension().lastSegment() + "2" + outModel.trimFileExtension().lastSegment();
         tempDirectory = outModel.trimFileExtension().trimSegments(1).appendSegment(transformationInstance + "-trace");
@@ -58,7 +63,7 @@ public class Context {
      *
      * @return a new context
      */
-    public static Context from(ILaunchConfiguration configuration) {
+    public static Context from(ILaunchConfiguration configuration, IProgressMonitor monitor) {
         try {
             String moduleName = configuration.getAttribute(EMFTVMLaunchConstants.MODULE_NAME, "");
 
@@ -76,7 +81,7 @@ public class Context {
             boolean forward = configuration.getAttribute(Direction.FORWARD.getName(), false);
             Direction direction = (forward ? Direction.FORWARD : Direction.BACKWARD);
 
-            return new Context(pluginUri, moduleName, metamodels, inModel, outModel, direction);
+            return new Context(pluginUri, moduleName, metamodels, inModel, outModel, direction, monitor);
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -195,11 +200,18 @@ public class Context {
     }
 
     /**
-     * Defines whether that this context has been initialized.
-     *
-     * @param initialized {@code true} if the context has been initialized
+     * Defines this context as initialized.
      */
-    public void setInitialized(boolean initialized) {
-        this.initialized = initialized;
+    public void setInitialized() {
+        this.initialized = true;
+    }
+
+    /**
+     * Returns the progress monitor of this context.
+     *
+     * @return the progress monitor
+     */
+    public IProgressMonitor monitor() {
+        return monitor;
     }
 }
