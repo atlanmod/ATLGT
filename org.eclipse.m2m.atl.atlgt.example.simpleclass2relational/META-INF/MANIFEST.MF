@@ -1,8 +1,0 @@
-Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-Name: Simpleclass2relational
-Bundle-SymbolicName: org.eclipse.m2m.atl.atlgt.example.simpleclass2relational;singleton:=true
-Bundle-Version: 1.0.0.qualifier
-Require-Bundle: org.eclipse.ui
-Import-Package: org.eclipse.ui,
- org.eclipse.jface
