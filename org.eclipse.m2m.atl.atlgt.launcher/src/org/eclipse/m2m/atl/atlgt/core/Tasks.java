@@ -1,5 +1,9 @@
 package org.eclipse.m2m.atl.atlgt.core;
 
+import net.jodah.failsafe.Failsafe;
+import net.jodah.failsafe.RetryPolicy;
+import net.jodah.failsafe.SyncFailsafe;
+
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.m2m.atl.atlgt.atlidfier.AtlIdfierTransformationFactory;
@@ -8,9 +12,11 @@ import org.eclipse.m2m.atl.atlgt.projector.ProjectorFactory;
 import org.eclipse.m2m.atl.atlgt.tools.Commands;
 import org.eclipse.m2m.atl.atlgt.util.Metamodels;
 import org.eclipse.m2m.atl.atlgt.util.URIs;
+import org.eclipse.m2m.atl.emftvm.util.VMException;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -19,6 +25,24 @@ import java.util.stream.StreamSupport;
  * Static class that regroups the different tasks of ATL-GT.
  */
 public final class Tasks {
+
+    /**
+     * The default policy that defines when retries should be performed.
+     * <p>
+     * This policy is used when using an ATL transformation: Because ATL files are generated or modified by code,
+     * *.emftvm and *.asm files may take some time to regenerate.
+     */
+    private static final RetryPolicy RETRY_POLICY = new RetryPolicy()
+            .withMaxRetries(5)
+            .withDelay(5, TimeUnit.SECONDS)
+            .retryOn(VMException.class::isInstance);
+
+    /**
+     * Performs synchronous executions with failures handled according to a configure {@link #RETRY_POLICY}.
+     */
+    private static final SyncFailsafe<Object> FAILSAFE = Failsafe.with(RETRY_POLICY)
+            .onFailedAttempt(t -> System.out.println(t.getMessage() + "\nRetrying in 5 seconds..."))
+            .onFailure(t -> System.out.println(t.getMessage()));
 
     private Tasks() {
         throw new IllegalStateException("This class should not be initialized");
@@ -129,20 +153,20 @@ public final class Tasks {
             System.out.println("### Forward transformation");
 
             // C.3 Execution of ATL with IDs
-            Metamodels.transform(
+            FAILSAFE.run(() -> Metamodels.transform(
                     context.tempDirectory().appendSegment(context.inModel().lastSegment()),
                     context.tempDirectory().appendSegment(context.outModel().lastSegment()),
                     context.metamodels(),
                     context.tempDirectory(),
-                    URIs.fn(context.module(), "Ids"));
+                    URIs.fn(context.module(), "Ids")));
 
             // C.4 Execution of ATL with IDs projected
-            Metamodels.transform(
+            FAILSAFE.run(() -> Metamodels.transform(
                     context.tempDirectory().appendSegment(context.inModel().lastSegment()),
                     context.tempDirectory().appendSegment(URIs.fn(context.outModel(), "-partial.xmi")),
                     context.metamodels(),
                     context.tempDirectory(),
-                    URIs.fn(context.module(), "IdsProjected"));
+                    URIs.fn(context.module(), "IdsProjected")));
 
             // C.5 Copy the target model to the user folder
             URIs.copy(context.tempDirectory().appendSegment(context.outModel().lastSegment()), context.outModel());
@@ -176,7 +200,7 @@ public final class Tasks {
 
             // Copy the updated target model from the user folder
             URIs.copy(context.outModel(), context.tempDirectory().appendSegment(context.outModel().lastSegment()));
-            
+
             initialize()
                     .andThen(bwdRestrictAndXmiToDot())
                     .andThen(bwdDenormalize())
@@ -186,7 +210,7 @@ public final class Tasks {
 
             // Copy the source model to the user folder
             URIs.copy(context.tempDirectory().appendSegment(context.inModel().lastSegment()), context.inModel());
-            
+
             return context;
         };
     }

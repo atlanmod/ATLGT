@@ -18,7 +18,6 @@ import org.eclipse.m2m.atl.emftvm.Model;
 import org.eclipse.m2m.atl.emftvm.util.DefaultModuleResolver;
 import org.eclipse.m2m.atl.emftvm.util.ModuleResolver;
 import org.eclipse.m2m.atl.emftvm.util.TimingData;
-import org.eclipse.m2m.atl.emftvm.util.VMException;
 import org.eclipse.m2m.km3.Attribute;
 import org.eclipse.m2m.km3.Class;
 import org.eclipse.m2m.km3.DataType;
@@ -202,77 +201,49 @@ public final class Metamodels {
         System.out.println("Transformation of '" + source + "' to '" + target + "' by using the module '" + module + "' @ " + directory);
 
         EmftvmFactory factory = EmftvmFactory.eINSTANCE;
+        ExecEnv env = factory.createExecEnv();
 
-        // TODO Can be improved
-        int attemps = 0;
-        boolean retry = true;
+        ResourceSet resourceSet = new ResourceSetImpl();
 
-        do {
-            try {
-                ExecEnv env = factory.createExecEnv();
+        // Load metamodels
 
-                ResourceSet resourceSet = new ResourceSetImpl();
+        metamodels.forEach(metamodel -> {
+            Resource inMetamodelResource = resourceSet.getResource(metamodel, true);
+            register(inMetamodelResource);
 
-                // Load metamodels
+            org.eclipse.m2m.atl.emftvm.Metamodel inMetamodel = factory.createMetamodel();
+            inMetamodel.setResource(inMetamodelResource);
+            env.registerMetaModel(firstPackage(metamodel).getName(), inMetamodel);
+        });
 
-                metamodels.forEach(metamodel -> {
-                    Resource inMetamodelResource = resourceSet.getResource(metamodel, true);
-                    register(inMetamodelResource);
+        // Load models
 
-                    org.eclipse.m2m.atl.emftvm.Metamodel inMetamodel = factory.createMetamodel();
-                    inMetamodel.setResource(inMetamodelResource);
-                    env.registerMetaModel(firstPackage(metamodel).getName(), inMetamodel);
-                });
+        Model inModel = factory.createModel();
+        inModel.setResource(resourceSet.getResource(source, true));
+        env.registerInputModel("IN", inModel);
 
-                // Load models
+        Model outModel = factory.createModel();
+        outModel.setResource(resourceSet.createResource(target));
+        env.registerOutputModel("OUT", outModel);
 
-                Model inModel = factory.createModel();
-                inModel.setResource(resourceSet.getResource(source, true));
-                env.registerInputModel("IN", inModel);
+        // Run transformation
 
-                Model outModel = factory.createModel();
-                outModel.setResource(resourceSet.createResource(target));
-                env.registerOutputModel("OUT", outModel);
+        ModuleResolver moduleResolver = new DefaultModuleResolver(directory.toString() + "/", resourceSet);
+        TimingData td = new TimingData();
+        env.loadModule(moduleResolver, module);
+        td.finishLoading();
+        env.run(td);
+        td.finish();
 
-                // Run transformation
+        // Save changes
 
-                ModuleResolver moduleResolver = new DefaultModuleResolver(directory.toString() + "/", resourceSet);
-                TimingData td = new TimingData();
-                env.loadModule(moduleResolver, module);
-                td.finishLoading();
-                env.run(td);
-                td.finish();
-
-                // Save changes
-
-                try {
-                    outModel.getResource().save(Collections.emptyMap());
-                }
-                catch (IOException e) {
-                    e.printStackTrace();
-                    throw new RuntimeException(e);
-                }
-
-                retry = false;
-            }
-            catch (VMException e) {
-                System.out.println(e.getMessage());
-                attemps++;
-                // If it has tried more than 5 times, it stop
-                if (attemps > 5) {
-                    throw e;
-                }
-                // Wait for the ATL generation
-                try {
-                    System.out.println("Waiting 5 seconds...");
-                    Thread.sleep(5000);
-                }
-                catch (InterruptedException ie) {
-                    throw e;
-                }
-            }
+        try {
+            outModel.getResource().save(Collections.emptyMap());
         }
-        while (retry);
+        catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
     }
 
     /**
