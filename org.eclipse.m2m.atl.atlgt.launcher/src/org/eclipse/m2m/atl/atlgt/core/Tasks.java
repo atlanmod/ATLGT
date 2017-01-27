@@ -283,7 +283,7 @@ public final class Tasks {
             URIs.copy(atlModule, idfiedAtlModule);
 
             // Run in-place transformation
-            AtlIdfierTransformationFactory.withEmftvm().transform(idfiedAtlModule);
+            retryIfNecessary(() -> AtlIdfierTransformationFactory.withEmftvm().transform(idfiedAtlModule));
 
             return context;
         };
@@ -312,7 +312,7 @@ public final class Tasks {
             context.monitor().worked(1);
 
             // Run in-place transformation
-            ProjectorFactory.withEmftvm().transform(projectedAtlModule);
+            retryIfNecessary(() -> ProjectorFactory.withEmftvm().transform(projectedAtlModule));
 
             return context;
         };
@@ -575,7 +575,7 @@ public final class Tasks {
     private static void retryIfNecessary(CheckedRunnable runnable) {
         // The default policy that defines when retries should be performed.
         final RetryPolicy retryPolicy = new RetryPolicy()
-                .withMaxRetries(5)
+                .withMaxRetries(3)
                 .withDelay(5, TimeUnit.SECONDS)
                 .retryOn(VMException.class::isInstance);
 
