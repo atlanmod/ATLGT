@@ -16,7 +16,7 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
     public void launch(ILaunchConfiguration launchConfiguration, String mode, ILaunch launch, IProgressMonitor monitor) {
 
         SubMonitor subMonitor = SubMonitor.convert(monitor);
-        subMonitor.beginTask("ATL-GT Transformation", 100);
+        subMonitor.beginTask("ATL-GT Transformation", 16);
 
         // Loads the current context
         Context context = Context.from(launchConfiguration, subMonitor);
@@ -26,14 +26,10 @@ public class AtlGtLauncher implements ILaunchConfigurationDelegate {
 
         // Run transformation
         if (context.direction() == Direction.FORWARD) {
-            Tasks.metamodelProcessing()
-                    .andThen(Tasks.transformationProcessing())
-                    .andThen(Tasks.forwardTransformation())
-                    .apply(context);
+            Tasks.forwardTransformation().apply(context);
         }
         else if (context.direction() == Direction.BACKWARD) {
-            Tasks.backwardTransformation()
-                    .apply(context);
+            Tasks.backwardTransformation().apply(context);
         }
         else {
             throw new IllegalStateException("Unknown direction");

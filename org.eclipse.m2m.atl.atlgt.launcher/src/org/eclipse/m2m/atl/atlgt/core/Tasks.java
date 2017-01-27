@@ -3,6 +3,7 @@ package org.eclipse.m2m.atl.atlgt.core;
 import net.jodah.failsafe.Failsafe;
 import net.jodah.failsafe.RetryPolicy;
 import net.jodah.failsafe.SyncFailsafe;
+import net.jodah.failsafe.function.CheckedRunnable;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
@@ -25,24 +26,6 @@ import java.util.stream.StreamSupport;
  * Static class that regroups the different tasks of ATL-GT.
  */
 public final class Tasks {
-
-    /**
-     * The default policy that defines when retries should be performed.
-     * <p>
-     * This policy is used when using an ATL transformation: Because ATL files are generated or modified by code,
-     * *.emftvm and *.asm files may take some time to regenerate.
-     */
-    private static final RetryPolicy RETRY_POLICY = new RetryPolicy()
-            .withMaxRetries(5)
-            .withDelay(5, TimeUnit.SECONDS)
-            .retryOn(VMException.class::isInstance);
-
-    /**
-     * Performs synchronous executions with failures handled according to a configure {@link #RETRY_POLICY}.
-     */
-    private static final SyncFailsafe<Object> FAILSAFE = Failsafe.with(RETRY_POLICY)
-            .onFailedAttempt(t -> System.out.println(t.getMessage() + "\nRetrying in 5 seconds..."))
-            .onFailure(t -> System.out.println(t.getMessage()));
 
     private Tasks() {
         throw new IllegalStateException("This class should not be initialized");
@@ -95,7 +78,7 @@ public final class Tasks {
      *
      * @return a new function
      */
-    public static Function<Context, Context> metamodelProcessing() {
+    private static Function<Context, Context> metamodelProcessing() {
         return context -> {
 
             context.monitor().subTask("Metamodel processing");
@@ -103,8 +86,7 @@ public final class Tasks {
             System.out.println();
             System.out.println("### Metamodel processing");
 
-            initialize()
-                    .andThen(ecoreToKm3())
+            ecoreToKm3()
                     .andThen(relaxedEcoreToRelaxedKm3())
                     .apply(context);
 
@@ -119,7 +101,7 @@ public final class Tasks {
      *
      * @return a new function
      */
-    public static Function<Context, Context> transformationProcessing() {
+    private static Function<Context, Context> transformationProcessing() {
         return context -> {
 
             context.monitor().subTask("Transformation processing");
@@ -127,8 +109,7 @@ public final class Tasks {
             System.out.println();
             System.out.println("### Transformation processing");
 
-            initialize()
-                    .andThen(atlIdfier())
+            atlIdfier()
                     .andThen(atlToUnqlProjector())
                     .andThen(atlToUnql())
                     .apply(context);
@@ -147,21 +128,32 @@ public final class Tasks {
     public static Function<Context, Context> forwardTransformation() {
         return context -> {
 
-            context.monitor().subTask("Forward transformation");
+            context.monitor().setTaskName("ATL-GT - Forward transformation");
+
+            initialize()
+                    .andThen(metamodelProcessing())
+                    .andThen(transformationProcessing())
+                    .apply(context);
 
             System.out.println();
             System.out.println("### Forward transformation");
 
+            context.monitor().subTask("ATL transformation with IDs");
+            context.monitor().worked(1);
+
             // C.3 Execution of ATL with IDs
-            FAILSAFE.run(() -> Metamodels.transform(
+            retryIfNecessary(() -> Metamodels.transform(
                     context.tempDirectory().appendSegment(context.inModel().lastSegment()),
                     context.tempDirectory().appendSegment(context.outModel().lastSegment()),
                     context.metamodels(),
                     context.tempDirectory(),
                     URIs.fn(context.module(), "Ids")));
 
+            context.monitor().subTask("ATL transformation with IDs projected");
+            context.monitor().worked(1);
+
             // C.4 Execution of ATL with IDs projected
-            FAILSAFE.run(() -> Metamodels.transform(
+            retryIfNecessary(() -> Metamodels.transform(
                     context.tempDirectory().appendSegment(context.inModel().lastSegment()),
                     context.tempDirectory().appendSegment(URIs.fn(context.outModel(), "-partial.xmi")),
                     context.metamodels(),
@@ -193,7 +185,7 @@ public final class Tasks {
     public static Function<Context, Context> backwardTransformation() {
         return context -> {
 
-            context.monitor().subTask("Backward transformation");
+            context.monitor().setTaskName("ATL-GT - Backward transformation");
 
             System.out.println();
             System.out.println("### Backward transformation");
@@ -226,6 +218,7 @@ public final class Tasks {
         return context -> {
 
             context.monitor().subTask("Ecore to KM3");
+            context.monitor().worked(1);
 
             // A.1 Ecore to KM3
             Iterable<URI> km3Metamodels = StreamSupport.stream(context.metamodels().spliterator(), false)
@@ -251,6 +244,7 @@ public final class Tasks {
         return context -> {
 
             context.monitor().subTask("Relaxed Ecore to Relaxed KM3");
+            context.monitor().worked(1);
 
             // A.3 Ecore Relaxation
             Iterable<URI> relaxedMetamodels = StreamSupport.stream(context.metamodels().spliterator(), false)
@@ -280,6 +274,7 @@ public final class Tasks {
         return context -> {
 
             context.monitor().subTask("ATL idifier");
+            context.monitor().worked(1);
 
             // B.1 ATLIDfier
             // Create a copy of the atl file
@@ -305,6 +300,7 @@ public final class Tasks {
         return context -> {
 
             context.monitor().subTask("ATL to UNQL projection");
+            context.monitor().worked(1);
 
             // B.3 ATL2UnQL Projector
             // Create a copy of the atl file
@@ -313,6 +309,7 @@ public final class Tasks {
             URIs.copy(idfiedAtlModule, projectedAtlModule);
 
             context.monitor().subTask("ATL to UNQL projection");
+            context.monitor().worked(1);
 
             // Run in-place transformation
             ProjectorFactory.withEmftvm().transform(projectedAtlModule);
@@ -332,6 +329,7 @@ public final class Tasks {
         return context -> {
 
             context.monitor().subTask("Conversion of ATL to UNQL");
+            context.monitor().worked(1);
 
             URI inMetamodel = context.inMetamodel();
             URI outMetamodel = context.outMetamodel();
@@ -363,6 +361,7 @@ public final class Tasks {
         return context -> {
 
             context.monitor().subTask("Conversion of XMI to DOT");
+            context.monitor().worked(1);
 
             URI inMetamodel = context.inMetamodel();
             EPackage inPackage = Metamodels.firstPackage(inMetamodel);
@@ -389,7 +388,8 @@ public final class Tasks {
     private static Function<Context, Context> fwdUncal() {
         return context -> {
 
-            context.monitor().subTask("Uncal");
+            context.monitor().subTask("Uncal (may take a while to execute)");
+            context.monitor().worked(5);
 
             // C.2 Forward UnCAL
             Commands.gRoundTram().fwdUncal().execute(
@@ -415,6 +415,7 @@ public final class Tasks {
         return context -> {
 
             context.monitor().subTask("Normalization");
+            context.monitor().worked(1);
 
             // C.2.1 Normalize (up-to isomorphism)
             Commands.gRoundTram().bxContract().execute(
@@ -437,6 +438,7 @@ public final class Tasks {
         return context -> {
 
             context.monitor().subTask("Conversion of DOT to XMI");
+            context.monitor().worked(1);
 
             URI outMetamodel = context.outMetamodel();
             EPackage outPackage = Metamodels.firstPackage(outMetamodel);
@@ -464,6 +466,7 @@ public final class Tasks {
         return context -> {
 
             context.monitor().subTask("Conversion of XMI to DOT");
+            context.monitor().worked(3);
 
             URI outMetamodel = context.outMetamodel();
             EPackage outPackage = Metamodels.firstPackage(outMetamodel);
@@ -492,6 +495,7 @@ public final class Tasks {
         return context -> {
 
             context.monitor().subTask("Denormalization");
+            context.monitor().worked(3);
 
             // D.2 Denormalization
             Commands.gRoundTram().bxContract().execute(
@@ -514,7 +518,8 @@ public final class Tasks {
     private static Function<Context, Context> bwdUncal() {
         return context -> {
 
-            context.monitor().subTask("Uncal");
+            context.monitor().subTask("Uncal (may take a while to execute)");
+            context.monitor().worked(7);
 
             // E.1 Backward UnCAL
             Commands.gRoundTram().bwdUncal().execute(
@@ -540,6 +545,7 @@ public final class Tasks {
         return context -> {
 
             context.monitor().subTask("Conversion of DOT to XMI");
+            context.monitor().worked(3);
 
             URI inMetamodel = context.inMetamodel();
             EPackage inPackage = Metamodels.firstPackage(inMetamodel);
@@ -554,5 +560,29 @@ public final class Tasks {
 
             return context;
         };
+    }
+
+    /**
+     * Executes the {@code runnable} in a safe environment.
+     * <p>
+     * In a safe environment, a function is called several times if something goes wrong the first times. This is
+     * typically used when using an ATL transformation: Because ATL files are generated or modified by code,
+     * *.emftvm and *.asm files may take some time to regenerate.
+     *
+     * @see RetryPolicy
+     * @see SyncFailsafe
+     */
+    private static void retryIfNecessary(CheckedRunnable runnable) {
+        // The default policy that defines when retries should be performed.
+        final RetryPolicy retryPolicy = new RetryPolicy()
+                .withMaxRetries(5)
+                .withDelay(5, TimeUnit.SECONDS)
+                .retryOn(VMException.class::isInstance);
+
+        // Performs synchronous executions with failures handled according to a configure {@code #retryPolicy}.
+        Failsafe.with(retryPolicy)
+                .onFailedAttempt(t -> System.out.println(t.getMessage() + "\nRetrying in 5 seconds..."))
+                .onFailure(t -> System.out.println(t.getMessage()))
+                .run(runnable);
     }
 }
