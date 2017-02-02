@@ -1,7 +1,0 @@
-rec( \($L@@"bar",$G@@"foo").
-       (if $L = Customer then &
-  else if $L = order then &
-  else if $L = Order then &
-  else if $L = date then {Date: {date: $G}}
-  else {} @@ "baz") @@ "qux"
-)($db)

@@ -1,7 +1,0 @@
-package Date {
-  datatype String;
-
-  class Date {
-    reference date[0-*]: String;
-  }  
-}
