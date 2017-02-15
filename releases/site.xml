@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<site>
-   <feature url="features/org.eclipse.m2m.atl.atlgt_0.1.0.201702020156.jar" id="org.eclipse.m2m.atl.atlgt" version="0.1.0.201702020156">
-      <category name="ATL-GT"/>
-   </feature>
-   <category-def name="ATL-GT" label="ATL-GT"/>
-</site>

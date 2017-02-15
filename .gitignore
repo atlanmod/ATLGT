@@ -4,8 +4,8 @@ bin/
 .settings/
 
 # Only root files
-/.classpath
-/.project
+.classpath
+.project
 
 # ATL & Co
 *.asm
@@ -23,3 +23,6 @@ bin/
 */xtend-gen/*
 !*/src-gen/.empty
 !*/xtend-gen/.empty
+
+### Update-site
+org.eclipse.m2m.atl.atlgt.update/*
