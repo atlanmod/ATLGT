@@ -17,9 +17,12 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.attribute.PosixFilePermission;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -121,6 +124,11 @@ public class Commands {
                                 out.write(in.read());
                             }
                         }
+
+                        // Defines the permissions for the created file
+                        Set<PosixFilePermission> permissions = new HashSet<>();
+                        permissions.add(PosixFilePermission.OWNER_EXECUTE);
+                        Files.setPosixFilePermissions(fileName, permissions);
                     }
                 }
             }
