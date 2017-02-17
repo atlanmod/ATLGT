@@ -102,14 +102,14 @@ public class Commands {
             tempDirectory = Files.createTempDirectory("atlgt-tools");
 
             String jarUrl = new URL(url.getPath()).getPath();
-            File jarFile = new File(jarUrl.substring(1, jarUrl.indexOf('!')));
+            File jarFile = new File(jarUrl.substring(os().startsWith("win") ? 1 : 0, jarUrl.indexOf('!')));
 
             System.out.println("Extracting binaries from: " + jarFile.getName());
 
             // Extracting the content from the JAR
             try (JarFile jar = new JarFile(jarFile)) {
-                for (Enumeration<JarEntry> enums = jar.entries(); enums.hasMoreElements(); ) {
-                    JarEntry entry = enums.nextElement();
+                for (Enumeration<JarEntry> entries = jar.entries(); entries.hasMoreElements(); ) {
+                    JarEntry entry = entries.nextElement();
 
                     Path fileName = tempDirectory.resolve(entry.getName());
 
@@ -125,7 +125,6 @@ public class Commands {
                 }
             }
         }
-
         return tempDirectory;
     }
 
