@@ -14,6 +14,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -126,9 +127,12 @@ public class Commands {
                         }
 
                         // Defines the permissions for the created file
-                        Set<PosixFilePermission> permissions = new HashSet<>();
-                        permissions.add(PosixFilePermission.OWNER_EXECUTE);
-                        Files.setPosixFilePermissions(fileName, permissions);
+                        if (FileSystems.getDefault().supportedFileAttributeViews().contains("posix")) {
+                            Set<PosixFilePermission> permissions = new HashSet<>();
+                            permissions.add(PosixFilePermission.OWNER_EXECUTE);
+
+                            Files.setPosixFilePermissions(fileName, permissions);
+                        }
                     }
                 }
             }
