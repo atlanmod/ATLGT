@@ -1,7 +1,7 @@
 # ATLGT
 Bidirectional version of ATL on top of the GRoundTram transformation engine
 
-**Paper**: Sochiro Hidaka and Massimo Tisi, "Partial Bidirectionalization of Model Transformation Languages" ([link](http://cis.k.hosei.ac.jp/~hidaka/research/papers/scp2016.pdf))
+**Technical Report**: Sochiro Hidaka and Massimo Tisi, "Partial Bidirectionalization of Model Transformation Languages" ([link](http://cis.k.hosei.ac.jp/~hidaka/research/papers/scp2016.pdf))
 
 
 ### Installation
