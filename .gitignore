@@ -24,5 +24,8 @@ bin/
 !*/src-gen/.empty
 !*/xtend-gen/.empty
 
+### Examples
+**/examples/*
+
 ### Update-site
 org.eclipse.m2m.atl.atlgt.update/*
