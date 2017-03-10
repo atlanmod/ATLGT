@@ -1,6 +1,0 @@
-Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-Name: SimpleClass2Relational
-Bundle-SymbolicName: org.eclipse.m2m.atl.atlgt.examples.simpleclass2relational
-Bundle-Version: 1.0.0.qualifier
-Bundle-Vendor: Atlanmod-Hosei
