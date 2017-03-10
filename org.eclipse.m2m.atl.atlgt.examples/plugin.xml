@@ -15,6 +15,7 @@
             hasPages="false"
             id="org.eclipse.m2m.atl.examples.simpleclass2relational"
             name="Class to Relational Example"
+            icon="icons/atl_example.gif"
             project="true">
          <description>
          </description>
