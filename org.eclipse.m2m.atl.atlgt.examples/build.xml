@@ -17,7 +17,11 @@
     <!-- Build zip files -->
     <target name="zipAll" depends="clean">
         <zip destfile="${dest.dir}/${class2relational.project}.zip">
-            <zipfileset dir="${plugins.base.dir}/${class2relational.project}" />      
+            <zipfileset dir="${plugins.base.dir}/${class2relational.project}">
+            	<exclude name="bin/" />
+            	<exclude name="*.iml" />
+            	<exclude name="*.eml" />
+            </zipfileset>
         </zip>
     </target>
     

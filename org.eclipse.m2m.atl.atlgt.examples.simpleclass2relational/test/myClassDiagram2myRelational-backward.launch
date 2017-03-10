@@ -7,20 +7,20 @@
 <mapAttribute key="Inout Models Output Locations"/>
 <mapAttribute key="Input Model Options"/>
 <mapAttribute key="Input Models">
-<mapEntry key="IN" value="platform:/resource/org.eclipse.m2m.atl.atlgt.example.simpleclass2relational/test/myClassDiagram.xmi"/>
+<mapEntry key="IN" value="platform:/resource/org.eclipse.m2m.atl.atlgt.examples.simpleclass2relational/test/myClassDiagram.xmi"/>
 </mapAttribute>
 <mapAttribute key="Metamodel Options"/>
 <mapAttribute key="Metamodels">
-<mapEntry key="IN" value="platform:/resource/org.eclipse.m2m.atl.atlgt.example.simpleclass2relational/transformation/ClassDiagram.ecore"/>
-<mapEntry key="OUT" value="platform:/resource/org.eclipse.m2m.atl.atlgt.example.simpleclass2relational/transformation/Relational.ecore"/>
+<mapEntry key="IN" value="platform:/resource/org.eclipse.m2m.atl.atlgt.examples.simpleclass2relational/transformation/ClassDiagram.ecore"/>
+<mapEntry key="OUT" value="platform:/resource/org.eclipse.m2m.atl.atlgt.examples.simpleclass2relational/transformation/Relational.ecore"/>
 </mapAttribute>
 <stringAttribute key="Module Name" value="ClassDiagram2Relational"/>
-<stringAttribute key="Module Path" value="/org.eclipse.m2m.atl.atlgt.example.simpleclass2relational/transformation/ClassDiagram2Relational.atl"/>
+<stringAttribute key="Module Path" value="/org.eclipse.m2m.atl.atlgt.examples.simpleclass2relational/transformation/ClassDiagram2Relational.atl"/>
 <mapAttribute key="Output Model Options">
 <mapEntry key="OUT" value="allowIntermodelReferences derivedFile"/>
 </mapAttribute>
 <mapAttribute key="Output Models">
-<mapEntry key="OUT" value="platform:/resource/org.eclipse.m2m.atl.atlgt.example.simpleclass2relational/test/myRelational.xmi"/>
+<mapEntry key="OUT" value="platform:/resource/org.eclipse.m2m.atl.atlgt.examples.simpleclass2relational/test/myRelational.xmi"/>
 </mapAttribute>
 <stringAttribute key="name" value="&lt;unnamed&gt;"/>
 </launchConfiguration>
