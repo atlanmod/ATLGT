@@ -15,9 +15,10 @@ A JDK8 is required, and, in order to import the _ATL-GT_ repository in Eclipse, 
 
 ### Sample
 
-The project is provided with a sample project: `org.eclipse.m2m.atl.atlgt.example.simpleclass2relational`.
+The project is provided with an example project, named "Class to Relational". In order to import it in your workspace, 
+you can retrieve it in the `File > Example...` window, under the "ATL-GT" section.
 
-To use it, you need to import this project under an Eclipse workspace, and run the 2 preconfigured `*.launch` files, which can be found under the `test` directory:
+You can run it by using the 2 preconfigured `*.launch` files, which can be found under the `test` directory:
 
 1. `myClassDiagram2myRelational-forward`
 2. `myClassDiagram2myRelational-backward`
