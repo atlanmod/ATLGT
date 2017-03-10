@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="ATL-GT Examples" basedir="." default="update">
+    <!-- Project properties -->
+    <property name="dest.dir" value="examples" />
+    <property name="plugins.base.dir" value=".." />
+
+    <property name="class2relational.project" value="org.eclipse.m2m.atl.atlgt.examples.simpleclass2relational" />
+
+    <!-- Clean -->
+    <target name="clean">
+        <mkdir dir="${dest.dir}" />
+        <delete>
+            <fileset dir="${dest.dir}" includes="*.zip" />
+        </delete>
+    </target>
+
+    <!-- Build zip files -->
+    <target name="zipAll" depends="clean">
+        <zip destfile="${dest.dir}/${class2relational.project}.zip">
+            <zipfileset dir="${plugins.base.dir}/${class2relational.project}" />      
+        </zip>
+    </target>
+    
+    <target name="update" depends="zipAll">
+        <eclipse.refreshLocal resource="org.eclipse.m2m.atl.atlgt.examples/examples"/>
+    </target>
+</project>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="org.eclipse.m2m.atl.atlgt.examples.category"
+            name="ATL-GT"
+            parentCategory="org.eclipse.ui.Examples">
+      </category>
+      <wizard
+            canFinishEarly="true"
+            category="org.eclipse.ui.Examples/org.eclipse.m2m.atl.atlgt.examples.category"
+            class="org.eclipse.m2m.atl.atlgt.examples.Class2RelationalExampleWizard"
+            hasPages="false"
+            id="org.eclipse.m2m.atl.examples.simpleclass2relational"
+            name="Class to Relational Example"
+            project="true">
+         <description>
+         </description>
+      </wizard>
+   </extension>
+</plugin>
