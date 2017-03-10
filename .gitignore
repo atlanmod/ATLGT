@@ -23,3 +23,6 @@ bin/
 */xtend-gen/*
 !*/src-gen/.empty
 !*/xtend-gen/.empty
+
+### Generated ZIP (Examples)
+**/examples/*.zip
