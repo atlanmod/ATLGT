@@ -15,8 +15,7 @@ A JDK8 is required, and, in order to import the _ATL-GT_ repository in Eclipse, 
 
 ### Sample
 
-The project is provided with an example project, named "Class to Relational". In order to import it in your workspace, 
-you can retrieve it in the `File > Example...` window, under the "ATL-GT" section.
+The project is provided with an example project, named "Class to Relational". In order to import it in your workspace, you can retrieve it in the `File > New > Example...` window, under the "ATL-GT" section.
 
 
 You can run it by using the 2 preconfigured `*.launch` files, which can be found under the `test` directory:
